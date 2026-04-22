@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get() // Nhận Request GET /users
   async getUsers() {
     return this.appService.getAllUsers();
   }
