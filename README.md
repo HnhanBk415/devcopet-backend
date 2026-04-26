@@ -98,3 +98,48 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 # devcopet_be
 Backend
+
+
+## Cấu trúc thư mục (Project Structure)
+
+src/
+├── modules/
+│   ├── users/                    <-- Quản lý tài khoản, thông tin chung
+│   │   ├── dto/
+│   │   ├── schemas/              <-- Kéo file user.schema.ts vào đây
+│   │   ├── users.controller.ts
+│   │   ├── users.service.ts
+│   │   └── users.module.ts
+│   │
+│   ├── tutorials/                <-- Hệ thống bài học
+│   │   ├── dto/
+│   │   ├── schemas/
+│   │   ├── tutorials.controller.ts
+│   │   ├── tutorials.service.ts
+│   │   └── tutorials.module.ts   <-- Xử lý mô hình course -> chapter -> lesson
+│   │
+│   ├── roadmaps/                 <-- Hệ thống Game / Đi map
+│   │   ├── dto/
+│   │   ├── schemas/
+│   │   ├── roadmaps.controller.ts
+│   │   ├── roadmaps.service.ts
+│   │   └── roadmaps.module.ts    <-- Quản lý world, level, và các node để unlock
+│   │
+│   ├── pets/                     <-- Hệ thống thú cưng đồng hành
+│   │   ├── dto/
+│   │   ├── schemas/
+│   │   ├── pets.controller.ts
+│   │   ├── pets.service.ts
+│   │   └── pets.module.ts        <-- Xử lý bài khảo sát tạo pet profile và các tương tác hỗ trợ
+│   │
+│   └── histories/                <-- Quá trình làm bài của user
+│       ├── dto/
+│       ├── schemas/
+│       ├── histories.controller.ts
+│       ├── histories.service.ts
+│       └── histories.module.ts   <-- Lưu trữ bản ghi kết quả (record history) khi user submit node
+│
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+└── main.ts
