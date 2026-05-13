@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller('information') // Định tuyến: endpoint lúc này sẽ là /users
+@Controller('users') // Định tuyến: endpoint lúc này sẽ là /users
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
