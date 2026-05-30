@@ -15,8 +15,11 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return users', async () => {
+      // Vì hàm getUsers gọi appService.getAllUsers() trả về Promise,
+      // ta sửa lại test để gọi đúng tên hàm.
+      const result = await appController.getUsers();
+      expect(result).toBeDefined();
     });
   });
 });

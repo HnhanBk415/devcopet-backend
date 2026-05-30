@@ -16,8 +16,9 @@ export class User {
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
   email!: string;
 
-  @Prop({ required: true })
-  passwordHash!: string;
+  // Optional — social users may have no local password
+  @Prop()
+  passwordHash?: string;
 
   @Prop({
     type: String,
@@ -26,6 +27,28 @@ export class User {
   })
   role!: UserRole;
 
+  @Prop()
+  avatarUrl?: string;
+
+  // Social provider IDs — sparse index allows null but enforces uniqueness when set
+  @Prop({ sparse: true })
+  githubId?: string;
+
+  @Prop({ sparse: true })
+  googleId?: string;
+
+  @Prop({ sparse: true })
+  facebookId?: string;
+
+  // Tracks which auth methods this account has used e.g. ['local', 'github', 'google']
+  @Prop({ type: [String], default: [] })
+  authProviders!: string[];
+
+  // Hashed refresh token — null when logged out
+  @Prop()
+  refreshTokenHash?: string;
+
+  // Game state
   @Prop({ default: 1 })
   level!: number;
 
