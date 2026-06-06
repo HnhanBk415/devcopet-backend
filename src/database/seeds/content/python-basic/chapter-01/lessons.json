@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Introducing Output / Printing",
+    "slug": "introducing-output-printing",
+    "description": "Learn how to display text and values using print().",
+    "order": 1,
+    "type": "reading",
+    "filename": "01-introducing-output-printing.md",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Printing on Multiple Lines",
+    "slug": "printing-on-multiple-lines",
+    "description": "Learn different ways to print output on multiple lines.",
+    "order": 2,
+    "type": "reading",
+    "filename": "02-printing-on-multiple-lines.md",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  }
+]

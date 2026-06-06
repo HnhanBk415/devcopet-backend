@@ -26,7 +26,7 @@ export class Node {
   @Prop({ type: Object, required: true })
   answerConfig!: Record<string, any>;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   hintTemplate!: string | null;
 
   @Prop({ default: 0, min: 0 })
