@@ -10,11 +10,13 @@ In Python, the most common way to display output is by using the `print()` funct
 print("Hello, World!")
 ```
 
-When this program runs, Python displays:
+Output:
 
 ```text
 Hello, World!
 ```
+
+This lesson introduces the basic idea of output and how Python displays text, numbers, and simple results.
 
 ---
 
@@ -22,24 +24,23 @@ Hello, World!
 
 By the end of this lesson, you will be able to:
 
-- Understand what output means in programming.
-- Use the `print()` function to display text.
-- Print numbers and simple values.
-- Recognize common mistakes when using `print()`.
+- Explain what output means in programming.
+- Use `print()` to display text.
+- Print numbers and simple calculations.
+- Avoid basic `print()` syntax mistakes.
 
 ---
 
 ## 1. What Is Output?
 
-A program often needs to communicate with the user.
+A program often needs to show information to the user.
 
-For example, a program may need to show:
+For example, a program may show:
 
 - A welcome message
-- A result of a calculation
+- A calculation result
 - A warning message
-- The current value of a variable
-- Instructions for the next step
+- A value stored in the program
 
 This displayed information is called **output**.
 
@@ -61,13 +62,13 @@ Welcome to Python!
 
 Python uses the built-in `print()` function to display output.
 
-The basic syntax is:
+Basic syntax:
 
 ```python
 print(value)
 ```
 
-The value inside the parentheses is what Python will display.
+The value inside the parentheses is displayed on the screen.
 
 Example:
 
@@ -85,40 +86,21 @@ I am learning Python.
 
 ## 3. Printing Text
 
-Text in Python is usually written inside quotation marks.
-
-You can use double quotes:
+Text in Python is written inside quotation marks.
 
 ```python
 print("Python is fun!")
-```
-
-Output:
-
-```text
-Python is fun!
-```
-
-You can also use single quotes:
-
-```python
 print('Python is powerful!')
 ```
 
 Output:
 
 ```text
+Python is fun!
 Python is powerful!
 ```
 
-Both are valid. The important point is that the opening and closing quotation marks must match.
-
-Correct:
-
-```python
-print("Hello")
-print('Hello')
-```
+Single quotes and double quotes are both valid. Just make sure the opening and closing quotes match.
 
 Incorrect:
 
@@ -126,15 +108,17 @@ Incorrect:
 print("Hello')
 ```
 
-The incorrect example will cause an error because the quotes do not match.
+Correct:
+
+```python
+print("Hello")
+```
 
 ---
 
 ## 4. Printing Numbers
 
 Numbers do not need quotation marks.
-
-Example:
 
 ```python
 print(100)
@@ -148,9 +132,7 @@ Output:
 3.14
 ```
 
-If you put a number inside quotation marks, Python treats it as text.
-
-Example:
+If you put a number inside quotes, Python treats it as text.
 
 ```python
 print("100")
@@ -162,15 +144,13 @@ Output:
 100
 ```
 
-The output looks the same, but internally Python treats `"100"` as text, not as a number.
+The output looks the same, but `"100"` is text, while `100` is a number.
 
 ---
 
-## 5. Printing Calculations
+## 5. Printing Simple Calculations
 
-You can also print the result of a calculation.
-
-Example:
+You can print the result of a calculation.
 
 ```python
 print(2 + 3)
@@ -188,89 +168,13 @@ Output:
 5.0
 ```
 
-Python evaluates the expression first, then prints the result.
-
-Example:
-
-```python
-print(10 + 5)
-```
-
-Python first calculates:
-
-```text
-10 + 5 = 15
-```
-
-Then it displays:
-
-```text
-15
-```
+Python calculates the expression first, then prints the result.
 
 ---
 
-## 6. Printing Multiple Values
+## Common Mistakes
 
-The `print()` function can display more than one value at the same time.
-
-Use commas to separate the values.
-
-Example:
-
-```python
-print("My age is", 18)
-```
-
-Output:
-
-```text
-My age is 18
-```
-
-Python automatically adds a space between values separated by commas.
-
-Another example:
-
-```python
-print("The answer is", 2 + 3)
-```
-
-Output:
-
-```text
-The answer is 5
-```
-
----
-
-## 7. Empty `print()`
-
-You can call `print()` with nothing inside the parentheses.
-
-Example:
-
-```python
-print("Line above")
-print()
-print("Line below")
-```
-
-Output:
-
-```text
-Line above
-
-Line below
-```
-
-An empty `print()` creates a blank line.
-
----
-
-## 8. Common Mistakes
-
-### Mistake 1: Forgetting quotation marks for text
+### Mistake 1: Forgetting quotes around text
 
 Incorrect:
 
@@ -278,15 +182,13 @@ Incorrect:
 print(Hello)
 ```
 
-This causes an error because Python thinks `Hello` is a variable name.
-
 Correct:
 
 ```python
 print("Hello")
 ```
 
----
+Without quotes, Python thinks `Hello` is a variable name.
 
 ### Mistake 2: Forgetting parentheses
 
@@ -302,119 +204,35 @@ Correct:
 print("Hello")
 ```
 
-In Python 3, `print` must be used with parentheses.
+In Python 3, `print` must use parentheses.
 
----
-
-### Mistake 3: Mismatched quotation marks
-
-Incorrect:
+### Mistake 3: Putting calculations inside quotes
 
 ```python
-print("Hello')
-```
-
-Correct:
-
-```python
-print("Hello")
-```
-
-or:
-
-```python
-print('Hello')
-```
-
----
-
-### Mistake 4: Using commas incorrectly
-
-Incorrect:
-
-```python
-print("Age is" 18)
-```
-
-Correct:
-
-```python
-print("Age is", 18)
-```
-
-Use a comma to separate multiple values.
-
----
-
-## 9. Practice Examples
-
-Try to predict the output before running each program.
-
-### Example 1
-
-```python
-print("Hello, Python!")
+print("2 + 3")
 ```
 
 Output:
 
 ```text
-Hello, Python!
+2 + 3
 ```
 
----
-
-### Example 2
+To calculate it, write:
 
 ```python
-print(7 + 3)
+print(2 + 3)
 ```
 
 Output:
 
 ```text
-10
+5
 ```
 
 ---
 
-### Example 3
-
-```python
-print("7 + 3")
-```
-
-Output:
-
-```text
-7 + 3
-```
-
-Explanation:
-
-Because `7 + 3` is inside quotation marks, Python prints it as text instead of calculating it.
-
----
-
-### Example 4
-
-```python
-print("Result:", 7 + 3)
-```
-
-Output:
-
-```text
-Result: 10
-```
-
-Explanation:
-
-Python prints the text `"Result:"`, then prints the calculated value of `7 + 3`.
-
----
-
-## 10. Mini Exercises
+## Mini Exercises
 
 ### Exercise 1
 
@@ -424,13 +242,11 @@ Write a program that prints:
 Hello, World!
 ```
 
-Starter code:
+Solution:
 
 ```python
 print("Hello, World!")
 ```
-
----
 
 ### Exercise 2
 
@@ -442,33 +258,9 @@ Example:
 print("My name is Alex.")
 ```
 
----
-
 ### Exercise 3
 
-Write a program that prints the result of:
-
-```text
-8 + 12
-```
-
-Expected output:
-
-```text
-20
-```
-
-Solution:
-
-```python
-print(8 + 12)
-```
-
----
-
-### Exercise 4
-
-What is the output of this code?
+What is the output?
 
 ```python
 print("8 + 12")
@@ -480,23 +272,20 @@ Answer:
 8 + 12
 ```
 
-Explanation:
-
-The expression is inside quotation marks, so Python treats it as text.
+Because the expression is inside quotes, Python treats it as text.
 
 ---
 
 ## Key Takeaways
 
 - Output means displaying information from a program.
-- Python uses `print()` to show output.
-- Text must be written inside quotation marks.
+- Python uses `print()` to display output.
+- Text needs quotation marks.
 - Numbers and calculations do not need quotation marks.
-- Commas can be used to print multiple values.
-- `print()` with nothing inside creates a blank line.
+- Anything inside quotes is printed as text.
 
 ---
 
 ## Next Lesson
 
-In the next lesson, you will learn how to print output on multiple lines.
+Next, you will learn how to print output on multiple lines.

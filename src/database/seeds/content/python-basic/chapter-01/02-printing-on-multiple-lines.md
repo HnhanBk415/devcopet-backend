@@ -2,16 +2,16 @@
 
 ## Lesson Overview
 
-In the previous lesson, you learned how to display output using the `print()` function.
+In the previous lesson, you learned how to display output using `print()`.
 
 In this lesson, you will learn how to print output on **multiple lines**.
 
-Python gives you several ways to do this:
+Python provides several simple ways to do this:
 
 - Use multiple `print()` statements.
 - Use the newline character `\n`.
-- Use triple-quoted strings.
-- Use an empty `print()` to create a blank line.
+- Use an empty `print()` for a blank line.
+- Use triple-quoted strings for longer multi-line text.
 
 ---
 
@@ -19,19 +19,16 @@ Python gives you several ways to do this:
 
 By the end of this lesson, you will be able to:
 
-- Print text on separate lines using multiple `print()` statements.
-- Use `\n` to create line breaks inside a string.
+- Print separate lines using multiple `print()` statements.
+- Use `\n` to create line breaks.
+- Use empty `print()` statements to create blank lines.
 - Use triple-quoted strings for multi-line text.
-- Create blank lines using `print()`.
-- Recognize common mistakes when printing multiple lines.
 
 ---
 
 ## 1. Using Multiple `print()` Statements
 
-The simplest way to print on multiple lines is to use more than one `print()` statement.
-
-Example:
+The simplest way to print multiple lines is to use more than one `print()` statement.
 
 ```python
 print("Hello")
@@ -47,39 +44,13 @@ Python
 Learner
 ```
 
-Each `print()` statement displays its output on a new line by default.
+Each `print()` statement moves to a new line by default.
 
 ---
 
-## 2. Why Does Each `print()` Start a New Line?
+## 2. Printing a Blank Line
 
-By default, `print()` adds a newline after displaying its value.
-
-A **newline** means moving the cursor to the next line.
-
-Example:
-
-```python
-print("First line")
-print("Second line")
-```
-
-Output:
-
-```text
-First line
-Second line
-```
-
-Python prints `"First line"`, then automatically moves to the next line before printing `"Second line"`.
-
----
-
-## 3. Printing a Blank Line
-
-You can use an empty `print()` statement to create a blank line.
-
-Example:
+You can call `print()` with nothing inside the parentheses.
 
 ```python
 print("Line 1")
@@ -95,17 +66,15 @@ Line 1
 Line 2
 ```
 
-The empty `print()` creates one blank line between the two lines of text.
+The empty `print()` creates one blank line.
 
 ---
 
-## 4. Using `\n` for a New Line
+## 3. Using `\n`
 
 The symbol `\n` is called a **newline character**.
 
-It tells Python to move to the next line.
-
-Example:
+It creates a line break inside a string.
 
 ```python
 print("Hello\nPython")
@@ -122,11 +91,9 @@ Even though there is only one `print()` statement, the output appears on two lin
 
 ---
 
-## 5. Using Multiple `\n` Characters
+## 4. Using Multiple `\n` Characters
 
-You can use more than one `\n`.
-
-Example:
+You can use more than one newline character.
 
 ```python
 print("A\nB\nC")
@@ -140,7 +107,7 @@ B
 C
 ```
 
-Another example:
+You can also create blank lines:
 
 ```python
 print("Line 1\n\nLine 3")
@@ -154,15 +121,13 @@ Line 1
 Line 3
 ```
 
-The two newline characters `\n\n` create one blank line between the two lines of text.
+The `\n\n` creates an empty line between the two lines.
 
 ---
 
-## 6. Printing Multi-line Text with Triple Quotes
+## 5. Triple-Quoted Strings
 
-Python also supports triple-quoted strings.
-
-Example:
+Python allows strings to span multiple lines using triple quotes.
 
 ```python
 print("""Hello
@@ -178,71 +143,11 @@ Python
 Learner
 ```
 
-Triple-quoted strings are useful when you want to write longer text across multiple lines.
+Triple-quoted strings are useful when you want to write longer text exactly as it should appear.
 
 ---
 
-## 7. Comparing the Three Main Methods
-
-### Method 1: Multiple `print()` statements
-
-```python
-print("Name: Alex")
-print("Age: 18")
-print("Language: Python")
-```
-
-Output:
-
-```text
-Name: Alex
-Age: 18
-Language: Python
-```
-
-This method is simple and easy to read.
-
----
-
-### Method 2: Newline character `\n`
-
-```python
-print("Name: Alex\nAge: 18\nLanguage: Python")
-```
-
-Output:
-
-```text
-Name: Alex
-Age: 18
-Language: Python
-```
-
-This method is useful when you want one string to contain several lines.
-
----
-
-### Method 3: Triple-quoted string
-
-```python
-print("""Name: Alex
-Age: 18
-Language: Python""")
-```
-
-Output:
-
-```text
-Name: Alex
-Age: 18
-Language: Python
-```
-
-This method is useful for longer formatted text.
-
----
-
-## 8. Common Mistakes
+## Common Mistakes
 
 ### Mistake 1: Writing `/n` instead of `\n`
 
@@ -273,35 +178,7 @@ Python
 
 The correct newline character is `\n`, not `/n`.
 
----
-
-### Mistake 2: Forgetting quotation marks
-
-Incorrect:
-
-```python
-print(Hello
-Python)
-```
-
-Correct:
-
-```python
-print("Hello")
-print("Python")
-```
-
-or:
-
-```python
-print("Hello\nPython")
-```
-
-Text must be written inside quotation marks.
-
----
-
-### Mistake 3: Thinking `\n` works outside a string
+### Mistake 2: Putting `\n` outside a string
 
 Incorrect:
 
@@ -322,110 +199,11 @@ or:
 print("Hello\nPython")
 ```
 
-The newline character `\n` must be inside a string.
+The `\n` character must be inside a string.
 
 ---
 
-### Mistake 4: Adding unwanted spaces
-
-Example:
-
-```python
-print("Hello \nPython")
-```
-
-Output:
-
-```text
-Hello 
-Python
-```
-
-There is a space after `Hello`, so the first output line ends with a space.
-
-Usually, you should write:
-
-```python
-print("Hello\nPython")
-```
-
----
-
-## 9. Practice Examples
-
-Try to predict the output before running each program.
-
-### Example 1
-
-```python
-print("One")
-print("Two")
-print("Three")
-```
-
-Output:
-
-```text
-One
-Two
-Three
-```
-
----
-
-### Example 2
-
-```python
-print("One\nTwo\nThree")
-```
-
-Output:
-
-```text
-One
-Two
-Three
-```
-
----
-
-### Example 3
-
-```python
-print("One")
-print()
-print("Three")
-```
-
-Output:
-
-```text
-One
-
-Three
-```
-
----
-
-### Example 4
-
-```python
-print("""Python
-is
-fun""")
-```
-
-Output:
-
-```text
-Python
-is
-fun
-```
-
----
-
-## 10. Mini Exercises
+## Mini Exercises
 
 ### Exercise 1
 
@@ -443,18 +221,9 @@ print("Hello")
 print("World")
 ```
 
----
-
 ### Exercise 2
 
 Write the same output using `\n`.
-
-Expected output:
-
-```text
-Hello
-World
-```
 
 Solution:
 
@@ -462,37 +231,9 @@ Solution:
 print("Hello\nWorld")
 ```
 
----
-
 ### Exercise 3
 
-Write a program that prints:
-
-```text
-Name: Alex
-Age: 18
-Language: Python
-```
-
-Possible solution:
-
-```python
-print("Name: Alex")
-print("Age: 18")
-print("Language: Python")
-```
-
-Another possible solution:
-
-```python
-print("Name: Alex\nAge: 18\nLanguage: Python")
-```
-
----
-
-### Exercise 4
-
-What is the output of this code?
+What is the output?
 
 ```python
 print("A\n\nB")
@@ -506,22 +247,20 @@ A
 B
 ```
 
-Explanation:
-
 The first `\n` moves to the next line. The second `\n` creates an extra blank line.
 
 ---
 
 ## Key Takeaways
 
-- Each `print()` statement starts a new line by default.
-- `print()` with nothing inside creates a blank line.
+- Each `print()` starts a new line by default.
+- Empty `print()` creates a blank line.
 - `\n` creates a line break inside a string.
-- Triple-quoted strings can be used to print multi-line text.
+- Triple-quoted strings can display multi-line text.
 - The newline character is `\n`, not `/n`.
 
 ---
 
 ## Next Lesson
 
-In the next lesson, you will continue learning basic Python syntax and how programs display information.
+Next, you will learn how to print text and numbers in a single `print()` statement.
