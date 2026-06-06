@@ -50,10 +50,10 @@ export class AssessmentResult {
   @Prop({ default: 'Balanced' })
   primaryPersonality!: string;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   secondaryPersonality!: string | null;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   secondaryModifier!: string | null;
 }
 
