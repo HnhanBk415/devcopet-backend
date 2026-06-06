@@ -1,0 +1,29 @@
+1. Các module cốt lõi & Gamification (Được giữ nguyên)
+UsersModule & AuthModule: Đã giữ nguyên cấu trúc user.schema.ts cũ (bảo toàn username, các phương thức OAuth, Refresh Token) để không làm hỏng AuthService.
+Tiến trình & Game hóa: Các module RoadmapModule (World → Level → Node), ProgressModule (chứa các schema như attempt.schema.ts, lesson-progress.schema.ts), PetsModule, và OnboardingModule vẫn giữ nguyên hoạt động.
+2. Hệ thống Học tập (Learning Platform) - Vừa mới được xây dựng
+Em đã tạo mới hoàn toàn 4 module phục vụ nội dung học tập và đã đăng ký vào app.module.ts:
+
+Courses (Khóa học)
+
+Schema: Bám sát yêu cầu (slug duy nhất, level phân cấp, thời gian dự kiến, v.v.).
+API (đã có bộ khung):
+GET /courses
+GET /courses/:courseId
+Chapters (Chương học)
+
+Schema: Thuộc về khóa học (courseId). Có unique index [courseId, slug] và [courseId, order].
+API: GET /courses/:courseId/chapters
+Lessons (Bài học)
+
+Schema: Thuộc về khóa học và chương học. Hỗ trợ đa dạng loại bài học (reading, practice, quiz, project) sử dụng định dạng nội dung Markdown.
+APIs:
+GET /chapters/:chapterId/lessons
+GET /lessons/:lessonId
+Quizzes (Bài tập / Trắc nghiệm)
+
+Schema: Có quan hệ 1-1 với Lesson. Em đã thiết lập Schema lồng nhau (Nested Schema) rất chi tiết bao gồm QuizQuestion (hỗ trợ multiple_choice, true_false, fill_blank, code_output) và QuizOption.
+API: GET /lessons/:lessonId/quiz
+3. Trạng thái Code
+Các schema, controller, service đã được setup cấu trúc chuẩn của NestJS.
+Em đã chạy npm install và npm run build thành công. Toàn bộ code compile bình thường và không có bất kỳ lỗi TypeScript nào.
