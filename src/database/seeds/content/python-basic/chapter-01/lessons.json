@@ -6,6 +6,7 @@
     "order": 1,
     "type": "reading",
     "filename": "01-introducing-output-printing.md",
+    "quizFile": "01-introducing-output-printing.quiz.json",
     "estimatedMinutes": 8,
     "xpReward": 10,
     "isPublished": true

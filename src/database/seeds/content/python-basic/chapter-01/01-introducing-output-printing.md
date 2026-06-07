@@ -230,6 +230,14 @@ Output:
 5
 ```
 
+## Try it Yourself
+
+Change the text inside `print()`, then run the code.
+
+```python-run
+print("Hello, World!")
+```
+
 ---
 
 ## Mini Exercises

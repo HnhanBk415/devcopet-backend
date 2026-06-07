@@ -201,6 +201,16 @@ print("Hello\nPython")
 
 The `\n` character must be inside a string.
 
+## Try it Yourself
+
+Change the code below to see how it works on multiple lines.
+
+```python-run
+print("Line 1")
+print()
+print("Line 2\nLine 3")
+```
+
 ---
 
 ## Mini Exercises
