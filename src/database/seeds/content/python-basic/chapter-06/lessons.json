@@ -1,0 +1,86 @@
+[
+  {
+    "title": "What Is a Condition?",
+    "slug": "what-is-a-condition",
+    "description": "Practice the key ideas from What Is a Condition?.",
+    "order": 1,
+    "type": "reading",
+    "filename": "01-what-is-a-condition.md",
+    "quizFile": "01-what-is-a-condition.quiz.json",
+    "estimatedMinutes": 8,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Boolean Expressions",
+    "slug": "boolean-expressions",
+    "description": "Practice the key ideas from Boolean Expressions.",
+    "order": 2,
+    "type": "reading",
+    "filename": "02-boolean-expressions.md",
+    "quizFile": "02-boolean-expressions.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "The if Statement",
+    "slug": "the-if-statement",
+    "description": "Practice the key ideas from The if Statement.",
+    "order": 3,
+    "type": "reading",
+    "filename": "03-the-if-statement.md",
+    "quizFile": "03-the-if-statement.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "The if else Statement",
+    "slug": "the-if-else-statement",
+    "description": "Practice the key ideas from The if else Statement.",
+    "order": 4,
+    "type": "reading",
+    "filename": "04-the-if-else-statement.md",
+    "quizFile": "04-the-if-else-statement.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "The if elif else Statement",
+    "slug": "the-if-elif-else-statement",
+    "description": "Practice the key ideas from The if elif else Statement.",
+    "order": 5,
+    "type": "reading",
+    "filename": "05-the-if-elif-else-statement.md",
+    "quizFile": "05-the-if-elif-else-statement.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Logical Operators: and, or, not",
+    "slug": "logical-operators-and-or-not",
+    "description": "Practice the key ideas from Logical Operators: and, or, not.",
+    "order": 6,
+    "type": "reading",
+    "filename": "06-logical-operators-and-or-not.md",
+    "quizFile": "06-logical-operators-and-or-not.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Common Conditional Mistakes",
+    "slug": "common-conditional-mistakes",
+    "description": "Practice the key ideas from Common Conditional Mistakes.",
+    "order": 7,
+    "type": "reading",
+    "filename": "07-common-conditional-mistakes.md",
+    "quizFile": "07-common-conditional-mistakes.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  }
+]

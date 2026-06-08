@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Arithmetic Operators",
+  "description": "Check your understanding of Arithmetic Operators.",
+  "order": 2,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Arithmetic operators are used for:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "math calculations"
+        },
+        {
+          "id": "B",
+          "text": "creating folders"
+        },
+        {
+          "id": "C",
+          "text": "writing comments"
+        },
+        {
+          "id": "D",
+          "text": "changing themes"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Arithmetic operators perform math operations.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "arithmetic-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator is used for multiplication?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "+"
+        },
+        {
+          "id": "B",
+          "text": "-"
+        },
+        {
+          "id": "C",
+          "text": "*"
+        },
+        {
+          "id": "D",
+          "text": "/"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "* is the multiplication operator.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "arithmetic-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator is used for division?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "/"
+        },
+        {
+          "id": "B",
+          "text": "*"
+        },
+        {
+          "id": "C",
+          "text": "%"
+        },
+        {
+          "id": "D",
+          "text": "="
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "/ performs division.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "arithmetic-operators"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

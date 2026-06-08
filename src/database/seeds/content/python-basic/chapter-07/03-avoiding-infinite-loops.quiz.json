@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Avoiding Infinite Loops",
+  "description": "Check your understanding of Avoiding Infinite Loops.",
+  "order": 3,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is an infinite loop?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "A loop that never stops"
+        },
+        {
+          "id": "B",
+          "text": "A loop with no code"
+        },
+        {
+          "id": "C",
+          "text": "A string value"
+        },
+        {
+          "id": "D",
+          "text": "A type of file"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "An infinite loop continues forever unless stopped.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "avoiding-infinite-loops"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "How can you avoid an infinite while loop?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Make sure the condition can eventually become false"
+        },
+        {
+          "id": "B",
+          "text": "Never use variables"
+        },
+        {
+          "id": "C",
+          "text": "Only use strings"
+        },
+        {
+          "id": "D",
+          "text": "Remove all indentation"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The loop condition should be able to change to False.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "avoiding-infinite-loops"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which issue can cause an infinite loop?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Forgetting to update a counter"
+        },
+        {
+          "id": "B",
+          "text": "Using print()"
+        },
+        {
+          "id": "C",
+          "text": "Writing comments"
+        },
+        {
+          "id": "D",
+          "text": "Opening VS Code"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "If a counter never changes, the condition may stay true forever.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "avoiding-infinite-loops"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

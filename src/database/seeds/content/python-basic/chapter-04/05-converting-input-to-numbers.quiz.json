@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Converting Input to Numbers",
+  "description": "Check your understanding of Converting Input to Numbers.",
+  "order": 5,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which code converts user input to an integer?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "age = int(input(\"Age: \"))"
+        },
+        {
+          "id": "B",
+          "text": "age = input(int(\"Age\"))"
+        },
+        {
+          "id": "C",
+          "text": "age = str(input(\"Age\"))"
+        },
+        {
+          "id": "D",
+          "text": "age = bool(input(\"Age\"))"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "int(input(...)) converts the input string to an integer.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "converting-input-to-numbers"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which function is better for decimal input?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "int()"
+        },
+        {
+          "id": "B",
+          "text": "float()"
+        },
+        {
+          "id": "C",
+          "text": "print()"
+        },
+        {
+          "id": "D",
+          "text": "type()"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "float() supports decimal numbers.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "converting-input-to-numbers"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens if int() receives text like \"abc\"?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Python raises an error"
+        },
+        {
+          "id": "B",
+          "text": "It becomes 0"
+        },
+        {
+          "id": "C",
+          "text": "It becomes True"
+        },
+        {
+          "id": "D",
+          "text": "It is ignored"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Invalid numeric conversion causes an error.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "converting-input-to-numbers"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Converting Data Types",
+  "description": "Check your understanding of Converting Data Types.",
+  "order": 7,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which function converts a value to an integer?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "str()"
+        },
+        {
+          "id": "B",
+          "text": "int()"
+        },
+        {
+          "id": "C",
+          "text": "float()"
+        },
+        {
+          "id": "D",
+          "text": "bool()"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "int() converts compatible values to integers.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "converting-data-types"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does str(25) produce?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "25 as text"
+        },
+        {
+          "id": "B",
+          "text": "25.0"
+        },
+        {
+          "id": "C",
+          "text": "True"
+        },
+        {
+          "id": "D",
+          "text": "An empty value"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "str(25) converts the number 25 into the string \"25\".",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "converting-data-types"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why might we convert data types?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "To use a value in the correct kind of operation."
+        },
+        {
+          "id": "B",
+          "text": "To hide code from Python."
+        },
+        {
+          "id": "C",
+          "text": "To remove all variables."
+        },
+        {
+          "id": "D",
+          "text": "To stop a program from running."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Conversion helps values work correctly in calculations, printing, or comparisons.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "converting-data-types"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

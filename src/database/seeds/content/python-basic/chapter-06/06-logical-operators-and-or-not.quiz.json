@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Logical Operators: and, or, not",
+  "description": "Check your understanding of Logical Operators: and, or, not.",
+  "order": 6,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does and require?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Both conditions must be true"
+        },
+        {
+          "id": "B",
+          "text": "Only one condition must be true"
+        },
+        {
+          "id": "C",
+          "text": "No condition can be true"
+        },
+        {
+          "id": "D",
+          "text": "It only works on strings"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "and is true only when both sides are true.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "logical-operators-and-or-not"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does or require?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "At least one condition must be true"
+        },
+        {
+          "id": "B",
+          "text": "Both must be false"
+        },
+        {
+          "id": "C",
+          "text": "Only numbers are allowed"
+        },
+        {
+          "id": "D",
+          "text": "No condition is allowed"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "or is true if one or both conditions are true.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "logical-operators-and-or-not"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does not do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reverses a boolean value"
+        },
+        {
+          "id": "B",
+          "text": "Adds two numbers"
+        },
+        {
+          "id": "C",
+          "text": "Creates a loop"
+        },
+        {
+          "id": "D",
+          "text": "Prints text"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "not True becomes False, and not False becomes True.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "logical-operators-and-or-not"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

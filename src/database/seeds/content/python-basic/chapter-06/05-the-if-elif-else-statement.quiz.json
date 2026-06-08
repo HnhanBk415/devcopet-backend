@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: The if elif else Statement",
+  "description": "Check your understanding of The if elif else Statement.",
+  "order": 5,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is elif used for?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Checking another condition"
+        },
+        {
+          "id": "B",
+          "text": "Ending the program"
+        },
+        {
+          "id": "C",
+          "text": "Creating a string"
+        },
+        {
+          "id": "D",
+          "text": "Installing Python"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "elif adds another condition after if.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-elif-else-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "When should you use if elif else?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "When there are multiple possible cases"
+        },
+        {
+          "id": "B",
+          "text": "Only when printing text"
+        },
+        {
+          "id": "C",
+          "text": "Only with no conditions"
+        },
+        {
+          "id": "D",
+          "text": "Only for comments"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "elif chains help handle multiple choices.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-elif-else-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which part runs if no if or elif condition is true?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "else"
+        },
+        {
+          "id": "B",
+          "text": "import"
+        },
+        {
+          "id": "C",
+          "text": "print"
+        },
+        {
+          "id": "D",
+          "text": "type"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The else block handles the fallback case.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-elif-else-statement"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

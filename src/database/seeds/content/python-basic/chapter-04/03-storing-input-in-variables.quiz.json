@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Storing Input in Variables",
+  "description": "Check your understanding of Storing Input in Variables.",
+  "order": 3,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Why store input in a variable?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "So the program can use it later"
+        },
+        {
+          "id": "B",
+          "text": "So Python forgets it immediately"
+        },
+        {
+          "id": "C",
+          "text": "So it becomes a comment"
+        },
+        {
+          "id": "D",
+          "text": "So it cannot be printed"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Variables let you keep and reuse user input.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "storing-input-in-variables"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which code stores user input in name?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "name = input(\"Name: \")"
+        },
+        {
+          "id": "B",
+          "text": "input = name(\"Name\")"
+        },
+        {
+          "id": "C",
+          "text": "print(name = input)"
+        },
+        {
+          "id": "D",
+          "text": "name input()"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The input result is assigned to the variable name.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "storing-input-in-variables"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "After name = input(\"Name: \"), what does name contain?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "The user’s typed text"
+        },
+        {
+          "id": "B",
+          "text": "Only the word input"
+        },
+        {
+          "id": "C",
+          "text": "Nothing"
+        },
+        {
+          "id": "D",
+          "text": "A random number"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The variable stores the text entered by the user.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "storing-input-in-variables"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

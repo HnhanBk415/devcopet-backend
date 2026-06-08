@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: The while Loop",
+  "description": "Check your understanding of The while Loop.",
+  "order": 2,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "A while loop runs while:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "its condition is true"
+        },
+        {
+          "id": "B",
+          "text": "its condition is a string"
+        },
+        {
+          "id": "C",
+          "text": "Python is closed"
+        },
+        {
+          "id": "D",
+          "text": "there are no variables"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "while repeats as long as the condition remains True.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-while-loop"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What should change inside many while loops?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "The value used in the condition"
+        },
+        {
+          "id": "B",
+          "text": "The file extension"
+        },
+        {
+          "id": "C",
+          "text": "The Python installation"
+        },
+        {
+          "id": "D",
+          "text": "The editor theme"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Changing the condition-related value helps the loop eventually stop.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-while-loop"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which keyword starts a while loop?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "while"
+        },
+        {
+          "id": "B",
+          "text": "repeat"
+        },
+        {
+          "id": "C",
+          "text": "loop"
+        },
+        {
+          "id": "D",
+          "text": "until"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python uses the while keyword.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-while-loop"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: break and continue",
+  "description": "Check your understanding of break and continue.",
+  "order": 6,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does break do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Stops the loop immediately"
+        },
+        {
+          "id": "B",
+          "text": "Skips only the current iteration"
+        },
+        {
+          "id": "C",
+          "text": "Creates a new loop"
+        },
+        {
+          "id": "D",
+          "text": "Converts text to numbers"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "break exits the loop.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "break-and-continue"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does continue do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Skips to the next iteration"
+        },
+        {
+          "id": "B",
+          "text": "Stops the whole program"
+        },
+        {
+          "id": "C",
+          "text": "Deletes the loop"
+        },
+        {
+          "id": "D",
+          "text": "Prints the condition"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "continue skips the rest of the current loop body and moves to the next iteration.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "break-and-continue"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "When might break be useful?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "When you found what you were searching for"
+        },
+        {
+          "id": "B",
+          "text": "When you want to install Python"
+        },
+        {
+          "id": "C",
+          "text": "When you need a string only"
+        },
+        {
+          "id": "D",
+          "text": "When you remove all conditions"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "break is useful when the loop no longer needs to continue.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "break-and-continue"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Floor Division, Modulo, and Exponent",
+  "description": "Check your understanding of Floor Division, Modulo, and Exponent.",
+  "order": 4,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which operator performs floor division?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "//"
+        },
+        {
+          "id": "B",
+          "text": "/"
+        },
+        {
+          "id": "C",
+          "text": "%"
+        },
+        {
+          "id": "D",
+          "text": "**"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "// divides and rounds down to a whole-number result.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floor-division-modulo-and-exponent"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does the modulo operator % return?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "The remainder"
+        },
+        {
+          "id": "B",
+          "text": "The product"
+        },
+        {
+          "id": "C",
+          "text": "The exponent"
+        },
+        {
+          "id": "D",
+          "text": "The text version"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "% returns the remainder after division.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floor-division-modulo-and-exponent"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator means exponentiation?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "**"
+        },
+        {
+          "id": "B",
+          "text": "//"
+        },
+        {
+          "id": "C",
+          "text": "%"
+        },
+        {
+          "id": "D",
+          "text": "+"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "** is used for powers, such as 2 ** 3.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floor-division-modulo-and-exponent"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

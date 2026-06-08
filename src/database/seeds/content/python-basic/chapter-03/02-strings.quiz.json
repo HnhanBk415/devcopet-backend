@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Strings",
+  "description": "Check your understanding of Strings.",
+  "order": 2,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which of these is a valid Python string?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Hello"
+        },
+        {
+          "id": "B",
+          "text": "\"Hello\""
+        },
+        {
+          "id": "C",
+          "text": "123 without quotes"
+        },
+        {
+          "id": "D",
+          "text": "True"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A string must be placed inside quotation marks.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "strings"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does this code display: print(\"Hi\")?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Hi"
+        },
+        {
+          "id": "B",
+          "text": "\"Hi\" with no output"
+        },
+        {
+          "id": "C",
+          "text": "print"
+        },
+        {
+          "id": "D",
+          "text": "An error because strings cannot be printed"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "print() displays the string content on the screen.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "strings"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What kind of data is usually stored as a string?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Text"
+        },
+        {
+          "id": "B",
+          "text": "Only whole numbers"
+        },
+        {
+          "id": "C",
+          "text": "Only decimal numbers"
+        },
+        {
+          "id": "D",
+          "text": "Only true or false values"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Strings are used to store text.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "strings"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

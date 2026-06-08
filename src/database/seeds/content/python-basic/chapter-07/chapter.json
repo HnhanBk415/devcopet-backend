@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 7: Loops",
+  "slug": "loops",
+  "description": "Learn how loops help Python repeat actions using while loops, for loops, range(), break, and continue.",
+  "order": 7,
+  "estimatedMinutes": 75,
+  "isPublished": true
+}

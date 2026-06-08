@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Why input() Returns a String",
+  "description": "Check your understanding of Why input() Returns a String.",
+  "order": 4,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What type does input() return?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "str"
+        },
+        {
+          "id": "B",
+          "text": "int"
+        },
+        {
+          "id": "C",
+          "text": "float"
+        },
+        {
+          "id": "D",
+          "text": "bool"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "input() returns user input as a string.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-input-returns-a-string"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "If the user types 10, input() returns:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "the number 10"
+        },
+        {
+          "id": "B",
+          "text": "the string \"10\""
+        },
+        {
+          "id": "C",
+          "text": "True"
+        },
+        {
+          "id": "D",
+          "text": "None"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Even numeric-looking input is returned as text.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-input-returns-a-string"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why can input returning a string cause issues?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "You must convert it before numeric calculations."
+        },
+        {
+          "id": "B",
+          "text": "Strings cannot be stored."
+        },
+        {
+          "id": "C",
+          "text": "Strings cannot be printed."
+        },
+        {
+          "id": "D",
+          "text": "Python does not support strings."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "To do math with input, you usually need int() or float().",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-input-returns-a-string"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 3: Basic Data Types",
+  "slug": "basic-data-types",
+  "description": "Learn the basic data types in Python: strings, integers, floats, booleans, type checking, and type conversion.",
+  "order": 3,
+  "estimatedMinutes": 70,
+  "isPublished": true
+}

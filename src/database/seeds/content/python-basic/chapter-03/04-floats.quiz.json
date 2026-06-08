@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Floats",
+  "description": "Check your understanding of Floats.",
+  "order": 4,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which value is a float?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "42"
+        },
+        {
+          "id": "B",
+          "text": "\"3.14\""
+        },
+        {
+          "id": "C",
+          "text": "3.14"
+        },
+        {
+          "id": "D",
+          "text": "False"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A float is a number with a decimal point.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floats"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What type is commonly used for measurements like 1.75?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "int"
+        },
+        {
+          "id": "B",
+          "text": "str"
+        },
+        {
+          "id": "C",
+          "text": "float"
+        },
+        {
+          "id": "D",
+          "text": "bool"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Measurements with decimals are usually floats.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floats"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is one important thing to remember about floats?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "They can represent decimal numbers."
+        },
+        {
+          "id": "B",
+          "text": "They can only store text."
+        },
+        {
+          "id": "C",
+          "text": "They always have to be negative."
+        },
+        {
+          "id": "D",
+          "text": "They cannot be used in calculations."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Floats are used for decimal numbers and calculations involving decimals.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floats"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

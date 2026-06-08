@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Addition, Subtraction, Multiplication, and Division",
+  "description": "Check your understanding of Addition, Subtraction, Multiplication, and Division.",
+  "order": 3,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is 10 - 3 in Python?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "7"
+        },
+        {
+          "id": "B",
+          "text": "13"
+        },
+        {
+          "id": "C",
+          "text": "30"
+        },
+        {
+          "id": "D",
+          "text": "3"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Subtraction gives 7.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "addition-subtraction-multiplication-division"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is 4 * 5?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "9"
+        },
+        {
+          "id": "B",
+          "text": "20"
+        },
+        {
+          "id": "C",
+          "text": "45"
+        },
+        {
+          "id": "D",
+          "text": "1"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The * operator multiplies values.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "addition-subtraction-multiplication-division"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the result type of 10 / 2 in Python?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "usually float"
+        },
+        {
+          "id": "B",
+          "text": "always string"
+        },
+        {
+          "id": "C",
+          "text": "always boolean"
+        },
+        {
+          "id": "D",
+          "text": "always list"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The / operator returns a float result in Python.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "addition-subtraction-multiplication-division"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

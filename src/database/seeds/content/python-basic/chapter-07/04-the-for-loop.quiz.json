@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: The for Loop",
+  "description": "Check your understanding of The for Loop.",
+  "order": 4,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "A for loop is commonly used to:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "iterate over a sequence"
+        },
+        {
+          "id": "B",
+          "text": "delete Python"
+        },
+        {
+          "id": "C",
+          "text": "hide variables"
+        },
+        {
+          "id": "D",
+          "text": "change DNS"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "for loops work well with sequences like lists, strings, and ranges.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-for-loop"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which keyword starts a for loop?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "for"
+        },
+        {
+          "id": "B",
+          "text": "while"
+        },
+        {
+          "id": "C",
+          "text": "if"
+        },
+        {
+          "id": "D",
+          "text": "def"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python uses the for keyword.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-for-loop"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What can a for loop iterate over?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "A string"
+        },
+        {
+          "id": "B",
+          "text": "A list"
+        },
+        {
+          "id": "C",
+          "text": "A range"
+        },
+        {
+          "id": "D",
+          "text": "All of the above"
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "for loops can iterate over many iterable objects.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-for-loop"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

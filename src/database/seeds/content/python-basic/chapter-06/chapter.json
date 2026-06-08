@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 6: Conditions",
+  "slug": "conditions",
+  "description": "Learn how to make decisions in Python using conditions, boolean expressions, if statements, and logical operators.",
+  "order": 6,
+  "estimatedMinutes": 75,
+  "isPublished": true
+}

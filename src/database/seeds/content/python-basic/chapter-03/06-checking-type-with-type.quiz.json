@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Checking Type with type()",
+  "description": "Check your understanding of Checking Type with type().",
+  "order": 6,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does type() help you check?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "The color of the terminal"
+        },
+        {
+          "id": "B",
+          "text": "The data type of a value"
+        },
+        {
+          "id": "C",
+          "text": "The size of a folder"
+        },
+        {
+          "id": "D",
+          "text": "The speed of the internet"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "type() returns the type of a value.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "checking-type-with-type"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What will type(\"Hello\") show?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "str"
+        },
+        {
+          "id": "B",
+          "text": "int"
+        },
+        {
+          "id": "C",
+          "text": "float"
+        },
+        {
+          "id": "D",
+          "text": "bool"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "\"Hello\" is text, so its type is str.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "checking-type-with-type"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why is type() useful for beginners?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "It helps confirm what kind of data a value is."
+        },
+        {
+          "id": "B",
+          "text": "It automatically fixes all bugs."
+        },
+        {
+          "id": "C",
+          "text": "It deletes unused variables."
+        },
+        {
+          "id": "D",
+          "text": "It converts every value to text."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "type() is useful when learning how Python sees different values.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "checking-type-with-type"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "title": "What Is a Data Type?",
+    "slug": "what-is-a-data-type",
+    "description": "Practice the key ideas from What Is a Data Type?.",
+    "order": 1,
+    "type": "reading",
+    "filename": "01-what-is-a-data-type.md",
+    "quizFile": "01-what-is-a-data-type.quiz.json",
+    "estimatedMinutes": 8,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Strings",
+    "slug": "strings",
+    "description": "Practice the key ideas from Strings.",
+    "order": 2,
+    "type": "reading",
+    "filename": "02-strings.md",
+    "quizFile": "02-strings.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Integers",
+    "slug": "integers",
+    "description": "Practice the key ideas from Integers.",
+    "order": 3,
+    "type": "reading",
+    "filename": "03-integers.md",
+    "quizFile": "03-integers.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Floats",
+    "slug": "floats",
+    "description": "Practice the key ideas from Floats.",
+    "order": 4,
+    "type": "reading",
+    "filename": "04-floats.md",
+    "quizFile": "04-floats.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Booleans",
+    "slug": "booleans",
+    "description": "Practice the key ideas from Booleans.",
+    "order": 5,
+    "type": "reading",
+    "filename": "05-booleans.md",
+    "quizFile": "05-booleans.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Checking Type with type()",
+    "slug": "checking-type-with-type",
+    "description": "Practice the key ideas from Checking Type with type().",
+    "order": 6,
+    "type": "reading",
+    "filename": "06-checking-type-with-type.md",
+    "quizFile": "06-checking-type-with-type.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Converting Data Types",
+    "slug": "converting-data-types",
+    "description": "Practice the key ideas from Converting Data Types.",
+    "order": 7,
+    "type": "reading",
+    "filename": "07-converting-data-types.md",
+    "quizFile": "07-converting-data-types.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  }
+]

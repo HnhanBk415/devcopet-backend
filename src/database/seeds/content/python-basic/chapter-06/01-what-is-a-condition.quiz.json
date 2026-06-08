@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: What Is a Condition?",
+  "description": "Check your understanding of What Is a Condition?.",
+  "order": 1,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is a condition in programming?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "An expression that can be True or False"
+        },
+        {
+          "id": "B",
+          "text": "A file extension"
+        },
+        {
+          "id": "C",
+          "text": "A kind of string only"
+        },
+        {
+          "id": "D",
+          "text": "A folder name"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Conditions are used to make decisions.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-a-condition"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Conditions help programs:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "make decisions"
+        },
+        {
+          "id": "B",
+          "text": "delete variables automatically"
+        },
+        {
+          "id": "C",
+          "text": "avoid all input"
+        },
+        {
+          "id": "D",
+          "text": "write code by themselves"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Programs use conditions to choose what to do.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-a-condition"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which value is commonly produced by a condition?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "True or False"
+        },
+        {
+          "id": "B",
+          "text": "Only text"
+        },
+        {
+          "id": "C",
+          "text": "Only a folder"
+        },
+        {
+          "id": "D",
+          "text": "Only a decimal"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Conditions evaluate to boolean values.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-a-condition"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

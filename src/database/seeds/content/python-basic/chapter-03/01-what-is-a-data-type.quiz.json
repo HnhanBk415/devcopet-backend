@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: What Is a Data Type?",
+  "description": "Check your understanding of What Is a Data Type?.",
+  "order": 1,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is a data type?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "A category that tells Python what kind of value is being used."
+        },
+        {
+          "id": "B",
+          "text": "A folder that stores Python projects."
+        },
+        {
+          "id": "C",
+          "text": "A function used only for printing."
+        },
+        {
+          "id": "D",
+          "text": "A style setting in a code editor."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A data type describes the kind of value Python is working with.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-a-data-type"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which value is most likely a string?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "25"
+        },
+        {
+          "id": "B",
+          "text": "3.14"
+        },
+        {
+          "id": "C",
+          "text": "\"Python\""
+        },
+        {
+          "id": "D",
+          "text": "False"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Strings are text values written inside quotation marks.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-a-data-type"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why do data types matter?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "They help Python decide what operations make sense."
+        },
+        {
+          "id": "B",
+          "text": "They make code impossible to read."
+        },
+        {
+          "id": "C",
+          "text": "They are only used in comments."
+        },
+        {
+          "id": "D",
+          "text": "They are required only for file names."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python uses data types to understand how values should behave.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-a-data-type"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

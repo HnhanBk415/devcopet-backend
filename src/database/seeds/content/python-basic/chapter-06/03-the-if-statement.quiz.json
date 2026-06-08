@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: The if Statement",
+  "description": "Check your understanding of The if Statement.",
+  "order": 3,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does an if statement do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Runs code only when a condition is true"
+        },
+        {
+          "id": "B",
+          "text": "Runs code only when Python is closed"
+        },
+        {
+          "id": "C",
+          "text": "Always creates a string"
+        },
+        {
+          "id": "D",
+          "text": "Deletes the condition"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "if statements control whether a block of code runs.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which symbol is required after an if condition?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": ":"
+        },
+        {
+          "id": "B",
+          "text": ";"
+        },
+        {
+          "id": "C",
+          "text": "."
+        },
+        {
+          "id": "D",
+          "text": ","
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python uses a colon after the if condition.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "The code inside an if block must be:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "indented"
+        },
+        {
+          "id": "B",
+          "text": "unquoted"
+        },
+        {
+          "id": "C",
+          "text": "in a separate file"
+        },
+        {
+          "id": "D",
+          "text": "all uppercase"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Indentation defines the block of code controlled by if.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-statement"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 5: Operators",
+  "slug": "operators",
+  "description": "Learn how operators help Python calculate values, compare data, assign values, and control expression order.",
+  "order": 5,
+  "estimatedMinutes": 70,
+  "isPublished": true
+}

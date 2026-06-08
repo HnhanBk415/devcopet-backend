@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Common Conditional Mistakes",
+  "description": "Check your understanding of Common Conditional Mistakes.",
+  "order": 7,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which is a common conditional mistake?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Forgetting indentation"
+        },
+        {
+          "id": "B",
+          "text": "Using variables"
+        },
+        {
+          "id": "C",
+          "text": "Writing strings"
+        },
+        {
+          "id": "D",
+          "text": "Running Python"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Indentation mistakes often break if statements.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-conditional-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator should be used to compare equality?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "=="
+        },
+        {
+          "id": "B",
+          "text": "="
+        },
+        {
+          "id": "C",
+          "text": "+="
+        },
+        {
+          "id": "D",
+          "text": "**"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "== compares values; = assigns values.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-conditional-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "A good way to avoid conditional mistakes is to:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "keep conditions simple and readable"
+        },
+        {
+          "id": "B",
+          "text": "remove all colons"
+        },
+        {
+          "id": "C",
+          "text": "avoid indentation"
+        },
+        {
+          "id": "D",
+          "text": "never test code"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Simple, readable conditions are easier to debug.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-conditional-mistakes"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Assignment Operators",
+  "description": "Check your understanding of Assignment Operators.",
+  "order": 6,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does = do in Python?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Assigns a value to a variable"
+        },
+        {
+          "id": "B",
+          "text": "Checks equality"
+        },
+        {
+          "id": "C",
+          "text": "Adds two numbers only"
+        },
+        {
+          "id": "D",
+          "text": "Starts a loop"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "= stores a value in a variable.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "assignment-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does x += 1 mean?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "x = x + 1"
+        },
+        {
+          "id": "B",
+          "text": "x = 1"
+        },
+        {
+          "id": "C",
+          "text": "x == 1"
+        },
+        {
+          "id": "D",
+          "text": "x is deleted"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "+= adds to the current value and stores the result.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "assignment-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which is an assignment operator?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "+="
+        },
+        {
+          "id": "B",
+          "text": "=="
+        },
+        {
+          "id": "C",
+          "text": ">"
+        },
+        {
+          "id": "D",
+          "text": "and"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "+= is a compound assignment operator.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "assignment-operators"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

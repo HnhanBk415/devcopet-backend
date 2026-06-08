@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Introducing User Input",
+  "description": "Check your understanding of Introducing User Input.",
+  "order": 1,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does user input allow a program to do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Receive information from the user"
+        },
+        {
+          "id": "B",
+          "text": "Delete Python"
+        },
+        {
+          "id": "C",
+          "text": "Change the computer hardware"
+        },
+        {
+          "id": "D",
+          "text": "Skip all code"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "User input lets a program receive data while it is running.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "introducing-user-input"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which function is commonly used for user input in Python?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "print()"
+        },
+        {
+          "id": "B",
+          "text": "input()"
+        },
+        {
+          "id": "C",
+          "text": "type()"
+        },
+        {
+          "id": "D",
+          "text": "range()"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "input() reads text entered by the user.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "introducing-user-input"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why is input useful?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "It makes programs interactive."
+        },
+        {
+          "id": "B",
+          "text": "It prevents variables from being used."
+        },
+        {
+          "id": "C",
+          "text": "It only works with comments."
+        },
+        {
+          "id": "D",
+          "text": "It replaces all calculations."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Input allows users to interact with a program.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "introducing-user-input"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

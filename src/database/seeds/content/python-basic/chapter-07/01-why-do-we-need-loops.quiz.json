@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Why Do We Need Loops?",
+  "description": "Check your understanding of Why Do We Need Loops?.",
+  "order": 1,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Why are loops useful?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "They repeat code without rewriting it many times"
+        },
+        {
+          "id": "B",
+          "text": "They delete all variables"
+        },
+        {
+          "id": "C",
+          "text": "They only print comments"
+        },
+        {
+          "id": "D",
+          "text": "They install Python"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Loops help repeat actions efficiently.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-do-we-need-loops"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "A loop is best when you need to:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "repeat a task"
+        },
+        {
+          "id": "B",
+          "text": "write a file name"
+        },
+        {
+          "id": "C",
+          "text": "change a theme"
+        },
+        {
+          "id": "D",
+          "text": "avoid all code"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Loops are designed for repetition.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-do-we-need-loops"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Without loops, repeated tasks often require:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "duplicated code"
+        },
+        {
+          "id": "B",
+          "text": "no code"
+        },
+        {
+          "id": "C",
+          "text": "only comments"
+        },
+        {
+          "id": "D",
+          "text": "only strings"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Loops reduce duplicated code.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-do-we-need-loops"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

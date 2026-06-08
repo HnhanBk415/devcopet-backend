@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Common Input Mistakes",
+  "description": "Check your understanding of Common Input Mistakes.",
+  "order": 6,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is a common mistake with input?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Forgetting that input returns a string"
+        },
+        {
+          "id": "B",
+          "text": "Using variables"
+        },
+        {
+          "id": "C",
+          "text": "Printing text"
+        },
+        {
+          "id": "D",
+          "text": "Writing comments"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Many beginners try to do math with input without conversion.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-input-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is wrong with age = input(\"Age: \"); print(age + 1)?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "age is a string, so adding 1 causes a type issue"
+        },
+        {
+          "id": "B",
+          "text": "print cannot show variables"
+        },
+        {
+          "id": "C",
+          "text": "input cannot ask questions"
+        },
+        {
+          "id": "D",
+          "text": "1 is not allowed in Python"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "You need to convert age to int before adding 1.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-input-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "A good habit when using input is to:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "use clear prompts"
+        },
+        {
+          "id": "B",
+          "text": "avoid variables forever"
+        },
+        {
+          "id": "C",
+          "text": "delete the user response"
+        },
+        {
+          "id": "D",
+          "text": "always use empty prompts"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Clear prompts help users understand what to enter.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-input-mistakes"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

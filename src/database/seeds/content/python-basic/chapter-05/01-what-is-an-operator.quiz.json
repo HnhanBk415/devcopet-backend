@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: What Is an Operator?",
+  "description": "Check your understanding of What Is an Operator?.",
+  "order": 1,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is an operator?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "A symbol or keyword that performs an operation"
+        },
+        {
+          "id": "B",
+          "text": "A folder in a project"
+        },
+        {
+          "id": "C",
+          "text": "A type of comment"
+        },
+        {
+          "id": "D",
+          "text": "A Python file extension"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Operators perform actions such as addition or comparison.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-an-operator"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which of these is an operator?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "+"
+        },
+        {
+          "id": "B",
+          "text": "hello"
+        },
+        {
+          "id": "C",
+          "text": "variable"
+        },
+        {
+          "id": "D",
+          "text": "file"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "+ is an arithmetic operator.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-an-operator"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Operators are used with:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "values and variables"
+        },
+        {
+          "id": "B",
+          "text": "only folders"
+        },
+        {
+          "id": "C",
+          "text": "only comments"
+        },
+        {
+          "id": "D",
+          "text": "only images"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Operators work with values and variables.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "what-is-an-operator"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

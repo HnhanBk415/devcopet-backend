@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 0: Introduction",
+  "slug": "introduction",
+  "description": "Set up the Python environment, choose an IDE/code editor, and write your first Hello World program.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "isPublished": true
+}

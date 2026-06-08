@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Using input()",
+  "description": "Check your understanding of Using input().",
+  "order": 2,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does input(\"Name: \") do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Displays a prompt and waits for user text"
+        },
+        {
+          "id": "B",
+          "text": "Prints Name forever"
+        },
+        {
+          "id": "C",
+          "text": "Creates a file named Name"
+        },
+        {
+          "id": "D",
+          "text": "Converts text to an integer automatically"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "input() can show a prompt and wait for the user to type something.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-input"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "The text inside input(...) is usually called a:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "prompt"
+        },
+        {
+          "id": "B",
+          "text": "loop"
+        },
+        {
+          "id": "C",
+          "text": "database"
+        },
+        {
+          "id": "D",
+          "text": "boolean"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The prompt tells the user what to enter.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-input"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does input() return by default?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "A string"
+        },
+        {
+          "id": "B",
+          "text": "An integer"
+        },
+        {
+          "id": "C",
+          "text": "A float"
+        },
+        {
+          "id": "D",
+          "text": "A boolean"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "input() always returns a string unless you convert it.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-input"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

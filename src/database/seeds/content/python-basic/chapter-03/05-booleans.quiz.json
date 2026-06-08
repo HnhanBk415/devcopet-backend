@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Booleans",
+  "description": "Check your understanding of Booleans.",
+  "order": 5,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "A boolean value can be:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Only yes"
+        },
+        {
+          "id": "B",
+          "text": "Only no"
+        },
+        {
+          "id": "C",
+          "text": "True or False"
+        },
+        {
+          "id": "D",
+          "text": "Any text"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Booleans represent truth values: True or False.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "booleans"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which is a valid Python boolean?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "true"
+        },
+        {
+          "id": "B",
+          "text": "TRUE"
+        },
+        {
+          "id": "C",
+          "text": "True"
+        },
+        {
+          "id": "D",
+          "text": "yes"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python boolean values are capitalized: True and False.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "booleans"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Booleans are often used in:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "conditions and comparisons"
+        },
+        {
+          "id": "B",
+          "text": "file names only"
+        },
+        {
+          "id": "C",
+          "text": "comments only"
+        },
+        {
+          "id": "D",
+          "text": "image editing only"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Conditions use booleans to decide what code should run.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "booleans"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

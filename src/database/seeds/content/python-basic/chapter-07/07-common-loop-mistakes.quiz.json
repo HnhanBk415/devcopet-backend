@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Common Loop Mistakes",
+  "description": "Check your understanding of Common Loop Mistakes.",
+  "order": 7,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which is a common loop mistake?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Creating an infinite loop"
+        },
+        {
+          "id": "B",
+          "text": "Using variables"
+        },
+        {
+          "id": "C",
+          "text": "Writing strings"
+        },
+        {
+          "id": "D",
+          "text": "Using print"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Infinite loops are a common beginner issue.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-loop-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What can help make loops easier to understand?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Clear variable names and simple conditions"
+        },
+        {
+          "id": "B",
+          "text": "Removing all indentation"
+        },
+        {
+          "id": "C",
+          "text": "Using random names only"
+        },
+        {
+          "id": "D",
+          "text": "Never testing them"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Readable loop logic is easier to debug.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-loop-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why should you test loops carefully?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Small mistakes can repeat many times"
+        },
+        {
+          "id": "B",
+          "text": "Loops never run"
+        },
+        {
+          "id": "C",
+          "text": "Loops are not Python code"
+        },
+        {
+          "id": "D",
+          "text": "Testing deletes variables"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A loop mistake can repeat over and over, so testing is important.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-loop-mistakes"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

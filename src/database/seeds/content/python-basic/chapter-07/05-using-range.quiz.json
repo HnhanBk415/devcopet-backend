@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Using range()",
+  "description": "Check your understanding of Using range().",
+  "order": 5,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does range() commonly create?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "A sequence of numbers"
+        },
+        {
+          "id": "B",
+          "text": "A string prompt"
+        },
+        {
+          "id": "C",
+          "text": "A boolean only"
+        },
+        {
+          "id": "D",
+          "text": "A file"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "range() produces a sequence of numbers for iteration.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-range"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does range(3) produce for a loop?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "0, 1, 2"
+        },
+        {
+          "id": "B",
+          "text": "1, 2, 3"
+        },
+        {
+          "id": "C",
+          "text": "3 only"
+        },
+        {
+          "id": "D",
+          "text": "0, 1, 2, 3"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "range(3) starts at 0 and stops before 3.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-range"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "range() is often used with:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "for loops"
+        },
+        {
+          "id": "B",
+          "text": "only comments"
+        },
+        {
+          "id": "C",
+          "text": "only strings"
+        },
+        {
+          "id": "D",
+          "text": "DNS settings"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "range() is commonly paired with for loops.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-range"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

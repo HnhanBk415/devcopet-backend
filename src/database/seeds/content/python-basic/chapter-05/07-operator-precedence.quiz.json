@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Operator Precedence",
+  "description": "Check your understanding of Operator Precedence.",
+  "order": 7,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is operator precedence?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "The order Python uses to evaluate operators"
+        },
+        {
+          "id": "B",
+          "text": "The number of files in a folder"
+        },
+        {
+          "id": "C",
+          "text": "The color of an operator"
+        },
+        {
+          "id": "D",
+          "text": "A type of loop"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Precedence controls which operation happens first.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "operator-precedence"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operation happens first in 2 + 3 * 4?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "3 * 4"
+        },
+        {
+          "id": "B",
+          "text": "2 + 3"
+        },
+        {
+          "id": "C",
+          "text": "2 + 4"
+        },
+        {
+          "id": "D",
+          "text": "All at once"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Multiplication has higher precedence than addition.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "operator-precedence"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "How can you control evaluation order?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use parentheses"
+        },
+        {
+          "id": "B",
+          "text": "Use comments"
+        },
+        {
+          "id": "C",
+          "text": "Use longer variable names"
+        },
+        {
+          "id": "D",
+          "text": "Use print only"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Parentheses make the intended order clear.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "operator-precedence"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

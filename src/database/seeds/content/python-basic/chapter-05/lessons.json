@@ -1,0 +1,86 @@
+[
+  {
+    "title": "What Is an Operator?",
+    "slug": "what-is-an-operator",
+    "description": "Practice the key ideas from What Is an Operator?.",
+    "order": 1,
+    "type": "reading",
+    "filename": "01-what-is-an-operator.md",
+    "quizFile": "01-what-is-an-operator.quiz.json",
+    "estimatedMinutes": 8,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Arithmetic Operators",
+    "slug": "arithmetic-operators",
+    "description": "Practice the key ideas from Arithmetic Operators.",
+    "order": 2,
+    "type": "reading",
+    "filename": "02-arithmetic-operators.md",
+    "quizFile": "02-arithmetic-operators.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Addition, Subtraction, Multiplication, and Division",
+    "slug": "addition-subtraction-multiplication-division",
+    "description": "Practice the key ideas from Addition, Subtraction, Multiplication, and Division.",
+    "order": 3,
+    "type": "reading",
+    "filename": "03-addition-subtraction-multiplication-division.md",
+    "quizFile": "03-addition-subtraction-multiplication-division.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Floor Division, Modulo, and Exponent",
+    "slug": "floor-division-modulo-and-exponent",
+    "description": "Practice the key ideas from Floor Division, Modulo, and Exponent.",
+    "order": 4,
+    "type": "reading",
+    "filename": "04-floor-division-modulo-and-exponent.md",
+    "quizFile": "04-floor-division-modulo-and-exponent.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Comparison Operators",
+    "slug": "comparison-operators",
+    "description": "Practice the key ideas from Comparison Operators.",
+    "order": 5,
+    "type": "reading",
+    "filename": "05-comparison-operators.md",
+    "quizFile": "05-comparison-operators.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Assignment Operators",
+    "slug": "assignment-operators",
+    "description": "Practice the key ideas from Assignment Operators.",
+    "order": 6,
+    "type": "reading",
+    "filename": "06-assignment-operators.md",
+    "quizFile": "06-assignment-operators.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Operator Precedence",
+    "slug": "operator-precedence",
+    "description": "Practice the key ideas from Operator Precedence.",
+    "order": 7,
+    "type": "reading",
+    "filename": "07-operator-precedence.md",
+    "quizFile": "07-operator-precedence.quiz.json",
+    "estimatedMinutes": 10,
+    "xpReward": 10,
+    "isPublished": true
+  }
+]

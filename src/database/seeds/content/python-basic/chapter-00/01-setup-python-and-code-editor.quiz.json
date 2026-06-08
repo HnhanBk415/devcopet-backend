@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Set Up Python and a Code Editor",
+  "description": "Check your understanding of Set Up Python and a Code Editor.",
+  "order": 1,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Why do we install Python before writing Python programs?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "Because Python runs the code we write."
+        },
+        {
+          "id": "B",
+          "text": "Because Python is only used to draw pictures."
+        },
+        {
+          "id": "C",
+          "text": "Because Python replaces the keyboard."
+        },
+        {
+          "id": "D",
+          "text": "Because Python files cannot be saved without it."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python is the program that understands and executes Python code.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "setup-python-and-code-editor"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which file extension is commonly used for Python files?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": ".html"
+        },
+        {
+          "id": "B",
+          "text": ".py"
+        },
+        {
+          "id": "C",
+          "text": ".css"
+        },
+        {
+          "id": "D",
+          "text": ".txt"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python source files usually use the .py extension.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "setup-python-and-code-editor"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why is a code editor useful?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "It helps you write, organize, and run code more easily."
+        },
+        {
+          "id": "B",
+          "text": "It automatically writes every program for you."
+        },
+        {
+          "id": "C",
+          "text": "It deletes errors without showing them."
+        },
+        {
+          "id": "D",
+          "text": "It replaces Python completely."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A code editor provides tools such as syntax highlighting, file management, and terminal integration.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "setup-python-and-code-editor"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

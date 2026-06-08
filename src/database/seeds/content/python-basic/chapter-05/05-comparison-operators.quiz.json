@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Comparison Operators",
+  "description": "Check your understanding of Comparison Operators.",
+  "order": 5,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What do comparison operators return?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "A boolean"
+        },
+        {
+          "id": "B",
+          "text": "A file"
+        },
+        {
+          "id": "C",
+          "text": "A string every time"
+        },
+        {
+          "id": "D",
+          "text": "A new function"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Comparisons return True or False.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "comparison-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator checks equality?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "="
+        },
+        {
+          "id": "B",
+          "text": "=="
+        },
+        {
+          "id": "C",
+          "text": "!="
+        },
+        {
+          "id": "D",
+          "text": ">="
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "== checks whether two values are equal.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "comparison-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does != mean?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "not equal"
+        },
+        {
+          "id": "B",
+          "text": "equal"
+        },
+        {
+          "id": "C",
+          "text": "greater than"
+        },
+        {
+          "id": "D",
+          "text": "assignment"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "!= checks that two values are not equal.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "comparison-operators"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

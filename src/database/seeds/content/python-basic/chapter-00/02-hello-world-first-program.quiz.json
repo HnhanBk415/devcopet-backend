@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Write Your First Hello World Program",
+  "description": "Check your understanding of Write Your First Hello World Program.",
+  "order": 2,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does print(\"Hello, World!\") do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "It stores a password."
+        },
+        {
+          "id": "B",
+          "text": "It displays Hello, World! on the screen."
+        },
+        {
+          "id": "C",
+          "text": "It creates a new folder."
+        },
+        {
+          "id": "D",
+          "text": "It installs Python."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The print() function displays output on the screen.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "hello-world-first-program"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "In Python, text inside quotation marks is called a:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "number"
+        },
+        {
+          "id": "B",
+          "text": "loop"
+        },
+        {
+          "id": "C",
+          "text": "string"
+        },
+        {
+          "id": "D",
+          "text": "comment"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A string is text written inside quotation marks.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "hello-world-first-program"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which command can run a file named hello.py on many systems?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "python hello.py"
+        },
+        {
+          "id": "B",
+          "text": "open hello.py"
+        },
+        {
+          "id": "C",
+          "text": "run hello"
+        },
+        {
+          "id": "D",
+          "text": "print hello.py"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The command python hello.py runs the Python file using Python.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "hello-world-first-program"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

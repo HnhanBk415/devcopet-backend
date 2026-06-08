@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Integers",
+  "description": "Check your understanding of Integers.",
+  "order": 3,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which value is an integer?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "3.14"
+        },
+        {
+          "id": "B",
+          "text": "\"10\""
+        },
+        {
+          "id": "C",
+          "text": "10"
+        },
+        {
+          "id": "D",
+          "text": "True"
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "An integer is a whole number without a decimal point.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "integers"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the result of 5 + 2 in Python?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "7"
+        },
+        {
+          "id": "B",
+          "text": "52"
+        },
+        {
+          "id": "C",
+          "text": "5 + 2"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Adding two integers produces the numeric result 7.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "integers"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which Python type represents whole numbers?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "str"
+        },
+        {
+          "id": "B",
+          "text": "int"
+        },
+        {
+          "id": "C",
+          "text": "float"
+        },
+        {
+          "id": "D",
+          "text": "bool"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The int type represents whole numbers.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "integers"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

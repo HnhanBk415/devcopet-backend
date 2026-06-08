@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: The if else Statement",
+  "description": "Check your understanding of The if else Statement.",
+  "order": 4,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does else represent?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "What to do when the if condition is false"
+        },
+        {
+          "id": "B",
+          "text": "A second variable name"
+        },
+        {
+          "id": "C",
+          "text": "A required import"
+        },
+        {
+          "id": "D",
+          "text": "A kind of number"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "else handles the alternative path.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-else-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Can else have its own condition?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "No"
+        },
+        {
+          "id": "B",
+          "text": "Yes, always"
+        },
+        {
+          "id": "C",
+          "text": "Only with strings"
+        },
+        {
+          "id": "D",
+          "text": "Only in loops"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "else runs when previous conditions fail; it does not have its own condition.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-else-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "An if else statement is useful when:",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "there are two possible paths"
+        },
+        {
+          "id": "B",
+          "text": "there are no conditions"
+        },
+        {
+          "id": "C",
+          "text": "you only print comments"
+        },
+        {
+          "id": "D",
+          "text": "you never need decisions"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "if else lets code choose between two paths.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-else-statement"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}

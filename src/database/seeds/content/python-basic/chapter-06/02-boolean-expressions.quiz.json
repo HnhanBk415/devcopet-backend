@@ -1,0 +1,114 @@
+{
+  "title": "Quiz: Boolean Expressions",
+  "description": "Check your understanding of Boolean Expressions.",
+  "order": 2,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is a boolean expression?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "An expression that evaluates to True or False"
+        },
+        {
+          "id": "B",
+          "text": "A string with quotes"
+        },
+        {
+          "id": "C",
+          "text": "A Python installation command"
+        },
+        {
+          "id": "D",
+          "text": "A file path"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Boolean expressions are used in conditions.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "boolean-expressions"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does 5 > 3 evaluate to?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": "True"
+        },
+        {
+          "id": "B",
+          "text": "False"
+        },
+        {
+          "id": "C",
+          "text": "5"
+        },
+        {
+          "id": "D",
+          "text": "3"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "5 is greater than 3, so the expression is True.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "boolean-expressions"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator can create a boolean expression?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "A",
+          "text": ">"
+        },
+        {
+          "id": "B",
+          "text": "+"
+        },
+        {
+          "id": "C",
+          "text": "*"
+        },
+        {
+          "id": "D",
+          "text": "="
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "> compares two values and returns a boolean.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "boolean-expressions"
+      ]
+    }
+  ],
+  "passingScore": 70,
+  "isPublished": true
+}
