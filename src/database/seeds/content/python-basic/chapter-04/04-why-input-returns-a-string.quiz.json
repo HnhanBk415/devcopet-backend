@@ -1,36 +1,37 @@
 {
-  "title": "Quiz: Why input() Returns a String",
+  "title": "Why input() Returns a String Quiz",
   "description": "Check your understanding of Why input() Returns a String.",
-  "order": 4,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "What type does input() return?",
+      "question": "What is the main idea of Why input() Returns a String?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "str"
+          "id": "a",
+          "text": "Understand that input() always starts as text and why conversion is often needed."
         },
         {
-          "id": "B",
-          "text": "int"
+          "id": "b",
+          "text": "It only changes the editor color."
         },
         {
-          "id": "C",
-          "text": "float"
+          "id": "c",
+          "text": "It deletes all variables."
         },
         {
-          "id": "D",
-          "text": "bool"
+          "id": "d",
+          "text": "It is used only for comments."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "input() returns user input as a string.",
+      "explanation": "Understand that input() always starts as text and why conversion is often needed.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "If the user types 10, input() returns:",
-      "codeSnippet": "",
+      "question": "Which statement best matches the code shown?",
+      "codeSnippet": "age = input(\"Age: \")\nprint(type(age))",
       "options": [
         {
-          "id": "A",
-          "text": "the number 10"
+          "id": "a",
+          "text": "The code demonstrates the lesson concept."
         },
         {
-          "id": "B",
-          "text": "the string \"10\""
+          "id": "b",
+          "text": "The code is HTML."
         },
         {
-          "id": "C",
-          "text": "True"
+          "id": "c",
+          "text": "The code cannot be Python because it has variables."
         },
         {
-          "id": "D",
-          "text": "None"
+          "id": "d",
+          "text": "The code creates a database collection."
         }
       ],
       "correctOptionIds": [
-        "B"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Even numeric-looking input is returned as text.",
+      "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "Why can input returning a string cause issues?",
+      "question": "Why should beginners practice this concept?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "You must convert it before numeric calculations."
+          "id": "a",
+          "text": "It appears often in real Python programs."
         },
         {
-          "id": "B",
-          "text": "Strings cannot be stored."
+          "id": "b",
+          "text": "It is only needed for changing fonts."
         },
         {
-          "id": "C",
-          "text": "Strings cannot be printed."
+          "id": "c",
+          "text": "It prevents you from using variables."
         },
         {
-          "id": "D",
-          "text": "Python does not support strings."
+          "id": "d",
+          "text": "It replaces all other Python topics."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "To do math with input, you usually need int() or float().",
+      "explanation": "This concept is a common building block for beginner Python programs.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-input-returns-a-string"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is a good habit when using this concept?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Write clear, readable code and test small examples."
+        },
+        {
+          "id": "b",
+          "text": "Never run the program."
+        },
+        {
+          "id": "c",
+          "text": "Use random variable names only."
+        },
+        {
+          "id": "d",
+          "text": "Ignore error messages."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Clear code and small tests make debugging easier.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "why-input-returns-a-string"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What should you do if the output is not what you expected?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Check the types, values, and control flow step by step."
+        },
+        {
+          "id": "b",
+          "text": "Delete the whole project immediately."
+        },
+        {
+          "id": "c",
+          "text": "Assume Python is broken."
+        },
+        {
+          "id": "d",
+          "text": "Stop using variables forever."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "why-input-returns-a-string"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

@@ -1,76 +1,147 @@
 {
-  "title": "Quiz: Introducing User Input",
+  "title": "Introducing User Input Quiz",
   "description": "Check your understanding of Introducing User Input.",
-  "order": 1,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "What does user input allow a program to do?",
+      "question": "What does `input()` do?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "Receive information from the user"
+          "id": "a",
+          "text": "It asks the user for text while the program runs."
         },
         {
-          "id": "B",
-          "text": "Delete Python"
+          "id": "b",
+          "text": "It deletes a variable."
         },
         {
-          "id": "C",
-          "text": "Change the computer hardware"
+          "id": "c",
+          "text": "It only prints numbers."
         },
         {
-          "id": "D",
-          "text": "Skip all code"
+          "id": "d",
+          "text": "It starts the database."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "User input lets a program receive data while it is running.",
+      "explanation": "`input()` reads user text from the keyboard.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "introducing-user-input"
+        "input"
       ]
     },
     {
       "type": "multiple_choice",
-      "question": "Which function is commonly used for user input in Python?",
+      "question": "What is the text inside `input()` called?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "print()"
+          "id": "a",
+          "text": "A prompt"
         },
         {
-          "id": "B",
-          "text": "input()"
+          "id": "b",
+          "text": "A loop"
         },
         {
-          "id": "C",
-          "text": "type()"
+          "id": "c",
+          "text": "A float"
         },
         {
-          "id": "D",
-          "text": "range()"
+          "id": "d",
+          "text": "A module"
         }
       ],
       "correctOptionIds": [
-        "B"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "input() reads text entered by the user.",
+      "explanation": "The prompt tells the user what to type.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "introducing-user-input"
+        "input"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens when Python reaches `input()`?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "It waits for the user to type and press Enter."
+        },
+        {
+          "id": "b",
+          "text": "It skips the line."
+        },
+        {
+          "id": "c",
+          "text": "It closes the program immediately."
+        },
+        {
+          "id": "d",
+          "text": "It converts everything to an integer."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "`input()` pauses execution until the user submits text.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "input"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which prompt is clearer?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "input(\"Enter your age: \" )"
+        },
+        {
+          "id": "b",
+          "text": "input(\"???\")"
+        },
+        {
+          "id": "c",
+          "text": "input(\"x\")"
+        },
+        {
+          "id": "d",
+          "text": "input(\"\")"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A good prompt tells the user what value is expected.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "input"
       ]
     },
     {
@@ -79,36 +150,34 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "It makes programs interactive."
+          "id": "a",
+          "text": "It lets programs respond to different users."
         },
         {
-          "id": "B",
-          "text": "It prevents variables from being used."
+          "id": "b",
+          "text": "It prevents all errors."
         },
         {
-          "id": "C",
-          "text": "It only works with comments."
+          "id": "c",
+          "text": "It replaces all variables."
         },
         {
-          "id": "D",
-          "text": "It replaces all calculations."
+          "id": "d",
+          "text": "It only changes font size."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Input allows users to interact with a program.",
+      "explanation": "Input makes programs interactive and flexible.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "introducing-user-input"
+        "input"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

@@ -1,62 +1,95 @@
 # The if elif else Statement
 
-Use `elif` when you need to check more than two possibilities.
-
-`elif` means "else if".
+When a program has more than two possible outcomes, use `elif` to check additional conditions before the final `else`.
 
 ---
 
-## Basic Syntax
+## Learning Goals
 
-```python
-if condition1:
-    code1
-elif condition2:
-    code2
-else:
-    code3
-```
+By the end of this lesson, you should be able to:
+
+- Use `elif` for additional conditions.
+- Python checks branches from top to bottom.
+- Only the first true branch runs.
 
 ---
 
-## Example
+## 1. Multiple branches
+
+Python checks the `if` first, then each `elif` in order, then `else` if none are true.
 
 ```python
-score = 75
-
+score = 85
 if score >= 90:
-    print("Excellent")
-elif score >= 60:
-    print("Passed")
+    print("A")
+elif score >= 80:
+    print("B")
 else:
-    print("Try again")
+    print("Keep practicing")
 ```
 
 Output:
 
 ```text
-Passed
+B
 ```
 
 ---
 
-## Order Matters
+## 2. Order matters
 
-Python checks conditions from top to bottom. Once one condition is true, the rest are skipped.
+Put more specific or higher-priority conditions first.
 
 ```python
-score = 95
-
-if score >= 60:
-    print("Passed")
-elif score >= 90:
-    print("Excellent")
+temperature = 38
+if temperature >= 40:
+    print("Very hot")
+elif temperature >= 30:
+    print("Hot")
+else:
+    print("Comfortable")
 ```
 
-This prints `Passed`, not `Excellent`, because the first condition is already true.
+Output:
+
+```text
+Hot
+```
+
+---
+
+## 3. One branch only
+
+After Python finds the first true branch, it skips the rest.
+
+```python
+number = 10
+if number > 0:
+    print("Positive")
+elif number == 10:
+    print("Ten")
+```
+
+Output:
+
+```text
+Positive
+```
+
+---
+
+## Mini Practice
+
+1. Create grade logic using if/elif/else.
+2. Test the order of conditions.
+3. Write a menu choice with three options.
 
 ---
 
 ## Summary
 
-Use `elif` to handle multiple conditions. Put more specific conditions before more general ones when needed.
+- Use `elif` for additional conditions.
+- Python checks branches from top to bottom.
+- Only the first true branch runs.
+
+Next, you will combine conditions using logical operators.

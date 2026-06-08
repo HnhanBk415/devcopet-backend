@@ -1,93 +1,89 @@
 # Integers
 
-An **integer** is a whole number. It does not have a decimal point.
-
-Examples:
-
-```python
-age = 18
-year = 2026
-score = 100
-```
-
-In Python, the integer type is called `int`.
+An integer, or `int`, is a whole number. Integers are used for counts, ages, scores, quantities, and any number that does not need a decimal point.
 
 ---
 
-## Using Integers in Calculations
+## Learning Goals
 
-Integers are useful for counting and doing math.
+By the end of this lesson, you should be able to:
+
+- Integers are whole numbers.
+- Do not put quotes around integers if you want math behavior.
+- Normal division returns a float, while floor division returns an integer-like result.
+
+---
+
+## 1. Creating integers
+
+You create an integer by writing a whole number without quotes. Negative numbers are also integers.
 
 ```python
-apples = 5
-oranges = 3
-
-print(apples + oranges)
+coins = 25
+temperature = -3
+print(coins)
+print(temperature)
 ```
 
 Output:
 
 ```text
-8
+25
+-3
 ```
 
 ---
 
-## Positive, Negative, and Zero
+## 2. Doing math with integers
 
-Integers can be positive, negative, or zero.
+Integers can be used with arithmetic operators such as `+`, `-`, `*`, and `/`.
 
 ```python
-temperature = -2
-zero = 0
-points = 50
+apples = 6
+oranges = 4
+print(apples + oranges)
+print(apples * 2)
 ```
 
-All of these are integers.
+Output:
+
+```text
+10
+12
+```
 
 ---
 
-## Integers Are Not Strings
+## 3. Integer division result
 
-Compare these two values:
-
-```python
-number = 10
-text = "10"
-```
-
-`number` is an integer. `text` is a string.
-
-This works:
+Normal division `/` returns a float, even when the answer looks like a whole number. You will learn more about this in operators.
 
 ```python
-print(number + 5)
+print(8 / 2)
+print(8 // 2)
 ```
 
-This does not work the same way:
+Output:
 
-```python
-print(text + "5")
+```text
+4.0
+4
 ```
-
-It prints `105` because it joins text.
 
 ---
 
-## Quick Practice
+## Mini Practice
 
-Try this code:
-
-```python
-books = 4
-new_books = 2
-
-print(books + new_books)
-print(books * 3)
-```
+1. Create variables for your age and your number of siblings.
+2. Add two integer variables together.
+3. Try dividing two integers with `/` and `//`.
 
 ---
 
 ## Summary
 
-Integers are whole numbers. They are useful for counting, scores, quantities, and many kinds of calculations.
+- Integers are whole numbers.
+- Do not put quotes around integers if you want math behavior.
+- Normal division returns a float, while floor division returns an integer-like result.
+
+Next, you will learn about floats, the type for decimal numbers.

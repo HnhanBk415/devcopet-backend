@@ -1,15 +1,25 @@
 # Floor Division, Modulo, and Exponent
 
-Python has extra arithmetic operators that are very useful.
+Python includes extra arithmetic operators for common programming tasks: floor division, modulo, and exponentiation.
 
 ---
 
-## Floor Division `//`
+## Learning Goals
 
-Floor division divides and removes the decimal part.
+By the end of this lesson, you should be able to:
+
+- `//` gives floor division.
+- `%` gives the remainder.
+- `**` calculates powers.
+
+---
+
+## 1. Floor division
+
+`//` divides and rounds down to the nearest whole result.
 
 ```python
-print(7 // 2)
+print(17 // 5)
 ```
 
 Output:
@@ -20,49 +30,54 @@ Output:
 
 ---
 
-## Modulo `%`
+## 2. Modulo
 
-Modulo gives the remainder after division.
+`%` gives the remainder after division. It is useful for checking even/odd numbers.
 
 ```python
-print(7 % 2)
+print(17 % 5)
+print(10 % 2)
 ```
 
 Output:
 
 ```text
-1
+2
+0
 ```
-
-Modulo is often used to check if a number is even or odd.
-
-```python
-number = 10
-print(number % 2)
-```
-
-If the result is `0`, the number is even.
 
 ---
 
-## Exponent `**`
+## 3. Exponent
 
-Exponent raises a number to a power.
+`**` raises a number to a power.
 
 ```python
 print(2 ** 3)
+print(5 ** 2)
 ```
 
 Output:
 
 ```text
 8
+25
 ```
 
-This means `2 * 2 * 2`.
+---
+
+## Mini Practice
+
+1. Use `//` to divide 23 by 4.
+2. Use `%` to check if 12 is even.
+3. Use `**` to calculate 3 squared.
 
 ---
 
 ## Summary
 
-Use `//` for floor division, `%` for remainders, and `**` for powers. These operators are common in calculations and problem solving.
+- `//` gives floor division.
+- `%` gives the remainder.
+- `**` calculates powers.
+
+Next, you will learn how comparison operators create boolean results.

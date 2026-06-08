@@ -1,17 +1,22 @@
 # break and continue
 
-Python provides two keywords that help control loops:
-
-```python
-break
-continue
-```
+Sometimes you need more control inside a loop. `break` stops the loop early, while `continue` skips the rest of the current iteration and moves to the next one.
 
 ---
 
-## break
+## Learning Goals
 
-`break` stops the loop immediately.
+By the end of this lesson, you should be able to:
+
+- `break` exits the loop.
+- `continue` skips to the next iteration.
+- Use them to make loop control clearer, not more confusing.
+
+---
+
+## 1. break stops the loop
+
+Use `break` when you have found what you need or want to exit early.
 
 ```python
 for number in range(1, 6):
@@ -27,13 +32,11 @@ Output:
 2
 ```
 
-The loop stops when `number` becomes 3.
-
 ---
 
-## continue
+## 2. continue skips one iteration
 
-`continue` skips the current loop step and moves to the next one.
+Use `continue` to skip certain values but keep looping.
 
 ```python
 for number in range(1, 6):
@@ -51,16 +54,40 @@ Output:
 5
 ```
 
-The value 3 is skipped.
+---
+
+## 3. Use carefully
+
+Too many `break` or `continue` statements can make code harder to read. Use them when they make the logic clearer.
+
+```python
+for word in ["yes", "skip", "done"]:
+    if word == "skip":
+        continue
+    print(word)
+```
+
+Output:
+
+```text
+yes
+done
+```
 
 ---
 
-## Use Them Carefully
+## Mini Practice
 
-`break` and `continue` are useful, but too many of them can make code harder to read. Use them when they make the logic clearer.
+1. Write a loop that stops when number equals 4.
+2. Write a loop that skips number 2.
+3. Explain the difference between break and continue.
 
 ---
 
 ## Summary
 
-Use `break` to stop a loop and `continue` to skip one iteration.
+- `break` exits the loop.
+- `continue` skips to the next iteration.
+- Use them to make loop control clearer, not more confusing.
+
+Next, you will review common loop mistakes.

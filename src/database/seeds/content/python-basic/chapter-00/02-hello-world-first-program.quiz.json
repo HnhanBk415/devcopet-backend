@@ -1,7 +1,8 @@
 {
-  "title": "Quiz: Write Your First Hello World Program",
+  "title": "Write Your First Hello World Program Quiz",
   "description": "Check your understanding of Write Your First Hello World Program.",
-  "order": 2,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
@@ -9,24 +10,24 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "It stores a password."
         },
         {
-          "id": "B",
+          "id": "b",
           "text": "It displays Hello, World! on the screen."
         },
         {
-          "id": "C",
+          "id": "c",
           "text": "It creates a new folder."
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "It installs Python."
         }
       ],
       "correctOptionIds": [
-        "B"
+        "b"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
@@ -44,24 +45,24 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "number"
         },
         {
-          "id": "B",
+          "id": "b",
           "text": "loop"
         },
         {
-          "id": "C",
+          "id": "c",
           "text": "string"
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "comment"
         }
       ],
       "correctOptionIds": [
-        "C"
+        "c"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
@@ -79,24 +80,24 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "python hello.py"
         },
         {
-          "id": "B",
+          "id": "b",
           "text": "open hello.py"
         },
         {
-          "id": "C",
+          "id": "c",
           "text": "run hello"
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "print hello.py"
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
@@ -108,7 +109,5 @@
         "hello-world-first-program"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

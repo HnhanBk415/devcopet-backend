@@ -1,36 +1,37 @@
 {
-  "title": "Quiz: The if elif else Statement",
+  "title": "The if elif else Statement Quiz",
   "description": "Check your understanding of The if elif else Statement.",
-  "order": 5,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "What is elif used for?",
+      "question": "What is the main idea of The if elif else Statement?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "Checking another condition"
+          "id": "a",
+          "text": "Handle multiple possible conditions in order."
         },
         {
-          "id": "B",
-          "text": "Ending the program"
+          "id": "b",
+          "text": "It only changes the editor color."
         },
         {
-          "id": "C",
-          "text": "Creating a string"
+          "id": "c",
+          "text": "It deletes all variables."
         },
         {
-          "id": "D",
-          "text": "Installing Python"
+          "id": "d",
+          "text": "It is used only for comments."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "elif adds another condition after if.",
+      "explanation": "Handle multiple possible conditions in order.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "When should you use if elif else?",
-      "codeSnippet": "",
+      "question": "Which statement best matches the code shown?",
+      "codeSnippet": "score = 85\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelse:\n    print(\"Keep practicing\")",
       "options": [
         {
-          "id": "A",
-          "text": "When there are multiple possible cases"
+          "id": "a",
+          "text": "The code demonstrates the lesson concept."
         },
         {
-          "id": "B",
-          "text": "Only when printing text"
+          "id": "b",
+          "text": "The code is HTML."
         },
         {
-          "id": "C",
-          "text": "Only with no conditions"
+          "id": "c",
+          "text": "The code cannot be Python because it has variables."
         },
         {
-          "id": "D",
-          "text": "Only for comments"
+          "id": "d",
+          "text": "The code creates a database collection."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "elif chains help handle multiple choices.",
+      "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "Which part runs if no if or elif condition is true?",
+      "question": "Why should beginners practice this concept?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "else"
+          "id": "a",
+          "text": "It appears often in real Python programs."
         },
         {
-          "id": "B",
-          "text": "import"
+          "id": "b",
+          "text": "It is only needed for changing fonts."
         },
         {
-          "id": "C",
-          "text": "print"
+          "id": "c",
+          "text": "It prevents you from using variables."
         },
         {
-          "id": "D",
-          "text": "type"
+          "id": "d",
+          "text": "It replaces all other Python topics."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "The else block handles the fallback case.",
+      "explanation": "This concept is a common building block for beginner Python programs.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-elif-else-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is a good habit when using this concept?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Write clear, readable code and test small examples."
+        },
+        {
+          "id": "b",
+          "text": "Never run the program."
+        },
+        {
+          "id": "c",
+          "text": "Use random variable names only."
+        },
+        {
+          "id": "d",
+          "text": "Ignore error messages."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Clear code and small tests make debugging easier.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "the-if-elif-else-statement"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What should you do if the output is not what you expected?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Check the types, values, and control flow step by step."
+        },
+        {
+          "id": "b",
+          "text": "Delete the whole project immediately."
+        },
+        {
+          "id": "c",
+          "text": "Assume Python is broken."
+        },
+        {
+          "id": "d",
+          "text": "Stop using variables forever."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "the-if-elif-else-statement"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

@@ -1,32 +1,25 @@
 # What Is a Condition?
 
-A **condition** is an expression that can be either `True` or `False`.
-
-Programs use conditions to make decisions.
+A condition is an expression that evaluates to `True` or `False`. Conditions allow programs to choose what to do next.
 
 ---
 
-## Real-Life Example
+## Learning Goals
 
-If it is raining, bring an umbrella.
+By the end of this lesson, you should be able to:
 
-In programming, this idea becomes:
-
-```python
-is_raining = True
-
-if is_raining:
-    print("Bring an umbrella")
-```
+- A condition evaluates to `True` or `False`.
+- Conditions help programs make decisions.
+- Conditions are used with `if` statements.
 
 ---
 
-## Conditions Use Booleans
+## 1. Conditions answer questions
 
-Conditions often come from comparison expressions.
+A condition asks a question such as: is the age at least 18? Is the score high enough? Is the password correct?
 
 ```python
-age = 18
+age = 20
 print(age >= 18)
 ```
 
@@ -38,14 +31,54 @@ True
 
 ---
 
-## Why Conditions Matter
+## 2. Conditions control code
 
-Conditions let your program choose what to do next.
+You use conditions with `if` statements to run code only when something is true.
 
-Without conditions, a program always follows the same path. With conditions, it can respond to different situations.
+```python
+is_raining = True
+if is_raining:
+    print("Take an umbrella.")
+```
+
+Output:
+
+```text
+Take an umbrella.
+```
+
+---
+
+## 3. Real program decisions
+
+Conditions are used in login systems, games, forms, quizzes, and many other programs.
+
+```python
+score = 85
+if score >= 70:
+    print("Passed")
+```
+
+Output:
+
+```text
+Passed
+```
+
+---
+
+## Mini Practice
+
+1. Write a condition that checks if a number is positive.
+2. Write a condition that checks if a score is at least 70.
+3. Use an `if` statement with one condition.
 
 ---
 
 ## Summary
 
-A condition is something Python can evaluate as true or false. Conditions are the foundation of decision-making in programs.
+- A condition evaluates to `True` or `False`.
+- Conditions help programs make decisions.
+- Conditions are used with `if` statements.
+
+Next, you will study boolean expressions more deeply.

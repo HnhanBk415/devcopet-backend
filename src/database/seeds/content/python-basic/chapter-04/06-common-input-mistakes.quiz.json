@@ -1,36 +1,37 @@
 {
-  "title": "Quiz: Common Input Mistakes",
+  "title": "Common Input Mistakes Quiz",
   "description": "Check your understanding of Common Input Mistakes.",
-  "order": 6,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "What is a common mistake with input?",
+      "question": "What is the main idea of Common Input Mistakes?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "Forgetting that input returns a string"
+          "id": "a",
+          "text": "Recognize and fix common errors when using input in beginner Python programs."
         },
         {
-          "id": "B",
-          "text": "Using variables"
+          "id": "b",
+          "text": "It only changes the editor color."
         },
         {
-          "id": "C",
-          "text": "Printing text"
+          "id": "c",
+          "text": "It deletes all variables."
         },
         {
-          "id": "D",
-          "text": "Writing comments"
+          "id": "d",
+          "text": "It is used only for comments."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Many beginners try to do math with input without conversion.",
+      "explanation": "Recognize and fix common errors when using input in beginner Python programs.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What is wrong with age = input(\"Age: \"); print(age + 1)?",
-      "codeSnippet": "",
+      "question": "Which statement best matches the code shown?",
+      "codeSnippet": "number = input(\"Number: \")\nprint(number + number)",
       "options": [
         {
-          "id": "A",
-          "text": "age is a string, so adding 1 causes a type issue"
+          "id": "a",
+          "text": "The code demonstrates the lesson concept."
         },
         {
-          "id": "B",
-          "text": "print cannot show variables"
+          "id": "b",
+          "text": "The code is HTML."
         },
         {
-          "id": "C",
-          "text": "input cannot ask questions"
+          "id": "c",
+          "text": "The code cannot be Python because it has variables."
         },
         {
-          "id": "D",
-          "text": "1 is not allowed in Python"
+          "id": "d",
+          "text": "The code creates a database collection."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "You need to convert age to int before adding 1.",
+      "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "A good habit when using input is to:",
+      "question": "Why should beginners practice this concept?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "use clear prompts"
+          "id": "a",
+          "text": "It appears often in real Python programs."
         },
         {
-          "id": "B",
-          "text": "avoid variables forever"
+          "id": "b",
+          "text": "It is only needed for changing fonts."
         },
         {
-          "id": "C",
-          "text": "delete the user response"
+          "id": "c",
+          "text": "It prevents you from using variables."
         },
         {
-          "id": "D",
-          "text": "always use empty prompts"
+          "id": "d",
+          "text": "It replaces all other Python topics."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Clear prompts help users understand what to enter.",
+      "explanation": "This concept is a common building block for beginner Python programs.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-input-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is a good habit when using this concept?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Write clear, readable code and test small examples."
+        },
+        {
+          "id": "b",
+          "text": "Never run the program."
+        },
+        {
+          "id": "c",
+          "text": "Use random variable names only."
+        },
+        {
+          "id": "d",
+          "text": "Ignore error messages."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Clear code and small tests make debugging easier.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "common-input-mistakes"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What should you do if the output is not what you expected?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Check the types, values, and control flow step by step."
+        },
+        {
+          "id": "b",
+          "text": "Delete the whole project immediately."
+        },
+        {
+          "id": "c",
+          "text": "Assume Python is broken."
+        },
+        {
+          "id": "d",
+          "text": "Stop using variables forever."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "common-input-mistakes"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

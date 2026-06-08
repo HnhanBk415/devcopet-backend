@@ -1,36 +1,37 @@
 {
-  "title": "Quiz: Assignment Operators",
+  "title": "Assignment Operators Quiz",
   "description": "Check your understanding of Assignment Operators.",
-  "order": 6,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "What does = do in Python?",
+      "question": "What is the main idea of Assignment Operators?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "Assigns a value to a variable"
+          "id": "a",
+          "text": "Assign and update variable values using = and shortcut operators."
         },
         {
-          "id": "B",
-          "text": "Checks equality"
+          "id": "b",
+          "text": "It only changes the editor color."
         },
         {
-          "id": "C",
-          "text": "Adds two numbers only"
+          "id": "c",
+          "text": "It deletes all variables."
         },
         {
-          "id": "D",
-          "text": "Starts a loop"
+          "id": "d",
+          "text": "It is used only for comments."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "= stores a value in a variable.",
+      "explanation": "Assign and update variable values using = and shortcut operators.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What does x += 1 mean?",
-      "codeSnippet": "",
+      "question": "Which statement best matches the code shown?",
+      "codeSnippet": "score = 10\nprint(score)",
       "options": [
         {
-          "id": "A",
-          "text": "x = x + 1"
+          "id": "a",
+          "text": "The code demonstrates the lesson concept."
         },
         {
-          "id": "B",
-          "text": "x = 1"
+          "id": "b",
+          "text": "The code is HTML."
         },
         {
-          "id": "C",
-          "text": "x == 1"
+          "id": "c",
+          "text": "The code cannot be Python because it has variables."
         },
         {
-          "id": "D",
-          "text": "x is deleted"
+          "id": "d",
+          "text": "The code creates a database collection."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "+= adds to the current value and stores the result.",
+      "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "Which is an assignment operator?",
+      "question": "Why should beginners practice this concept?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "+="
+          "id": "a",
+          "text": "It appears often in real Python programs."
         },
         {
-          "id": "B",
-          "text": "=="
+          "id": "b",
+          "text": "It is only needed for changing fonts."
         },
         {
-          "id": "C",
-          "text": ">"
+          "id": "c",
+          "text": "It prevents you from using variables."
         },
         {
-          "id": "D",
-          "text": "and"
+          "id": "d",
+          "text": "It replaces all other Python topics."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "+= is a compound assignment operator.",
+      "explanation": "This concept is a common building block for beginner Python programs.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "assignment-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is a good habit when using this concept?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Write clear, readable code and test small examples."
+        },
+        {
+          "id": "b",
+          "text": "Never run the program."
+        },
+        {
+          "id": "c",
+          "text": "Use random variable names only."
+        },
+        {
+          "id": "d",
+          "text": "Ignore error messages."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Clear code and small tests make debugging easier.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "assignment-operators"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What should you do if the output is not what you expected?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Check the types, values, and control flow step by step."
+        },
+        {
+          "id": "b",
+          "text": "Delete the whole project immediately."
+        },
+        {
+          "id": "c",
+          "text": "Assume Python is broken."
+        },
+        {
+          "id": "d",
+          "text": "Stop using variables forever."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "assignment-operators"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

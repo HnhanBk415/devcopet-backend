@@ -1,54 +1,91 @@
 # The if else Statement
 
-An `if else` statement lets your program choose between two paths.
+An `if else` statement lets your program do one thing when a condition is true and another thing when it is false.
 
 ---
 
-## Basic Syntax
+## Learning Goals
 
-```python
-if condition:
-    code_if_true
-else:
-    code_if_false
-```
+By the end of this lesson, you should be able to:
+
+- `else` handles the false case.
+- Only one branch runs in an `if else`.
+- Clear conditions make branches easier to read.
 
 ---
 
-## Example
+## 1. Basic if else
+
+The `else` block runs when the `if` condition is false.
 
 ```python
-age = 16
-
-if age >= 18:
-    print("Adult")
+score = 60
+if score >= 70:
+    print("Passed")
 else:
-    print("Not adult yet")
+    print("Try again")
 ```
 
 Output:
 
 ```text
-Not adult yet
+Try again
 ```
 
 ---
 
-## When to Use else
+## 2. Only one path runs
 
-Use `else` when you want a fallback action if the condition is false.
+In an `if else`, Python chooses exactly one of the two blocks.
 
 ```python
-password = "abc123"
-
-if password == "abc123":
-    print("Login successful")
+is_member = True
+if is_member:
+    print("Discount applied")
 else:
-    print("Wrong password")
+    print("Regular price")
 ```
+
+Output:
+
+```text
+Discount applied
+```
+
+---
+
+## 3. Use clear conditions
+
+Good conditions make the two outcomes easy to understand.
+
+```python
+age = 15
+if age >= 18:
+    print("Adult ticket")
+else:
+    print("Child ticket")
+```
+
+Output:
+
+```text
+Child ticket
+```
+
+---
+
+## Mini Practice
+
+1. Write an if else for pass/fail.
+2. Write an if else for adult/minor.
+3. Change values to test both branches.
 
 ---
 
 ## Summary
 
-`if else` helps your program choose between two possible outcomes.
+- `else` handles the false case.
+- Only one branch runs in an `if else`.
+- Clear conditions make branches easier to read.
+
+Next, you will handle more than two choices with `elif`.

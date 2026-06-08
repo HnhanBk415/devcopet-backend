@@ -1,36 +1,37 @@
 {
-  "title": "Quiz: Using range()",
+  "title": "Using range() Quiz",
   "description": "Check your understanding of Using range().",
-  "order": 5,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "What does range() commonly create?",
+      "question": "What is the main idea of Using range()?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "A sequence of numbers"
+          "id": "a",
+          "text": "Control numeric sequences with range()."
         },
         {
-          "id": "B",
-          "text": "A string prompt"
+          "id": "b",
+          "text": "It only changes the editor color."
         },
         {
-          "id": "C",
-          "text": "A boolean only"
+          "id": "c",
+          "text": "It deletes all variables."
         },
         {
-          "id": "D",
-          "text": "A file"
+          "id": "d",
+          "text": "It is used only for comments."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "range() produces a sequence of numbers for iteration.",
+      "explanation": "Control numeric sequences with range().",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What does range(3) produce for a loop?",
-      "codeSnippet": "",
+      "question": "Which statement best matches the code shown?",
+      "codeSnippet": "for i in range(5):\n    print(i)",
       "options": [
         {
-          "id": "A",
-          "text": "0, 1, 2"
+          "id": "a",
+          "text": "The code demonstrates the lesson concept."
         },
         {
-          "id": "B",
-          "text": "1, 2, 3"
+          "id": "b",
+          "text": "The code is HTML."
         },
         {
-          "id": "C",
-          "text": "3 only"
+          "id": "c",
+          "text": "The code cannot be Python because it has variables."
         },
         {
-          "id": "D",
-          "text": "0, 1, 2, 3"
+          "id": "d",
+          "text": "The code creates a database collection."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "range(3) starts at 0 and stops before 3.",
+      "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "range() is often used with:",
+      "question": "Why should beginners practice this concept?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "for loops"
+          "id": "a",
+          "text": "It appears often in real Python programs."
         },
         {
-          "id": "B",
-          "text": "only comments"
+          "id": "b",
+          "text": "It is only needed for changing fonts."
         },
         {
-          "id": "C",
-          "text": "only strings"
+          "id": "c",
+          "text": "It prevents you from using variables."
         },
         {
-          "id": "D",
-          "text": "DNS settings"
+          "id": "d",
+          "text": "It replaces all other Python topics."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "range() is commonly paired with for loops.",
+      "explanation": "This concept is a common building block for beginner Python programs.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-range"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is a good habit when using this concept?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Write clear, readable code and test small examples."
+        },
+        {
+          "id": "b",
+          "text": "Never run the program."
+        },
+        {
+          "id": "c",
+          "text": "Use random variable names only."
+        },
+        {
+          "id": "d",
+          "text": "Ignore error messages."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Clear code and small tests make debugging easier.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "using-range"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What should you do if the output is not what you expected?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Check the types, values, and control flow step by step."
+        },
+        {
+          "id": "b",
+          "text": "Delete the whole project immediately."
+        },
+        {
+          "id": "c",
+          "text": "Assume Python is broken."
+        },
+        {
+          "id": "d",
+          "text": "Stop using variables forever."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "using-range"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

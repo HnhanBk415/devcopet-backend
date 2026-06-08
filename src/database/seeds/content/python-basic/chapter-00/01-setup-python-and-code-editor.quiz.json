@@ -1,7 +1,8 @@
 {
-  "title": "Quiz: Set Up Python and a Code Editor",
+  "title": "Set Up Python and a Code Editor Quiz",
   "description": "Check your understanding of Set Up Python and a Code Editor.",
-  "order": 1,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
@@ -9,24 +10,24 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "Because Python runs the code we write."
         },
         {
-          "id": "B",
+          "id": "b",
           "text": "Because Python is only used to draw pictures."
         },
         {
-          "id": "C",
+          "id": "c",
           "text": "Because Python replaces the keyboard."
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "Because Python files cannot be saved without it."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
@@ -44,24 +45,24 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": ".html"
         },
         {
-          "id": "B",
+          "id": "b",
           "text": ".py"
         },
         {
-          "id": "C",
+          "id": "c",
           "text": ".css"
         },
         {
-          "id": "D",
+          "id": "d",
           "text": ".txt"
         }
       ],
       "correctOptionIds": [
-        "B"
+        "b"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
@@ -79,24 +80,24 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "It helps you write, organize, and run code more easily."
         },
         {
-          "id": "B",
+          "id": "b",
           "text": "It automatically writes every program for you."
         },
         {
-          "id": "C",
+          "id": "c",
           "text": "It deletes errors without showing them."
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "It replaces Python completely."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
@@ -108,7 +109,5 @@
         "setup-python-and-code-editor"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

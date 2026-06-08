@@ -2,7 +2,7 @@
   {
     "title": "What Is a Data Type?",
     "slug": "what-is-a-data-type",
-    "description": "Practice the key ideas from What Is a Data Type?.",
+    "description": "Understand how Python classifies values and why types affect what operations you can do.",
     "order": 1,
     "type": "reading",
     "filename": "01-what-is-a-data-type.md",
@@ -14,19 +14,19 @@
   {
     "title": "Strings",
     "slug": "strings",
-    "description": "Practice the key ideas from Strings.",
+    "description": "Use strings to store and display text values in Python.",
     "order": 2,
     "type": "reading",
     "filename": "02-strings.md",
     "quizFile": "02-strings.quiz.json",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 12,
     "xpReward": 10,
     "isPublished": true
   },
   {
     "title": "Integers",
     "slug": "integers",
-    "description": "Practice the key ideas from Integers.",
+    "description": "Work with whole numbers using Python's int type.",
     "order": 3,
     "type": "reading",
     "filename": "03-integers.md",
@@ -38,7 +38,7 @@
   {
     "title": "Floats",
     "slug": "floats",
-    "description": "Practice the key ideas from Floats.",
+    "description": "Represent decimal numbers and measurements using floats.",
     "order": 4,
     "type": "reading",
     "filename": "04-floats.md",
@@ -50,7 +50,7 @@
   {
     "title": "Booleans",
     "slug": "booleans",
-    "description": "Practice the key ideas from Booleans.",
+    "description": "Use True and False values for decisions and conditions.",
     "order": 5,
     "type": "reading",
     "filename": "05-booleans.md",
@@ -62,7 +62,7 @@
   {
     "title": "Checking Type with type()",
     "slug": "checking-type-with-type",
-    "description": "Practice the key ideas from Checking Type with type().",
+    "description": "Use Python's type() function to inspect the data type of a value.",
     "order": 6,
     "type": "reading",
     "filename": "06-checking-type-with-type.md",
@@ -74,12 +74,12 @@
   {
     "title": "Converting Data Types",
     "slug": "converting-data-types",
-    "description": "Practice the key ideas from Converting Data Types.",
+    "description": "Convert values between strings, integers, floats, and booleans when needed.",
     "order": 7,
     "type": "reading",
     "filename": "07-converting-data-types.md",
     "quizFile": "07-converting-data-types.quiz.json",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 12,
     "xpReward": 10,
     "isPublished": true
   }

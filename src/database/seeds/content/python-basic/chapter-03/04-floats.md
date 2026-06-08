@@ -1,80 +1,87 @@
 # Floats
 
-A **float** is a number with a decimal point.
+A float is a number with a decimal point. You use floats for measurements, prices, averages, percentages, and calculations that may not be whole numbers.
 
-Examples:
+---
+
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- Floats store decimal numbers.
+- A number with a decimal point is a float.
+- Float precision can sometimes produce tiny display differences.
+
+---
+
+## 1. Creating floats
+
+A float is written with a decimal point. Even `5.0` is a float because it includes `.0`.
 
 ```python
 price = 9.99
-height = 1.75
-temperature = 36.5
-```
-
-In Python, the decimal number type is called `float`.
-
----
-
-## When Do We Use Floats?
-
-Floats are useful when a value is not always a whole number.
-
-Common examples include:
-
-- Prices
-- Measurements
-- Percentages
-- Averages
-- Scientific values
-
----
-
-## Calculating with Floats
-
-```python
-price = 19.99
-tax = 1.5
-
-print(price + tax)
+height = 1.72
+exact_five = 5.0
+print(price)
+print(height)
+print(exact_five)
 ```
 
 Output:
 
 ```text
-21.49
-```
-
----
-
-## Division Usually Creates a Float
-
-In Python, normal division `/` usually returns a float.
-
-```python
-print(10 / 2)
-```
-
-Output:
-
-```text
+9.99
+1.72
 5.0
 ```
 
-Even though the result is mathematically 5, Python returns `5.0`, which is a float.
+---
+
+## 2. Math with floats
+
+Floats can be used in calculations. If an expression mixes an int and a float, the result is usually a float.
+
+```python
+total = 10 + 2.5
+print(total)
+```
+
+Output:
+
+```text
+12.5
+```
 
 ---
 
-## Quick Practice
+## 3. Be careful with precision
+
+Computers store decimal numbers in binary, so some float results may look slightly unexpected. This is normal in many programming languages.
 
 ```python
-meal_price = 12.5
-drink_price = 2.75
-
-total = meal_price + drink_price
-print(total)
+print(0.1 + 0.2)
 ```
+
+Output:
+
+```text
+0.30000000000000004
+```
+
+---
+
+## Mini Practice
+
+1. Create variables for price and tax rate.
+2. Multiply them to estimate tax.
+3. Try adding `0.1 + 0.2` and observe the result.
 
 ---
 
 ## Summary
 
-Floats are decimal numbers. Use them when you need more precision than whole numbers can provide.
+- Floats store decimal numbers.
+- A number with a decimal point is a float.
+- Float precision can sometimes produce tiny display differences.
+
+Next, you will learn about booleans, the type for true/false values.

@@ -1,19 +1,22 @@
 # Comparison Operators
 
-Comparison operators compare two values and return a boolean: `True` or `False`.
-
-| Operator | Meaning |
-|---|---|
-| `==` | Equal to |
-| `!=` | Not equal to |
-| `>` | Greater than |
-| `<` | Less than |
-| `>=` | Greater than or equal to |
-| `<=` | Less than or equal to |
+Comparison operators ask questions about values. The answer is always `True` or `False`.
 
 ---
 
-## Examples
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- Comparisons return booleans.
+- Use `==` for equality checks.
+- Comparison results are useful in conditions.
+
+---
+
+## 1. Common comparisons
+
+Python supports `>`, `<`, `>=`, `<=`, `==`, and `!=`.
 
 ```python
 print(10 > 5)
@@ -31,24 +34,53 @@ True
 
 ---
 
-## Equal vs Assignment
+## 2. Equality uses ==
 
-Be careful:
-
-```python
-age = 18
-```
-
-This assigns a value.
+Use `==` to compare values. A single `=` is assignment, not comparison.
 
 ```python
-age == 18
+score = 100
+print(score == 100)
 ```
 
-This compares a value.
+Output:
+
+```text
+True
+```
+
+---
+
+## 3. Comparisons in variables
+
+You can store a comparison result in a boolean variable.
+
+```python
+age = 20
+is_adult = age >= 18
+print(is_adult)
+```
+
+Output:
+
+```text
+True
+```
+
+---
+
+## Mini Practice
+
+1. Compare two numbers using `>`.
+2. Check if a variable equals a value using `==`.
+3. Store a comparison result in a variable.
 
 ---
 
 ## Summary
 
-Comparison operators are important because they create boolean results that conditions can use.
+- Comparisons return booleans.
+- Use `==` for equality checks.
+- Comparison results are useful in conditions.
+
+Next, you will learn assignment operators.

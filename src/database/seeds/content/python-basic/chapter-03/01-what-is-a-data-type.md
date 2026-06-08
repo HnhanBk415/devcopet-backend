@@ -1,91 +1,89 @@
 # What Is a Data Type?
 
-A **data type** tells Python what kind of value it is working with.
-
-Different values behave in different ways. Text, numbers, decimal values, and true/false values are not the same thing, so Python gives each of them a type.
+Every value in Python has a data type. A data type tells Python what kind of value it is working with, such as text, a whole number, a decimal number, or a true/false value. Understanding data types helps you predict what your code will do.
 
 ---
 
-## Why Data Types Matter
+## Learning Goals
 
-Imagine these two values:
+By the end of this lesson, you should be able to:
+
+- A data type describes what kind of value Python is using.
+- Numbers and strings can look similar but behave differently.
+- Knowing data types helps prevent mistakes when writing expressions.
+
+---
+
+## 1. Values have types
+
+Python does not only store a value. It also remembers what kind of value it is. For example, `25` is a number, but `"25"` is text. They look similar to humans, but Python treats them differently.
+
+```python
+age = 25
+age_text = "25"
+print(age)
+print(age_text)
+```
+
+Output:
+
+```text
+25
+25
+```
+
+---
+
+## 2. Types control behavior
+
+The same symbol can behave differently depending on the types involved. With numbers, `+` performs addition. With strings, `+` joins text together.
 
 ```python
 print(10 + 5)
 print("10" + "5")
 ```
 
-The first line prints:
+Output:
 
 ```text
 15
-```
-
-The second line prints:
-
-```text
 105
 ```
 
-Why?
-
-Because `10` and `5` are numbers, but `"10"` and `"5"` are strings. Python treats them differently.
-
 ---
 
-## Common Python Data Types
+## 3. Common beginner types
 
-In this chapter, you will learn these basic types:
-
-| Type | Meaning | Example |
-|---|---|---|
-| `str` | Text | `"Python"` |
-| `int` | Whole number | `25` |
-| `float` | Decimal number | `3.14` |
-| `bool` | True or false value | `True` |
-
----
-
-## Data Types Help Python Make Decisions
-
-Python uses data types to decide what operations are allowed.
-
-For example:
+The most common beginner data types are `str` for text, `int` for whole numbers, `float` for decimal numbers, and `bool` for true/false values.
 
 ```python
+name = "Mina"
 age = 18
-name = "Alex"
-
-print(age + 2)
-print(name + " is learning Python")
+height = 1.65
+is_student = True
+print(name, age, height, is_student)
 ```
 
-The variable `age` can be used in math. The variable `name` can be joined with other text.
-
----
-
-## Quick Practice
-
-Look at the values below and guess their data types:
-
-```python
-"Hello"
-100
-12.5
-True
-```
-
-Expected answers:
+Output:
 
 ```text
-str
-int
-float
-bool
+Mina 18 1.65 True
 ```
+
+---
+
+## Mini Practice
+
+1. Create one variable for your name, age, height, and whether you are a student.
+2. Print all four variables.
+3. Try adding two numbers, then try joining two strings.
 
 ---
 
 ## Summary
 
-A data type describes what kind of value something is. Understanding data types helps you write programs that work correctly and avoid common errors.
+- A data type describes what kind of value Python is using.
+- Numbers and strings can look similar but behave differently.
+- Knowing data types helps prevent mistakes when writing expressions.
+
+Next, you will learn about strings, the data type used for text.

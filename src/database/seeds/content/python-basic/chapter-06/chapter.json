@@ -1,8 +1,8 @@
 {
   "title": "Chapter 6: Conditions",
   "slug": "conditions",
-  "description": "Learn how to make decisions in Python using conditions, boolean expressions, if statements, and logical operators.",
+  "description": "Use boolean expressions and if/elif/else statements to make programs choose different paths.",
   "order": 6,
-  "estimatedMinutes": 75,
+  "estimatedMinutes": 84,
   "isPublished": true
 }

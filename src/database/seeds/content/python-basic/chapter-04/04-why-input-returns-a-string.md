@@ -1,70 +1,89 @@
 # Why input() Returns a String
 
-In Python, `input()` always returns a string.
-
-This is true even if the user types a number.
+A very common beginner mistake is assuming that numeric input is automatically a number. In Python, `input()` always returns a string.
 
 ---
 
-## Example
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- `input()` always returns a string.
+- String `+` joins text instead of doing math.
+- Convert input before numeric calculations.
+
+---
+
+## 1. All input starts as text
+
+Even if the user types digits, Python receives them as a string.
 
 ```python
-age = input("Enter your age: ")
+age = input("Age: ")
 print(type(age))
 ```
 
-If the user types `18`, the output is still:
+Output:
 
 ```text
+Age: 18
 <class 'str'>
 ```
 
-That means `age` is text, not a number.
-
 ---
 
-## Why This Matters
+## 2. String behavior can surprise you
 
-This code will not work as expected:
-
-```python
-age = input("Enter your age: ")
-print(age + 1)
-```
-
-Python cannot add a string and an integer together.
-
----
-
-## Strings Can Look Like Numbers
+If you use `+` with input strings, Python joins them instead of adding numbers.
 
 ```python
-value = "100"
+a = input("First number: ")
+b = input("Second number: ")
+print(a + b)
 ```
 
-This looks like a number, but it is a string because it is inside quotes.
-
-To use it in math, you must convert it.
-
----
-
-## Correct Approach
-
-```python
-age = input("Enter your age: ")
-age = int(age)
-
-print(age + 1)
-```
-
-If the user enters `18`, the output is:
+Output:
 
 ```text
-19
+First number: 2
+Second number: 3
+23
 ```
+
+---
+
+## 3. Convert before math
+
+Use `int()` or `float()` before doing numeric calculations.
+
+```python
+a = int(input("First number: "))
+b = int(input("Second number: "))
+print(a + b)
+```
+
+Output:
+
+```text
+First number: 2
+Second number: 3
+5
+```
+
+---
+
+## Mini Practice
+
+1. Ask for two numbers and print their raw string result with `+`.
+2. Convert both values with `int()` and add them.
+3. Use `type()` to confirm the difference.
 
 ---
 
 ## Summary
 
-`input()` always gives you a string. If you need a number, convert the input using `int()` or `float()`.
+- `input()` always returns a string.
+- String `+` joins text instead of doing math.
+- Convert input before numeric calculations.
+
+Next, you will focus on converting input to numbers safely.

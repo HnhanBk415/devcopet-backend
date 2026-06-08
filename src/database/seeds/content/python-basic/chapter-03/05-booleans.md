@@ -1,36 +1,28 @@
 # Booleans
 
-A **boolean** is a value that can only be one of two things:
-
-```python
-True
-False
-```
-
-In Python, the boolean type is called `bool`.
+A boolean is a value that can only be `True` or `False`. Booleans are important because programs often need to make decisions based on whether something is true.
 
 ---
 
-## Boolean Values
+## Learning Goals
 
-Booleans are often used to represent yes/no or on/off situations.
+By the end of this lesson, you should be able to:
+
+- Booleans are `True` or `False`.
+- Comparison expressions produce booleans.
+- Booleans are used to make decisions in programs.
+
+---
+
+## 1. Boolean values
+
+Python uses capital `T` and capital `F`: `True` and `False`. These are not strings, so they do not use quotes.
 
 ```python
-is_logged_in = True
+is_online = True
 is_finished = False
-```
-
-These values help programs make decisions.
-
----
-
-## Booleans from Comparisons
-
-Comparison expressions return booleans.
-
-```python
-print(10 > 5)
-print(3 == 7)
+print(is_online)
+print(is_finished)
 ```
 
 Output:
@@ -42,39 +34,55 @@ False
 
 ---
 
-## Capitalization Matters
+## 2. Comparisons create booleans
 
-In Python, booleans must start with capital letters.
-
-Correct:
+Comparison expressions such as `>` and `==` produce boolean results.
 
 ```python
+age = 18
+print(age >= 18)
+print(age == 16)
+```
+
+Output:
+
+```text
 True
 False
 ```
 
-Incorrect:
+---
+
+## 3. Booleans help control flow
+
+Later, you will use booleans with `if` statements to decide which code should run.
 
 ```python
-true
-false
+has_ticket = True
+if has_ticket:
+    print("You can enter.")
 ```
 
-Python will not understand `true` and `false` as boolean values.
+Output:
+
+```text
+You can enter.
+```
 
 ---
 
-## Quick Practice
+## Mini Practice
 
-```python
-age = 20
-
-print(age >= 18)
-print(age < 18)
-```
+1. Create a boolean variable called `is_learning`.
+2. Compare two numbers and print the result.
+3. Write a simple `if` statement that uses a boolean variable.
 
 ---
 
 ## Summary
 
-Booleans represent `True` or `False`. They are essential for conditions, comparisons, and decision-making in Python.
+- Booleans are `True` or `False`.
+- Comparison expressions produce booleans.
+- Booleans are used to make decisions in programs.
+
+Next, you will learn how to check a value's type with `type()`.

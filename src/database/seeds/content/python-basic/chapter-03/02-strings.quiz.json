@@ -1,36 +1,37 @@
 {
-  "title": "Quiz: Strings",
+  "title": "Strings Quiz",
   "description": "Check your understanding of Strings.",
-  "order": 2,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "Which of these is a valid Python string?",
+      "question": "Which value is a string?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "Hello"
+          "id": "a",
+          "text": "42"
         },
         {
-          "id": "B",
+          "id": "b",
+          "text": "3.5"
+        },
+        {
+          "id": "c",
           "text": "\"Hello\""
         },
         {
-          "id": "C",
-          "text": "123 without quotes"
-        },
-        {
-          "id": "D",
+          "id": "d",
           "text": "True"
         }
       ],
       "correctOptionIds": [
-        "B"
+        "c"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "A string must be placed inside quotation marks.",
+      "explanation": "Text inside quotes is a string.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What does this code display: print(\"Hi\")?",
+      "question": "What does string concatenation mean?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "Hi"
+          "id": "a",
+          "text": "Joining strings together."
         },
         {
-          "id": "B",
-          "text": "\"Hi\" with no output"
+          "id": "b",
+          "text": "Deleting strings."
         },
         {
-          "id": "C",
-          "text": "print"
+          "id": "c",
+          "text": "Changing text into a number."
         },
         {
-          "id": "D",
-          "text": "An error because strings cannot be printed"
+          "id": "d",
+          "text": "Checking if text is true."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "print() displays the string content on the screen.",
+      "explanation": "Concatenation means joining strings together.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What kind of data is usually stored as a string?",
-      "codeSnippet": "",
+      "question": "What does this print?",
+      "codeSnippet": "print(\"Hello\" + \"World\")",
       "options": [
         {
-          "id": "A",
-          "text": "Text"
+          "id": "a",
+          "text": "HelloWorld"
         },
         {
-          "id": "B",
-          "text": "Only whole numbers"
+          "id": "b",
+          "text": "Hello World"
         },
         {
-          "id": "C",
-          "text": "Only decimal numbers"
+          "id": "c",
+          "text": "Hello + World"
         },
         {
-          "id": "D",
-          "text": "Only true or false values"
+          "id": "d",
+          "text": "Error"
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Strings are used to store text.",
+      "explanation": "There is no space in either string, so the result is `HelloWorld`.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "strings"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which quote style is valid for a string?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only double quotes"
+        },
+        {
+          "id": "b",
+          "text": "Only single quotes"
+        },
+        {
+          "id": "c",
+          "text": "Both single and double quotes if they match"
+        },
+        {
+          "id": "d",
+          "text": "No quotes"
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Python accepts both single and double quotes for strings.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "strings"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why is `\"100\"` not the same as `100`?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Because it is text, not a number."
+        },
+        {
+          "id": "b",
+          "text": "Because it is larger."
+        },
+        {
+          "id": "c",
+          "text": "Because it is automatically a float."
+        },
+        {
+          "id": "d",
+          "text": "Because strings cannot contain digits."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Digits inside quotes are still text.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "strings"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

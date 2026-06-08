@@ -1,7 +1,8 @@
 {
-  "title": "Quiz: Integers",
+  "title": "Integers Quiz",
   "description": "Check your understanding of Integers.",
-  "order": 3,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
@@ -9,28 +10,28 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "3.14"
+          "id": "a",
+          "text": "\"18\""
         },
         {
-          "id": "B",
-          "text": "\"10\""
+          "id": "b",
+          "text": "18"
         },
         {
-          "id": "C",
-          "text": "10"
+          "id": "c",
+          "text": "18.5"
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "True"
         }
       ],
       "correctOptionIds": [
-        "C"
+        "b"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "An integer is a whole number without a decimal point.",
+      "explanation": "`18` without quotes and without a decimal point is an integer.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What is the result of 5 + 2 in Python?",
+      "question": "What are integers commonly used for?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "7"
+          "id": "a",
+          "text": "Whole-number counts and quantities."
         },
         {
-          "id": "B",
-          "text": "52"
+          "id": "b",
+          "text": "Only paragraphs of text."
         },
         {
-          "id": "C",
-          "text": "5 + 2"
+          "id": "c",
+          "text": "Only true/false answers."
         },
         {
-          "id": "D",
-          "text": "An error"
+          "id": "d",
+          "text": "Only decimal measurements."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Adding two integers produces the numeric result 7.",
+      "explanation": "Integers are useful for whole-number values.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "Which Python type represents whole numbers?",
-      "codeSnippet": "",
+      "question": "What does this print?",
+      "codeSnippet": "print(6 + 5)",
       "options": [
         {
-          "id": "A",
-          "text": "str"
+          "id": "a",
+          "text": "11"
         },
         {
-          "id": "B",
-          "text": "int"
+          "id": "b",
+          "text": "65"
         },
         {
-          "id": "C",
-          "text": "float"
+          "id": "c",
+          "text": "6 + 5"
         },
         {
-          "id": "D",
-          "text": "bool"
+          "id": "d",
+          "text": "Error"
         }
       ],
       "correctOptionIds": [
-        "B"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "The int type represents whole numbers.",
+      "explanation": "Both values are integers, so `+` performs addition.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "integers"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which one is not an integer?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "0"
+        },
+        {
+          "id": "b",
+          "text": "-4"
+        },
+        {
+          "id": "c",
+          "text": "12"
+        },
+        {
+          "id": "d",
+          "text": "3.14"
+        }
+      ],
+      "correctOptionIds": [
+        "d"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "`3.14` has a decimal point, so it is a float.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "integers"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why should you avoid quotes around a number when doing math?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Quotes make it a string."
+        },
+        {
+          "id": "b",
+          "text": "Quotes make it faster."
+        },
+        {
+          "id": "c",
+          "text": "Quotes make it negative."
+        },
+        {
+          "id": "d",
+          "text": "Quotes make it a boolean."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A quoted number is text, not an integer.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "integers"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

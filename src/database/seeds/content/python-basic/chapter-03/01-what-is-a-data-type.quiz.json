@@ -1,7 +1,8 @@
 {
-  "title": "Quiz: What Is a Data Type?",
+  "title": "What Is a Data Type? Quiz",
   "description": "Check your understanding of What Is a Data Type?.",
-  "order": 1,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
@@ -9,24 +10,24 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "A category that tells Python what kind of value is being used."
         },
         {
-          "id": "B",
-          "text": "A folder that stores Python projects."
+          "id": "b",
+          "text": "A folder that stores project files."
         },
         {
-          "id": "C",
-          "text": "A function used only for printing."
+          "id": "c",
+          "text": "A command that only prints text."
         },
         {
-          "id": "D",
-          "text": "A style setting in a code editor."
+          "id": "d",
+          "text": "A color theme in the editor."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
@@ -35,80 +36,148 @@
       "points": 1,
       "tags": [
         "python",
-        "what-is-a-data-type"
+        "data-types"
       ]
     },
     {
       "type": "multiple_choice",
-      "question": "Which value is most likely a string?",
+      "question": "What is the type of the value `\"25\"`?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "25"
+          "id": "a",
+          "text": "int"
         },
         {
-          "id": "B",
+          "id": "b",
+          "text": "float"
+        },
+        {
+          "id": "c",
+          "text": "str"
+        },
+        {
+          "id": "d",
+          "text": "bool"
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Quotation marks make the value text, so it is a string.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "data-types"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does this print?",
+      "codeSnippet": "print(\"10\" + \"5\")",
+      "options": [
+        {
+          "id": "a",
+          "text": "15"
+        },
+        {
+          "id": "b",
+          "text": "105"
+        },
+        {
+          "id": "c",
+          "text": "10 5"
+        },
+        {
+          "id": "d",
+          "text": "Error"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Both values are strings, so `+` joins them together.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "data-types"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which value is a boolean?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "\"True\""
+        },
+        {
+          "id": "b",
           "text": "3.14"
         },
         {
-          "id": "C",
-          "text": "\"Python\""
+          "id": "c",
+          "text": "False"
         },
         {
-          "id": "D",
-          "text": "False"
+          "id": "d",
+          "text": "\"no\""
         }
       ],
       "correctOptionIds": [
-        "C"
+        "c"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Strings are text values written inside quotation marks.",
+      "explanation": "`False` without quotes is a boolean value.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "what-is-a-data-type"
+        "data-types"
       ]
     },
     {
       "type": "multiple_choice",
-      "question": "Why do data types matter?",
+      "question": "Why do types matter?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "They help Python decide what operations make sense."
+          "id": "a",
+          "text": "They help Python decide which operations make sense."
         },
         {
-          "id": "B",
-          "text": "They make code impossible to read."
-        },
-        {
-          "id": "C",
+          "id": "b",
           "text": "They are only used in comments."
         },
         {
-          "id": "D",
-          "text": "They are required only for file names."
+          "id": "c",
+          "text": "They make code slower by default."
+        },
+        {
+          "id": "d",
+          "text": "They replace variable names."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Python uses data types to understand how values should behave.",
+      "explanation": "Python uses types to decide how values should behave.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "what-is-a-data-type"
+        "data-types"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

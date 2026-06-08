@@ -1,8 +1,8 @@
 {
   "title": "Chapter 5: Operators",
   "slug": "operators",
-  "description": "Learn how operators help Python calculate values, compare data, assign values, and control expression order.",
+  "description": "Learn arithmetic, comparison, assignment, and precedence rules in Python.",
   "order": 5,
-  "estimatedMinutes": 70,
+  "estimatedMinutes": 82,
   "isPublished": true
 }

@@ -1,15 +1,26 @@
 # Boolean Expressions
 
-A **boolean expression** is an expression that returns `True` or `False`.
+A boolean expression is any expression that results in `True` or `False`. Comparisons are the most common beginner boolean expressions.
 
 ---
 
-## Examples
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- Boolean expressions produce `True` or `False`.
+- Comparisons are common boolean expressions.
+- Boolean results can be stored in variables.
+
+---
+
+## 1. Comparison expressions
+
+Operators like `>`, `<`, `==`, and `!=` produce boolean values.
 
 ```python
-print(10 > 5)
-print(3 == 7)
-print("Python" == "Python")
+print(5 > 3)
+print(5 == 3)
 ```
 
 Output:
@@ -17,18 +28,35 @@ Output:
 ```text
 True
 False
-True
 ```
 
 ---
 
-## Using Variables
+## 2. Store boolean results
+
+A boolean expression can be assigned to a variable.
 
 ```python
-score = 85
-passed = score >= 60
+age = 16
+can_drive = age >= 18
+print(can_drive)
+```
 
-print(passed)
+Output:
+
+```text
+False
+```
+
+---
+
+## 3. Use booleans directly
+
+Sometimes you already have a boolean variable and can use it directly.
+
+```python
+is_logged_in = True
+print(is_logged_in)
 ```
 
 Output:
@@ -39,19 +67,18 @@ True
 
 ---
 
-## Boolean Expressions in Conditions
+## Mini Practice
 
-Boolean expressions are often used inside `if` statements.
-
-```python
-age = 20
-
-if age >= 18:
-    print("Adult")
-```
+1. Create a boolean expression using `>`.
+2. Store a comparison in a variable.
+3. Print the type of a boolean expression.
 
 ---
 
 ## Summary
 
-Boolean expressions produce `True` or `False`. They are used to control decisions in Python programs.
+- Boolean expressions produce `True` or `False`.
+- Comparisons are common boolean expressions.
+- Boolean results can be stored in variables.
+
+Next, you will write your first `if` statement.

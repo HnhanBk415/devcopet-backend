@@ -1,16 +1,26 @@
 # The for Loop
 
-A `for` loop repeats code over a sequence of values.
-
-It is commonly used when you know how many times you want to repeat something.
+A `for` loop is commonly used when you know the sequence you want to go through. It can loop over ranges, strings, lists, and more.
 
 ---
 
-## Basic Example
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- For loops iterate over a sequence.
+- The loop variable changes each iteration.
+- `range()` is commonly used with for loops.
+
+---
+
+## 1. Looping with range
+
+`range()` creates a sequence of numbers for the loop.
 
 ```python
-for number in range(3):
-    print(number)
+for i in range(3):
+    print(i)
 ```
 
 Output:
@@ -23,41 +33,56 @@ Output:
 
 ---
 
-## Looping Through Text
+## 2. Loop variable
 
-A string is a sequence of characters.
+The loop variable takes one value at a time from the sequence.
 
 ```python
-for letter in "Python":
+for number in range(1, 4):
+    print("Number:", number)
+```
+
+Output:
+
+```text
+Number: 1
+Number: 2
+Number: 3
+```
+
+---
+
+## 3. Looping over text
+
+A for loop can go through each character in a string.
+
+```python
+for letter in "cat":
     print(letter)
 ```
 
 Output:
 
 ```text
-P
-y
+c
+a
 t
-h
-o
-n
 ```
 
 ---
 
-## Variable Names in Loops
+## Mini Practice
 
-Choose a clear loop variable name.
-
-```python
-for item in range(5):
-    print(item)
-```
-
-The variable `item` changes each time the loop runs.
+1. Use a for loop to print numbers 0 to 4.
+2. Use a for loop to print numbers 1 to 5.
+3. Loop over the letters in your name.
 
 ---
 
 ## Summary
 
-Use a `for` loop to repeat code over a sequence such as numbers from `range()` or characters in a string.
+- For loops iterate over a sequence.
+- The loop variable changes each iteration.
+- `range()` is commonly used with for loops.
+
+Next, you will learn more about using `range()`.

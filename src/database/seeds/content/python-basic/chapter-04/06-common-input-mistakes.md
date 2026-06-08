@@ -1,77 +1,85 @@
 # Common Input Mistakes
 
-User input is simple, but beginners often make a few common mistakes.
-
-Let's review them.
+Input bugs are common because user input starts as text and because prompts must be clear. Learning these mistakes helps you debug faster.
 
 ---
 
-## Mistake 1: Forgetting That input() Returns a String
+## Learning Goals
 
-Incorrect:
+By the end of this lesson, you should be able to:
+
+- Raw input is always text.
+- Clear prompts improve user experience.
+- String joining requires you to manage spaces and punctuation.
+
+---
+
+## 1. Forgetting conversion
+
+Trying to do math with raw input causes string behavior or errors.
 
 ```python
-age = input("Age: ")
-print(age + 1)
+number = input("Number: ")
+print(number + number)
 ```
 
-Correct:
+Output:
 
-```python
-age = int(input("Age: "))
-print(age + 1)
+```text
+Number: 5
+55
 ```
 
 ---
 
-## Mistake 2: Missing a Clear Prompt
+## 2. Using unclear prompts
 
-Unclear:
-
-```python
-name = input()
-```
-
-Better:
+A vague prompt makes the program confusing for users. Clear prompts reduce bad input.
 
 ```python
-name = input("Enter your name: ")
+age_text = input("Enter your age as a whole number: ")
+print(age_text)
 ```
 
-A clear prompt helps the user understand what to type.
+Output:
+
+```text
+Enter your age as a whole number: 18
+18
+```
 
 ---
 
-## Mistake 3: Converting Invalid Text
+## 3. Forgetting spaces in output
 
-This causes an error if the user types text instead of a number:
-
-```python
-age = int(input("Age: "))
-```
-
-If the user types `hello`, Python cannot convert it to an integer.
-
----
-
-## Mistake 4: Using Confusing Variable Names
-
-Less clear:
-
-```python
-a = input("Name: ")
-b = input("City: ")
-```
-
-Better:
+When joining strings, include spaces where needed.
 
 ```python
 name = input("Name: ")
-city = input("City: ")
+print("Hello, " + name + "!")
 ```
+
+Output:
+
+```text
+Name: Mia
+Hello, Mia!
+```
+
+---
+
+## Mini Practice
+
+1. Fix a program that adds two raw inputs incorrectly.
+2. Rewrite a vague prompt to make it clear.
+3. Print a greeting with correct spacing.
 
 ---
 
 ## Summary
 
-When using input, remember: ask clear questions, store answers in meaningful variables, and convert input when you need numbers.
+- Raw input is always text.
+- Clear prompts improve user experience.
+- String joining requires you to manage spaces and punctuation.
+
+Next, you will learn about operators, the symbols used to calculate and compare values.

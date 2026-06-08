@@ -1,76 +1,85 @@
 # Using input()
 
-The `input()` function asks the user to type something.
-
-Basic syntax:
-
-```python
-variable = input("Question here: ")
-```
-
-The value typed by the user is stored in the variable.
+The `input()` function is simple, but writing good input statements is important. You usually store the result in a variable so you can use it later.
 
 ---
 
-## First Example
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- `input()` can include a prompt string.
+- Store input in a variable if you need it later.
+- Clear variable names make interactive programs easier to read.
+
+---
+
+## 1. Basic syntax
+
+Write `input()` with a prompt string inside parentheses. Store the returned value in a variable.
 
 ```python
-name = input("Enter your name: ")
-print("Hello, " + name + "!")
+username = input("Username: ")
+print("Welcome, " + username)
 ```
 
-Example run:
+Output:
 
 ```text
-Enter your name: Maya
-Hello, Maya!
+Username: coder
+Welcome, coder
 ```
 
 ---
 
-## The Prompt Text
+## 2. Input returns what the user typed
 
-The text inside `input()` is called the **prompt**. It tells the user what to enter.
-
-Good prompt:
+Whatever the user types before pressing Enter becomes the returned value.
 
 ```python
-city = input("Enter your city: ")
+word = input("Type one word: ")
+print(word)
 ```
 
-Less clear prompt:
+Output:
 
-```python
-city = input("Type: ")
+```text
+Type one word: python
+python
 ```
-
-Clear prompts make your program easier to use.
 
 ---
 
-## Add a Space After the Prompt
+## 3. Use meaningful variable names
 
-It is common to include a space at the end of the prompt.
+Names like `name`, `choice`, or `age_text` make code easier to understand than names like `x`.
 
 ```python
-name = input("Name: ")
+favorite_language = input("Favorite language: ")
+print(favorite_language)
 ```
 
-This makes the input look cleaner in the terminal.
+Output:
+
+```text
+Favorite language: Python
+Python
+```
 
 ---
 
-## Quick Practice
+## Mini Practice
 
-Write a program that asks for a favorite color:
-
-```python
-color = input("What is your favorite color? ")
-print("Your favorite color is " + color)
-```
+1. Ask the user for a username.
+2. Store the answer in a descriptive variable.
+3. Print a welcome message using that variable.
 
 ---
 
 ## Summary
 
-Use `input()` to ask the user for information. Store the result in a variable so you can use it later.
+- `input()` can include a prompt string.
+- Store input in a variable if you need it later.
+- Clear variable names make interactive programs easier to read.
+
+Next, you will practice storing input in variables.

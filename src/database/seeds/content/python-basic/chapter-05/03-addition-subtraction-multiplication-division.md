@@ -1,79 +1,86 @@
 # Addition, Subtraction, Multiplication, and Division
 
-The four basic math operators are used frequently in Python.
+The four most common math operators are `+`, `-`, `*`, and `/`. These operators are the foundation for many beginner programs.
 
 ---
 
-## Addition
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- `+`, `-`, `*`, and `/` are core arithmetic operators.
+- Division with `/` returns a float.
+- Use variables to make calculations readable.
+
+---
+
+## 1. Addition and subtraction
+
+Use `+` to add and `-` to subtract.
 
 ```python
-print(8 + 2)
+points = 50
+points = points + 10
+points = points - 5
+print(points)
 ```
 
 Output:
 
 ```text
-10
+55
 ```
 
 ---
 
-## Subtraction
+## 2. Multiplication
+
+Use `*` to multiply. This is useful for repeated quantities.
 
 ```python
-print(8 - 2)
+price = 7
+quantity = 4
+print(price * quantity)
 ```
 
 Output:
 
 ```text
-6
+28
 ```
 
 ---
 
-## Multiplication
+## 3. Division
+
+Use `/` for normal division. The result is a float.
 
 ```python
-print(8 * 2)
+print(20 / 4)
+print(21 / 4)
 ```
 
 Output:
 
 ```text
-16
+5.0
+5.25
 ```
 
 ---
 
-## Division
+## Mini Practice
 
-```python
-print(8 / 2)
-```
-
-Output:
-
-```text
-4.0
-```
-
-Normal division returns a float.
-
----
-
-## Using Variables
-
-```python
-price = 20
-quantity = 3
-
-total = price * quantity
-print(total)
-```
+1. Create a subtotal from price and quantity.
+2. Subtract a discount.
+3. Divide a total bill between 3 people.
 
 ---
 
 ## Summary
 
-The operators `+`, `-`, `*`, and `/` are the foundation of calculations in Python.
+- `+`, `-`, `*`, and `/` are core arithmetic operators.
+- Division with `/` returns a float.
+- Use variables to make calculations readable.
+
+Next, you will learn about floor division, modulo, and exponentiation.

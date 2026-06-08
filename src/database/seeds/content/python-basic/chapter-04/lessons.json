@@ -2,7 +2,7 @@
   {
     "title": "Introducing User Input",
     "slug": "introducing-user-input",
-    "description": "Practice the key ideas from Introducing User Input.",
+    "description": "Understand why programs ask users for information and how input makes programs interactive.",
     "order": 1,
     "type": "reading",
     "filename": "01-introducing-user-input.md",
@@ -14,7 +14,7 @@
   {
     "title": "Using input()",
     "slug": "using-input",
-    "description": "Practice the key ideas from Using input().",
+    "description": "Write input statements correctly and understand the value returned by input().",
     "order": 2,
     "type": "reading",
     "filename": "02-using-input.md",
@@ -26,7 +26,7 @@
   {
     "title": "Storing Input in Variables",
     "slug": "storing-input-in-variables",
-    "description": "Practice the key ideas from Storing Input in Variables.",
+    "description": "Store user input in variables and reuse it in later statements.",
     "order": 3,
     "type": "reading",
     "filename": "03-storing-input-in-variables.md",
@@ -38,31 +38,31 @@
   {
     "title": "Why input() Returns a String",
     "slug": "why-input-returns-a-string",
-    "description": "Practice the key ideas from Why input() Returns a String.",
+    "description": "Understand that input() always starts as text and why conversion is often needed.",
     "order": 4,
     "type": "reading",
     "filename": "04-why-input-returns-a-string.md",
     "quizFile": "04-why-input-returns-a-string.quiz.json",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 12,
     "xpReward": 10,
     "isPublished": true
   },
   {
     "title": "Converting Input to Numbers",
     "slug": "converting-input-to-numbers",
-    "description": "Practice the key ideas from Converting Input to Numbers.",
+    "description": "Convert user input into int or float values before performing calculations.",
     "order": 5,
     "type": "reading",
     "filename": "05-converting-input-to-numbers.md",
     "quizFile": "05-converting-input-to-numbers.quiz.json",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 12,
     "xpReward": 10,
     "isPublished": true
   },
   {
     "title": "Common Input Mistakes",
     "slug": "common-input-mistakes",
-    "description": "Practice the key ideas from Common Input Mistakes.",
+    "description": "Recognize and fix common errors when using input in beginner Python programs.",
     "order": 6,
     "type": "reading",
     "filename": "06-common-input-mistakes.md",

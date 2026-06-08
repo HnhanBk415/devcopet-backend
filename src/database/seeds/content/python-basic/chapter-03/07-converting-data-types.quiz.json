@@ -1,114 +1,183 @@
 {
-  "title": "Quiz: Converting Data Types",
+  "title": "Converting Data Types Quiz",
   "description": "Check your understanding of Converting Data Types.",
-  "order": 7,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "Which function converts a value to an integer?",
+      "question": "Which function converts a valid whole-number string to an integer?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "str()"
         },
         {
-          "id": "B",
-          "text": "int()"
-        },
-        {
-          "id": "C",
+          "id": "b",
           "text": "float()"
         },
         {
-          "id": "D",
+          "id": "c",
+          "text": "int()"
+        },
+        {
+          "id": "d",
           "text": "bool()"
         }
       ],
       "correctOptionIds": [
-        "B"
+        "c"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "int() converts compatible values to integers.",
+      "explanation": "`int()` converts compatible values to integers.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "converting-data-types"
+        "conversion"
       ]
     },
     {
       "type": "multiple_choice",
-      "question": "What does str(25) produce?",
-      "codeSnippet": "",
+      "question": "What does this print?",
+      "codeSnippet": "print(int(\"5\") + 1)",
       "options": [
         {
-          "id": "A",
-          "text": "25 as text"
+          "id": "a",
+          "text": "51"
         },
         {
-          "id": "B",
-          "text": "25.0"
+          "id": "b",
+          "text": "6"
         },
         {
-          "id": "C",
-          "text": "True"
+          "id": "c",
+          "text": "Error"
         },
         {
-          "id": "D",
-          "text": "An empty value"
+          "id": "d",
+          "text": "5 + 1"
         }
       ],
       "correctOptionIds": [
-        "A"
+        "b"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "str(25) converts the number 25 into the string \"25\".",
+      "explanation": "`int(\"5\")` becomes the number 5, then 1 is added.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "converting-data-types"
+        "conversion"
       ]
     },
     {
       "type": "multiple_choice",
-      "question": "Why might we convert data types?",
+      "question": "Which conversion is best for `\"3.14\"` if you want math with decimals?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "To use a value in the correct kind of operation."
+          "id": "a",
+          "text": "int()"
         },
         {
-          "id": "B",
-          "text": "To hide code from Python."
+          "id": "b",
+          "text": "float()"
         },
         {
-          "id": "C",
-          "text": "To remove all variables."
+          "id": "c",
+          "text": "str()"
         },
         {
-          "id": "D",
-          "text": "To stop a program from running."
+          "id": "d",
+          "text": "print()"
         }
       ],
       "correctOptionIds": [
-        "A"
+        "b"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Conversion helps values work correctly in calculations, printing, or comparisons.",
+      "explanation": "`float()` handles decimal-number strings.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "converting-data-types"
+        "conversion"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why use `str(score)` in a message?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "To join a number with text."
+        },
+        {
+          "id": "b",
+          "text": "To delete the score."
+        },
+        {
+          "id": "c",
+          "text": "To make the score larger."
+        },
+        {
+          "id": "d",
+          "text": "To convert text to a boolean."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Strings can be joined with strings, so numbers must be converted first.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "conversion"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which conversion will fail?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "int(\"12\")"
+        },
+        {
+          "id": "b",
+          "text": "float(\"3.5\")"
+        },
+        {
+          "id": "c",
+          "text": "str(99)"
+        },
+        {
+          "id": "d",
+          "text": "int(\"hello\")"
+        }
+      ],
+      "correctOptionIds": [
+        "d"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "`hello` is not a valid whole number.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "conversion"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

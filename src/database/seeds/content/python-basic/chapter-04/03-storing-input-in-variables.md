@@ -1,75 +1,89 @@
 # Storing Input in Variables
 
-When you use `input()`, you usually store the result in a variable.
-
-This allows your program to remember and reuse the user's answer.
+Input is most useful when you save it. A variable lets you reuse the user's answer multiple times in your program.
 
 ---
 
-## Example
+## Learning Goals
 
-```python
-name = input("Enter your name: ")
-print("Welcome, " + name)
-```
+By the end of this lesson, you should be able to:
 
-Here, the user's answer is stored in the variable `name`.
+- Input values can be stored in variables.
+- Stored input can be reused multiple times.
+- Multiple inputs should use separate meaningful variables.
 
 ---
 
-## Reusing Input
+## 1. Store first, use later
 
-A variable can be used more than once.
+Assign the result of `input()` to a variable.
 
 ```python
-name = input("Enter your name: ")
-
+name = input("Name: ")
 print("Hello, " + name)
 print(name + " is learning Python.")
 ```
 
-If the user enters `Lina`, the output might be:
+Output:
 
 ```text
-Hello, Lina
-Lina is learning Python.
+Name: Ana
+Hello, Ana
+Ana is learning Python.
 ```
 
 ---
 
-## Multiple Inputs
+## 2. Multiple inputs
 
-You can ask for more than one piece of information.
+You can ask several questions and store each answer separately.
 
 ```python
 name = input("Name: ")
 city = input("City: ")
-
 print(name + " lives in " + city)
+```
+
+Output:
+
+```text
+Name: Nam
+City: Hue
+Nam lives in Hue
 ```
 
 ---
 
-## Naming Input Variables
+## 3. Variables make code flexible
 
-Choose names that describe the value.
-
-Good:
+Changing the user's input changes the program's output without changing the code.
 
 ```python
-username = input("Username: ")
-age = input("Age: ")
+pet = input("Pet name: ")
+print("Your pet " + pet + " sounds awesome!")
 ```
 
-Less clear:
+Output:
 
-```python
-x = input("Username: ")
-y = input("Age: ")
+```text
+Pet name: Milo
+Your pet Milo sounds awesome!
 ```
+
+---
+
+## Mini Practice
+
+1. Ask for name and city.
+2. Store both answers.
+3. Print a sentence that uses both variables.
 
 ---
 
 ## Summary
 
-Storing input in variables helps your program remember user answers and use them later. Choose clear variable names to make your code easier to read.
+- Input values can be stored in variables.
+- Stored input can be reused multiple times.
+- Multiple inputs should use separate meaningful variables.
+
+Next, you will learn why input values are strings by default.

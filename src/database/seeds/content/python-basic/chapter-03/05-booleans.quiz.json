@@ -1,71 +1,37 @@
 {
-  "title": "Quiz: Booleans",
+  "title": "Booleans Quiz",
   "description": "Check your understanding of Booleans.",
-  "order": 5,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "A boolean value can be:",
+      "question": "Which is a valid boolean value in Python?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "Only yes"
-        },
-        {
-          "id": "B",
-          "text": "Only no"
-        },
-        {
-          "id": "C",
-          "text": "True or False"
-        },
-        {
-          "id": "D",
-          "text": "Any text"
-        }
-      ],
-      "correctOptionIds": [
-        "C"
-      ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
-      "explanation": "Booleans represent truth values: True or False.",
-      "difficulty": "easy",
-      "points": 1,
-      "tags": [
-        "python",
-        "booleans"
-      ]
-    },
-    {
-      "type": "multiple_choice",
-      "question": "Which is a valid Python boolean?",
-      "codeSnippet": "",
-      "options": [
-        {
-          "id": "A",
+          "id": "a",
           "text": "true"
         },
         {
-          "id": "B",
-          "text": "TRUE"
-        },
-        {
-          "id": "C",
+          "id": "b",
           "text": "True"
         },
         {
-          "id": "D",
+          "id": "c",
+          "text": "\"False\""
+        },
+        {
+          "id": "d",
           "text": "yes"
         }
       ],
       "correctOptionIds": [
-        "C"
+        "b"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Python boolean values are capitalized: True and False.",
+      "explanation": "Python booleans are `True` and `False` with capital letters.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +41,137 @@
     },
     {
       "type": "multiple_choice",
-      "question": "Booleans are often used in:",
+      "question": "What does a comparison usually return?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "conditions and comparisons"
+          "id": "a",
+          "text": "A boolean"
         },
         {
-          "id": "B",
-          "text": "file names only"
+          "id": "b",
+          "text": "A folder"
         },
         {
-          "id": "C",
-          "text": "comments only"
+          "id": "c",
+          "text": "A file name"
         },
         {
-          "id": "D",
-          "text": "image editing only"
+          "id": "d",
+          "text": "A comment"
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Conditions use booleans to decide what code should run.",
+      "explanation": "Comparisons such as `5 > 3` return `True` or `False`.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "booleans"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does this print?",
+      "codeSnippet": "print(18 >= 21)",
+      "options": [
+        {
+          "id": "a",
+          "text": "True"
+        },
+        {
+          "id": "b",
+          "text": "False"
+        },
+        {
+          "id": "c",
+          "text": "18 >= 21"
+        },
+        {
+          "id": "d",
+          "text": "Error"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "18 is not greater than or equal to 21.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "booleans"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which one is a string, not a boolean?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "True"
+        },
+        {
+          "id": "b",
+          "text": "False"
+        },
+        {
+          "id": "c",
+          "text": "\"True\""
+        },
+        {
+          "id": "d",
+          "text": "5 > 3"
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Quotes make `\"True\"` a string.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "booleans"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why are booleans useful?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "They help programs make decisions."
+        },
+        {
+          "id": "b",
+          "text": "They store long paragraphs."
+        },
+        {
+          "id": "c",
+          "text": "They replace all numbers."
+        },
+        {
+          "id": "d",
+          "text": "They only change editor colors."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Booleans are commonly used in conditions and decision-making.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "booleans"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

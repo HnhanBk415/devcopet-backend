@@ -1,114 +1,183 @@
 {
-  "title": "Quiz: Checking Type with type()",
+  "title": "Checking Type with type() Quiz",
   "description": "Check your understanding of Checking Type with type().",
-  "order": 6,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "What does type() help you check?",
+      "question": "What does `type()` do?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "The color of the terminal"
+          "id": "a",
+          "text": "Shows the data type of a value."
         },
         {
-          "id": "B",
-          "text": "The data type of a value"
+          "id": "b",
+          "text": "Deletes a variable."
         },
         {
-          "id": "C",
-          "text": "The size of a folder"
+          "id": "c",
+          "text": "Prints a file path."
         },
         {
-          "id": "D",
-          "text": "The speed of the internet"
+          "id": "d",
+          "text": "Changes all text to uppercase."
         }
       ],
       "correctOptionIds": [
-        "B"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "type() returns the type of a value.",
+      "explanation": "`type()` tells you the class/type of a value.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "checking-type-with-type"
+        "type"
       ]
     },
     {
       "type": "multiple_choice",
-      "question": "What will type(\"Hello\") show?",
+      "question": "What does this likely print?",
+      "codeSnippet": "print(type(\"42\"))",
+      "options": [
+        {
+          "id": "a",
+          "text": "<class 'str'>"
+        },
+        {
+          "id": "b",
+          "text": "<class 'int'>"
+        },
+        {
+          "id": "c",
+          "text": "<class 'float'>"
+        },
+        {
+          "id": "d",
+          "text": "<class 'bool'>"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The value is inside quotes, so it is a string.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "type"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the type of `10 / 2` in Python?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
+          "id": "a",
           "text": "str"
         },
         {
-          "id": "B",
+          "id": "b",
           "text": "int"
         },
         {
-          "id": "C",
+          "id": "c",
           "text": "float"
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "bool"
         }
       ],
       "correctOptionIds": [
-        "A"
+        "c"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "\"Hello\" is text, so its type is str.",
+      "explanation": "Normal division returns a float, even if the answer is whole-number-like.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "checking-type-with-type"
+        "type"
       ]
     },
     {
       "type": "multiple_choice",
-      "question": "Why is type() useful for beginners?",
+      "question": "Why is `type()` helpful?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "It helps confirm what kind of data a value is."
+          "id": "a",
+          "text": "It helps debug when values are not the type you expected."
         },
         {
-          "id": "B",
-          "text": "It automatically fixes all bugs."
+          "id": "b",
+          "text": "It automatically fixes all errors."
         },
         {
-          "id": "C",
-          "text": "It deletes unused variables."
+          "id": "c",
+          "text": "It converts code to HTML."
         },
         {
-          "id": "D",
-          "text": "It converts every value to text."
+          "id": "d",
+          "text": "It runs code faster."
         }
       ],
       "correctOptionIds": [
-        "A"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "type() is useful when learning how Python sees different values.",
+      "explanation": "Seeing the type helps explain behavior and errors.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
         "python",
-        "checking-type-with-type"
+        "type"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the type of `5 > 3`?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "int"
+        },
+        {
+          "id": "b",
+          "text": "str"
+        },
+        {
+          "id": "c",
+          "text": "float"
+        },
+        {
+          "id": "d",
+          "text": "bool"
+        }
+      ],
+      "correctOptionIds": [
+        "d"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A comparison produces a boolean result.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "type"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

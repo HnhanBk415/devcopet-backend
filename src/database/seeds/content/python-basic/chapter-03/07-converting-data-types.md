@@ -1,94 +1,103 @@
 # Converting Data Types
 
-Sometimes you need to change a value from one type to another. This is called **type conversion** or **type casting**.
+Sometimes a value has the wrong type for what you want to do. Type conversion lets you create a new value in another type, such as converting text input into a number.
 
-Python provides functions such as:
+---
+
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- Use `int()` for whole-number conversion.
+- Use `float()` for decimal-number conversion.
+- Use `str()` when joining numbers with text.
+
+---
+
+## 1. Converting to int
+
+Use `int()` when a string contains a whole number and you want to do integer math.
 
 ```python
-str()
-int()
-float()
-bool()
+age_text = "18"
+age = int(age_text)
+print(age + 1)
+```
+
+Output:
+
+```text
+19
 ```
 
 ---
 
-## Convert to a String
+## 2. Converting to float
 
-Use `str()` to convert a value to text.
+Use `float()` when a string contains a decimal number.
 
 ```python
-age = 18
-message = "I am " + str(age) + " years old"
+price_text = "9.99"
+price = float(price_text)
+print(price * 2)
+```
+
+Output:
+
+```text
+19.98
+```
+
+---
+
+## 3. Converting to string
+
+Use `str()` when you need to join a number with text.
+
+```python
+score = 95
+message = "Your score is " + str(score)
 print(message)
 ```
 
 Output:
 
 ```text
-I am 18 years old
+Your score is 95
 ```
 
 ---
 
-## Convert to an Integer
+## 4. Conversion can fail
 
-Use `int()` to convert a valid number string to an integer.
+Python cannot convert every string into a number. The text must look like a valid number.
 
 ```python
-year = "2026"
-print(int(year) + 1)
+# int("hello") would cause an error
+print(int("123"))
 ```
 
 Output:
 
 ```text
-2027
+123
 ```
 
 ---
 
-## Convert to a Float
+## Mini Practice
 
-Use `float()` for decimal numbers.
-
-```python
-price = "9.99"
-print(float(price) + 1)
-```
-
-Output:
-
-```text
-10.99
-```
-
----
-
-## Conversion Can Fail
-
-This will cause an error:
-
-```python
-number = int("hello")
-```
-
-Python cannot convert the word `hello` into a number.
-
----
-
-## Quick Practice
-
-```python
-score = "85"
-bonus = 5
-
-final_score = int(score) + bonus
-print(final_score)
-```
+1. Convert the string `"20"` into an integer and add 5.
+2. Convert `"3.5"` into a float and multiply it by 2.
+3. Use `str()` to build a sentence with a number.
 
 ---
 
 ## Summary
 
-Type conversion lets you change values into the type your program needs. This is especially important when working with user input and calculations.
+- Use `int()` for whole-number conversion.
+- Use `float()` for decimal-number conversion.
+- Use `str()` when joining numbers with text.
+- Conversion only works when the original value is compatible.
+
+Next, you will learn how to get input from users.

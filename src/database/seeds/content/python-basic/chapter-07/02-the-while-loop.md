@@ -1,25 +1,25 @@
 # The while Loop
 
-A `while` loop repeats code while a condition is true.
+A `while` loop repeats as long as its condition is `True`. It is useful when you do not know in advance how many times the loop should run.
 
 ---
 
-## Basic Syntax
+## Learning Goals
 
-```python
-while condition:
-    code_to_repeat
-```
+By the end of this lesson, you should be able to:
 
-The loop continues until the condition becomes false.
+- A while loop repeats while a condition is true.
+- Update variables so the loop can stop.
+- While loops are useful when repetition depends on a condition.
 
 ---
 
-## Example
+## 1. Basic while syntax
+
+Write `while`, a condition, a colon, and an indented block.
 
 ```python
 count = 1
-
 while count <= 3:
     print(count)
     count += 1
@@ -35,16 +35,59 @@ Output:
 
 ---
 
-## How It Works
+## 2. Update the loop variable
 
-1. Python checks `count <= 3`.
-2. If true, it runs the indented code.
-3. `count` increases by 1.
-4. Python checks the condition again.
-5. The loop stops when the condition is false.
+Most while loops need something inside the loop that eventually makes the condition false.
+
+```python
+lives = 3
+while lives > 0:
+    print("Lives left:", lives)
+    lives -= 1
+```
+
+Output:
+
+```text
+Lives left: 3
+Lives left: 2
+Lives left: 1
+```
+
+---
+
+## 3. User-controlled loops
+
+A while loop can keep asking until the user chooses to stop.
+
+```python
+choice = ""
+while choice != "q":
+    choice = input("Type q to quit: ")
+print("Goodbye")
+```
+
+Output:
+
+```text
+Type q to quit: q
+Goodbye
+```
+
+---
+
+## Mini Practice
+
+1. Write a while loop that counts from 1 to 5.
+2. Write a while loop that counts down from 3.
+3. Create a loop that stops when a variable reaches 0.
 
 ---
 
 ## Summary
 
-Use a `while` loop when you want to repeat code as long as a condition remains true.
+- A while loop repeats while a condition is true.
+- Update variables so the loop can stop.
+- While loops are useful when repetition depends on a condition.
+
+Next, you will learn how to avoid infinite loops.

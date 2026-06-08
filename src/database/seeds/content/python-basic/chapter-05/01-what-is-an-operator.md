@@ -1,50 +1,86 @@
 # What Is an Operator?
 
-An **operator** is a symbol that tells Python to perform an action.
+Operators are symbols or keywords that tell Python to perform an operation, such as adding numbers, comparing values, or assigning a value to a variable.
 
-For example, `+` tells Python to add values.
+---
+
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- Operators perform actions on values.
+- Operands are the values used by an operator.
+- Operator behavior can depend on data type.
+
+---
+
+## 1. Operators work with operands
+
+The values around an operator are called operands. In `3 + 4`, `3` and `4` are operands, and `+` is the operator.
+
+```python
+print(3 + 4)
+print(10 > 5)
+```
+
+Output:
+
+```text
+7
+True
+```
+
+---
+
+## 2. Different operator categories
+
+Python has arithmetic operators, comparison operators, logical operators, and assignment operators.
+
+```python
+x = 10
+print(x * 2)
+print(x == 10)
+```
+
+Output:
+
+```text
+20
+True
+```
+
+---
+
+## 3. Operators depend on types
+
+Some operators behave differently depending on data types. `+` adds numbers but joins strings.
 
 ```python
 print(2 + 3)
+print("Py" + "thon")
 ```
 
 Output:
 
 ```text
 5
+Python
 ```
 
 ---
 
-## Operators Work with Values
+## Mini Practice
 
-The values used with an operator are called operands.
-
-```python
-10 + 5
-```
-
-Here:
-
-- `10` is an operand
-- `+` is the operator
-- `5` is an operand
-
----
-
-## Common Operator Categories
-
-In Python, you will often use:
-
-- Arithmetic operators
-- Comparison operators
-- Assignment operators
-- Logical operators
-
-This chapter focuses on the most important operators for beginners.
+1. Identify the operator in `8 - 3`.
+2. Write one arithmetic expression.
+3. Write one comparison expression.
 
 ---
 
 ## Summary
 
-Operators are symbols that help Python perform actions such as calculation, comparison, and assignment.
+- Operators perform actions on values.
+- Operands are the values used by an operator.
+- Operator behavior can depend on data type.
+
+Next, you will focus on arithmetic operators.

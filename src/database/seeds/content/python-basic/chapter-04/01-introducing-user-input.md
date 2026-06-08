@@ -1,61 +1,85 @@
 # Introducing User Input
 
-So far, your programs may have displayed information using `print()`. But real programs often need information from the user.
-
-This information is called **user input**.
+User input lets a program receive information while it is running. Instead of hard-coding every value, you can ask the user for a name, age, choice, or number.
 
 ---
 
-## Why User Input Matters
+## Learning Goals
 
-User input allows a program to become interactive.
+By the end of this lesson, you should be able to:
 
-For example, a program can ask:
-
-- What is your name?
-- How old are you?
-- What number do you want to calculate?
-- Which option do you choose?
-
-Without input, the program always does the same thing. With input, the program can respond to the user.
+- `input()` makes programs interactive.
+- The prompt should guide the user.
+- The program waits at `input()` until the user presses Enter.
 
 ---
 
-## Example Interaction
+## 1. Why input matters
 
-A program might ask:
-
-```text
-What is your name?
-```
-
-The user types:
-
-```text
-Alex
-```
-
-Then the program responds:
-
-```text
-Hello, Alex!
-```
-
----
-
-## Python Uses input()
-
-Python provides the `input()` function to collect input from the keyboard.
+Without input, a program always behaves the same way. With input, the program can respond to different users.
 
 ```python
 name = input("What is your name? ")
 print("Hello, " + name)
 ```
 
-The text inside `input()` is the question shown to the user.
+Output:
+
+```text
+What is your name? Alex
+Hello, Alex
+```
+
+---
+
+## 2. Prompts guide the user
+
+The text inside `input()` is called a prompt. It should clearly tell the user what to type.
+
+```python
+color = input("Enter your favorite color: ")
+print("You chose " + color)
+```
+
+Output:
+
+```text
+Enter your favorite color: blue
+You chose blue
+```
+
+---
+
+## 3. Input pauses the program
+
+When Python reaches `input()`, it waits until the user types something and presses Enter.
+
+```python
+answer = input("Press Enter after typing yes: ")
+print("You typed: " + answer)
+```
+
+Output:
+
+```text
+Press Enter after typing yes: yes
+You typed: yes
+```
+
+---
+
+## Mini Practice
+
+1. Ask the user for their name and print a greeting.
+2. Ask for a favorite food and print a sentence with it.
+3. Write a clear prompt that tells the user exactly what to enter.
 
 ---
 
 ## Summary
 
-User input lets your program communicate with the person using it. In Python, you will use `input()` to collect that information.
+- `input()` makes programs interactive.
+- The prompt should guide the user.
+- The program waits at `input()` until the user presses Enter.
+
+Next, you will learn the syntax of using `input()` more carefully.

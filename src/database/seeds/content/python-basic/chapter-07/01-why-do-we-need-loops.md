@@ -1,12 +1,22 @@
 # Why Do We Need Loops?
 
-A **loop** lets a program repeat code.
-
-Without loops, repeated work becomes messy.
+Loops let your program repeat actions without copying the same line many times. They are essential for lists, games, menus, counting, and repeated user interactions.
 
 ---
 
-## Without a Loop
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- Loops reduce repeated code.
+- A loop repeats an indented block.
+- Loops make programs easier to scale and maintain.
+
+---
+
+## 1. Avoid repetition
+
+Without loops, repeated code becomes long and hard to maintain.
 
 ```python
 print("Hello")
@@ -14,33 +24,68 @@ print("Hello")
 print("Hello")
 ```
 
-This works, but it is not flexible. What if you need to print it 100 times?
+Output:
+
+```text
+Hello
+Hello
+Hello
+```
 
 ---
 
-## With a Loop
+## 2. A loop repeats code
+
+A loop can run the same block multiple times.
 
 ```python
 for i in range(3):
     print("Hello")
 ```
 
-This repeats the same action three times.
+Output:
+
+```text
+Hello
+Hello
+Hello
+```
 
 ---
 
-## When Loops Are Useful
+## 3. Loops scale better
 
-Use loops when you need to:
+If you need 100 repetitions, a loop is much cleaner than 100 copied lines.
 
-- Repeat instructions
-- Process many items
-- Count numbers
-- Keep asking for input
-- Run code until a condition changes
+```python
+for number in range(1, 6):
+    print(number)
+```
+
+Output:
+
+```text
+1
+2
+3
+4
+5
+```
+
+---
+
+## Mini Practice
+
+1. Print your name 3 times with repeated print statements.
+2. Rewrite it with a loop.
+3. Use a loop to print numbers 1 to 5.
 
 ---
 
 ## Summary
 
-Loops help programs repeat actions efficiently. They make your code shorter, cleaner, and easier to change.
+- Loops reduce repeated code.
+- A loop repeats an indented block.
+- Loops make programs easier to scale and maintain.
+
+Next, you will learn the `while` loop.

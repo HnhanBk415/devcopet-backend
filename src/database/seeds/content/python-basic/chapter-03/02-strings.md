@@ -1,109 +1,87 @@
 # Strings
 
-A **string** is a piece of text. In Python, strings are written inside quotation marks.
-
-You can use either double quotes or single quotes:
-
-```python
-name = "Python"
-message = 'Hello, World!'
-```
-
-Both are valid.
+A string is text in Python. You use strings for names, messages, labels, sentences, and any value that should be treated as text instead of a number.
 
 ---
 
-## Printing Strings
+## Learning Goals
 
-You can print a string directly:
+By the end of this lesson, you should be able to:
 
-```python
-print("Welcome to Python")
-```
-
-Output:
-
-```text
-Welcome to Python
-```
-
-You can also store a string in a variable:
-
-```python
-course = "Python Basic"
-print(course)
-```
+- Strings store text values.
+- Strings are written inside quotes.
+- Use `+` to join strings, but remember to add spaces manually.
 
 ---
 
-## Joining Strings
+## 1. Creating strings
 
-You can join strings using the `+` operator. This is called **string concatenation**.
-
-```python
-first_name = "Alex"
-last_name = "Kim"
-
-print(first_name + " " + last_name)
-```
-
-Output:
-
-```text
-Alex Kim
-```
-
-The string `" "` adds a space between the two names.
-
----
-
-## Strings Can Contain Numbers
-
-A string can contain number characters, but that does not make it a number.
+A string is usually written inside single quotes or double quotes. Both styles work as long as the opening and closing quote match.
 
 ```python
-age = "18"
-print(age)
-```
-
-This looks like a number, but Python treats it as text because it is inside quotes.
-
----
-
-## Common String Mistake
-
-Incorrect:
-
-```python
-print(Hello)
-```
-
-Python thinks `Hello` is a variable name. If you want text, use quotes.
-
-Correct:
-
-```python
-print("Hello")
-```
-
----
-
-## Quick Practice
-
-Create three string variables:
-
-```python
-city = "Da Nang"
-language = "Python"
-goal = "build apps"
-
+name = "Alex"
+city = 'Da Nang'
+print(name)
 print(city)
-print(language)
-print(goal)
 ```
+
+Output:
+
+```text
+Alex
+Da Nang
+```
+
+---
+
+## 2. Joining strings
+
+You can join strings with `+`. This is called concatenation. Remember to include spaces yourself if you want spaces in the result.
+
+```python
+first_name = "Linh"
+last_name = "Vo"
+full_name = first_name + " " + last_name
+print(full_name)
+```
+
+Output:
+
+```text
+Linh Vo
+```
+
+---
+
+## 3. Strings can contain numbers
+
+A string can contain digits, but Python still treats it as text. You cannot do math with it until you convert it.
+
+```python
+score_text = "100"
+print(score_text + " points")
+```
+
+Output:
+
+```text
+100 points
+```
+
+---
+
+## Mini Practice
+
+1. Create a variable called `pet_name` and store a string in it.
+2. Print a greeting that includes the pet name.
+3. Try joining two strings with and without a space.
 
 ---
 
 ## Summary
 
-Strings are used to store text. They must be written inside quotation marks and can be printed, stored in variables, and joined together.
+- Strings store text values.
+- Strings are written inside quotes.
+- Use `+` to join strings, but remember to add spaces manually.
+
+Next, you will learn about integers, the data type for whole numbers.

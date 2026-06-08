@@ -1,7 +1,8 @@
 {
-  "title": "Quiz: Floats",
+  "title": "Floats Quiz",
   "description": "Check your understanding of Floats.",
-  "order": 4,
+  "passingScore": 70,
+  "isPublished": true,
   "questions": [
     {
       "type": "multiple_choice",
@@ -9,28 +10,28 @@
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "42"
+          "id": "a",
+          "text": "7"
         },
         {
-          "id": "B",
-          "text": "\"3.14\""
+          "id": "b",
+          "text": "\"7.5\""
         },
         {
-          "id": "C",
-          "text": "3.14"
+          "id": "c",
+          "text": "7.5"
         },
         {
-          "id": "D",
+          "id": "d",
           "text": "False"
         }
       ],
       "correctOptionIds": [
-        "C"
+        "c"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "A float is a number with a decimal point.",
+      "explanation": "`7.5` is a decimal number, so it is a float.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -40,32 +41,32 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What type is commonly used for measurements like 1.75?",
+      "question": "What is a common use for floats?",
       "codeSnippet": "",
       "options": [
         {
-          "id": "A",
-          "text": "int"
+          "id": "a",
+          "text": "Measurements and prices."
         },
         {
-          "id": "B",
-          "text": "str"
+          "id": "b",
+          "text": "Only chapter titles."
         },
         {
-          "id": "C",
-          "text": "float"
+          "id": "c",
+          "text": "Only true/false states."
         },
         {
-          "id": "D",
-          "text": "bool"
+          "id": "d",
+          "text": "Only file extensions."
         }
       ],
       "correctOptionIds": [
-        "C"
+        "a"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Measurements with decimals are usually floats.",
+      "explanation": "Floats are useful for decimal values such as measurements and prices.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -75,32 +76,102 @@
     },
     {
       "type": "multiple_choice",
-      "question": "What is one important thing to remember about floats?",
-      "codeSnippet": "",
+      "question": "What does this print?",
+      "codeSnippet": "print(10 + 2.5)",
       "options": [
         {
-          "id": "A",
-          "text": "They can represent decimal numbers."
+          "id": "a",
+          "text": "12"
         },
         {
-          "id": "B",
-          "text": "They can only store text."
+          "id": "b",
+          "text": "12.5"
         },
         {
-          "id": "C",
-          "text": "They always have to be negative."
+          "id": "c",
+          "text": "10 + 2.5"
         },
         {
-          "id": "D",
-          "text": "They cannot be used in calculations."
+          "id": "d",
+          "text": "Error"
         }
       ],
       "correctOptionIds": [
-        "A"
+        "b"
       ],
       "correctAnswerText": "",
       "acceptedAnswers": [],
-      "explanation": "Floats are used for decimal numbers and calculations involving decimals.",
+      "explanation": "Adding an int and a float gives a float result.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floats"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which value is still a float?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "5"
+        },
+        {
+          "id": "b",
+          "text": "5.0"
+        },
+        {
+          "id": "c",
+          "text": "\"5\""
+        },
+        {
+          "id": "d",
+          "text": "True"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "`5.0` has a decimal point, so it is a float.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": [
+        "python",
+        "floats"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why can `0.1 + 0.2` look slightly unexpected?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Because of how computers represent decimal numbers."
+        },
+        {
+          "id": "b",
+          "text": "Because Python cannot add floats."
+        },
+        {
+          "id": "c",
+          "text": "Because floats are strings."
+        },
+        {
+          "id": "d",
+          "text": "Because addition only works for integers."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Binary floating-point representation can create tiny precision differences.",
       "difficulty": "easy",
       "points": 1,
       "tags": [
@@ -108,7 +179,5 @@
         "floats"
       ]
     }
-  ],
-  "passingScore": 70,
-  "isPublished": true
+  ]
 }

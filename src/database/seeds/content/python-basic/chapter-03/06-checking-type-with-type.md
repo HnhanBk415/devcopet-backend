@@ -1,18 +1,30 @@
 # Checking Type with type()
 
-Python has a built-in function called `type()` that tells you the data type of a value.
-
-This is useful when you are learning or debugging.
+When you are not sure what type a value has, Python gives you a built-in function called `type()`. This function helps you debug code and understand why a value behaves a certain way.
 
 ---
 
-## Using type()
+## Learning Goals
+
+By the end of this lesson, you should be able to:
+
+- `type()` shows the data type of a value.
+- It is useful for debugging confusing behavior.
+- Expressions also have types.
+
+---
+
+## 1. Using type()
+
+Pass a value or variable into `type()` to see its data type.
 
 ```python
-print(type("Hello"))
-print(type(100))
-print(type(3.14))
-print(type(True))
+name = "Alex"
+age = 18
+height = 1.72
+print(type(name))
+print(type(age))
+print(type(height))
 ```
 
 Output:
@@ -21,63 +33,61 @@ Output:
 <class 'str'>
 <class 'int'>
 <class 'float'>
-<class 'bool'>
 ```
 
 ---
 
-## Checking Variables
+## 2. Why type() helps
 
-You can also check the type of a variable.
-
-```python
-name = "Lina"
-age = 21
-height = 1.68
-is_student = True
-
-print(type(name))
-print(type(age))
-print(type(height))
-print(type(is_student))
-```
-
----
-
-## Why type() Is Useful
-
-Sometimes your program may not behave as expected because a value has the wrong type.
-
-For example:
+If your code behaves strangely, checking the type can reveal that a value is text when you expected a number.
 
 ```python
-age = "18"
-print(type(age))
+score = "100"
+print(type(score))
+print(score + " points")
 ```
 
 Output:
 
 ```text
 <class 'str'>
+100 points
 ```
-
-Even though `18` looks like a number, it is a string because it is inside quotes.
 
 ---
 
-## Quick Practice
+## 3. Checking expressions
 
-Predict the type before running the code:
+You can also use `type()` on expressions, not only variables.
 
 ```python
-print(type("2026"))
-print(type(2026))
-print(type(20.26))
-print(type(False))
+print(type(10 + 5))
+print(type(10 / 5))
+print(type(10 > 5))
 ```
+
+Output:
+
+```text
+<class 'int'>
+<class 'float'>
+<class 'bool'>
+```
+
+---
+
+## Mini Practice
+
+1. Use `type()` on a string, integer, float, and boolean.
+2. Use `type()` on the result of `5 + 2`.
+3. Use `type()` on the result of `5 > 2`.
 
 ---
 
 ## Summary
 
-The `type()` function helps you inspect what kind of value Python is working with. It is especially helpful when debugging beginner mistakes.
+- `type()` shows the data type of a value.
+- It is useful for debugging confusing behavior.
+- Expressions also have types.
+
+Next, you will learn how to convert values from one type to another.

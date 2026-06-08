@@ -1,51 +1,43 @@
 # Common Loop Mistakes
 
-Loops are useful, but they can create confusing bugs. Here are common mistakes to avoid.
+Loop mistakes can create infinite loops, skipped values, or wrong output. Learning the common patterns makes debugging much easier.
 
 ---
 
-## Mistake 1: Infinite while Loop
+## Learning Goals
 
-Incorrect:
+By the end of this lesson, you should be able to:
+
+- Update while-loop variables to avoid infinite loops.
+- Remember that range stop values are excluded.
+- Indentation controls what belongs inside the loop.
+
+---
+
+## 1. Forgetting to update while variables
+
+A while loop needs progress toward its stopping condition.
 
 ```python
 count = 1
-
-while count <= 5:
-    print(count)
-```
-
-Correct:
-
-```python
-count = 1
-
-while count <= 5:
+while count <= 3:
     print(count)
     count += 1
 ```
 
----
+Output:
 
-## Mistake 2: Forgetting Indentation
-
-Incorrect:
-
-```python
-for i in range(3):
-print(i)
-```
-
-Correct:
-
-```python
-for i in range(3):
-    print(i)
+```text
+1
+2
+3
 ```
 
 ---
 
-## Mistake 3: Expecting range() to Include the Stop Value
+## 2. Off-by-one errors
+
+`range()` stops before the stop value, so `range(1, 5)` prints 1 through 4.
 
 ```python
 for i in range(1, 5):
@@ -61,16 +53,41 @@ Output:
 4
 ```
 
-The number 5 is not included.
+---
+
+## 3. Wrong indentation
+
+Indented code is inside the loop. Unindented code runs after the loop finishes.
+
+```python
+for i in range(3):
+    print(i)
+print("Done")
+```
+
+Output:
+
+```text
+0
+1
+2
+Done
+```
 
 ---
 
-## Mistake 4: Changing the Wrong Variable
+## Mini Practice
 
-Make sure the variable in the loop condition is the one being updated.
+1. Fix a while loop that never updates its counter.
+2. Predict the output of `range(1, 4)`.
+3. Move a print statement inside and outside a loop to compare behavior.
 
 ---
 
 ## Summary
 
-When debugging loops, check the condition, indentation, update step, and range boundaries.
+- Update while-loop variables to avoid infinite loops.
+- Remember that range stop values are excluded.
+- Indentation controls what belongs inside the loop.
+
+You have completed the loops chapter and are ready to practice with more complex programs.
