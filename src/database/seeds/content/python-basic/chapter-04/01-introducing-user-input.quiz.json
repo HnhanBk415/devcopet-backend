@@ -11,7 +11,7 @@
       "options": [
         {
           "id": "a",
-          "text": "It asks the user for text while the program runs."
+          "text": "It starts the database."
         },
         {
           "id": "b",
@@ -23,14 +23,16 @@
         },
         {
           "id": "d",
-          "text": "It starts the database."
+          "text": "It asks the user for text while the program runs."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "It asks the user for text while the program runs.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "`input()` reads user text from the keyboard.",
       "difficulty": "easy",
       "points": 1,
@@ -64,8 +66,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "A prompt",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "The prompt tells the user what to type.",
       "difficulty": "easy",
       "points": 1,
@@ -81,11 +85,11 @@
       "options": [
         {
           "id": "a",
-          "text": "It waits for the user to type and press Enter."
+          "text": "It skips the line."
         },
         {
           "id": "b",
-          "text": "It skips the line."
+          "text": "It waits for the user to type and press Enter."
         },
         {
           "id": "c",
@@ -97,10 +101,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "It waits for the user to type and press Enter.",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "`input()` pauses execution until the user submits text.",
       "difficulty": "easy",
       "points": 1,
@@ -116,7 +122,7 @@
       "options": [
         {
           "id": "a",
-          "text": "input(\"Enter your age: \" )"
+          "text": "input(\"x\")"
         },
         {
           "id": "b",
@@ -124,7 +130,7 @@
         },
         {
           "id": "c",
-          "text": "input(\"x\")"
+          "text": "input(\"Enter your age: \" )"
         },
         {
           "id": "d",
@@ -132,10 +138,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "input(\"Enter your age: \" )",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "A good prompt tells the user what value is expected.",
       "difficulty": "easy",
       "points": 1,
@@ -151,7 +159,7 @@
       "options": [
         {
           "id": "a",
-          "text": "It lets programs respond to different users."
+          "text": "It only changes font size."
         },
         {
           "id": "b",
@@ -163,14 +171,16 @@
         },
         {
           "id": "d",
-          "text": "It only changes font size."
+          "text": "It lets programs respond to different users."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "It lets programs respond to different users.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "Input makes programs interactive and flexible.",
       "difficulty": "easy",
       "points": 1,

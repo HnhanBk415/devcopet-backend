@@ -11,7 +11,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Run a block of code only when a condition is true."
+          "text": "It deletes all variables."
         },
         {
           "id": "b",
@@ -19,7 +19,7 @@
         },
         {
           "id": "c",
-          "text": "It deletes all variables."
+          "text": "Run a block of code only when a condition is true."
         },
         {
           "id": "d",
@@ -27,10 +27,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Run a block of code only when a condition is true.",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "Run a block of code only when a condition is true.",
       "difficulty": "easy",
       "points": 1,
@@ -46,7 +48,7 @@
       "options": [
         {
           "id": "a",
-          "text": "The code demonstrates the lesson concept."
+          "text": "The code creates a database collection."
         },
         {
           "id": "b",
@@ -58,14 +60,16 @@
         },
         {
           "id": "d",
-          "text": "The code creates a database collection."
+          "text": "The code demonstrates the lesson concept."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "The code demonstrates the lesson concept.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
@@ -99,8 +103,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "It appears often in real Python programs.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "This concept is a common building block for beginner Python programs.",
       "difficulty": "easy",
       "points": 1,
@@ -116,11 +122,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Write clear, readable code and test small examples."
+          "text": "Never run the program."
         },
         {
           "id": "b",
-          "text": "Never run the program."
+          "text": "Write clear, readable code and test small examples."
         },
         {
           "id": "c",
@@ -132,10 +138,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Write clear, readable code and test small examples.",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "Clear code and small tests make debugging easier.",
       "difficulty": "easy",
       "points": 1,
@@ -151,7 +159,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Check the types, values, and control flow step by step."
+          "text": "Assume Python is broken."
         },
         {
           "id": "b",
@@ -159,7 +167,7 @@
         },
         {
           "id": "c",
-          "text": "Assume Python is broken."
+          "text": "Check the types, values, and control flow step by step."
         },
         {
           "id": "d",
@@ -167,10 +175,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Check the types, values, and control flow step by step.",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,

@@ -11,11 +11,11 @@
       "options": [
         {
           "id": "a",
-          "text": "true"
+          "text": "True"
         },
         {
           "id": "b",
-          "text": "True"
+          "text": "true"
         },
         {
           "id": "c",
@@ -27,10 +27,12 @@
         }
       ],
       "correctOptionIds": [
-        "b"
+        "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "True",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Python booleans are `True` and `False` with capital letters.",
       "difficulty": "easy",
       "points": 1,
@@ -46,11 +48,11 @@
       "options": [
         {
           "id": "a",
-          "text": "A boolean"
+          "text": "A folder"
         },
         {
           "id": "b",
-          "text": "A folder"
+          "text": "A boolean"
         },
         {
           "id": "c",
@@ -62,10 +64,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "A boolean",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "Comparisons such as `5 > 3` return `True` or `False`.",
       "difficulty": "easy",
       "points": 1,
@@ -85,11 +89,11 @@
         },
         {
           "id": "b",
-          "text": "False"
+          "text": "18 >= 21"
         },
         {
           "id": "c",
-          "text": "18 >= 21"
+          "text": "False"
         },
         {
           "id": "d",
@@ -97,10 +101,12 @@
         }
       ],
       "correctOptionIds": [
-        "b"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "False",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "18 is not greater than or equal to 21.",
       "difficulty": "easy",
       "points": 1,
@@ -124,18 +130,20 @@
         },
         {
           "id": "c",
-          "text": "\"True\""
+          "text": "5 > 3"
         },
         {
           "id": "d",
-          "text": "5 > 3"
+          "text": "\"True\""
         }
       ],
       "correctOptionIds": [
-        "c"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "\"True\"",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "Quotes make `\"True\"` a string.",
       "difficulty": "easy",
       "points": 1,
@@ -169,8 +177,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "They help programs make decisions.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Booleans are commonly used in conditions and decision-making.",
       "difficulty": "easy",
       "points": 1,

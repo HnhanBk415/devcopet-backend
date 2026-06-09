@@ -11,7 +11,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Choose between two possible code paths."
+          "text": "It is used only for comments."
         },
         {
           "id": "b",
@@ -23,14 +23,16 @@
         },
         {
           "id": "d",
-          "text": "It is used only for comments."
+          "text": "Choose between two possible code paths."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Choose between two possible code paths.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "Choose between two possible code paths.",
       "difficulty": "easy",
       "points": 1,
@@ -64,8 +66,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "The code demonstrates the lesson concept.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
@@ -81,11 +85,11 @@
       "options": [
         {
           "id": "a",
-          "text": "It appears often in real Python programs."
+          "text": "It is only needed for changing fonts."
         },
         {
           "id": "b",
-          "text": "It is only needed for changing fonts."
+          "text": "It appears often in real Python programs."
         },
         {
           "id": "c",
@@ -97,10 +101,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "It appears often in real Python programs.",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "This concept is a common building block for beginner Python programs.",
       "difficulty": "easy",
       "points": 1,
@@ -116,7 +122,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Write clear, readable code and test small examples."
+          "text": "Use random variable names only."
         },
         {
           "id": "b",
@@ -124,7 +130,7 @@
         },
         {
           "id": "c",
-          "text": "Use random variable names only."
+          "text": "Write clear, readable code and test small examples."
         },
         {
           "id": "d",
@@ -132,10 +138,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Write clear, readable code and test small examples.",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "Clear code and small tests make debugging easier.",
       "difficulty": "easy",
       "points": 1,
@@ -151,7 +159,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Check the types, values, and control flow step by step."
+          "text": "Stop using variables forever."
         },
         {
           "id": "b",
@@ -163,14 +171,16 @@
         },
         {
           "id": "d",
-          "text": "Stop using variables forever."
+          "text": "Check the types, values, and control flow step by step."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Check the types, values, and control flow step by step.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,

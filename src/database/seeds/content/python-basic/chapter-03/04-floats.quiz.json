@@ -19,18 +19,20 @@
         },
         {
           "id": "c",
-          "text": "7.5"
+          "text": "False"
         },
         {
           "id": "d",
-          "text": "False"
+          "text": "7.5"
         }
       ],
       "correctOptionIds": [
-        "c"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "7.5",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "`7.5` is a decimal number, so it is a float.",
       "difficulty": "easy",
       "points": 1,
@@ -64,8 +66,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Measurements and prices.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Floats are useful for decimal values such as measurements and prices.",
       "difficulty": "easy",
       "points": 1,
@@ -99,8 +103,10 @@
       "correctOptionIds": [
         "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "12.5",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "Adding an int and a float gives a float result.",
       "difficulty": "easy",
       "points": 1,
@@ -120,11 +126,11 @@
         },
         {
           "id": "b",
-          "text": "5.0"
+          "text": "\"5\""
         },
         {
           "id": "c",
-          "text": "\"5\""
+          "text": "5.0"
         },
         {
           "id": "d",
@@ -132,10 +138,12 @@
         }
       ],
       "correctOptionIds": [
-        "b"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "5.0",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "`5.0` has a decimal point, so it is a float.",
       "difficulty": "easy",
       "points": 1,
@@ -151,7 +159,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Because of how computers represent decimal numbers."
+          "text": "Because addition only works for integers."
         },
         {
           "id": "b",
@@ -163,14 +171,16 @@
         },
         {
           "id": "d",
-          "text": "Because addition only works for integers."
+          "text": "Because of how computers represent decimal numbers."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Because of how computers represent decimal numbers.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "Binary floating-point representation can create tiny precision differences.",
       "difficulty": "easy",
       "points": 1,

@@ -29,8 +29,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Control loops with break and continue.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Control loops with break and continue.",
       "difficulty": "easy",
       "points": 1,
@@ -46,11 +48,11 @@
       "options": [
         {
           "id": "a",
-          "text": "The code demonstrates the lesson concept."
+          "text": "The code is HTML."
         },
         {
           "id": "b",
-          "text": "The code is HTML."
+          "text": "The code demonstrates the lesson concept."
         },
         {
           "id": "c",
@@ -62,10 +64,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "The code demonstrates the lesson concept.",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
@@ -81,7 +85,7 @@
       "options": [
         {
           "id": "a",
-          "text": "It appears often in real Python programs."
+          "text": "It prevents you from using variables."
         },
         {
           "id": "b",
@@ -89,7 +93,7 @@
         },
         {
           "id": "c",
-          "text": "It prevents you from using variables."
+          "text": "It appears often in real Python programs."
         },
         {
           "id": "d",
@@ -97,10 +101,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "It appears often in real Python programs.",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "This concept is a common building block for beginner Python programs.",
       "difficulty": "easy",
       "points": 1,
@@ -116,7 +122,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Write clear, readable code and test small examples."
+          "text": "Ignore error messages."
         },
         {
           "id": "b",
@@ -128,14 +134,16 @@
         },
         {
           "id": "d",
-          "text": "Ignore error messages."
+          "text": "Write clear, readable code and test small examples."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Write clear, readable code and test small examples.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "Clear code and small tests make debugging easier.",
       "difficulty": "easy",
       "points": 1,
@@ -169,8 +177,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Check the types, values, and control flow step by step.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,

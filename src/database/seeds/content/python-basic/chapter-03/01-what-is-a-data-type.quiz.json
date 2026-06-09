@@ -29,8 +29,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "A category that tells Python what kind of value is being used.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "A data type describes the kind of value Python is working with.",
       "difficulty": "easy",
       "points": 1,
@@ -50,11 +52,11 @@
         },
         {
           "id": "b",
-          "text": "float"
+          "text": "str"
         },
         {
           "id": "c",
-          "text": "str"
+          "text": "float"
         },
         {
           "id": "d",
@@ -62,10 +64,12 @@
         }
       ],
       "correctOptionIds": [
-        "c"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "str",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "Quotation marks make the value text, so it is a string.",
       "difficulty": "easy",
       "points": 1,
@@ -85,11 +89,11 @@
         },
         {
           "id": "b",
-          "text": "105"
+          "text": "10 5"
         },
         {
           "id": "c",
-          "text": "10 5"
+          "text": "105"
         },
         {
           "id": "d",
@@ -97,10 +101,12 @@
         }
       ],
       "correctOptionIds": [
-        "b"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "105",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "Both values are strings, so `+` joins them together.",
       "difficulty": "easy",
       "points": 1,
@@ -124,18 +130,20 @@
         },
         {
           "id": "c",
-          "text": "False"
+          "text": "\"no\""
         },
         {
           "id": "d",
-          "text": "\"no\""
+          "text": "False"
         }
       ],
       "correctOptionIds": [
-        "c"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "False",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "`False` without quotes is a boolean value.",
       "difficulty": "easy",
       "points": 1,
@@ -169,8 +177,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "They help Python decide which operations make sense.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Python uses types to decide how values should behave.",
       "difficulty": "easy",
       "points": 1,

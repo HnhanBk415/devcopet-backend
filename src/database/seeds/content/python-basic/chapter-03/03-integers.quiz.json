@@ -15,11 +15,11 @@
         },
         {
           "id": "b",
-          "text": "18"
+          "text": "18.5"
         },
         {
           "id": "c",
-          "text": "18.5"
+          "text": "18"
         },
         {
           "id": "d",
@@ -27,10 +27,12 @@
         }
       ],
       "correctOptionIds": [
-        "b"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "18",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "`18` without quotes and without a decimal point is an integer.",
       "difficulty": "easy",
       "points": 1,
@@ -46,7 +48,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Whole-number counts and quantities."
+          "text": "Only decimal measurements."
         },
         {
           "id": "b",
@@ -58,14 +60,16 @@
         },
         {
           "id": "d",
-          "text": "Only decimal measurements."
+          "text": "Whole-number counts and quantities."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Whole-number counts and quantities.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "Integers are useful for whole-number values.",
       "difficulty": "easy",
       "points": 1,
@@ -99,8 +103,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "11",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Both values are integers, so `+` performs addition.",
       "difficulty": "easy",
       "points": 1,
@@ -120,7 +126,7 @@
         },
         {
           "id": "b",
-          "text": "-4"
+          "text": "3.14"
         },
         {
           "id": "c",
@@ -128,14 +134,16 @@
         },
         {
           "id": "d",
-          "text": "3.14"
+          "text": "-4"
         }
       ],
       "correctOptionIds": [
-        "d"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "3.14",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "`3.14` has a decimal point, so it is a float.",
       "difficulty": "easy",
       "points": 1,
@@ -151,7 +159,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Quotes make it a string."
+          "text": "Quotes make it negative."
         },
         {
           "id": "b",
@@ -159,7 +167,7 @@
         },
         {
           "id": "c",
-          "text": "Quotes make it negative."
+          "text": "Quotes make it a string."
         },
         {
           "id": "d",
@@ -167,10 +175,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Quotes make it a string.",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "A quoted number is text, not an integer.",
       "difficulty": "easy",
       "points": 1,

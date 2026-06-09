@@ -29,8 +29,10 @@
       "correctOptionIds": [
         "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "int()",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "`int()` converts compatible values to integers.",
       "difficulty": "easy",
       "points": 1,
@@ -50,7 +52,7 @@
         },
         {
           "id": "b",
-          "text": "6"
+          "text": "5 + 1"
         },
         {
           "id": "c",
@@ -58,14 +60,16 @@
         },
         {
           "id": "d",
-          "text": "5 + 1"
+          "text": "6"
         }
       ],
       "correctOptionIds": [
-        "b"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "6",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "`int(\"5\")` becomes the number 5, then 1 is added.",
       "difficulty": "easy",
       "points": 1,
@@ -81,11 +85,11 @@
       "options": [
         {
           "id": "a",
-          "text": "int()"
+          "text": "float()"
         },
         {
           "id": "b",
-          "text": "float()"
+          "text": "int()"
         },
         {
           "id": "c",
@@ -97,10 +101,12 @@
         }
       ],
       "correctOptionIds": [
-        "b"
+        "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "float()",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "`float()` handles decimal-number strings.",
       "difficulty": "easy",
       "points": 1,
@@ -116,11 +122,11 @@
       "options": [
         {
           "id": "a",
-          "text": "To join a number with text."
+          "text": "To delete the score."
         },
         {
           "id": "b",
-          "text": "To delete the score."
+          "text": "To join a number with text."
         },
         {
           "id": "c",
@@ -132,10 +138,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "To join a number with text.",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "Strings can be joined with strings, so numbers must be converted first.",
       "difficulty": "easy",
       "points": 1,
@@ -159,18 +167,20 @@
         },
         {
           "id": "c",
-          "text": "str(99)"
+          "text": "int(\"hello\")"
         },
         {
           "id": "d",
-          "text": "int(\"hello\")"
+          "text": "str(99)"
         }
       ],
       "correctOptionIds": [
-        "d"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "int(\"hello\")",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "`hello` is not a valid whole number.",
       "difficulty": "easy",
       "points": 1,

@@ -11,11 +11,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Recognize and fix beginner loop errors."
+          "text": "It only changes the editor color."
         },
         {
           "id": "b",
-          "text": "It only changes the editor color."
+          "text": "Recognize and fix beginner loop errors."
         },
         {
           "id": "c",
@@ -27,10 +27,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Recognize and fix beginner loop errors.",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "Recognize and fix beginner loop errors.",
       "difficulty": "easy",
       "points": 1,
@@ -46,7 +48,7 @@
       "options": [
         {
           "id": "a",
-          "text": "The code demonstrates the lesson concept."
+          "text": "The code cannot be Python because it has variables."
         },
         {
           "id": "b",
@@ -54,7 +56,7 @@
         },
         {
           "id": "c",
-          "text": "The code cannot be Python because it has variables."
+          "text": "The code demonstrates the lesson concept."
         },
         {
           "id": "d",
@@ -62,10 +64,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "c"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "The code demonstrates the lesson concept.",
+      "acceptedAnswers": [
+        "c"
+      ],
       "explanation": "The snippet is a Python example for this lesson.",
       "difficulty": "easy",
       "points": 1,
@@ -81,7 +85,7 @@
       "options": [
         {
           "id": "a",
-          "text": "It appears often in real Python programs."
+          "text": "It replaces all other Python topics."
         },
         {
           "id": "b",
@@ -93,14 +97,16 @@
         },
         {
           "id": "d",
-          "text": "It replaces all other Python topics."
+          "text": "It appears often in real Python programs."
         }
       ],
       "correctOptionIds": [
-        "a"
+        "d"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "It appears often in real Python programs.",
+      "acceptedAnswers": [
+        "d"
+      ],
       "explanation": "This concept is a common building block for beginner Python programs.",
       "difficulty": "easy",
       "points": 1,
@@ -134,8 +140,10 @@
       "correctOptionIds": [
         "a"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Write clear, readable code and test small examples.",
+      "acceptedAnswers": [
+        "a"
+      ],
       "explanation": "Clear code and small tests make debugging easier.",
       "difficulty": "easy",
       "points": 1,
@@ -151,11 +159,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Check the types, values, and control flow step by step."
+          "text": "Delete the whole project immediately."
         },
         {
           "id": "b",
-          "text": "Delete the whole project immediately."
+          "text": "Check the types, values, and control flow step by step."
         },
         {
           "id": "c",
@@ -167,10 +175,12 @@
         }
       ],
       "correctOptionIds": [
-        "a"
+        "b"
       ],
-      "correctAnswerText": "",
-      "acceptedAnswers": [],
+      "correctAnswerText": "Check the types, values, and control flow step by step.",
+      "acceptedAnswers": [
+        "b"
+      ],
       "explanation": "Debugging means checking what the program is doing step by step.",
       "difficulty": "easy",
       "points": 1,
