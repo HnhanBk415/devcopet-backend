@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 3: Basic Data Types",
-  "slug": "basic-data-types",
-  "description": "Learn Python's core data types: strings, integers, floats, booleans, type checking, and conversion.",
+  "title": "Chapter 3: Loops",
+  "slug": "loops",
+  "description": "Repeat work safely with while loops, for loops, range(), collection iteration, break, and continue.",
   "order": 3,
-  "estimatedMinutes": 82,
+  "estimatedMinutes": 64,
   "isPublished": true
 }

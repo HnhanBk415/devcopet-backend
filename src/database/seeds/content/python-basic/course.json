@@ -1,12 +1,18 @@
 {
-  "title": "Python Basic",
+  "title": "Python Basics: Code Your First Toolkit",
   "slug": "python-basic",
-  "description": "A beginner-friendly Python course for learning programming fundamentals.",
+  "description": "A beginner-friendly Python course built like a practical adventure: learn one core idea, run a small lab, avoid the common mistake, and ship a small task in every lesson.",
   "thumbnailUrl": "",
   "level": "beginner",
   "language": "en",
   "programmingLanguage": "python",
   "order": 1,
-  "tags": ["python", "beginner", "programming"],
+  "tags": [
+    "python",
+    "beginner",
+    "hands-on",
+    "tasks",
+    "mongo-seeded"
+  ],
   "isPublished": true
 }

@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 1: Output / Print in Python",
-  "slug": "output-print-in-python",
-  "description": "Learn how to display output using Python's print() function.",
+  "title": "Chapter 1: Basic Data Types + Operators",
+  "slug": "basic-data-types-operators",
+  "description": "Turn raw values into useful program state with variables, data types, conversions, and operators.",
   "order": 1,
-  "estimatedMinutes": 20,
+  "estimatedMinutes": 72,
   "isPublished": true
 }

@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 8: Exception Handling",
-  "slug": "exception-handling",
-  "description": "Handle expected failure safely with try, except, else, finally, and clear custom errors.",
+  "title": "Chapter 8: Exception",
+  "slug": "exception",
+  "description": "Handle failure like a developer: catch expected errors, clean up safely, and raise useful exceptions.",
   "order": 8,
-  "estimatedMinutes": 76,
+  "estimatedMinutes": 75,
   "isPublished": true
 }

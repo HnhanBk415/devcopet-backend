@@ -1,89 +1,56 @@
 ## Purpose and Use Case
 
-Some failures are predictable. User input may not be numeric, a file may not exist, or a value may be missing from external data.
+Some failures are predictable, and a good program responds instead of exploding.
 
-`try` and `except` let you handle those expected failures instead of letting the whole program crash. This is essential when the program should guide the user back to a valid path.
+`try` is entering a risky room; `except` is the safety plan if the alarm goes off.
 
 ## Core Concept
 
-Put risky code inside `try`. Put the recovery behavior inside `except`.
+> Use `try` to run code that might fail and `except` to handle a specific exception. This keeps user-facing programs stable.
 
 ## Technical Breakdown
 
-### Basic pattern
+- Put only the risky lines inside `try`.
+- Catch specific exceptions when possible.
+- Use the `except` block to recover, explain, or choose a fallback.
+- Do not hide errors you do not understand.
+
+### Concept Summary
+
+| Block | Role | Example |
+|---|---|---|
+| `try` | Risky action | Convert input |
+| `except ValueError` | Recovery | Show helpful message |
+| After block | Continue program | Ask again or exit |
+
+### Guided Example
 
 ```python
+score_text = "85"
+
 try:
-    age = int("twenty")
+    score = int(score_text)
+    print("Score:", score)
 except ValueError:
     print("Please enter a valid number")
 ```
 
-Python tries to run the conversion. If a `ValueError` occurs, Python jumps to the matching `except` block.
+### Implementation Steps
 
-### Catch specific exceptions
-
-```python
-text = "42"
-
-try:
-    number = int(text)
-    print(number * 2)
-except ValueError:
-    print("Input must be a number")
-```
-
-This handles one known risk: invalid conversion.
-
-### Avoid broad exception handling
-
-```python
-# Avoid this for normal application code
-try:
-    result = int(text)
-except Exception:
-    print("Something went wrong")
-```
-
-Catching `Exception` hides useful debugging information. It can make real bugs look like normal user mistakes.
-
-### A practical input parser
-
-```python
-def parse_points(text):
-    try:
-        return int(text)
-    except ValueError:
-        return 0
-
-points = parse_points("80")
-print(points)
-```
-
-This function turns valid numeric text into an integer and uses `0` as a safe fallback.
+1. **Predict** what each line should do before running it.
+2. **Run** the code and compare the terminal output with your prediction.
+3. **Change one value** and run again.
+4. **Explain the result** in one concise sentence.
 
 ## Best Practices
 
-- Catch the most specific exception you can.
-- Keep the `try` block small so the risky operation is obvious.
-- Use `except` for recovery, not for hiding bugs.
-- Include a useful fallback or message.
+- **Tip 1:** Avoid bare `except:` because it catches too much.
+- **Tip 2:** Keep recovery messages clear for the user.
+- **Tip 3:** If the program cannot recover, let the error be visible during development.
 
-> **Warning:** A large `try` block makes it hard to know which line actually failed.
-
-## Concept Summary
-
-**Key idea:** `try/except` handles expected failure without stopping the entire program.
-
-| Part | Purpose |
-|---|---|
-| `try` | Runs risky code |
-| `except` | Handles a matching exception |
-| Specific exception | Keeps the handler precise |
-
-> **Rule:** Catch the error you expect, not every possible error.
+> **Common mistake:** Avoid copying code mechanically. Before running it, predict what should happen; after running it, explain why it happened.
 
 ## Practice Check
 
-- Write a function that converts text to an integer and returns `0` when conversion fails.
-- Test it with `"50"`, `"abc"`, and `""`.
+- Wrap `int("abc")` in `try/except ValueError` and print a friendly message.
+- Modify one value in the guided example and predict the new output before executing it.

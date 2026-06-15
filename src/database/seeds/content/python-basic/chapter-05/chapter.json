@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 5: Operators",
-  "slug": "operators",
-  "description": "Learn arithmetic, comparison, assignment, and precedence rules in Python.",
+  "title": "Chapter 5: Function",
+  "slug": "function",
+  "description": "Package logic into reusable functions with parameters, return values, scope, and clean defaults.",
   "order": 5,
-  "estimatedMinutes": 82,
+  "estimatedMinutes": 68,
   "isPublished": true
 }

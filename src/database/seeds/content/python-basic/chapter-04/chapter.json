@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 4: User Input",
-  "slug": "user-input",
-  "description": "Learn how to collect user input, store it, and convert it for calculations.",
+  "title": "Chapter 4: Basic Data Structures",
+  "slug": "basic-data-structures",
+  "description": "Organize real data with lists, tuples, dictionaries, and sets, then choose the right tool for the job.",
   "order": 4,
-  "estimatedMinutes": 70,
+  "estimatedMinutes": 66,
   "isPublished": true
 }

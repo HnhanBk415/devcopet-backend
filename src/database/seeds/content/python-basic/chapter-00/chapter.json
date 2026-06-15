@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 0: Introduction",
-  "slug": "introduction",
-  "description": "Set up the Python environment, choose an IDE/code editor, and write your first Hello World program.",
+  "title": "Chapter 0: Introduction + Output/Print in Python",
+  "slug": "introduction-output-print-in-python",
+  "description": "Set up the learner mindset, run Python scripts, and make your program speak clearly with print().",
   "order": 0,
-  "estimatedMinutes": 30,
+  "estimatedMinutes": 49,
   "isPublished": true
 }

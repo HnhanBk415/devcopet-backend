@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 6: Conditions",
-  "slug": "conditions",
-  "description": "Use boolean expressions and if/elif/else statements to make programs choose different paths.",
+  "title": "Chapter 6: String Processing",
+  "slug": "string-processing",
+  "description": "Clean, search, split, join, and format text so messy user input becomes reliable data.",
   "order": 6,
-  "estimatedMinutes": 84,
+  "estimatedMinutes": 67,
   "isPublished": true
 }

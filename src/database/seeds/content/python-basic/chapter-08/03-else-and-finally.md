@@ -1,91 +1,60 @@
 ## Purpose and Use Case
 
-Handling errors is only one part of reliable code. You may also need to run success-only logic or cleanup code no matter what happened.
+Sometimes you need code that runs only on success, and cleanup that runs no matter what.
 
-`else` and `finally` make exception handling more precise. They separate successful work from recovery work and cleanup work.
+`else` is the victory animation; `finally` is cleaning the runtime environment after every match.
 
 ## Core Concept
 
-In a `try` statement, `else` runs only if no exception occurs. `finally` runs whether an exception occurred or not.
+> In exception handling, `else` runs when no exception happens. `finally` runs whether an exception happened or not.
 
 ## Technical Breakdown
 
-### try, except, else
+- Use `else` for success-only logic.
+- Use `finally` for cleanup or final messages.
+- Keep risky code in `try`, not in `else`.
+- With files, `with open()` often handles cleanup better than `finally`.
 
-```python
-try:
-    score = int("95")
-except ValueError:
-    print("Invalid score")
-else:
-    print("Score saved:", score)
-```
+### Concept Summary
 
-The `else` block runs only after the risky operation succeeds.
-
-### finally always runs
-
-```python
-try:
-    file = open("progress.txt")
-    content = file.read()
-except FileNotFoundError:
-    print("Progress file not found")
-finally:
-    print("Read attempt finished")
-```
-
-The `finally` block is useful for cleanup, logging, or releasing resources.
-
-### How the blocks behave
-
-| Block | Runs when | Purpose |
+| Block | Runs when | Typical use |
 |---|---|---|
-| `try` | First | Attempt risky work |
-| `except` | Error occurs | Recover from failure |
-| `else` | No error occurs | Run success-only code |
-| `finally` | Always | Cleanup or final step |
+| `try` | Always attempted | Risky operation |
+| `except` | Matching error | Recovery |
+| `else` | No error | Success path |
+| `finally` | Always | Cleanup |
 
-### A realistic pattern
+### Guided Example
 
 ```python
-def load_points(text):
-    try:
-        points = int(text)
-    except ValueError:
-        print("Invalid points")
-        return 0
-    else:
-        print("Points loaded")
-        return points
-    finally:
-        print("Validation complete")
+text = "42"
+
+try:
+    number = int(text)
+except ValueError:
+    print("Invalid number")
+else:
+    print("Double:", number * 2)
+finally:
+    print("Parsing attempt finished")
 ```
 
-This structure keeps each responsibility separate.
+### Implementation Steps
+
+1. **Predict** what each line should do before running it.
+2. **Run** the code and compare the terminal output with your prediction.
+3. **Change one value** and run again.
+4. **Explain the result** in one concise sentence.
 
 ## Best Practices
 
-- Use `else` when success logic should not be inside `try`.
-- Use `finally` for cleanup that must always happen.
-- Do not put complex business logic in `finally`.
-- Keep each block focused on one purpose.
+- **Tip 1:** Use `else` to keep success code separate from risky code.
+- **Tip 2:** Do not put too much logic in `finally`; it should be predictable.
+- **Tip 3:** For beginners, `try/except` is enough most of the time; add `else/finally` when the flow is clearer.
 
-> **Rule:** Use `else` for success and `finally` for cleanup.
-
-## Concept Summary
-
-**Key idea:** `else` and `finally` make exception handling easier to organize.
-
-| Block | Main job |
-|---|---|
-| `except` | Handle failure |
-| `else` | Handle success |
-| `finally` | Always run cleanup |
-
-> **Rule:** If code should run only after success, put it in `else`, not `finally`.
+> **Common mistake:** Avoid copying code mechanically. Before running it, predict what should happen; after running it, explain why it happened.
 
 ## Practice Check
 
-- Write a `try/except/else` block that converts text to an integer and prints success only when conversion works.
-- Add a `finally` block that prints `"Done"` every time.
+- Create a parse attempt that prints “success” only when conversion works.
+- Modify one value in the guided example and predict the new output before executing it.

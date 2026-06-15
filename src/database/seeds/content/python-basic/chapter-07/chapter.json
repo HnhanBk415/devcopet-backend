@@ -1,8 +1,8 @@
 {
-  "title": "Chapter 7: Loops",
-  "slug": "loops",
-  "description": "Repeat tasks with while loops, for loops, range(), break, and continue.",
+  "title": "Chapter 7: Basic File Reading and Writing",
+  "slug": "basic-file-reading-and-writing",
+  "description": "Read and write simple files so programs can remember data between runs.",
   "order": 7,
-  "estimatedMinutes": 86,
+  "estimatedMinutes": 78,
   "isPublished": true
 }

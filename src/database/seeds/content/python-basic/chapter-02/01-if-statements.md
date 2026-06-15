@@ -1,85 +1,54 @@
 ## Purpose and Use Case
 
-A program becomes useful when it can **react to data**. Without conditions, Python would run the same instructions every time, even when the situation changes.
+Programs that cannot make decisions are just calculators with no survival instinct.
 
-Use an **if statement** when an action should happen only in a specific case. Examples include unlocking a lesson, showing a warning, applying a discount, or stopping invalid input before it causes damage.
+An `if` statement is a gate: it opens only when the condition is true.
 
 ## Core Concept
 
-An **if statement** checks a condition. If the condition is `True`, Python runs the indented block under it; if the condition is `False`, Python skips that block.
+> An **if statement** runs a block of code only when a condition evaluates to `True`. It is the basic building block of decision-making.
 
 ## Technical Breakdown
 
-### Basic pattern
+- The condition must produce a boolean-like result.
+- The controlled block must be indented.
+- If the condition is false, Python skips the block.
+- Use comparisons like `>=`, `==`, and `<` to create conditions.
+
+### Concept Summary
+
+| Condition | Meaning | Block runs? |
+|---|---|---|
+| `score >= 70` | Passed quiz | Yes if score is 70+ |
+| `is_locked` | Content locked | Yes if True |
+| `name == "Ana"` | Exact match | Yes only for Ana |
+
+### Guided Example
 
 ```python
-score = 85
+score = 82
 
 if score >= 70:
-    print("Passed")
-```
-
-Python reads this as: **if the score is at least 70, print the message**.
-
-The line after `if` must be indented. That indentation tells Python which instruction belongs to the condition.
-
-### Conditions are yes-or-no checks
-
-Most conditions produce either `True` or `False`.
-
-```python
-level = 3
-
-print(level >= 2)   # True
-print(level == 5)   # False
-```
-
-An `if` statement uses the result of that check to decide whether the block should run.
-
-### A practical example
-
-```python
-xp = 120
-required_xp = 100
-
-if xp >= required_xp:
+    print("Quiz passed")
     print("Next lesson unlocked")
 ```
 
-This mirrors a real learning platform: the user earns XP, and the system decides whether the next lesson should become available.
+### Implementation Steps
 
-### Common comparison operators
-
-| Operator | Meaning | Example |
-|---|---|---|
-| `==` | Equal to | `role == "admin"` |
-| `>=` | At least | `xp >= 100` |
-| `<` | Less than | `attempts < 3` |
-
-Use comparison operators when your program needs to make a decision based on a value.
+1. **Predict** what each line should do before running it.
+2. **Run** the code and compare the terminal output with your prediction.
+3. **Change one value** and run again.
+4. **Explain the result** in one concise sentence.
 
 ## Best Practices
 
-- Write conditions that read like simple English.
-- Keep the `if` block focused on one clear action.
-- Use meaningful variable names such as `required_xp`, not `x`.
-- Test the condition with values that should pass and values that should fail.
+- **Tip 1:** Use `==` for comparison, not `=`.
+- **Tip 2:** Keep conditions readable; store complex checks in well-named variables.
+- **Tip 3:** Indentation is not decoration in Python; it defines the block.
 
-> **Warning:** Use `==` for comparison. A single `=` is for assignment and cannot be used to check equality inside a condition.
-
-## Concept Summary
-
-**Key idea:** An `if` statement runs a block only when its condition is `True`.
-
-| Part | Purpose |
-|---|---|
-| `if` | Starts the decision |
-| Condition | Produces `True` or `False` |
-| Indented block | Runs only when the condition passes |
-
-> **Rule:** Use `if` when your program should take action only under a specific condition.
+> **Common mistake:** Avoid copying code mechanically. Before running it, predict what should happen; after running it, explain why it happened.
 
 ## Practice Check
 
-- Create a variable `score` and print `"Passed"` only when the score is at least `70`.
-- Create a variable `energy` and print `"Rest needed"` only when energy is below `20`.
+- Write an `if` that prints “Boss unlocked” only when `stage` is at least 5.
+- Modify one value in the guided example and predict the new output before executing it.

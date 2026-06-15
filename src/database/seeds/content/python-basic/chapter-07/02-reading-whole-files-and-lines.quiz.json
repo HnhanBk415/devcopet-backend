@@ -1,0 +1,152 @@
+{
+  "title": "Reading Whole Files and Lines Assessment",
+  "description": "Multiple-choice assessment for Reading Whole Files and Lines.",
+  "passingScore": 70,
+  "isPublished": true,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What practical problem does this lesson help solve?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Saved data is only useful if your program can load it back correctly."
+        },
+        {
+          "id": "b",
+          "text": "It lets you avoid running code completely."
+        },
+        {
+          "id": "c",
+          "text": "It replaces the need for readable variable names."
+        },
+        {
+          "id": "d",
+          "text": "It is mainly theoretical and has little effect on implementation quality."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Saved data is only useful if your program can load it back correctly.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "reading-whole-files-and-lines",
+        "why"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which practice best supports the lesson workflow?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Write a large program before testing smaller parts."
+        },
+        {
+          "id": "b",
+          "text": "Predict the output, run a small example, then change one value."
+        },
+        {
+          "id": "c",
+          "text": "Ignore output as long as the editor has no red underline."
+        },
+        {
+          "id": "d",
+          "text": "Copy code without understanding the data it uses."
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Small prediction loops build real debugging skill.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "reading-whole-files-and-lines",
+        "practice"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the safest beginner habit when this concept feels confusing?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Add more code until the error disappears."
+        },
+        {
+          "id": "b",
+          "text": "Delete the line that creates the error without reading it."
+        },
+        {
+          "id": "c",
+          "text": "Print the important value, inspect its type, and test a smaller case."
+        },
+        {
+          "id": "d",
+          "text": "Use shorter variable names so the code looks advanced."
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Reducing the problem and inspecting data makes debugging faster.",
+      "difficulty": "medium",
+      "points": 20,
+      "tags": [
+        "python",
+        "reading-whole-files-and-lines",
+        "debugging"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which statement best describes the core idea?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "The main goal is to memorize every symbol before running anything."
+        },
+        {
+          "id": "b",
+          "text": "The concept is only useful after learning advanced frameworks."
+        },
+        {
+          "id": "c",
+          "text": "The best program is the one with the most lines."
+        },
+        {
+          "id": "d",
+          "text": "Use .read() for the whole file and .readlines() or a file loop for lines. Choose based on how much control you need."
+        }
+      ],
+      "correctOptionIds": [
+        "d"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Use .read() for the whole file and .readlines() or a file loop for lines. Choose based on how much control you need.",
+      "difficulty": "medium",
+      "points": 20,
+      "tags": [
+        "python",
+        "reading-whole-files-and-lines",
+        "concept"
+      ]
+    }
+  ]
+}
