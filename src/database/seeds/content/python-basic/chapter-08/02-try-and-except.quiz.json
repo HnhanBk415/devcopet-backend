@@ -1,0 +1,148 @@
+{
+  "title": "try and except Assessment",
+  "description": "Multiple-choice assessment for try and except.",
+  "passingScore": 70,
+  "isPublished": true,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What belongs inside a try block?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Code that may raise an expected exception"
+        },
+        {
+          "id": "b",
+          "text": "Only comments"
+        },
+        {
+          "id": "c",
+          "text": "Only variable names"
+        },
+        {
+          "id": "d",
+          "text": "Code that should never run"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Risky operations, such as conversions or file reads, belong inside try.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "try-and-except"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why should you catch specific exceptions?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "It avoids hiding unrelated bugs"
+        },
+        {
+          "id": "b",
+          "text": "It makes Python ignore indentation"
+        },
+        {
+          "id": "c",
+          "text": "It removes the need for tests"
+        },
+        {
+          "id": "d",
+          "text": "It prevents all future errors"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Specific handlers recover from expected problems without masking other bugs.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "try-and-except"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens when the matching exception occurs inside try?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Python jumps to the matching except block"
+        },
+        {
+          "id": "b",
+          "text": "Python deletes the file"
+        },
+        {
+          "id": "c",
+          "text": "Python restarts the program"
+        },
+        {
+          "id": "d",
+          "text": "Python skips all future code forever"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The matching except block handles the exception and lets the program continue if possible.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "try-and-except"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is a good habit for try blocks?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Keep them small and focused"
+        },
+        {
+          "id": "b",
+          "text": "Put the entire program inside one try"
+        },
+        {
+          "id": "c",
+          "text": "Catch Exception for every feature"
+        },
+        {
+          "id": "d",
+          "text": "Avoid naming the exception type"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Small try blocks make it clear which operation might fail.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "try-and-except"
+      ]
+    }
+  ]
+}

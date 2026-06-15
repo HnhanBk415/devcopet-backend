@@ -1,0 +1,148 @@
+{
+  "title": "Elif Chains Assessment",
+  "description": "Multiple-choice assessment for Elif Chains.",
+  "passingScore": 70,
+  "isPublished": true,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does elif mean in practice?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Check another condition if previous conditions failed"
+        },
+        {
+          "id": "b",
+          "text": "Run all matching conditions"
+        },
+        {
+          "id": "c",
+          "text": "Repeat the previous condition"
+        },
+        {
+          "id": "d",
+          "text": "End the program immediately"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "elif gives another conditional branch after an earlier if or elif failed.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "elif-chains"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why does condition order matter in an elif chain?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Python runs the first matching branch and skips the rest"
+        },
+        {
+          "id": "b",
+          "text": "Python sorts conditions automatically"
+        },
+        {
+          "id": "c",
+          "text": "Only the last condition is checked"
+        },
+        {
+          "id": "d",
+          "text": "Order only affects comments"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Once a condition matches, Python does not continue checking later branches in the same chain.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "elif-chains"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which condition should usually come first?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "The most specific condition"
+        },
+        {
+          "id": "b",
+          "text": "The easiest condition to type"
+        },
+        {
+          "id": "c",
+          "text": "The condition with the shortest variable name"
+        },
+        {
+          "id": "d",
+          "text": "The else branch"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Specific checks should appear before broad checks so they are not accidentally skipped.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "elif-chains"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which structure is best for ranking a score into several levels?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "if/elif/else"
+        },
+        {
+          "id": "b",
+          "text": "A single print statement"
+        },
+        {
+          "id": "c",
+          "text": "A comment block"
+        },
+        {
+          "id": "d",
+          "text": "Only an else block"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Several possible levels are a natural use case for if/elif/else.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "elif-chains"
+      ]
+    }
+  ]
+}

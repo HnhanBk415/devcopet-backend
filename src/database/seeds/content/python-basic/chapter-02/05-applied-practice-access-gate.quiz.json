@@ -1,0 +1,148 @@
+{
+  "title": "Applied Practice: Access Gate Assessment",
+  "description": "Multiple-choice assessment for Applied Practice: Access Gate.",
+  "passingScore": 70,
+  "isPublished": true,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Why should serious rejection rules often come first in an access gate?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "They prevent invalid users from reaching later checks"
+        },
+        {
+          "id": "b",
+          "text": "They make variables unnecessary"
+        },
+        {
+          "id": "c",
+          "text": "They force every branch to run"
+        },
+        {
+          "id": "d",
+          "text": "They remove the need for else"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Blocking rules such as login or restriction status should be handled before success logic.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "applied-practice-access-gate"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is a benefit of giving each rejection branch a clear message?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "The user understands why access was denied"
+        },
+        {
+          "id": "b",
+          "text": "The program ignores bad input"
+        },
+        {
+          "id": "c",
+          "text": "The code runs without indentation"
+        },
+        {
+          "id": "d",
+          "text": "The condition becomes optional"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Specific messages improve usability and make the decision easier to debug.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "applied-practice-access-gate"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does the final else usually represent in an access gate?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "The success path after all rejection checks failed"
+        },
+        {
+          "id": "b",
+          "text": "The first error in the program"
+        },
+        {
+          "id": "c",
+          "text": "A repeated condition"
+        },
+        {
+          "id": "d",
+          "text": "A comment for future developers"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "After all blocking conditions are handled, else can safely grant access.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "applied-practice-access-gate"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which test strategy is best for an access gate?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Test each branch with separate input values"
+        },
+        {
+          "id": "b",
+          "text": "Only test the success case"
+        },
+        {
+          "id": "c",
+          "text": "Avoid changing inputs"
+        },
+        {
+          "id": "d",
+          "text": "Delete conditions one by one"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Each branch should be tested so you know every response can occur correctly.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "applied-practice-access-gate"
+      ]
+    }
+  ]
+}

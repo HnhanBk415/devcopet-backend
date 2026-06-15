@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 8: Exception Handling",
+  "slug": "exception-handling",
+  "description": "Handle expected failure safely with try, except, else, finally, and clear custom errors.",
+  "order": 8,
+  "estimatedMinutes": 76,
+  "isPublished": true
+}

@@ -1,0 +1,148 @@
+{
+  "title": "Else Blocks Assessment",
+  "description": "Multiple-choice assessment for Else Blocks.",
+  "passingScore": 70,
+  "isPublished": true,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "When does an else block run?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "When the if condition is false"
+        },
+        {
+          "id": "b",
+          "text": "Before the if condition is checked"
+        },
+        {
+          "id": "c",
+          "text": "Only when there is an error"
+        },
+        {
+          "id": "d",
+          "text": "Every time the program starts"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The else block is the fallback path when the if condition fails.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "else-blocks"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which situation is best suited for if/else?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "A decision with two clear outcomes"
+        },
+        {
+          "id": "b",
+          "text": "A loop that repeats many times"
+        },
+        {
+          "id": "c",
+          "text": "A list with many items"
+        },
+        {
+          "id": "d",
+          "text": "A file that must be deleted"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "if/else is ideal when a decision has a main path and one fallback path.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "else-blocks"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Why is else often cleaner than writing the opposite condition manually?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "It connects the two outcomes in one decision"
+        },
+        {
+          "id": "b",
+          "text": "It makes Python run faster in every case"
+        },
+        {
+          "id": "c",
+          "text": "It removes the need for indentation"
+        },
+        {
+          "id": "d",
+          "text": "It prevents variables from changing"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "else makes the relationship between the main condition and fallback obvious.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "else-blocks"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What should a good else message often provide?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "A reason or next step"
+        },
+        {
+          "id": "b",
+          "text": "A random number"
+        },
+        {
+          "id": "c",
+          "text": "A hidden error"
+        },
+        {
+          "id": "d",
+          "text": "An unrelated print statement"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A useful fallback helps the user understand what happened and what to do next.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "else-blocks"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "title": "If Statements Assessment",
+  "description": "Multiple-choice assessment for If Statements.",
+  "passingScore": 70,
+  "isPublished": true,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does an if statement do?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Runs a block only when a condition is true"
+        },
+        {
+          "id": "b",
+          "text": "Repeats a block forever"
+        },
+        {
+          "id": "c",
+          "text": "Creates a new variable automatically"
+        },
+        {
+          "id": "d",
+          "text": "Prints every value in a program"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "An if statement checks a condition and runs its indented block only when the condition is true.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "if-statements"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "In Python, which part belongs to the if statement body?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "The indented lines under the if statement"
+        },
+        {
+          "id": "b",
+          "text": "Every line after the if statement"
+        },
+        {
+          "id": "c",
+          "text": "Only the condition line"
+        },
+        {
+          "id": "d",
+          "text": "Only lines inside quotation marks"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Indentation defines which statements are controlled by the if condition.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "if-statements"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator checks equality?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "=="
+        },
+        {
+          "id": "b",
+          "text": "="
+        },
+        {
+          "id": "c",
+          "text": ">="
+        },
+        {
+          "id": "d",
+          "text": "!="
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "`==` compares two values. `=` assigns a value to a variable.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "if-statements"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens when an if condition is false and there is no else block?",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Python skips the indented block"
+        },
+        {
+          "id": "b",
+          "text": "Python stops the entire program"
+        },
+        {
+          "id": "c",
+          "text": "Python runs the block anyway"
+        },
+        {
+          "id": "d",
+          "text": "Python creates an error automatically"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "When the condition is false, the controlled block is skipped.",
+      "difficulty": "easy",
+      "points": 15,
+      "tags": [
+        "python",
+        "if-statements"
+      ]
+    }
+  ]
+}
