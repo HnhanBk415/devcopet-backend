@@ -1,0 +1,71 @@
+{
+  "description": "A quick check to review basic Big O time complexity.",
+  "isPublished": true,
+  "order": 1,
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "The exact number of seconds a program runs"
+        },
+        {
+          "id": "b",
+          "text": "How an algorithm grows as input size increases"
+        },
+        {
+          "id": "c",
+          "text": "The color of the code editor"
+        },
+        {
+          "id": "d",
+          "text": "The number of files in a project"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Big O describes how the number of operations grows when the input size grows.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": []
+    },
+    {
+      "type": "multiple_choice",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "O(1)"
+        },
+        {
+          "id": "b",
+          "text": "O(n)"
+        },
+        {
+          "id": "c",
+          "text": "O(n²)"
+        },
+        {
+          "id": "d",
+          "text": "O(log n)"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "A loop that visits every item once grows linearly with the input size, so it is O(n).",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": []
+    }
+  ],
+  "title": "Time Complexity and Big O Quiz"
+}

@@ -1,0 +1,62 @@
+{
+    "title": "String Basics and Common Operations Quiz",
+    "description": "A quick check to review Python string basics.",
+    "passingScore": 50,
+    "questions": [
+        {
+            "type": "multiple_choice",
+            "questionText": "What does it mean that Python strings are immutable?",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "A string cannot be looped through"
+                },
+                {
+                    "id": "b",
+                    "text": "A string cannot be changed directly after it is created"
+                },
+                {
+                    "id": "c",
+                    "text": "A string can only contain numbers"
+                },
+                {
+                    "id": "d",
+                    "text": "A string has no length"
+                }
+            ],
+            "correctOptionIds": [
+                "b"
+            ],
+            "explanation": "Strings are immutable, so you cannot directly change a character inside an existing string.",
+            "points": 1
+        },
+        {
+            "type": "code_output",
+            "questionText": "What is the output of the following code?",
+            "codeSnippet": "word = \"hello\"\nprint(word[::-1])",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "hello"
+                },
+                {
+                    "id": "b",
+                    "text": "olleh"
+                },
+                {
+                    "id": "c",
+                    "text": "h"
+                },
+                {
+                    "id": "d",
+                    "text": "error"
+                }
+            ],
+            "correctOptionIds": [
+                "b"
+            ],
+            "explanation": "The slicing expression word[::-1] reverses the string.",
+            "points": 1
+        }
+    ]
+}

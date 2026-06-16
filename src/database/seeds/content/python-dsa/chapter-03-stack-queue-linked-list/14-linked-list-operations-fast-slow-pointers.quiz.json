@@ -1,0 +1,62 @@
+{
+  "title": "Linked List Operations and Fast-Slow Pointers Quiz",
+  "description": "A quick check to review linked list operations and the fast-slow pointer pattern.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "In the fast-slow pointer pattern, how does the fast pointer usually move?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One step at a time"
+        },
+        {
+          "id": "b",
+          "text": "Two steps at a time"
+        },
+        {
+          "id": "c",
+          "text": "It never moves"
+        },
+        {
+          "id": "d",
+          "text": "It moves backward only"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "The fast pointer usually moves two steps at a time, while the slow pointer moves one step.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\nhead = Node(10)\nhead.next = Node(20)\nhead.next.next = Node(30)\nhead.next.next.next = Node(40)\nhead.next.next.next.next = Node(50)\n\nslow = head\nfast = head\n\nwhile fast is not None and fast.next is not None:\n    slow = slow.next\n    fast = fast.next.next\n\nprint(slow.value)",
+      "options": [
+        {
+          "id": "a",
+          "text": "10"
+        },
+        {
+          "id": "b",
+          "text": "20"
+        },
+        {
+          "id": "c",
+          "text": "30"
+        },
+        {
+          "id": "d",
+          "text": "50"
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "explanation": "When fast reaches the end, slow points to the middle node, which has value 30.",
+      "points": 1
+    }
+  ]
+}

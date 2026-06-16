@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "what-is-dsa",
+    "contentFormat": "markdown",
+    "description": "Understand what Data Structures and Algorithms are and why they matter.",
+    "estimatedMinutes": 10,
+    "isPublished": true,
+    "order": 1,
+    "title": "What is DSA?",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "01-what-is-dsa.md",
+    "quizFile": "01-what-is-dsa.quiz.json"
+  },
+  {
+    "slug": "algorithmic-thinking",
+    "contentFormat": "markdown",
+    "description": "Learn how to break problems into clear steps before writing code.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 2,
+    "title": "Algorithmic Thinking",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "02-algorithmic-thinking.md",
+    "quizFile": "02-algorithmic-thinking.quiz.json"
+  },
+  {
+    "slug": "time-complexity-and-big-o",
+    "contentFormat": "markdown",
+    "description": "Understand how Big O describes the growth of an algorithm's running time.",
+    "estimatedMinutes": 20,
+    "isPublished": true,
+    "order": 3,
+    "title": "Time Complexity and Big O",
+    "type": "reading",
+    "xpReward": 15,
+    "filename": "03-time-complexity-and-big-o.md",
+    "quizFile": "03-time-complexity-and-big-o.quiz.json"
+  },
+  {
+    "slug": "space-complexity",
+    "contentFormat": "markdown",
+    "description": "Learn how to analyze the extra memory used by an algorithm.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 4,
+    "title": "Space Complexity",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "04-space-complexity.md",
+    "quizFile": "04-space-complexity.quiz.json"
+  }
+]

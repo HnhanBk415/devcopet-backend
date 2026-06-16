@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import { Model } from 'mongoose';
@@ -31,7 +32,7 @@ function listChapterDirs(basePath: string): string[] {
   }
 }
 
-export async function seedPythonBasic(
+export async function seedPythonDsa(
   CourseModel: Model<any>,
 
   ChapterModel: Model<any>,
@@ -40,7 +41,7 @@ export async function seedPythonBasic(
 
   QuizModel?: Model<any>,
 ): Promise<void> {
-  const basePath = path.resolve(__dirname, 'content', 'python-basic');
+  const basePath = path.resolve(__dirname, 'content', 'python-dsa');
   const courseJsonPath = path.join(basePath, 'course.json');
 
   if (!fs.existsSync(courseJsonPath)) {
@@ -57,6 +58,34 @@ export async function seedPythonBasic(
     { new: true, upsert: true },
   );
   console.log(`[Seed] Course upserted: ${courseData.title}`);
+
+  // Clean up old data to avoid DuplicateKey conflicts on indexes
+  const oldChapters = await ChapterModel.find(
+    { courseId: course._id },
+    { _id: 1 },
+  );
+  const oldChapterIds = oldChapters.map((ch: any) => String(ch._id));
+
+  if (oldChapterIds.length > 0) {
+    if (QuizModel) {
+      const deletedQuizzes = await QuizModel.deleteMany({
+        chapterId: { $in: oldChapterIds },
+      });
+      console.log(
+        `[Seed] Cleaned up ${deletedQuizzes.deletedCount} old quizzes`,
+      );
+    }
+    const deletedLessons = await LessonModel.deleteMany({
+      chapterId: { $in: oldChapterIds },
+    });
+    console.log(`[Seed] Cleaned up ${deletedLessons.deletedCount} old lessons`);
+    const deletedChapters = await ChapterModel.deleteMany({
+      courseId: course._id,
+    });
+    console.log(
+      `[Seed] Cleaned up ${deletedChapters.deletedCount} old chapters`,
+    );
+  }
 
   const chapterDirs = listChapterDirs(basePath);
   let totalCourseChapters = 0;

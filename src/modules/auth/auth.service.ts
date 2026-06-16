@@ -11,9 +11,8 @@ import { LoginDto } from './dto/login.dto';
 import { UserRole } from '../users/schemas/user.schema';
 import * as bcryptjs from 'bcryptjs';
 
-
 export interface SocialProfile {
-  provider: string;       // 'github' | 'google' | 'facebook'
+  provider: string; // 'github' | 'google' | 'facebook'
   providerId: string;
   email: string;
   username: string;
@@ -35,7 +34,8 @@ export class AuthService {
   private signAccessToken(userId: string, email: string): string {
     const opts: JwtSignOptions = {
       secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-      expiresIn: (this.configService.get<string>('JWT_ACCESS_EXPIRES_IN') ?? '15m') as JwtSignOptions['expiresIn'],
+      expiresIn: (this.configService.get<string>('JWT_ACCESS_EXPIRES_IN') ??
+        '15m') as JwtSignOptions['expiresIn'],
     };
     return this.jwtService.sign({ sub: userId, email }, opts);
   }
@@ -43,7 +43,8 @@ export class AuthService {
   private signRefreshToken(userId: string): string {
     const opts: JwtSignOptions = {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      expiresIn: (this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') ?? '7d') as JwtSignOptions['expiresIn'],
+      expiresIn: (this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') ??
+        '7d') as JwtSignOptions['expiresIn'],
     };
     return this.jwtService.sign({ sub: userId }, opts);
   }
@@ -161,7 +162,10 @@ export class AuthService {
     }
 
     // Verify the token matches the stored hash
-    const tokenMatches = await bcryptjs.compare(refreshToken, user.refreshTokenHash);
+    const tokenMatches = await bcryptjs.compare(
+      refreshToken,
+      user.refreshTokenHash,
+    );
     if (!tokenMatches) {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
@@ -206,43 +210,53 @@ export class AuthService {
       | 'googleId'
       | 'facebookId';
 
-    // Look up by email — primary account-linking mechanism.
-    // If the same email already has an account, link the new provider to it.
-    const userByEmail = profile.email
-      ? await this.usersService.findByEmail(profile.email)
-      : null;
-
     let userId: string;
 
-    if (userByEmail) {
-      // Link this social provider to the existing email account
-      await this.usersService.linkSocialProvider(
-        String(userByEmail._id),
-        profile.provider,
-        profile.providerId,
-        profile.avatarUrl,
-      );
-      userId = String(userByEmail._id);
-    } else {
-      // Create a brand new Devcopet user for this social account
-      const fallbackUsername =
-        profile.username ||
-        `user_${Date.now().toString(36)}`;
+    // 1. Find user by social provider ID first
+    const userBySocialId = await this.usersService.findBySocialId(
+      profile.provider as 'google' | 'facebook' | 'github',
+      profile.providerId,
+    );
 
-      const newUser = await this.usersService.create({
-        username: fallbackUsername,
-        email: profile.email || `${profile.provider}_${profile.providerId}@devcopet.local`,
-        [providerIdField]: profile.providerId,
-        authProviders: [profile.provider],
-        avatarUrl: profile.avatarUrl,
-        role: UserRole.STUDENT,
-        level: 1,
-        exp: 0,
-        coins: 0,
-        onboardingCompleted: false,
-        petProfileInitialized: false,
-      });
-      userId = String(newUser._id);
+    if (userBySocialId) {
+      userId = String(userBySocialId._id);
+    } else {
+      // 2. If not found by social ID, look up by email — primary account-linking mechanism
+      const userByEmail = profile.email
+        ? await this.usersService.findByEmail(profile.email)
+        : null;
+
+      if (userByEmail) {
+        // Link this social provider to the existing email account
+        await this.usersService.linkSocialProvider(
+          String(userByEmail._id),
+          profile.provider,
+          profile.providerId,
+          profile.avatarUrl,
+        );
+        userId = String(userByEmail._id);
+      } else {
+        // 3. Create a brand new Devcopet user for this social account
+        const fallbackUsername =
+          profile.username || `user_${Date.now().toString(36)}`;
+
+        const newUser = await this.usersService.create({
+          username: fallbackUsername,
+          email:
+            profile.email ||
+            `${profile.provider}_${profile.providerId}@devcopet.local`,
+          [providerIdField]: profile.providerId,
+          authProviders: [profile.provider],
+          avatarUrl: profile.avatarUrl,
+          role: UserRole.STUDENT,
+          level: 1,
+          exp: 0,
+          coins: 0,
+          onboardingCompleted: false,
+          petProfileInitialized: false,
+        });
+        userId = String(newUser._id);
+      }
     }
 
     // Fetch the final user to get up-to-date fields

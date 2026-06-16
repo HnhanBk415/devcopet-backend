@@ -1,0 +1,62 @@
+{
+  "title": "Queue and Deque Quiz",
+  "description": "A quick check to review queues and Python deque.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "Which rule does a queue follow?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Last In, First Out"
+        },
+        {
+          "id": "b",
+          "text": "First In, First Out"
+        },
+        {
+          "id": "c",
+          "text": "Highest Value First"
+        },
+        {
+          "id": "d",
+          "text": "Random Order"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "A queue follows First In, First Out. The first item added is removed first.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "from collections import deque\n\nqueue = deque()\nqueue.append(\"A\")\nqueue.append(\"B\")\nqueue.append(\"C\")\nprint(queue.popleft())",
+      "options": [
+        {
+          "id": "a",
+          "text": "A"
+        },
+        {
+          "id": "b",
+          "text": "B"
+        },
+        {
+          "id": "c",
+          "text": "C"
+        },
+        {
+          "id": "d",
+          "text": "deque(['A', 'B', 'C'])"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "popleft() removes the first item from the queue, which is A.",
+      "points": 1
+    }
+  ]
+}

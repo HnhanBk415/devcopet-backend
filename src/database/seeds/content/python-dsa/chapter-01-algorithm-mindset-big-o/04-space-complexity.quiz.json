@@ -1,0 +1,71 @@
+{
+    "description": "A quick check to review basic space complexity.",
+    "isPublished": true,
+    "order": 1,
+    "passingScore": 50,
+    "questions": [
+        {
+            "type": "multiple_choice",
+            "codeSnippet": "",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "How much extra memory an algorithm uses"
+                },
+                {
+                    "id": "b",
+                    "text": "How many colors are used in the UI"
+                },
+                {
+                    "id": "c",
+                    "text": "How many comments are in the code"
+                },
+                {
+                    "id": "d",
+                    "text": "How many lessons are in a course"
+                }
+            ],
+            "correctOptionIds": [
+                "a"
+            ],
+            "correctAnswerText": "",
+            "acceptedAnswers": [],
+            "explanation": "Space complexity measures the extra memory used by an algorithm.",
+            "difficulty": "easy",
+            "points": 1,
+            "tags": []
+        },
+        {
+            "type": "code_output",
+            "codeSnippet": "numbers = [1, 2, 3]\n\ndoubled = []\n\nfor number in numbers:\n doubled.append(number * 2)\n\nprint(doubled)",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "[1, 2, 3]"
+                },
+                {
+                    "id": "b",
+                    "text": "[2, 4, 6]"
+                },
+                {
+                    "id": "c",
+                    "text": "[3, 6, 9]"
+                },
+                {
+                    "id": "d",
+                    "text": "6"
+                }
+            ],
+            "correctOptionIds": [
+                "b"
+            ],
+            "correctAnswerText": "",
+            "acceptedAnswers": [],
+            "explanation": "Each number is multiplied by 2 and added to the new list, so the output is [2, 4, 6].",
+            "difficulty": "easy",
+            "points": 1,
+            "tags": []
+        }
+    ],
+    "title": "Space Complexity Quiz"
+}

@@ -66,3 +66,7 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.index({ googleId: 1 }, { sparse: true });
+UserSchema.index({ facebookId: 1 }, { sparse: true });
+UserSchema.index({ githubId: 1 }, { sparse: true });

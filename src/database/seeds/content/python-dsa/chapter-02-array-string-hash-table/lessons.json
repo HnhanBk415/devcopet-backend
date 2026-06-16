@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "python-list-as-array",
+    "contentFormat": "markdown",
+    "description": "A quick check to review Python lists as arrays.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 1,
+    "title": "Python List as Array",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "05-python-list-as-array.md",
+    "quizFile": "05-python-list-as-array.quiz.json"
+  },
+  {
+    "slug": "traversal-indexing-insert-delete",
+    "contentFormat": "markdown",
+    "description": "Learn traversal, indexing, insert, and delete operations.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 2,
+    "title": "Traversal, Indexing, Insert and Delete",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "06-traversal-indexing-insert-delete.md",
+    "quizFile": "06-traversal-indexing-insert-delete.quiz.json"
+  },
+  {
+    "slug": "string-basics-common-operations",
+    "contentFormat": "markdown",
+    "description": "Review string basics and common operations in Python.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 3,
+    "title": "String Basics and Common Operations",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "07-string-basics-common-operations.md",
+    "quizFile": "07-string-basics-common-operations.quiz.json"
+  },
+  {
+    "slug": "two-pointers-and-sliding-window",
+    "contentFormat": "markdown",
+    "description": "Introduction to the two pointers and sliding window techniques.",
+    "estimatedMinutes": 20,
+    "isPublished": true,
+    "order": 4,
+    "title": "Two Pointers and Sliding Window",
+    "type": "reading",
+    "xpReward": 15,
+    "filename": "08-two-pointers-and-sliding-window.md",
+    "quizFile": "08-two-pointers-and-sliding-window.quiz.json"
+  },
+  {
+    "slug": "hash-table-dictionary-set",
+    "contentFormat": "markdown",
+    "description": "Learn how to use dictionaries and sets in Python as hash tables.",
+    "estimatedMinutes": 20,
+    "isPublished": true,
+    "order": 5,
+    "title": "Hash Table with Dictionary and Set",
+    "type": "reading",
+    "xpReward": 15,
+    "filename": "09-hash-table-dictionary-set.md",
+    "quizFile": "09-hash-table-dictionary-set.quiz.json"
+  }
+]

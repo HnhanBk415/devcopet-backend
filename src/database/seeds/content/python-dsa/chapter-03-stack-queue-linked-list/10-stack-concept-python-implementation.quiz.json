@@ -1,0 +1,62 @@
+{
+  "title": "Stack Concept and Python Implementation Quiz",
+  "description": "A quick check to review stack behavior and Python list implementation.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "Which rule does a stack follow?",
+      "options": [
+        {
+          "id": "a",
+          "text": "First In, First Out"
+        },
+        {
+          "id": "b",
+          "text": "Last In, First Out"
+        },
+        {
+          "id": "c",
+          "text": "Random In, Random Out"
+        },
+        {
+          "id": "d",
+          "text": "Smallest In, First Out"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "A stack follows Last In, First Out. The last item added is removed first.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "stack = []\nstack.append(1)\nstack.append(2)\nstack.append(3)\nprint(stack.pop())",
+      "options": [
+        {
+          "id": "a",
+          "text": "1"
+        },
+        {
+          "id": "b",
+          "text": "2"
+        },
+        {
+          "id": "c",
+          "text": "3"
+        },
+        {
+          "id": "d",
+          "text": "[1, 2, 3]"
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "explanation": "The last item added was 3, so pop() removes and returns 3.",
+      "points": 1
+    }
+  ]
+}
