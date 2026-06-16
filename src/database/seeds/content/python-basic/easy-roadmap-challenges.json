@@ -1,0 +1,880 @@
+{
+  "courseSlug": "python-basic",
+  "mode": "easy",
+  "challenges": [
+    {
+      "chapterOrder": 0,
+      "lessonOrder": 1,
+      "label": "1.1",
+      "lessonTitle": "What Python Is and How Programs Run",
+      "type": "multiple_choice",
+      "title": "Python Program Execution",
+      "question": "What is the main role of Python when a program runs?",
+      "options": [
+        { "id": "A", "text": "It follows saved instructions step by step." },
+        { "id": "B", "text": "It guesses what the developer wanted." },
+        { "id": "C", "text": "It automatically fixes syntax errors." },
+        { "id": "D", "text": "It replaces the operating system." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Python executes the instructions written in a file. It does not infer missing logic or automatically fix incorrect code.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 0,
+      "lessonOrder": 2,
+      "label": "1.2",
+      "lessonTitle": "Running Your First Python File",
+      "type": "multiple_choice",
+      "title": "Running a Python File",
+      "question": "Which action runs a saved Python file from the terminal?",
+      "options": [
+        { "id": "A", "text": "Use python followed by the file name." },
+        { "id": "B", "text": "Rename the file to terminal.py." },
+        { "id": "C", "text": "Open the file and wait." },
+        { "id": "D", "text": "Put print before the file name." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A Python file runs when you ask Python to execute that saved file, usually with python and the file name.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 0,
+      "lessonOrder": 3,
+      "label": "1.3",
+      "lessonTitle": "Printing Text, Numbers, and Multiple Values",
+      "type": "multiple_choice",
+      "title": "Printing Multiple Values",
+      "question": "What does print(\"XP:\", 100) display?",
+      "options": [
+        { "id": "A", "text": "XP: 100" },
+        { "id": "B", "text": "\"XP:\", 100" },
+        { "id": "C", "text": "print XP 100" },
+        { "id": "D", "text": "An error" }
+      ],
+      "correctOptionId": "A",
+      "explanation": "print() can display multiple values in one line. Python separates comma-separated values with spaces in the output.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 0,
+      "lessonOrder": 4,
+      "label": "1.4",
+      "lessonTitle": "Comments and Readable Output",
+      "type": "multiple_choice",
+      "title": "Readable Python Code",
+      "question": "What is the purpose of a comment in Python code?",
+      "options": [
+        { "id": "A", "text": "To explain code for humans reading it." },
+        { "id": "B", "text": "To make Python run faster." },
+        { "id": "C", "text": "To print hidden text automatically." },
+        { "id": "D", "text": "To replace indentation." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Comments are ignored by Python and are used to make code easier for people to understand.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 0,
+      "lessonOrder": 5,
+      "label": "1.5",
+      "lessonTitle": "Applied Practice: Console Greeting Bot",
+      "type": "multiple_choice",
+      "title": "Console Greeting Output",
+      "question": "What should a simple console greeting program do?",
+      "options": [
+        { "id": "A", "text": "Print a clear greeting message in the terminal." },
+        { "id": "B", "text": "Change the computer password." },
+        { "id": "C", "text": "Create a database automatically." },
+        { "id": "D", "text": "Hide all output from the user." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A console greeting program practices basic output by showing a readable message in the terminal.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 1,
+      "lessonOrder": 1,
+      "label": "2.1",
+      "lessonTitle": "Variables and Naming Data",
+      "type": "multiple_choice",
+      "title": "Variables",
+      "question": "What is a variable in Python?",
+      "options": [
+        { "id": "A", "text": "A name that refers to a value." },
+        { "id": "B", "text": "A file that always stores code." },
+        { "id": "C", "text": "A command that deletes values." },
+        { "id": "D", "text": "A special type of comment." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A variable gives a useful name to a value so the program can use it later.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 1,
+      "lessonOrder": 2,
+      "label": "2.2",
+      "lessonTitle": "Numbers: int and float",
+      "type": "multiple_choice",
+      "title": "Integer and Float Values",
+      "question": "Which value is a float in Python?",
+      "options": [
+        { "id": "A", "text": "3.14" },
+        { "id": "B", "text": "42" },
+        { "id": "C", "text": "\"score\"" },
+        { "id": "D", "text": "True" }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A float is a number with a decimal point, such as 3.14.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 1,
+      "lessonOrder": 3,
+      "label": "2.3",
+      "lessonTitle": "Strings, Booleans, and None",
+      "type": "multiple_choice",
+      "title": "Basic Value Types",
+      "question": "Which value is a Boolean?",
+      "options": [
+        { "id": "A", "text": "True" },
+        { "id": "B", "text": "\"True\"" },
+        { "id": "C", "text": "3.5" },
+        { "id": "D", "text": "None" }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Boolean values are True and False. They are often used for decisions.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 1,
+      "lessonOrder": 4,
+      "label": "2.4",
+      "lessonTitle": "Type Conversion and User-Like Input",
+      "type": "multiple_choice",
+      "title": "Type Conversion",
+      "question": "Why might you convert \"100\" with int(\"100\")?",
+      "options": [
+        { "id": "A", "text": "To turn text into a number for calculations." },
+        { "id": "B", "text": "To turn a number into a comment." },
+        { "id": "C", "text": "To make the value print twice." },
+        { "id": "D", "text": "To remove all variables." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Input-like values often start as text, so converting them lets Python do numeric work.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 1,
+      "lessonOrder": 5,
+      "label": "2.5",
+      "lessonTitle": "Arithmetic and Assignment Operators",
+      "type": "multiple_choice",
+      "title": "Updating Values",
+      "question": "What does score += 10 do?",
+      "options": [
+        { "id": "A", "text": "Adds 10 to score and stores the result." },
+        { "id": "B", "text": "Checks whether score equals 10." },
+        { "id": "C", "text": "Turns score into text." },
+        { "id": "D", "text": "Deletes the score variable." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "The += operator updates a variable by adding a value to its current value.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 1,
+      "lessonOrder": 6,
+      "label": "2.6",
+      "lessonTitle": "Comparison and Logical Operators",
+      "type": "multiple_choice",
+      "title": "Boolean Decisions",
+      "question": "What is the result of a comparison such as score >= 70?",
+      "options": [
+        { "id": "A", "text": "A Boolean value: True or False" },
+        { "id": "B", "text": "A new variable name" },
+        { "id": "C", "text": "A text message" },
+        { "id": "D", "text": "A file path" }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Comparison expressions evaluate to Boolean values, which are commonly used by if statements.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 2,
+      "lessonOrder": 1,
+      "label": "3.1",
+      "lessonTitle": "if Statements",
+      "type": "multiple_choice",
+      "title": "if Statements",
+      "question": "When does the indented block under an if statement run?",
+      "options": [
+        { "id": "A", "text": "When the condition is True." },
+        { "id": "B", "text": "Whenever the file is saved." },
+        { "id": "C", "text": "Only when a comment is present." },
+        { "id": "D", "text": "Before Python checks the condition." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "An if block runs only when its condition evaluates to True.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 2,
+      "lessonOrder": 2,
+      "label": "3.2",
+      "lessonTitle": "else for Alternative Paths",
+      "type": "multiple_choice",
+      "title": "else Branches",
+      "question": "What does an else block provide?",
+      "options": [
+        { "id": "A", "text": "A path to run when the if condition is False." },
+        { "id": "B", "text": "A way to skip indentation." },
+        { "id": "C", "text": "A second file for Python to run." },
+        { "id": "D", "text": "A replacement for variables." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "else handles the alternative path when the if condition does not pass.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 2,
+      "lessonOrder": 3,
+      "label": "3.3",
+      "lessonTitle": "elif for Multiple Choices",
+      "type": "multiple_choice",
+      "title": "Multiple Conditions",
+      "question": "Why use elif in a conditional chain?",
+      "options": [
+        { "id": "A", "text": "To check another condition after the first if." },
+        { "id": "B", "text": "To repeat code forever." },
+        { "id": "C", "text": "To convert text into numbers." },
+        { "id": "D", "text": "To print a blank line." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "elif lets a program choose among multiple possible conditions in order.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 2,
+      "lessonOrder": 4,
+      "label": "3.4",
+      "lessonTitle": "Nested Conditions and Guard Clauses",
+      "type": "multiple_choice",
+      "title": "Guard Clauses",
+      "question": "What is one benefit of a guard clause?",
+      "options": [
+        { "id": "A", "text": "It handles an early case so the main logic stays clearer." },
+        { "id": "B", "text": "It makes every condition run twice." },
+        { "id": "C", "text": "It removes the need for Boolean values." },
+        { "id": "D", "text": "It changes a list into a tuple." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A guard clause can handle a special case early and reduce deeply nested code.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 2,
+      "lessonOrder": 5,
+      "label": "3.5",
+      "lessonTitle": "Applied Practice: Access Gate",
+      "type": "multiple_choice",
+      "title": "Access Rules",
+      "question": "What should an access gate program check first?",
+      "options": [
+        { "id": "A", "text": "The conditions that decide whether access is allowed." },
+        { "id": "B", "text": "The color of the terminal window." },
+        { "id": "C", "text": "The number of comments in the file." },
+        { "id": "D", "text": "Whether the file name is short." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "An access gate is built from clear conditions that decide whether a user can continue.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 3,
+      "lessonOrder": 1,
+      "label": "4.1",
+      "lessonTitle": "while Loops",
+      "type": "multiple_choice",
+      "title": "while Loops",
+      "question": "When does a while loop continue repeating?",
+      "options": [
+        { "id": "A", "text": "While its condition remains True." },
+        { "id": "B", "text": "Only once, no matter what." },
+        { "id": "C", "text": "Whenever a string has quotes." },
+        { "id": "D", "text": "After every comment." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A while loop repeats as long as its condition evaluates to True.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 3,
+      "lessonOrder": 2,
+      "label": "4.2",
+      "lessonTitle": "for Loops with range()",
+      "type": "multiple_choice",
+      "title": "range() Loops",
+      "question": "When is for item in range(3) useful?",
+      "options": [
+        { "id": "A", "text": "When you want a known number of repeats." },
+        { "id": "B", "text": "When you want to stop Python from running." },
+        { "id": "C", "text": "When you need to create a comment." },
+        { "id": "D", "text": "When a value must be None." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "range() is helpful when the number of loop repeats is known ahead of time.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 3,
+      "lessonOrder": 3,
+      "label": "4.3",
+      "lessonTitle": "Looping Through Collections",
+      "type": "multiple_choice",
+      "title": "Looping Through Items",
+      "question": "What does a for loop do when used with a list?",
+      "options": [
+        { "id": "A", "text": "It visits each item so the code can process it." },
+        { "id": "B", "text": "It turns every item into a file." },
+        { "id": "C", "text": "It deletes the list before reading it." },
+        { "id": "D", "text": "It changes the list name into a number." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Looping through a collection lets one block of code handle each stored item.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 3,
+      "lessonOrder": 4,
+      "label": "4.4",
+      "lessonTitle": "break and continue",
+      "type": "multiple_choice",
+      "title": "Loop Control",
+      "question": "What does break do inside a loop?",
+      "options": [
+        { "id": "A", "text": "It stops the loop early." },
+        { "id": "B", "text": "It skips only the current iteration." },
+        { "id": "C", "text": "It creates a new list." },
+        { "id": "D", "text": "It converts a string to an integer." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "break exits the loop immediately, before the normal loop condition would stop it.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 3,
+      "lessonOrder": 5,
+      "label": "4.5",
+      "lessonTitle": "Applied Practice: Training Counter",
+      "type": "multiple_choice",
+      "title": "Counting Repeated Progress",
+      "question": "What programming idea is most useful for a training counter?",
+      "options": [
+        { "id": "A", "text": "A loop that repeats for each round." },
+        { "id": "B", "text": "A comment that runs as code." },
+        { "id": "C", "text": "A file path stored as True." },
+        { "id": "D", "text": "A dictionary with no keys." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A counter often uses a loop to repeat work and update progress over several rounds.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 4,
+      "lessonOrder": 1,
+      "label": "5.1",
+      "lessonTitle": "Lists: Ordered Mutable Data",
+      "type": "multiple_choice",
+      "title": "Lists",
+      "question": "What does it mean that a list is mutable?",
+      "options": [
+        { "id": "A", "text": "Its contents can be changed after creation." },
+        { "id": "B", "text": "It can only store one value." },
+        { "id": "C", "text": "It must contain only text." },
+        { "id": "D", "text": "It cannot be looped over." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Lists are mutable, so you can add, remove, or update their items.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 4,
+      "lessonOrder": 2,
+      "label": "5.2",
+      "lessonTitle": "Tuples: Fixed Records",
+      "type": "multiple_choice",
+      "title": "Tuples",
+      "question": "When is a tuple a good choice?",
+      "options": [
+        { "id": "A", "text": "When a small ordered record should not change." },
+        { "id": "B", "text": "When every item must be deleted often." },
+        { "id": "C", "text": "When keys are required for lookup." },
+        { "id": "D", "text": "When duplicate values must be removed." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Tuples are useful for ordered data that should stay fixed.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 4,
+      "lessonOrder": 3,
+      "label": "5.3",
+      "lessonTitle": "Dictionaries: Key-Value Data",
+      "type": "multiple_choice",
+      "title": "Dictionaries",
+      "question": "How does a dictionary store data?",
+      "options": [
+        { "id": "A", "text": "As keys connected to values." },
+        { "id": "B", "text": "Only as numbered positions." },
+        { "id": "C", "text": "Only as unique values without labels." },
+        { "id": "D", "text": "As comments that Python ignores." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A dictionary uses meaningful keys to find related values.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 4,
+      "lessonOrder": 4,
+      "label": "5.4",
+      "lessonTitle": "Sets: Unique Collections",
+      "type": "multiple_choice",
+      "title": "Sets",
+      "question": "What is a key feature of a set?",
+      "options": [
+        { "id": "A", "text": "It stores each value only once." },
+        { "id": "B", "text": "It keeps duplicate values in order." },
+        { "id": "C", "text": "It requires string keys." },
+        { "id": "D", "text": "It stores comments." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Sets keep unique values, which makes them useful for removing duplicates or checking membership.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 4,
+      "lessonOrder": 5,
+      "label": "5.5",
+      "lessonTitle": "Choosing the Right Data Structure",
+      "type": "multiple_choice",
+      "title": "Data Structure Choice",
+      "question": "Which choice is best when you need named fields like name and score?",
+      "options": [
+        { "id": "A", "text": "A dictionary" },
+        { "id": "B", "text": "A comment" },
+        { "id": "C", "text": "A Boolean only" },
+        { "id": "D", "text": "A print statement" }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A dictionary is useful when values should be accessed by meaningful keys.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 5,
+      "lessonOrder": 1,
+      "label": "6.1",
+      "lessonTitle": "Defining and Calling Functions",
+      "type": "multiple_choice",
+      "title": "Functions",
+      "question": "Why define a function?",
+      "options": [
+        { "id": "A", "text": "To give reusable code a clear name." },
+        { "id": "B", "text": "To make Python ignore indentation." },
+        { "id": "C", "text": "To force all values to be strings." },
+        { "id": "D", "text": "To delete comments before running." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A function packages reusable logic under a name so it can be called when needed.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 5,
+      "lessonOrder": 2,
+      "label": "6.2",
+      "lessonTitle": "Parameters and Arguments",
+      "type": "multiple_choice",
+      "title": "Parameters and Arguments",
+      "question": "What does a parameter let a function do?",
+      "options": [
+        { "id": "A", "text": "Accept input values when it is called." },
+        { "id": "B", "text": "Run without a function name." },
+        { "id": "C", "text": "Convert every result to None." },
+        { "id": "D", "text": "Skip all code inside the function." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Parameters make functions flexible by letting callers provide values.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 5,
+      "lessonOrder": 3,
+      "label": "6.3",
+      "lessonTitle": "Return Values",
+      "type": "multiple_choice",
+      "title": "Return Values",
+      "question": "What does return do in a function?",
+      "options": [
+        { "id": "A", "text": "Sends a value back to the caller." },
+        { "id": "B", "text": "Always prints a value to the terminal." },
+        { "id": "C", "text": "Creates a new file." },
+        { "id": "D", "text": "Starts a while loop." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "return gives a result back to the code that called the function.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 5,
+      "lessonOrder": 4,
+      "label": "6.4",
+      "lessonTitle": "Scope and Local Variables",
+      "type": "multiple_choice",
+      "title": "Scope",
+      "question": "What is a local variable?",
+      "options": [
+        { "id": "A", "text": "A variable created inside a function." },
+        { "id": "B", "text": "A variable that must be stored in a file." },
+        { "id": "C", "text": "A value that is always True." },
+        { "id": "D", "text": "A comment inside a loop." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A local variable exists inside the function where it is created.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 5,
+      "lessonOrder": 5,
+      "label": "6.5",
+      "lessonTitle": "Default Arguments and Clean APIs",
+      "type": "multiple_choice",
+      "title": "Default Arguments",
+      "question": "What is the purpose of a default argument?",
+      "options": [
+        { "id": "A", "text": "To provide a value when the caller does not pass one." },
+        { "id": "B", "text": "To prevent a function from being called." },
+        { "id": "C", "text": "To remove every parameter." },
+        { "id": "D", "text": "To make comments required." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A default argument makes common calls simpler while still allowing a custom value.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 6,
+      "lessonOrder": 1,
+      "label": "7.1",
+      "lessonTitle": "String Indexing and Slicing",
+      "type": "multiple_choice",
+      "title": "String Slicing",
+      "question": "What does slicing a string let you do?",
+      "options": [
+        { "id": "A", "text": "Extract part of the text." },
+        { "id": "B", "text": "Change every character in place." },
+        { "id": "C", "text": "Turn text into a Boolean." },
+        { "id": "D", "text": "Delete the Python file." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Slicing uses positions to take a smaller piece from a string.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 6,
+      "lessonOrder": 2,
+      "label": "7.2",
+      "lessonTitle": "Common String Methods",
+      "type": "multiple_choice",
+      "title": "String Methods",
+      "question": "What does name.strip() commonly do?",
+      "options": [
+        { "id": "A", "text": "Removes extra whitespace from the ends." },
+        { "id": "B", "text": "Adds numbers to the string." },
+        { "id": "C", "text": "Turns the string into a list of files." },
+        { "id": "D", "text": "Stops Python from reading text." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "strip() is commonly used to clean text by removing leading and trailing whitespace.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 6,
+      "lessonOrder": 3,
+      "label": "7.3",
+      "lessonTitle": "Searching and Checking Strings",
+      "type": "multiple_choice",
+      "title": "Checking Text",
+      "question": "Which expression checks whether text contains @?",
+      "options": [
+        { "id": "A", "text": "\"@\" in text" },
+        { "id": "B", "text": "text + @" },
+        { "id": "C", "text": "text == contains" },
+        { "id": "D", "text": "in(\"@\", text)" }
+      ],
+      "correctOptionId": "A",
+      "explanation": "The in operator checks whether one string appears inside another string.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 6,
+      "lessonOrder": 4,
+      "label": "7.4",
+      "lessonTitle": "Splitting and Joining Text",
+      "type": "multiple_choice",
+      "title": "Split and Join",
+      "question": "What does split() do to text?",
+      "options": [
+        { "id": "A", "text": "Breaks it into smaller pieces." },
+        { "id": "B", "text": "Combines a list into one string." },
+        { "id": "C", "text": "Deletes every separator forever." },
+        { "id": "D", "text": "Turns text into True or False." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "split() breaks a string into pieces, often using whitespace or a chosen separator.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 6,
+      "lessonOrder": 5,
+      "label": "7.5",
+      "lessonTitle": "Applied Practice: Username Formatter",
+      "type": "multiple_choice",
+      "title": "Username Formatting",
+      "question": "Why should a username formatter clean text before saving it?",
+      "options": [
+        { "id": "A", "text": "To make usernames consistent and predictable." },
+        { "id": "B", "text": "To make every username a number." },
+        { "id": "C", "text": "To prevent print from working." },
+        { "id": "D", "text": "To remove all letters." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Cleaning text helps produce consistent usernames from different user inputs.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 7,
+      "lessonOrder": 1,
+      "label": "8.1",
+      "lessonTitle": "Opening Files with with open()",
+      "type": "multiple_choice",
+      "title": "Opening Files Safely",
+      "question": "Why is with open(...) useful when working with files?",
+      "options": [
+        { "id": "A", "text": "It closes the file automatically after the block." },
+        { "id": "B", "text": "It prevents all errors in the file." },
+        { "id": "C", "text": "It turns file text into a Boolean." },
+        { "id": "D", "text": "It deletes the file after reading." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "The with block manages the file and closes it when the block is done.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 7,
+      "lessonOrder": 2,
+      "label": "8.2",
+      "lessonTitle": "Reading Whole Files and Lines",
+      "type": "multiple_choice",
+      "title": "Reading Files",
+      "question": "What does reading a file allow a program to do?",
+      "options": [
+        { "id": "A", "text": "Load saved text from outside the program." },
+        { "id": "B", "text": "Guess the user's password." },
+        { "id": "C", "text": "Turn every line into a comment." },
+        { "id": "D", "text": "Run without Python installed." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Reading files lets a program use information that was saved outside the running code.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 7,
+      "lessonOrder": 3,
+      "label": "8.3",
+      "lessonTitle": "Writing and Appending Text",
+      "type": "multiple_choice",
+      "title": "Writing Files",
+      "question": "What is the difference between writing and appending?",
+      "options": [
+        { "id": "A", "text": "Writing can replace content; appending adds to the end." },
+        { "id": "B", "text": "Appending always deletes the file first." },
+        { "id": "C", "text": "Writing only works with numbers." },
+        { "id": "D", "text": "They are names for the same comment." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Writing can create or replace content, while appending keeps existing content and adds more.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 7,
+      "lessonOrder": 4,
+      "label": "8.4",
+      "lessonTitle": "Simple CSV-Style Data",
+      "type": "multiple_choice",
+      "title": "CSV-Style Text",
+      "question": "How does CSV-style text commonly store fields?",
+      "options": [
+        { "id": "A", "text": "By separating values with commas or another delimiter." },
+        { "id": "B", "text": "By storing only one Boolean." },
+        { "id": "C", "text": "By removing every line break." },
+        { "id": "D", "text": "By hiding values in comments." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "CSV-style data stores table-like values by separating fields with a delimiter such as a comma.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 7,
+      "lessonOrder": 5,
+      "label": "8.5",
+      "lessonTitle": "Applied Practice: Save Progress",
+      "type": "multiple_choice",
+      "title": "Saving Progress",
+      "question": "Why might a program save progress to a file?",
+      "options": [
+        { "id": "A", "text": "So progress can be loaded again later." },
+        { "id": "B", "text": "So Python stops using variables." },
+        { "id": "C", "text": "So every line becomes a number." },
+        { "id": "D", "text": "So print statements disappear." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Saving progress lets a program keep information between runs.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 8,
+      "lessonOrder": 1,
+      "label": "9.1",
+      "lessonTitle": "Why Exceptions Happen",
+      "type": "multiple_choice",
+      "title": "Exceptions",
+      "question": "What does an exception usually mean?",
+      "options": [
+        { "id": "A", "text": "Python cannot continue safely with the current operation." },
+        { "id": "B", "text": "The code has finished successfully." },
+        { "id": "C", "text": "A comment was written correctly." },
+        { "id": "D", "text": "A variable changed into a file." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "An exception signals that something went wrong and Python cannot safely continue that operation.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 8,
+      "lessonOrder": 2,
+      "label": "9.2",
+      "lessonTitle": "try and except",
+      "type": "multiple_choice",
+      "title": "Handling Expected Failure",
+      "question": "What is the role of an except block?",
+      "options": [
+        { "id": "A", "text": "To handle an error raised in the try block." },
+        { "id": "B", "text": "To run before the try block." },
+        { "id": "C", "text": "To create a new Python type." },
+        { "id": "D", "text": "To ignore indentation rules." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "except lets a program respond to expected errors without crashing immediately.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 8,
+      "lessonOrder": 3,
+      "label": "9.3",
+      "lessonTitle": "else and finally",
+      "type": "multiple_choice",
+      "title": "else and finally",
+      "question": "When does the finally block run?",
+      "options": [
+        { "id": "A", "text": "After try/except handling, whether an error happened or not." },
+        { "id": "B", "text": "Only before the try block starts." },
+        { "id": "C", "text": "Only when a file has no text." },
+        { "id": "D", "text": "Only when a variable is a string." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "finally is used for cleanup code that should run whether the try block succeeds or fails.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 8,
+      "lessonOrder": 4,
+      "label": "9.4",
+      "lessonTitle": "Raising Errors Intentionally",
+      "type": "multiple_choice",
+      "title": "Raising Errors",
+      "question": "Why might a function raise an error on purpose?",
+      "options": [
+        { "id": "A", "text": "To reject invalid data immediately." },
+        { "id": "B", "text": "To hide all output." },
+        { "id": "C", "text": "To turn every value into text." },
+        { "id": "D", "text": "To skip the function name." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "Raising an error intentionally can make bad input clear before the program continues.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    },
+    {
+      "chapterOrder": 8,
+      "lessonOrder": 5,
+      "label": "9.5",
+      "lessonTitle": "Applied Practice: Safe Number Parser",
+      "type": "multiple_choice",
+      "title": "Safe Number Parsing",
+      "question": "What should a safe number parser do with invalid text?",
+      "options": [
+        { "id": "A", "text": "Handle it without crashing and give useful feedback." },
+        { "id": "B", "text": "Always treat it as the number 100." },
+        { "id": "C", "text": "Delete the Python file." },
+        { "id": "D", "text": "Ignore all future input." }
+      ],
+      "correctOptionId": "A",
+      "explanation": "A safe parser handles invalid input gracefully instead of letting the program crash without context.",
+      "xp": 60,
+      "estimatedMinutes": 1
+    }
+  ]
+}
