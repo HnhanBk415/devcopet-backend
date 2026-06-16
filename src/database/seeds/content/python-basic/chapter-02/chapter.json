@@ -1,8 +1,0 @@
-{
-  "title": "Chapter 2: Conditions",
-  "slug": "conditions",
-  "description": "Teach Python programs to choose the correct path using if, else, elif, comparison expressions, and readable branching.",
-  "order": 2,
-  "estimatedMinutes": 68,
-  "isPublished": true
-}

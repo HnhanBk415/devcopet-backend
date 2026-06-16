@@ -15,7 +15,10 @@ export class UsersService {
   }
 
   async findAll() {
-    return this.userModel.find().select('-passwordHash -refreshTokenHash').lean();
+    return this.userModel
+      .find()
+      .select('-passwordHash -refreshTokenHash')
+      .lean();
   }
 
   async findByEmail(email: string): Promise<UserDocument | null> {
@@ -25,6 +28,13 @@ export class UsersService {
   /** Raw document with all fields — used internally by AuthService */
   async findById(id: string): Promise<UserDocument | null> {
     return this.userModel.findById(id);
+  }
+
+  async findBySocialId(
+    provider: 'google' | 'facebook' | 'github',
+    providerId: string,
+  ): Promise<UserDocument | null> {
+    return this.userModel.findOne({ [`${provider}Id`]: providerId });
   }
 
   /** Safe profile for API responses — strips sensitive fields */

@@ -1,0 +1,62 @@
+{
+    "title": "Hash Table with Dictionary and Set Quiz",
+    "description": "A quick check to review dictionaries, sets, and lookup patterns.",
+    "passingScore": 50,
+    "questions": [
+        {
+            "type": "multiple_choice",
+            "questionText": "When should you use a set?",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "When you need to store unique values and check membership quickly"
+                },
+                {
+                    "id": "b",
+                    "text": "When you need to store duplicate values many times"
+                },
+                {
+                    "id": "c",
+                    "text": "When you need to change a string directly"
+                },
+                {
+                    "id": "d",
+                    "text": "When you need to sort a list automatically"
+                }
+            ],
+            "correctOptionIds": [
+                "a"
+            ],
+            "explanation": "A set stores unique values and is useful for fast membership checks.",
+            "points": 1
+        },
+        {
+            "type": "code_output",
+            "questionText": "What is the output of the following code?",
+            "codeSnippet": "word = \"banana\"\nfreq = {}\n\nfor char in word:\n    if char not in freq:\n        freq[char] = 0\n    freq[char] += 1\n\nprint(freq[\"a\"])",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "1"
+                },
+                {
+                    "id": "b",
+                    "text": "2"
+                },
+                {
+                    "id": "c",
+                    "text": "3"
+                },
+                {
+                    "id": "d",
+                    "text": "6"
+                }
+            ],
+            "correctOptionIds": [
+                "c"
+            ],
+            "explanation": "The character 'a' appears 3 times in the word 'banana'.",
+            "points": 1
+        }
+    ]
+}

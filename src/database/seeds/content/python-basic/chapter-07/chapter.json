@@ -1,8 +1,0 @@
-{
-  "title": "Chapter 7: Loops",
-  "slug": "loops",
-  "description": "Repeat tasks with while loops, for loops, range(), break, and continue.",
-  "order": 7,
-  "estimatedMinutes": 86,
-  "isPublished": true
-}

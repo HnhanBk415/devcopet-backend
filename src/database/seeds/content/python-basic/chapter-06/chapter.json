@@ -1,8 +1,0 @@
-{
-  "title": "Chapter 6: Conditions",
-  "slug": "conditions",
-  "description": "Use boolean expressions and if/elif/else statements to make programs choose different paths.",
-  "order": 6,
-  "estimatedMinutes": 84,
-  "isPublished": true
-}

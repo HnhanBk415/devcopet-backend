@@ -4,7 +4,8 @@ import { CourseSchema } from '../../modules/courses/schemas/course.schema';
 import { ChapterSchema } from '../../modules/chapters/schemas/chapter.schema';
 import { LessonSchema } from '../../modules/lessons/schemas/lesson.schema';
 import { QuizSchema } from '../../modules/quizzes/schemas/quiz.schema';
-import { seedPythonBasic } from './python-basic.seed';
+
+import { seedPythonDsa } from './python-dsa.seed';
 
 dotenv.config();
 
@@ -28,7 +29,8 @@ async function run() {
     const QuizModel = getModel('Quiz', QuizSchema);
 
     // Call seed functions
-    await seedPythonBasic(CourseModel, ChapterModel, LessonModel, QuizModel);
+    // await seedPythonBasic(CourseModel, ChapterModel, LessonModel, QuizModel);
+    await seedPythonDsa(CourseModel, ChapterModel, LessonModel, QuizModel);
 
     console.log('[Seed] Done');
   } catch (error) {

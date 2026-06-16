@@ -1,0 +1,71 @@
+{
+  "description": "A quick check to review the basic meaning of Data Structures and Algorithms.",
+  "isPublished": true,
+  "order": 1,
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Data Science and Analysis"
+        },
+        {
+          "id": "b",
+          "text": "Data Structures and Algorithms"
+        },
+        {
+          "id": "c",
+          "text": "Digital System Architecture"
+        },
+        {
+          "id": "d",
+          "text": "Dynamic Software Automation"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "DSA stands for Data Structures and Algorithms.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": []
+    },
+    {
+      "type": "code_output",
+      "codeSnippet": "numbers = [3, 8, 2, 10, 5]\n\nlargest = numbers[0]\n\nfor number in numbers:\n    if number > largest:\n        largest = number\n\nprint(largest)",
+      "options": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "8"
+        },
+        {
+          "id": "c",
+          "text": "10"
+        },
+        {
+          "id": "d",
+          "text": "5"
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The algorithm checks each number and keeps the largest value. The largest number is 10.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": []
+    }
+  ],
+  "title": "What is DSA Quiz"
+}

@@ -1,0 +1,62 @@
+{
+    "title": "Traversal, Indexing, Insert and Delete Quiz",
+    "description": "A quick check to review common Python list operations.",
+    "passingScore": 50,
+    "questions": [
+        {
+            "type": "multiple_choice",
+            "questionText": "What does traversal mean?",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "Deleting the whole list"
+                },
+                {
+                    "id": "b",
+                    "text": "Visiting each item in a list"
+                },
+                {
+                    "id": "c",
+                    "text": "Only checking the first item"
+                },
+                {
+                    "id": "d",
+                    "text": "Changing the name of a variable"
+                }
+            ],
+            "correctOptionIds": [
+                "b"
+            ],
+            "explanation": "Traversal means going through each item in a data structure.",
+            "points": 1
+        },
+        {
+            "type": "code_output",
+            "questionText": "What is the output of the following code?",
+            "codeSnippet": "numbers = [3, 5, 7]\nnumbers.append(9)\nnumbers[1] = 10\nprint(numbers)",
+            "options": [
+                {
+                    "id": "a",
+                    "text": "[3, 5, 7, 9]"
+                },
+                {
+                    "id": "b",
+                    "text": "[3, 10, 7, 9]"
+                },
+                {
+                    "id": "c",
+                    "text": "[10, 5, 7, 9]"
+                },
+                {
+                    "id": "d",
+                    "text": "[3, 5, 10, 9]"
+                }
+            ],
+            "correctOptionIds": [
+                "b"
+            ],
+            "explanation": "The code appends 9, then updates index 1 from 5 to 10.",
+            "points": 1
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+{
+  "description": "A quick check to review how to break problems into clear steps before coding.",
+  "isPublished": true,
+  "order": 1,
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "codeSnippet": "",
+      "options": [
+        {
+          "id": "a",
+          "text": "Write random code and hope it works"
+        },
+        {
+          "id": "b",
+          "text": "Understand the input, output, and steps needed"
+        },
+        {
+          "id": "c",
+          "text": "Ignore the problem statement"
+        },
+        {
+          "id": "d",
+          "text": "Start with the most complex solution"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "Before writing code, you should understand the problem, identify the input and output, and plan the steps.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": []
+    },
+    {
+      "type": "code_output",
+      "codeSnippet": "numbers = [1, 2, 3, 4, 5, 6]\n\ncount = 0\n\nfor number in numbers:\n    if number % 2 == 0:\n        count += 1\n\nprint(count)",
+      "options": [
+        {
+          "id": "a",
+          "text": "2"
+        },
+        {
+          "id": "b",
+          "text": "3"
+        },
+        {
+          "id": "c",
+          "text": "6"
+        },
+        {
+          "id": "d",
+          "text": "0"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "correctAnswerText": "",
+      "acceptedAnswers": [],
+      "explanation": "The even numbers are 2, 4, and 6, so the counter becomes 3.",
+      "difficulty": "easy",
+      "points": 1,
+      "tags": []
+    }
+  ],
+  "title": "Algorithmic Thinking Quiz"
+}

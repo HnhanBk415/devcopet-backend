@@ -1,0 +1,62 @@
+{
+  "title": "Monotonic Stack Introduction Quiz",
+  "description": "A quick check to review the basic idea of monotonic stack.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What does a monotonic stack often help solve?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Next greater or next smaller element problems"
+        },
+        {
+          "id": "b",
+          "text": "Changing all strings directly"
+        },
+        {
+          "id": "c",
+          "text": "Opening files automatically"
+        },
+        {
+          "id": "d",
+          "text": "Sorting a database permanently"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Monotonic stacks are commonly used for next greater and next smaller element problems.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "numbers = [2, 1, 3]\nresult = [-1] * len(numbers)\nstack = []\n\nfor i in range(len(numbers)):\n    while stack and numbers[i] > numbers[stack[-1]]:\n        index = stack.pop()\n        result[index] = numbers[i]\n    stack.append(i)\n\nprint(result)",
+      "options": [
+        {
+          "id": "a",
+          "text": "[3, 3, -1]"
+        },
+        {
+          "id": "b",
+          "text": "[-1, 3, 3]"
+        },
+        {
+          "id": "c",
+          "text": "[2, 1, 3]"
+        },
+        {
+          "id": "d",
+          "text": "[1, 3, -1]"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "The next greater value for 2 is 3, for 1 is 3, and 3 has no greater value to its right.",
+      "points": 1
+    }
+  ]
+}

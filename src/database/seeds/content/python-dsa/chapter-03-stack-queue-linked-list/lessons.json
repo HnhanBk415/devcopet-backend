@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "stack-concept-python-implementation",
+    "contentFormat": "markdown",
+    "description": "Learn the Stack data structure and how to implement it in Python.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 1,
+    "title": "Stack Concept and Implementation",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "10-stack-concept-python-implementation.md",
+    "quizFile": "10-stack-concept-python-implementation.quiz.json"
+  },
+  {
+    "slug": "queue-and-deque",
+    "contentFormat": "markdown",
+    "description": "Understand Queues and the optimized Deque structure in Python.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 2,
+    "title": "Queue and Deque",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "11-queue-and-deque.md",
+    "quizFile": "11-queue-and-deque.quiz.json"
+  },
+  {
+    "slug": "monotonic-stack-introduction",
+    "contentFormat": "markdown",
+    "description": "Introduction to the Monotonic Stack pattern for advanced problems.",
+    "estimatedMinutes": 20,
+    "isPublished": true,
+    "order": 3,
+    "title": "Monotonic Stack Introduction",
+    "type": "reading",
+    "xpReward": 15,
+    "filename": "12-monotonic-stack-introduction.md",
+    "quizFile": "12-monotonic-stack-introduction.quiz.json"
+  },
+  {
+    "slug": "linked-list-concept",
+    "contentFormat": "markdown",
+    "description": "Learn the fundamentals of Linked Lists and Node structure.",
+    "estimatedMinutes": 15,
+    "isPublished": true,
+    "order": 4,
+    "title": "Linked List Concept",
+    "type": "reading",
+    "xpReward": 10,
+    "filename": "13-linked-list-concept.md",
+    "quizFile": "13-linked-list-concept.quiz.json"
+  },
+  {
+    "slug": "linked-list-operations-fast-slow-pointers",
+    "contentFormat": "markdown",
+    "description": "Master linked list operations and the Fast/Slow Pointers technique.",
+    "estimatedMinutes": 20,
+    "isPublished": true,
+    "order": 5,
+    "title": "Linked List Operations & Fast/Slow Pointers",
+    "type": "reading",
+    "xpReward": 15,
+    "filename": "14-linked-list-operations-fast-slow-pointers.md",
+    "quizFile": "14-linked-list-operations-fast-slow-pointers.quiz.json"
+  }
+]
