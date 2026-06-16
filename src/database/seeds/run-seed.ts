@@ -5,7 +5,7 @@ import { ChapterSchema } from '../../modules/chapters/schemas/chapter.schema';
 import { LessonSchema } from '../../modules/lessons/schemas/lesson.schema';
 import { QuizSchema } from '../../modules/quizzes/schemas/quiz.schema';
 
-import { seedPythonDsa } from './python-dsa.seed';
+import { seedPythonBasic, seedPythonDsa } from './python-dsa.seed';
 
 dotenv.config();
 
@@ -29,7 +29,7 @@ async function run() {
     const QuizModel = getModel('Quiz', QuizSchema);
 
     // Call seed functions
-    // await seedPythonBasic(CourseModel, ChapterModel, LessonModel, QuizModel);
+    await seedPythonBasic(CourseModel, ChapterModel, LessonModel, QuizModel);
     await seedPythonDsa(CourseModel, ChapterModel, LessonModel, QuizModel);
 
     console.log('[Seed] Done');
