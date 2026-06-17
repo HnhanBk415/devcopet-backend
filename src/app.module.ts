@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { OnboardingModule } from './modules/onboarding/onboarding.module';
+import { PersonalityEngineModule } from './modules/personality-engine/personality-engine.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { UsersModule } from './modules/users/users.module';
 
     AuthModule,
     UsersModule,
+    OnboardingModule,
+    PersonalityEngineModule,
   ],
 })
 export class AppModule {}

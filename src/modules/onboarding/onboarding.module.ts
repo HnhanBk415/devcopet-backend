@@ -6,12 +6,19 @@ import {
   AssessmentResult,
   AssessmentResultSchema,
 } from './schemas/assessment-result.schema';
+import {
+  UserPersonality,
+  UserPersonalitySchema,
+} from './schemas/user-personality.schema';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: AssessmentResult.name, schema: AssessmentResultSchema },
+      { name: UserPersonality.name, schema: UserPersonalitySchema },
     ]),
+    UsersModule,
   ],
   controllers: [OnboardingController],
   providers: [OnboardingService],

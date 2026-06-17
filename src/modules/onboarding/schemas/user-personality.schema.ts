@@ -1,26 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 
-export type AssessmentResultDocument = HydratedDocument<AssessmentResult>;
+export type UserPersonalityDocument = HydratedDocument<UserPersonality>;
 
+/**
+ * UserPersonality — Live personality profile per user.
+ *
+ * Created after onboarding assessment completion.
+ * Pet logic (PersonalityEngine) reads this document to personalize
+ * reminders, tone, challenge level, etc.
+ *
+ * One document per user (upsert on assessment).
+ */
 @Schema({ timestamps: true })
-export class AssessmentResult {
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+export class UserPersonality {
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true, unique: true })
   userId!: Types.ObjectId;
 
-  /** Version of assessment questions used */
-  @Prop({ default: 'v1' })
-  assessmentVersion!: string;
-
-  /** Version of scoring algorithm used */
-  @Prop({ default: 'v1' })
-  scoringVersion!: string;
-
-  /** Raw answers: { "1": "A", "2": "C", ... } */
-  @Prop({ type: Map, of: String, required: true })
-  answers!: Map<string, string>;
-
-  // ── 8 Personality Trait Raw Scores ──
+  // ── 8 Trait Raw Scores ──
 
   @Prop({ default: 0 })
   analytical!: number;
@@ -46,7 +43,7 @@ export class AssessmentResult {
   @Prop({ default: 0 })
   curious!: number;
 
-  // ── 8 Personality Trait Normalized Scores (0-1) ──
+  // ── 8 Trait Normalized Scores (0-1) ──
 
   @Prop({ default: 0 })
   analyticalNorm!: number;
@@ -74,18 +71,17 @@ export class AssessmentResult {
 
   // ── Top 3 Dominant Traits ──
 
-  @Prop({ required: true })
-  primaryPersonality!: string;
+  @Prop({ type: [String], default: [] })
+  dominantTraits!: string[];
 
-  @Prop({ type: String, default: null })
-  secondaryPersonality!: string | null;
+  /** Where the personality data came from */
+  @Prop({ default: 'onboarding' })
+  lastUpdatedFrom!: string;
 
-  @Prop({ type: String, default: null })
-  tertiaryPersonality!: string | null;
-
-  @Prop()
-  completedAt!: Date;
+  /** Ref to the AssessmentResult that created/updated this */
+  @Prop({ type: Types.ObjectId, ref: 'AssessmentResult', default: null })
+  sourceAssessmentId!: Types.ObjectId | null;
 }
 
-export const AssessmentResultSchema =
-  SchemaFactory.createForClass(AssessmentResult);
+export const UserPersonalitySchema =
+  SchemaFactory.createForClass(UserPersonality);
