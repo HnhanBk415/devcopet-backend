@@ -13,6 +13,7 @@ import { Lesson, LessonDocument } from '../lessons/schemas/lesson.schema';
 
 type EasyRoadmapStatus = 'locked' | 'available' | 'completed';
 type ChallengeOptionId = 'A' | 'B' | 'C' | 'D';
+type ChallengePromptType = 'code_mcq' | 'concept_mcq';
 
 const EASY_NODE_DURATION_MINUTES = 1;
 const CHALLENGE_OPTION_IDS: ChallengeOptionId[] = ['A', 'B', 'C', 'D'];
@@ -56,13 +57,19 @@ interface EasyNodeContext {
 }
 
 interface EasyChallengeData {
+  id: string;
   chapterOrder: number;
   lessonOrder: number;
   label: string;
   lessonTitle: string;
   type: 'multiple_choice';
+  promptType: ChallengePromptType;
   title: string;
   question: string;
+  codeSnippet?: {
+    language: 'python';
+    code: string;
+  };
   options: Array<{
     id: ChallengeOptionId;
     text: string;
@@ -180,6 +187,22 @@ export class RoadmapService {
       await this.getEasyNodeContext(nodeId);
     const challenge = this.findEasyChallenge(course.slug, chapter, lesson);
 
+    if (node.status === 'locked') {
+      return {
+        node,
+        challenge: null,
+        message: 'This roadmap node is locked.',
+      };
+    }
+
+    if (node.status === 'completed') {
+      return {
+        node,
+        challenge: this.toPublicChallenge(lesson, challenge),
+        review: this.toFallbackReview(challenge, node.id),
+      };
+    }
+
     return {
       node,
       challenge: this.toPublicChallenge(lesson, challenge),
@@ -193,8 +216,21 @@ export class RoadmapService {
       );
     }
 
-    const { chapter, course, lesson } = await this.getEasyNodeContext(nodeId);
+    const { node, chapter, course, lesson } =
+      await this.getEasyNodeContext(nodeId);
     const challenge = this.findEasyChallenge(course.slug, chapter, lesson);
+
+    if (node.status === 'locked') {
+      throw new BadRequestException('This roadmap node is locked.');
+    }
+
+    if (node.status === 'completed') {
+      return {
+        message: 'This roadmap node is already completed.',
+        review: this.toFallbackReview(challenge, node.id),
+      };
+    }
+
     const correct = selectedOptionId === challenge.correctOptionId;
 
     if (correct) {
@@ -314,12 +350,43 @@ export class RoadmapService {
     return {
       id: `easy-challenge-${String(lesson._id)}`,
       type: challenge.type,
+      promptType: challenge.promptType,
       title: challenge.title,
       question: challenge.question,
+      ...(challenge.codeSnippet ? { codeSnippet: challenge.codeSnippet } : {}),
       options: challenge.options,
       xp: challenge.xp,
       estimatedMinutes: challenge.estimatedMinutes,
     };
+  }
+
+  private toFallbackReview(
+    challenge: EasyChallengeData,
+    nodeId: string,
+  ): {
+    selectedOptionId: ChallengeOptionId;
+    correctOptionId: ChallengeOptionId;
+    correct: boolean;
+    explanation: string;
+    completedAt: string;
+  } {
+    const selectedOptionId = challenge.correctOptionId;
+
+    return {
+      selectedOptionId,
+      correctOptionId: challenge.correctOptionId,
+      correct: selectedOptionId === challenge.correctOptionId,
+      explanation: challenge.explanation,
+      completedAt: this.toDeterministicCompletedAt(nodeId),
+    };
+  }
+
+  private toDeterministicCompletedAt(nodeId: string): string {
+    const timestamp = Number.parseInt(nodeId.slice(-8), 16);
+    const completedAt = new Date(Date.UTC(2026, 0, 1));
+    completedAt.setSeconds(Number.isNaN(timestamp) ? 0 : timestamp % 86400);
+
+    return completedAt.toISOString();
   }
 
   private loadEasyChallengeFile(courseSlug: string): EasyChallengeFile {

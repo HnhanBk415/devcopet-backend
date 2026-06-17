@@ -3,645 +3,1241 @@
   "mode": "easy",
   "challenges": [
     {
+      "id": "python-basic-easy-1-1",
       "chapterOrder": 0,
       "lessonOrder": 1,
       "label": "1.1",
       "lessonTitle": "What Python Is and How Programs Run",
       "type": "multiple_choice",
-      "title": "Python Program Execution",
-      "question": "What is the main role of Python when a program runs?",
+      "promptType": "concept_mcq",
+      "title": "How Python Runs Code",
+      "question": "What is Python's role when a program runs?",
       "options": [
-        { "id": "A", "text": "It follows saved instructions step by step." },
-        { "id": "B", "text": "It guesses what the developer wanted." },
-        { "id": "C", "text": "It automatically fixes syntax errors." },
-        { "id": "D", "text": "It replaces the operating system." }
+        {
+          "id": "A",
+          "text": "It follows saved instructions step by step."
+        },
+        {
+          "id": "B",
+          "text": "It guesses what the developer wanted."
+        },
+        {
+          "id": "C",
+          "text": "It automatically fixes syntax errors."
+        },
+        {
+          "id": "D",
+          "text": "It replaces the operating system."
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Python executes the instructions written in a file. It does not infer missing logic or automatically fix incorrect code.",
+      "explanation": "Python executes the instructions written in the program. It does not guess missing logic.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-1-2",
       "chapterOrder": 0,
       "lessonOrder": 2,
       "label": "1.2",
       "lessonTitle": "Running Your First Python File",
       "type": "multiple_choice",
-      "title": "Running a Python File",
-      "question": "Which action runs a saved Python file from the terminal?",
+      "promptType": "concept_mcq",
+      "title": "Run a Python File",
+      "question": "Which command runs a saved file named app.py from the terminal?",
       "options": [
-        { "id": "A", "text": "Use python followed by the file name." },
-        { "id": "B", "text": "Rename the file to terminal.py." },
-        { "id": "C", "text": "Open the file and wait." },
-        { "id": "D", "text": "Put print before the file name." }
+        {
+          "id": "A",
+          "text": "python app.py"
+        },
+        {
+          "id": "B",
+          "text": "run app.py with print"
+        },
+        {
+          "id": "C",
+          "text": "open app.py and wait"
+        },
+        {
+          "id": "D",
+          "text": "app.py python"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A Python file runs when you ask Python to execute that saved file, usually with python and the file name.",
+      "explanation": "The python command asks Python to execute the saved file that follows it.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-1-3",
       "chapterOrder": 0,
       "lessonOrder": 3,
       "label": "1.3",
       "lessonTitle": "Printing Text, Numbers, and Multiple Values",
       "type": "multiple_choice",
-      "title": "Printing Multiple Values",
-      "question": "What does print(\"XP:\", 100) display?",
+      "promptType": "code_mcq",
+      "title": "Predict print Output",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "print(\"XP:\", 100)"
+      },
       "options": [
-        { "id": "A", "text": "XP: 100" },
-        { "id": "B", "text": "\"XP:\", 100" },
-        { "id": "C", "text": "print XP 100" },
-        { "id": "D", "text": "An error" }
+        {
+          "id": "A",
+          "text": "XP: 100"
+        },
+        {
+          "id": "B",
+          "text": "\"XP:\", 100"
+        },
+        {
+          "id": "C",
+          "text": "print XP 100"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "print() can display multiple values in one line. Python separates comma-separated values with spaces in the output.",
+      "explanation": "print() can display multiple comma-separated values on one line.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-1-4",
       "chapterOrder": 0,
       "lessonOrder": 4,
       "label": "1.4",
       "lessonTitle": "Comments and Readable Output",
       "type": "multiple_choice",
-      "title": "Readable Python Code",
-      "question": "What is the purpose of a comment in Python code?",
+      "promptType": "concept_mcq",
+      "title": "Use Comments Well",
+      "question": "What is the main purpose of a comment in Python?",
       "options": [
-        { "id": "A", "text": "To explain code for humans reading it." },
-        { "id": "B", "text": "To make Python run faster." },
-        { "id": "C", "text": "To print hidden text automatically." },
-        { "id": "D", "text": "To replace indentation." }
+        {
+          "id": "A",
+          "text": "To explain code for people reading it."
+        },
+        {
+          "id": "B",
+          "text": "To make Python run the line faster."
+        },
+        {
+          "id": "C",
+          "text": "To print hidden text automatically."
+        },
+        {
+          "id": "D",
+          "text": "To replace indentation."
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Comments are ignored by Python and are used to make code easier for people to understand.",
+      "explanation": "Python ignores comments. They help developers understand the code.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-1-5",
       "chapterOrder": 0,
       "lessonOrder": 5,
       "label": "1.5",
       "lessonTitle": "Applied Practice: Console Greeting Bot",
       "type": "multiple_choice",
-      "title": "Console Greeting Output",
-      "question": "What should a simple console greeting program do?",
+      "promptType": "code_mcq",
+      "title": "Choose Greeting Output",
+      "question": "Which line prints the greeting shown in the comment?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "# Expected output: Hello, Ada\n____"
+      },
       "options": [
-        { "id": "A", "text": "Print a clear greeting message in the terminal." },
-        { "id": "B", "text": "Change the computer password." },
-        { "id": "C", "text": "Create a database automatically." },
-        { "id": "D", "text": "Hide all output from the user." }
+        {
+          "id": "A",
+          "text": "print(\"Hello, Ada\")"
+        },
+        {
+          "id": "B",
+          "text": "print Hello, Ada"
+        },
+        {
+          "id": "C",
+          "text": "\"Hello, Ada\""
+        },
+        {
+          "id": "D",
+          "text": "input(\"Hello, Ada\")"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A console greeting program practices basic output by showing a readable message in the terminal.",
+      "explanation": "print(\"Hello, Ada\") displays the exact greeting in the terminal.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-2-1",
       "chapterOrder": 1,
       "lessonOrder": 1,
       "label": "2.1",
       "lessonTitle": "Variables and Naming Data",
       "type": "multiple_choice",
-      "title": "Variables",
-      "question": "What is a variable in Python?",
+      "promptType": "code_mcq",
+      "title": "Read a Variable",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "player_name = \"Mina\"\nprint(player_name)"
+      },
       "options": [
-        { "id": "A", "text": "A name that refers to a value." },
-        { "id": "B", "text": "A file that always stores code." },
-        { "id": "C", "text": "A command that deletes values." },
-        { "id": "D", "text": "A special type of comment." }
+        {
+          "id": "A",
+          "text": "Mina"
+        },
+        {
+          "id": "B",
+          "text": "player_name"
+        },
+        {
+          "id": "C",
+          "text": "\"player_name\""
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A variable gives a useful name to a value so the program can use it later.",
+      "explanation": "The variable player_name refers to the value \"Mina\", so print() displays Mina.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-2-2",
       "chapterOrder": 1,
       "lessonOrder": 2,
       "label": "2.2",
       "lessonTitle": "Numbers: int and float",
       "type": "multiple_choice",
-      "title": "Integer and Float Values",
-      "question": "Which value is a float in Python?",
+      "promptType": "code_mcq",
+      "title": "Identify a Float",
+      "question": "Which line creates a float value?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "level = 4\naccuracy = ____"
+      },
       "options": [
-        { "id": "A", "text": "3.14" },
-        { "id": "B", "text": "42" },
-        { "id": "C", "text": "\"score\"" },
-        { "id": "D", "text": "True" }
+        {
+          "id": "A",
+          "text": "98.5"
+        },
+        {
+          "id": "B",
+          "text": "98"
+        },
+        {
+          "id": "C",
+          "text": "\"98.5\""
+        },
+        {
+          "id": "D",
+          "text": "True"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A float is a number with a decimal point, such as 3.14.",
+      "explanation": "A float is a numeric value with a decimal point, such as 98.5.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-2-3",
       "chapterOrder": 1,
       "lessonOrder": 3,
       "label": "2.3",
       "lessonTitle": "Strings, Booleans, and None",
       "type": "multiple_choice",
-      "title": "Basic Value Types",
-      "question": "Which value is a Boolean?",
+      "promptType": "code_mcq",
+      "title": "Choose a Boolean",
+      "question": "Which value should fill the blank to mark the quest as complete?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "quest_complete = ____"
+      },
       "options": [
-        { "id": "A", "text": "True" },
-        { "id": "B", "text": "\"True\"" },
-        { "id": "C", "text": "3.5" },
-        { "id": "D", "text": "None" }
+        {
+          "id": "A",
+          "text": "True"
+        },
+        {
+          "id": "B",
+          "text": "\"True\""
+        },
+        {
+          "id": "C",
+          "text": "0.0"
+        },
+        {
+          "id": "D",
+          "text": "None()"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Boolean values are True and False. They are often used for decisions.",
+      "explanation": "True is a Boolean value. \"True\" is text, not a Boolean.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-2-4",
       "chapterOrder": 1,
       "lessonOrder": 4,
       "label": "2.4",
       "lessonTitle": "Type Conversion and User-Like Input",
       "type": "multiple_choice",
-      "title": "Type Conversion",
-      "question": "Why might you convert \"100\" with int(\"100\")?",
+      "promptType": "code_mcq",
+      "title": "Convert Text to a Number",
+      "question": "Which expression lets the calculation work?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "coins_text = \"25\"\ncoins = ____\nprint(coins + 5)"
+      },
       "options": [
-        { "id": "A", "text": "To turn text into a number for calculations." },
-        { "id": "B", "text": "To turn a number into a comment." },
-        { "id": "C", "text": "To make the value print twice." },
-        { "id": "D", "text": "To remove all variables." }
+        {
+          "id": "A",
+          "text": "int(coins_text)"
+        },
+        {
+          "id": "B",
+          "text": "str(coins_text)"
+        },
+        {
+          "id": "C",
+          "text": "print(coins_text)"
+        },
+        {
+          "id": "D",
+          "text": "bool(coins_text)"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Input-like values often start as text, so converting them lets Python do numeric work.",
+      "explanation": "int(coins_text) converts the text \"25\" into the number 25.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-2-5",
       "chapterOrder": 1,
       "lessonOrder": 5,
       "label": "2.5",
       "lessonTitle": "Arithmetic and Assignment Operators",
       "type": "multiple_choice",
-      "title": "Updating Values",
-      "question": "What does score += 10 do?",
+      "promptType": "code_mcq",
+      "title": "Update a Score",
+      "question": "What is printed after this code runs?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "score = 10\nscore += 5\nprint(score)"
+      },
       "options": [
-        { "id": "A", "text": "Adds 10 to score and stores the result." },
-        { "id": "B", "text": "Checks whether score equals 10." },
-        { "id": "C", "text": "Turns score into text." },
-        { "id": "D", "text": "Deletes the score variable." }
+        {
+          "id": "A",
+          "text": "15"
+        },
+        {
+          "id": "B",
+          "text": "10"
+        },
+        {
+          "id": "C",
+          "text": "5"
+        },
+        {
+          "id": "D",
+          "text": "score + 5"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "The += operator updates a variable by adding a value to its current value.",
+      "explanation": "score += 5 adds 5 to the current value and stores the result.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-2-6",
       "chapterOrder": 1,
       "lessonOrder": 6,
       "label": "2.6",
       "lessonTitle": "Comparison and Logical Operators",
       "type": "multiple_choice",
-      "title": "Boolean Decisions",
-      "question": "What is the result of a comparison such as score >= 70?",
+      "promptType": "code_mcq",
+      "title": "Compare a Score",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "score = 72\nprint(score >= 70)"
+      },
       "options": [
-        { "id": "A", "text": "A Boolean value: True or False" },
-        { "id": "B", "text": "A new variable name" },
-        { "id": "C", "text": "A text message" },
-        { "id": "D", "text": "A file path" }
+        {
+          "id": "A",
+          "text": "True"
+        },
+        {
+          "id": "B",
+          "text": "False"
+        },
+        {
+          "id": "C",
+          "text": "score >= 70"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Comparison expressions evaluate to Boolean values, which are commonly used by if statements.",
+      "explanation": "72 is greater than or equal to 70, so the comparison is True.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-3-1",
       "chapterOrder": 2,
       "lessonOrder": 1,
       "label": "3.1",
       "lessonTitle": "if Statements",
       "type": "multiple_choice",
-      "title": "if Statements",
-      "question": "When does the indented block under an if statement run?",
+      "promptType": "code_mcq",
+      "title": "Complete an if Statement",
+      "question": "Which condition should complete the code so it prints Adult when age is 18 or older?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "age = 20\n\nif ____:\n    print(\"Adult\")\nelse:\n    print(\"Child\")"
+      },
       "options": [
-        { "id": "A", "text": "When the condition is True." },
-        { "id": "B", "text": "Whenever the file is saved." },
-        { "id": "C", "text": "Only when a comment is present." },
-        { "id": "D", "text": "Before Python checks the condition." }
+        {
+          "id": "A",
+          "text": "age > 18"
+        },
+        {
+          "id": "B",
+          "text": "age >= 18"
+        },
+        {
+          "id": "C",
+          "text": "age = 18"
+        },
+        {
+          "id": "D",
+          "text": "age => 18"
+        }
       ],
-      "correctOptionId": "A",
-      "explanation": "An if block runs only when its condition evaluates to True.",
+      "correctOptionId": "B",
+      "explanation": "`age >= 18` includes 18 and any age above 18. A single `=` is assignment.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-3-2",
       "chapterOrder": 2,
       "lessonOrder": 2,
       "label": "3.2",
       "lessonTitle": "else for Alternative Paths",
       "type": "multiple_choice",
-      "title": "else Branches",
-      "question": "What does an else block provide?",
+      "promptType": "code_mcq",
+      "title": "Choose the else Result",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "points = 40\n\nif points >= 50:\n    print(\"Pass\")\nelse:\n    print(\"Try again\")"
+      },
       "options": [
-        { "id": "A", "text": "A path to run when the if condition is False." },
-        { "id": "B", "text": "A way to skip indentation." },
-        { "id": "C", "text": "A second file for Python to run." },
-        { "id": "D", "text": "A replacement for variables." }
+        {
+          "id": "A",
+          "text": "Pass"
+        },
+        {
+          "id": "B",
+          "text": "Try again"
+        },
+        {
+          "id": "C",
+          "text": "points >= 50"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
-      "correctOptionId": "A",
-      "explanation": "else handles the alternative path when the if condition does not pass.",
+      "correctOptionId": "B",
+      "explanation": "The condition is False because 40 is less than 50, so the else branch runs.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-3-3",
       "chapterOrder": 2,
       "lessonOrder": 3,
       "label": "3.3",
       "lessonTitle": "elif for Multiple Choices",
       "type": "multiple_choice",
-      "title": "Multiple Conditions",
-      "question": "Why use elif in a conditional chain?",
+      "promptType": "code_mcq",
+      "title": "Match an elif Branch",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "rank = 2\n\nif rank == 1:\n    print(\"Gold\")\nelif rank == 2:\n    print(\"Silver\")\nelse:\n    print(\"Bronze\")"
+      },
       "options": [
-        { "id": "A", "text": "To check another condition after the first if." },
-        { "id": "B", "text": "To repeat code forever." },
-        { "id": "C", "text": "To convert text into numbers." },
-        { "id": "D", "text": "To print a blank line." }
+        {
+          "id": "A",
+          "text": "Gold"
+        },
+        {
+          "id": "B",
+          "text": "Silver"
+        },
+        {
+          "id": "C",
+          "text": "Bronze"
+        },
+        {
+          "id": "D",
+          "text": "rank == 2"
+        }
       ],
-      "correctOptionId": "A",
-      "explanation": "elif lets a program choose among multiple possible conditions in order.",
+      "correctOptionId": "B",
+      "explanation": "The first condition is False, then rank == 2 is True, so Silver prints.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-3-4",
       "chapterOrder": 2,
       "lessonOrder": 4,
       "label": "3.4",
       "lessonTitle": "Nested Conditions and Guard Clauses",
       "type": "multiple_choice",
-      "title": "Guard Clauses",
-      "question": "What is one benefit of a guard clause?",
+      "promptType": "code_mcq",
+      "title": "Use a Guard Clause",
+      "question": "Which condition should block locked users first?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "is_locked = True\n\nif ____:\n    print(\"Access blocked\")\nelse:\n    print(\"Access granted\")"
+      },
       "options": [
-        { "id": "A", "text": "It handles an early case so the main logic stays clearer." },
-        { "id": "B", "text": "It makes every condition run twice." },
-        { "id": "C", "text": "It removes the need for Boolean values." },
-        { "id": "D", "text": "It changes a list into a tuple." }
+        {
+          "id": "A",
+          "text": "is_locked"
+        },
+        {
+          "id": "B",
+          "text": "not is_locked"
+        },
+        {
+          "id": "C",
+          "text": "is_locked = False"
+        },
+        {
+          "id": "D",
+          "text": "print(is_locked)"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A guard clause can handle a special case early and reduce deeply nested code.",
+      "explanation": "When is_locked is True, `if is_locked:` runs the blocking branch.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-3-5",
       "chapterOrder": 2,
       "lessonOrder": 5,
       "label": "3.5",
       "lessonTitle": "Applied Practice: Access Gate",
       "type": "multiple_choice",
-      "title": "Access Rules",
-      "question": "What should an access gate program check first?",
+      "promptType": "code_mcq",
+      "title": "Complete an Access Gate",
+      "question": "Which condition allows access only when the user has a pass and is not banned?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "has_pass = True\nis_banned = False\n\nif ____:\n    print(\"Enter\")\nelse:\n    print(\"Blocked\")"
+      },
       "options": [
-        { "id": "A", "text": "The conditions that decide whether access is allowed." },
-        { "id": "B", "text": "The color of the terminal window." },
-        { "id": "C", "text": "The number of comments in the file." },
-        { "id": "D", "text": "Whether the file name is short." }
+        {
+          "id": "A",
+          "text": "has_pass and not is_banned"
+        },
+        {
+          "id": "B",
+          "text": "has_pass or is_banned"
+        },
+        {
+          "id": "C",
+          "text": "not has_pass and is_banned"
+        },
+        {
+          "id": "D",
+          "text": "has_pass = True"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "An access gate is built from clear conditions that decide whether a user can continue.",
+      "explanation": "Both rules must be satisfied: the user has a pass and is not banned.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-4-1",
       "chapterOrder": 3,
       "lessonOrder": 1,
       "label": "4.1",
       "lessonTitle": "while Loops",
       "type": "multiple_choice",
-      "title": "while Loops",
-      "question": "When does a while loop continue repeating?",
+      "promptType": "code_mcq",
+      "title": "Trace a while Loop",
+      "question": "What does this code display last?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "count = 1\nwhile count <= 3:\n    print(count)\n    count += 1"
+      },
       "options": [
-        { "id": "A", "text": "While its condition remains True." },
-        { "id": "B", "text": "Only once, no matter what." },
-        { "id": "C", "text": "Whenever a string has quotes." },
-        { "id": "D", "text": "After every comment." }
+        {
+          "id": "A",
+          "text": "3"
+        },
+        {
+          "id": "B",
+          "text": "2"
+        },
+        {
+          "id": "C",
+          "text": "4"
+        },
+        {
+          "id": "D",
+          "text": "count"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A while loop repeats as long as its condition evaluates to True.",
+      "explanation": "The loop prints 1, 2, and 3. It stops after count becomes 4.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-4-2",
       "chapterOrder": 3,
       "lessonOrder": 2,
       "label": "4.2",
       "lessonTitle": "for Loops with range()",
       "type": "multiple_choice",
-      "title": "range() Loops",
-      "question": "When is for item in range(3) useful?",
+      "promptType": "code_mcq",
+      "title": "Use range()",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "for number in range(3):\n    print(number)"
+      },
       "options": [
-        { "id": "A", "text": "When you want a known number of repeats." },
-        { "id": "B", "text": "When you want to stop Python from running." },
-        { "id": "C", "text": "When you need to create a comment." },
-        { "id": "D", "text": "When a value must be None." }
+        {
+          "id": "A",
+          "text": "0, 1, 2"
+        },
+        {
+          "id": "B",
+          "text": "1, 2, 3"
+        },
+        {
+          "id": "C",
+          "text": "3 only"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "range() is helpful when the number of loop repeats is known ahead of time.",
+      "explanation": "range(3) produces 0, 1, and 2. It stops before 3.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-4-3",
       "chapterOrder": 3,
       "lessonOrder": 3,
       "label": "4.3",
       "lessonTitle": "Looping Through Collections",
       "type": "multiple_choice",
-      "title": "Looping Through Items",
-      "question": "What does a for loop do when used with a list?",
+      "promptType": "code_mcq",
+      "title": "Loop Through a List",
+      "question": "Which line correctly loops through every item in the list?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "pets = [\"Cat\", \"Dog\", \"Bird\"]\n\n____\n    print(pet)"
+      },
       "options": [
-        { "id": "A", "text": "It visits each item so the code can process it." },
-        { "id": "B", "text": "It turns every item into a file." },
-        { "id": "C", "text": "It deletes the list before reading it." },
-        { "id": "D", "text": "It changes the list name into a number." }
+        {
+          "id": "A",
+          "text": "for pet in pets:"
+        },
+        {
+          "id": "B",
+          "text": "for pets in pet:"
+        },
+        {
+          "id": "C",
+          "text": "while pet in pets:"
+        },
+        {
+          "id": "D",
+          "text": "if pet in pets:"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Looping through a collection lets one block of code handle each stored item.",
+      "explanation": "`for pet in pets:` visits each item in the list one by one.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-4-4",
       "chapterOrder": 3,
       "lessonOrder": 4,
       "label": "4.4",
       "lessonTitle": "break and continue",
       "type": "multiple_choice",
-      "title": "Loop Control",
-      "question": "What does break do inside a loop?",
+      "promptType": "code_mcq",
+      "title": "Stop a Loop",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "for number in range(5):\n    if number == 3:\n        break\n    print(number)"
+      },
       "options": [
-        { "id": "A", "text": "It stops the loop early." },
-        { "id": "B", "text": "It skips only the current iteration." },
-        { "id": "C", "text": "It creates a new list." },
-        { "id": "D", "text": "It converts a string to an integer." }
+        {
+          "id": "A",
+          "text": "0, 1, 2"
+        },
+        {
+          "id": "B",
+          "text": "0, 1, 2, 3"
+        },
+        {
+          "id": "C",
+          "text": "3, 4"
+        },
+        {
+          "id": "D",
+          "text": "Nothing"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "break exits the loop immediately, before the normal loop condition would stop it.",
+      "explanation": "break stops the loop before 3 is printed.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-4-5",
       "chapterOrder": 3,
       "lessonOrder": 5,
       "label": "4.5",
       "lessonTitle": "Applied Practice: Training Counter",
       "type": "multiple_choice",
-      "title": "Counting Repeated Progress",
-      "question": "What programming idea is most useful for a training counter?",
+      "promptType": "code_mcq",
+      "title": "Build a Training Counter",
+      "question": "Which update makes the loop move toward stopping?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "reps = 0\nwhile reps < 3:\n    print(\"Train\")\n    ____"
+      },
       "options": [
-        { "id": "A", "text": "A loop that repeats for each round." },
-        { "id": "B", "text": "A comment that runs as code." },
-        { "id": "C", "text": "A file path stored as True." },
-        { "id": "D", "text": "A dictionary with no keys." }
+        {
+          "id": "A",
+          "text": "reps += 1"
+        },
+        {
+          "id": "B",
+          "text": "reps = 0"
+        },
+        {
+          "id": "C",
+          "text": "print(reps)"
+        },
+        {
+          "id": "D",
+          "text": "reps < 3"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A counter often uses a loop to repeat work and update progress over several rounds.",
+      "explanation": "Increasing reps each time lets the while condition eventually become False.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-5-1",
       "chapterOrder": 4,
       "lessonOrder": 1,
       "label": "5.1",
       "lessonTitle": "Lists: Ordered Mutable Data",
       "type": "multiple_choice",
-      "title": "Lists",
-      "question": "What does it mean that a list is mutable?",
+      "promptType": "code_mcq",
+      "title": "Add to a List",
+      "question": "Which line adds \"Shield\" to the list?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "items = [\"Sword\", \"Potion\"]\n____\nprint(items)"
+      },
       "options": [
-        { "id": "A", "text": "Its contents can be changed after creation." },
-        { "id": "B", "text": "It can only store one value." },
-        { "id": "C", "text": "It must contain only text." },
-        { "id": "D", "text": "It cannot be looped over." }
+        {
+          "id": "A",
+          "text": "items.append(\"Shield\")"
+        },
+        {
+          "id": "B",
+          "text": "items.add(\"Shield\")"
+        },
+        {
+          "id": "C",
+          "text": "append(items, \"Shield\")"
+        },
+        {
+          "id": "D",
+          "text": "items = \"Shield\""
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Lists are mutable, so you can add, remove, or update their items.",
+      "explanation": "append() adds one new item to the end of a list.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-5-2",
       "chapterOrder": 4,
       "lessonOrder": 2,
       "label": "5.2",
       "lessonTitle": "Tuples: Fixed Records",
       "type": "multiple_choice",
-      "title": "Tuples",
-      "question": "When is a tuple a good choice?",
+      "promptType": "code_mcq",
+      "title": "Read a Tuple Item",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "location = (10, 20)\nprint(location[0])"
+      },
       "options": [
-        { "id": "A", "text": "When a small ordered record should not change." },
-        { "id": "B", "text": "When every item must be deleted often." },
-        { "id": "C", "text": "When keys are required for lookup." },
-        { "id": "D", "text": "When duplicate values must be removed." }
+        {
+          "id": "A",
+          "text": "10"
+        },
+        {
+          "id": "B",
+          "text": "20"
+        },
+        {
+          "id": "C",
+          "text": "(10, 20)"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Tuples are useful for ordered data that should stay fixed.",
+      "explanation": "Tuple indexes start at 0, so location[0] is the first value.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-5-3",
       "chapterOrder": 4,
       "lessonOrder": 3,
       "label": "5.3",
       "lessonTitle": "Dictionaries: Key-Value Data",
       "type": "multiple_choice",
-      "title": "Dictionaries",
-      "question": "How does a dictionary store data?",
+      "promptType": "code_mcq",
+      "title": "Read Dictionary Data",
+      "question": "Which expression gets the player name?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "player = {\"name\": \"Ada\", \"level\": 3}\nprint(____)"
+      },
       "options": [
-        { "id": "A", "text": "As keys connected to values." },
-        { "id": "B", "text": "Only as numbered positions." },
-        { "id": "C", "text": "Only as unique values without labels." },
-        { "id": "D", "text": "As comments that Python ignores." }
+        {
+          "id": "A",
+          "text": "player[\"name\"]"
+        },
+        {
+          "id": "B",
+          "text": "player.name"
+        },
+        {
+          "id": "C",
+          "text": "player[0]"
+        },
+        {
+          "id": "D",
+          "text": "\"player[name]\""
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A dictionary uses meaningful keys to find related values.",
+      "explanation": "Dictionaries use keys. The key \"name\" returns the value \"Ada\".",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-5-4",
       "chapterOrder": 4,
       "lessonOrder": 4,
       "label": "5.4",
       "lessonTitle": "Sets: Unique Collections",
       "type": "multiple_choice",
-      "title": "Sets",
-      "question": "What is a key feature of a set?",
+      "promptType": "code_mcq",
+      "title": "Use Unique Values",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "badges = {\"starter\", \"starter\", \"builder\"}\nprint(len(badges))"
+      },
       "options": [
-        { "id": "A", "text": "It stores each value only once." },
-        { "id": "B", "text": "It keeps duplicate values in order." },
-        { "id": "C", "text": "It requires string keys." },
-        { "id": "D", "text": "It stores comments." }
+        {
+          "id": "A",
+          "text": "2"
+        },
+        {
+          "id": "B",
+          "text": "3"
+        },
+        {
+          "id": "C",
+          "text": "0"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Sets keep unique values, which makes them useful for removing duplicates or checking membership.",
+      "explanation": "A set stores unique values, so the duplicate \"starter\" is counted once.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-5-5",
       "chapterOrder": 4,
       "lessonOrder": 5,
       "label": "5.5",
       "lessonTitle": "Choosing the Right Data Structure",
       "type": "multiple_choice",
-      "title": "Data Structure Choice",
-      "question": "Which choice is best when you need named fields like name and score?",
+      "promptType": "concept_mcq",
+      "title": "Choose a Data Structure",
+      "question": "Which data structure is best when each username must be unique?",
       "options": [
-        { "id": "A", "text": "A dictionary" },
-        { "id": "B", "text": "A comment" },
-        { "id": "C", "text": "A Boolean only" },
-        { "id": "D", "text": "A print statement" }
+        {
+          "id": "A",
+          "text": "Set"
+        },
+        {
+          "id": "B",
+          "text": "List"
+        },
+        {
+          "id": "C",
+          "text": "Tuple"
+        },
+        {
+          "id": "D",
+          "text": "String"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A dictionary is useful when values should be accessed by meaningful keys.",
+      "explanation": "A set is designed for unique values and is a good fit for preventing duplicates.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-6-1",
       "chapterOrder": 5,
       "lessonOrder": 1,
       "label": "6.1",
       "lessonTitle": "Defining and Calling Functions",
       "type": "multiple_choice",
-      "title": "Functions",
-      "question": "Why define a function?",
+      "promptType": "code_mcq",
+      "title": "Call a Function",
+      "question": "Which line calls the function?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "def greet():\n    print(\"Hello\")\n\n____"
+      },
       "options": [
-        { "id": "A", "text": "To give reusable code a clear name." },
-        { "id": "B", "text": "To make Python ignore indentation." },
-        { "id": "C", "text": "To force all values to be strings." },
-        { "id": "D", "text": "To delete comments before running." }
+        {
+          "id": "A",
+          "text": "greet()"
+        },
+        {
+          "id": "B",
+          "text": "def greet()"
+        },
+        {
+          "id": "C",
+          "text": "print(greet)"
+        },
+        {
+          "id": "D",
+          "text": "call greet"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A function packages reusable logic under a name so it can be called when needed.",
+      "explanation": "Writing greet() runs the function body.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-6-2",
       "chapterOrder": 5,
       "lessonOrder": 2,
       "label": "6.2",
       "lessonTitle": "Parameters and Arguments",
       "type": "multiple_choice",
-      "title": "Parameters and Arguments",
-      "question": "What does a parameter let a function do?",
+      "promptType": "code_mcq",
+      "title": "Pass an Argument",
+      "question": "Which function call prints Hello, Mina?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "def greet(name):\n    print(\"Hello,\", name)\n\n____"
+      },
       "options": [
-        { "id": "A", "text": "Accept input values when it is called." },
-        { "id": "B", "text": "Run without a function name." },
-        { "id": "C", "text": "Convert every result to None." },
-        { "id": "D", "text": "Skip all code inside the function." }
+        {
+          "id": "A",
+          "text": "greet(\"Mina\")"
+        },
+        {
+          "id": "B",
+          "text": "greet()"
+        },
+        {
+          "id": "C",
+          "text": "name(\"Mina\")"
+        },
+        {
+          "id": "D",
+          "text": "def greet(\"Mina\")"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Parameters make functions flexible by letting callers provide values.",
+      "explanation": "The argument \"Mina\" is passed into the name parameter.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-6-3",
       "chapterOrder": 5,
       "lessonOrder": 3,
       "label": "6.3",
       "lessonTitle": "Return Values",
       "type": "multiple_choice",
-      "title": "Return Values",
-      "question": "What does return do in a function?",
+      "promptType": "code_mcq",
+      "title": "Return a Value",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "def double(number):\n    return number * 2\n\nprint(double(4))"
+      },
       "options": [
-        { "id": "A", "text": "Sends a value back to the caller." },
-        { "id": "B", "text": "Always prints a value to the terminal." },
-        { "id": "C", "text": "Creates a new file." },
-        { "id": "D", "text": "Starts a while loop." }
+        {
+          "id": "A",
+          "text": "8"
+        },
+        {
+          "id": "B",
+          "text": "4"
+        },
+        {
+          "id": "C",
+          "text": "double(4)"
+        },
+        {
+          "id": "D",
+          "text": "None"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "return gives a result back to the code that called the function.",
+      "explanation": "return sends number * 2 back to the caller, and print displays 8.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-6-4",
       "chapterOrder": 5,
       "lessonOrder": 4,
       "label": "6.4",
       "lessonTitle": "Scope and Local Variables",
       "type": "multiple_choice",
-      "title": "Scope",
-      "question": "What is a local variable?",
+      "promptType": "code_mcq",
+      "title": "Understand Local Scope",
+      "question": "Where is the variable message created?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "def show_message():\n    message = \"Ready\"\n    print(message)"
+      },
       "options": [
-        { "id": "A", "text": "A variable created inside a function." },
-        { "id": "B", "text": "A variable that must be stored in a file." },
-        { "id": "C", "text": "A value that is always True." },
-        { "id": "D", "text": "A comment inside a loop." }
+        {
+          "id": "A",
+          "text": "Inside the function only"
+        },
+        {
+          "id": "B",
+          "text": "In every file automatically"
+        },
+        {
+          "id": "C",
+          "text": "Inside print() only"
+        },
+        {
+          "id": "D",
+          "text": "As a Python keyword"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A local variable exists inside the function where it is created.",
+      "explanation": "A variable assigned inside a function is local to that function.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-6-5",
       "chapterOrder": 5,
       "lessonOrder": 5,
       "label": "6.5",
       "lessonTitle": "Default Arguments and Clean APIs",
       "type": "multiple_choice",
-      "title": "Default Arguments",
-      "question": "What is the purpose of a default argument?",
+      "promptType": "code_mcq",
+      "title": "Use a Default Argument",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "def greet(name=\"Player\"):\n    print(\"Hello\", name)\n\ngreet()"
+      },
       "options": [
-        { "id": "A", "text": "To provide a value when the caller does not pass one." },
-        { "id": "B", "text": "To prevent a function from being called." },
-        { "id": "C", "text": "To remove every parameter." },
-        { "id": "D", "text": "To make comments required." }
+        {
+          "id": "A",
+          "text": "Hello Player"
+        },
+        {
+          "id": "B",
+          "text": "Hello name"
+        },
+        {
+          "id": "C",
+          "text": "Player Hello"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A default argument makes common calls simpler while still allowing a custom value.",
+      "explanation": "Because no argument is passed, Python uses the default value \"Player\".",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-7-1",
       "chapterOrder": 6,
       "lessonOrder": 1,
       "label": "7.1",
       "lessonTitle": "String Indexing and Slicing",
       "type": "multiple_choice",
-      "title": "String Slicing",
-      "question": "What does slicing a string let you do?",
+      "promptType": "code_mcq",
+      "title": "Slice a String",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "word = \"Python\"\nprint(word[0:2])"
+      },
       "options": [
-        { "id": "A", "text": "Extract part of the text." },
-        { "id": "B", "text": "Change every character in place." },
-        { "id": "C", "text": "Turn text into a Boolean." },
-        { "id": "D", "text": "Delete the Python file." }
+        {
+          "id": "A",
+          "text": "Py"
+        },
+        {
+          "id": "B",
+          "text": "Pyt"
+        },
+        {
+          "id": "C",
+          "text": "yt"
+        },
+        {
+          "id": "D",
+          "text": "Python"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Slicing uses positions to take a smaller piece from a string.",
+      "explanation": "word[0:2] starts at index 0 and stops before index 2.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-7-2",
       "chapterOrder": 6,
       "lessonOrder": 2,
       "label": "7.2",
       "lessonTitle": "Common String Methods",
       "type": "multiple_choice",
-      "title": "String Methods",
-      "question": "What does name.strip() commonly do?",
+      "promptType": "code_mcq",
+      "title": "Use a String Method",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "name = \"ada\"\nprint(name.upper())"
+      },
       "options": [
-        { "id": "A", "text": "Removes extra whitespace from the ends." },
-        { "id": "B", "text": "Adds numbers to the string." },
-        { "id": "C", "text": "Turns the string into a list of files." },
-        { "id": "D", "text": "Stops Python from reading text." }
+        {
+          "id": "A",
+          "text": "ADA"
+        },
+        {
+          "id": "B",
+          "text": "ada"
+        },
+        {
+          "id": "C",
+          "text": "Ada"
+        },
+        {
+          "id": "D",
+          "text": "upper"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "strip() is commonly used to clean text by removing leading and trailing whitespace.",
+      "explanation": "upper() returns a version of the string with uppercase letters.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-7-3",
       "chapterOrder": 6,
       "lessonOrder": 3,
       "label": "7.3",
       "lessonTitle": "Searching and Checking Strings",
       "type": "multiple_choice",
-      "title": "Checking Text",
-      "question": "Which expression checks whether text contains @?",
+      "promptType": "code_mcq",
+      "title": "Check Text",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "email = \"ada@example.com\"\nprint(\"@\" in email)"
+      },
       "options": [
-        { "id": "A", "text": "\"@\" in text" },
-        { "id": "B", "text": "text + @" },
-        { "id": "C", "text": "text == contains" },
-        { "id": "D", "text": "in(\"@\", text)" }
+        {
+          "id": "A",
+          "text": "True"
+        },
+        {
+          "id": "B",
+          "text": "False"
+        },
+        {
+          "id": "C",
+          "text": "@"
+        },
+        {
+          "id": "D",
+          "text": "email"
+        }
       ],
       "correctOptionId": "A",
       "explanation": "The in operator checks whether one string appears inside another string.",
@@ -649,230 +1245,442 @@
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-7-4",
       "chapterOrder": 6,
       "lessonOrder": 4,
       "label": "7.4",
       "lessonTitle": "Splitting and Joining Text",
       "type": "multiple_choice",
-      "title": "Split and Join",
-      "question": "What does split() do to text?",
+      "promptType": "code_mcq",
+      "title": "Split Text",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "tags = \"python,web,data\"\nprint(tags.split(\",\"))"
+      },
       "options": [
-        { "id": "A", "text": "Breaks it into smaller pieces." },
-        { "id": "B", "text": "Combines a list into one string." },
-        { "id": "C", "text": "Deletes every separator forever." },
-        { "id": "D", "text": "Turns text into True or False." }
+        {
+          "id": "A",
+          "text": "['python', 'web', 'data']"
+        },
+        {
+          "id": "B",
+          "text": "python web data"
+        },
+        {
+          "id": "C",
+          "text": "python,web,data"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "split() breaks a string into pieces, often using whitespace or a chosen separator.",
+      "explanation": "split(\",\") separates the string at each comma and returns a list.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-7-5",
       "chapterOrder": 6,
       "lessonOrder": 5,
       "label": "7.5",
       "lessonTitle": "Applied Practice: Username Formatter",
       "type": "multiple_choice",
-      "title": "Username Formatting",
-      "question": "Why should a username formatter clean text before saving it?",
+      "promptType": "code_mcq",
+      "title": "Format a Username",
+      "question": "Which expression creates a clean lowercase username?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "raw_name = \"  Ada Lovelace  \"\nusername = ____\nprint(username)"
+      },
       "options": [
-        { "id": "A", "text": "To make usernames consistent and predictable." },
-        { "id": "B", "text": "To make every username a number." },
-        { "id": "C", "text": "To prevent print from working." },
-        { "id": "D", "text": "To remove all letters." }
+        {
+          "id": "A",
+          "text": "raw_name.strip().lower().replace(\" \", \"_\")"
+        },
+        {
+          "id": "B",
+          "text": "raw_name.upper()"
+        },
+        {
+          "id": "C",
+          "text": "raw_name.split(\",\")"
+        },
+        {
+          "id": "D",
+          "text": "raw_name.replace(\"_\", \" \")"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Cleaning text helps produce consistent usernames from different user inputs.",
+      "explanation": "strip(), lower(), and replace() combine to remove extra spaces and format the name.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-8-1",
       "chapterOrder": 7,
       "lessonOrder": 1,
       "label": "8.1",
       "lessonTitle": "Opening Files with with open()",
       "type": "multiple_choice",
-      "title": "Opening Files Safely",
-      "question": "Why is with open(...) useful when working with files?",
+      "promptType": "code_mcq",
+      "title": "Open a File Safely",
+      "question": "Which line opens notes.txt for reading using a context manager?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "____\n    content = file.read()"
+      },
       "options": [
-        { "id": "A", "text": "It closes the file automatically after the block." },
-        { "id": "B", "text": "It prevents all errors in the file." },
-        { "id": "C", "text": "It turns file text into a Boolean." },
-        { "id": "D", "text": "It deletes the file after reading." }
+        {
+          "id": "A",
+          "text": "with open(\"notes.txt\", \"r\") as file:"
+        },
+        {
+          "id": "B",
+          "text": "open with \"notes.txt\" as file:"
+        },
+        {
+          "id": "C",
+          "text": "file = with open(\"notes.txt\")"
+        },
+        {
+          "id": "D",
+          "text": "read(\"notes.txt\") as file:"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "The with block manages the file and closes it when the block is done.",
+      "explanation": "with open(...) as file closes the file automatically after the block.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-8-2",
       "chapterOrder": 7,
       "lessonOrder": 2,
       "label": "8.2",
       "lessonTitle": "Reading Whole Files and Lines",
       "type": "multiple_choice",
-      "title": "Reading Files",
-      "question": "What does reading a file allow a program to do?",
+      "promptType": "code_mcq",
+      "title": "Read File Lines",
+      "question": "Which method reads all lines into a list?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "with open(\"tasks.txt\", \"r\") as file:\n    lines = ____"
+      },
       "options": [
-        { "id": "A", "text": "Load saved text from outside the program." },
-        { "id": "B", "text": "Guess the user's password." },
-        { "id": "C", "text": "Turn every line into a comment." },
-        { "id": "D", "text": "Run without Python installed." }
+        {
+          "id": "A",
+          "text": "file.readlines()"
+        },
+        {
+          "id": "B",
+          "text": "file.write()"
+        },
+        {
+          "id": "C",
+          "text": "file.append()"
+        },
+        {
+          "id": "D",
+          "text": "readlines(file)"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Reading files lets a program use information that was saved outside the running code.",
+      "explanation": "readlines() reads the file content as a list of lines.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-8-3",
       "chapterOrder": 7,
       "lessonOrder": 3,
       "label": "8.3",
       "lessonTitle": "Writing and Appending Text",
       "type": "multiple_choice",
-      "title": "Writing Files",
-      "question": "What is the difference between writing and appending?",
+      "promptType": "code_mcq",
+      "title": "Append to a File",
+      "question": "Which mode appends new text without replacing the file?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "with open(\"log.txt\", ____) as file:\n    file.write(\"Done\\n\")"
+      },
       "options": [
-        { "id": "A", "text": "Writing can replace content; appending adds to the end." },
-        { "id": "B", "text": "Appending always deletes the file first." },
-        { "id": "C", "text": "Writing only works with numbers." },
-        { "id": "D", "text": "They are names for the same comment." }
+        {
+          "id": "A",
+          "text": "\"a\""
+        },
+        {
+          "id": "B",
+          "text": "\"w\""
+        },
+        {
+          "id": "C",
+          "text": "\"r\""
+        },
+        {
+          "id": "D",
+          "text": "\"x\""
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Writing can create or replace content, while appending keeps existing content and adds more.",
+      "explanation": "Mode \"a\" appends to the end of a file. Mode \"w\" overwrites existing content.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-8-4",
       "chapterOrder": 7,
       "lessonOrder": 4,
       "label": "8.4",
       "lessonTitle": "Simple CSV-Style Data",
       "type": "multiple_choice",
-      "title": "CSV-Style Text",
-      "question": "How does CSV-style text commonly store fields?",
+      "promptType": "code_mcq",
+      "title": "Split CSV-Style Text",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "row = \"Ada,3,Python\"\nprint(row.split(\",\"))"
+      },
       "options": [
-        { "id": "A", "text": "By separating values with commas or another delimiter." },
-        { "id": "B", "text": "By storing only one Boolean." },
-        { "id": "C", "text": "By removing every line break." },
-        { "id": "D", "text": "By hiding values in comments." }
+        {
+          "id": "A",
+          "text": "['Ada', '3', 'Python']"
+        },
+        {
+          "id": "B",
+          "text": "Ada 3 Python"
+        },
+        {
+          "id": "C",
+          "text": "row.split"
+        },
+        {
+          "id": "D",
+          "text": "An error"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "CSV-style data stores table-like values by separating fields with a delimiter such as a comma.",
+      "explanation": "CSV-style text can be split at commas to create a list of fields.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-8-5",
       "chapterOrder": 7,
       "lessonOrder": 5,
       "label": "8.5",
       "lessonTitle": "Applied Practice: Save Progress",
       "type": "multiple_choice",
-      "title": "Saving Progress",
-      "question": "Why might a program save progress to a file?",
+      "promptType": "code_mcq",
+      "title": "Save Progress",
+      "question": "Which line writes the current lesson name into the file?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "lesson = \"Loops\"\nwith open(\"progress.txt\", \"w\") as file:\n    ____"
+      },
       "options": [
-        { "id": "A", "text": "So progress can be loaded again later." },
-        { "id": "B", "text": "So Python stops using variables." },
-        { "id": "C", "text": "So every line becomes a number." },
-        { "id": "D", "text": "So print statements disappear." }
+        {
+          "id": "A",
+          "text": "file.write(lesson)"
+        },
+        {
+          "id": "B",
+          "text": "file.read(lesson)"
+        },
+        {
+          "id": "C",
+          "text": "write.file(lesson)"
+        },
+        {
+          "id": "D",
+          "text": "print(file.read())"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Saving progress lets a program keep information between runs.",
+      "explanation": "file.write(lesson) writes the string value into the open file.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-9-1",
       "chapterOrder": 8,
       "lessonOrder": 1,
       "label": "9.1",
       "lessonTitle": "Why Exceptions Happen",
       "type": "multiple_choice",
-      "title": "Exceptions",
-      "question": "What does an exception usually mean?",
+      "promptType": "concept_mcq",
+      "title": "Why Exceptions Happen",
+      "question": "What is an exception in Python?",
       "options": [
-        { "id": "A", "text": "Python cannot continue safely with the current operation." },
-        { "id": "B", "text": "The code has finished successfully." },
-        { "id": "C", "text": "A comment was written correctly." },
-        { "id": "D", "text": "A variable changed into a file." }
+        {
+          "id": "A",
+          "text": "A runtime problem that interrupts normal execution."
+        },
+        {
+          "id": "B",
+          "text": "A comment that Python skips."
+        },
+        {
+          "id": "C",
+          "text": "A variable that stores text only."
+        },
+        {
+          "id": "D",
+          "text": "A file that always opens successfully."
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "An exception signals that something went wrong and Python cannot safely continue that operation.",
+      "explanation": "An exception is raised when Python encounters a problem while running code.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-9-2",
       "chapterOrder": 8,
       "lessonOrder": 2,
       "label": "9.2",
       "lessonTitle": "try and except",
       "type": "multiple_choice",
-      "title": "Handling Expected Failure",
-      "question": "What is the role of an except block?",
+      "promptType": "code_mcq",
+      "title": "Handle a ValueError",
+      "question": "Which line should catch invalid number conversion?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "try:\n    age = int(\"twenty\")\nexcept ____:\n    print(\"Use digits only\")"
+      },
       "options": [
-        { "id": "A", "text": "To handle an error raised in the try block." },
-        { "id": "B", "text": "To run before the try block." },
-        { "id": "C", "text": "To create a new Python type." },
-        { "id": "D", "text": "To ignore indentation rules." }
+        {
+          "id": "A",
+          "text": "ValueError"
+        },
+        {
+          "id": "B",
+          "text": "print"
+        },
+        {
+          "id": "C",
+          "text": "int"
+        },
+        {
+          "id": "D",
+          "text": "NoError"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "except lets a program respond to expected errors without crashing immediately.",
+      "explanation": "int(\"twenty\") raises ValueError because the text is not a valid integer.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-9-3",
       "chapterOrder": 8,
       "lessonOrder": 3,
       "label": "9.3",
       "lessonTitle": "else and finally",
       "type": "multiple_choice",
-      "title": "else and finally",
-      "question": "When does the finally block run?",
+      "promptType": "code_mcq",
+      "title": "Use else After try",
+      "question": "What does this code display?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "try:\n    number = int(\"5\")\nexcept ValueError:\n    print(\"Invalid\")\nelse:\n    print(\"Ready\")"
+      },
       "options": [
-        { "id": "A", "text": "After try/except handling, whether an error happened or not." },
-        { "id": "B", "text": "Only before the try block starts." },
-        { "id": "C", "text": "Only when a file has no text." },
-        { "id": "D", "text": "Only when a variable is a string." }
+        {
+          "id": "A",
+          "text": "Ready"
+        },
+        {
+          "id": "B",
+          "text": "Invalid"
+        },
+        {
+          "id": "C",
+          "text": "ValueError"
+        },
+        {
+          "id": "D",
+          "text": "Nothing"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "finally is used for cleanup code that should run whether the try block succeeds or fails.",
+      "explanation": "The conversion succeeds, so the except block is skipped and else runs.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-9-4",
       "chapterOrder": 8,
       "lessonOrder": 4,
       "label": "9.4",
       "lessonTitle": "Raising Errors Intentionally",
       "type": "multiple_choice",
-      "title": "Raising Errors",
-      "question": "Why might a function raise an error on purpose?",
+      "promptType": "code_mcq",
+      "title": "Raise an Error",
+      "question": "Which line intentionally raises an error for a negative amount?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "amount = -5\nif amount < 0:\n    ____"
+      },
       "options": [
-        { "id": "A", "text": "To reject invalid data immediately." },
-        { "id": "B", "text": "To hide all output." },
-        { "id": "C", "text": "To turn every value into text." },
-        { "id": "D", "text": "To skip the function name." }
+        {
+          "id": "A",
+          "text": "raise ValueError(\"Amount cannot be negative\")"
+        },
+        {
+          "id": "B",
+          "text": "return ValueError"
+        },
+        {
+          "id": "C",
+          "text": "print(ValueError)"
+        },
+        {
+          "id": "D",
+          "text": "except ValueError"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "Raising an error intentionally can make bad input clear before the program continues.",
+      "explanation": "raise creates an exception intentionally when the program reaches that line.",
       "xp": 60,
       "estimatedMinutes": 1
     },
     {
+      "id": "python-basic-easy-9-5",
       "chapterOrder": 8,
       "lessonOrder": 5,
       "label": "9.5",
       "lessonTitle": "Applied Practice: Safe Number Parser",
       "type": "multiple_choice",
-      "title": "Safe Number Parsing",
-      "question": "What should a safe number parser do with invalid text?",
+      "promptType": "code_mcq",
+      "title": "Parse a Number Safely",
+      "question": "Which result should this function return for invalid input?",
+      "codeSnippet": {
+        "language": "python",
+        "code": "def safe_int(text):\n    try:\n        return int(text)\n    except ValueError:\n        return ____"
+      },
       "options": [
-        { "id": "A", "text": "Handle it without crashing and give useful feedback." },
-        { "id": "B", "text": "Always treat it as the number 100." },
-        { "id": "C", "text": "Delete the Python file." },
-        { "id": "D", "text": "Ignore all future input." }
+        {
+          "id": "A",
+          "text": "None"
+        },
+        {
+          "id": "B",
+          "text": "int(text)"
+        },
+        {
+          "id": "C",
+          "text": "ValueError"
+        },
+        {
+          "id": "D",
+          "text": "text + 1"
+        }
       ],
       "correctOptionId": "A",
-      "explanation": "A safe parser handles invalid input gracefully instead of letting the program crash without context.",
+      "explanation": "Returning None is a simple way to signal that conversion did not produce a number.",
       "xp": 60,
       "estimatedMinutes": 1
     }
