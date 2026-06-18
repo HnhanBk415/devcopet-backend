@@ -1,0 +1,1215 @@
+{
+  "courseSlug": "python-basic",
+  "mode": "medium",
+  "chapters": [
+    {
+      "chapterOrder": 0,
+      "chapterTitle": "Chapter 0: Introduction + Output/Print in Python",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M0.1",
+          "type": "multiple_choice",
+          "title": "Check Python PATH Configuration",
+          "question": "A student installed Python on Windows but forgot to check \"Add Python to PATH\". What will happen when they run python hello.py in the Command Prompt?",
+          "codeSnippet": null,
+          "options": [
+            {
+              "id": "A",
+              "text": "The program still runs because VS Code automatically fixes the issue."
+            },
+            {
+              "id": "B",
+              "text": "The system reports: 'python' is not recognized as an internal or external command."
+            },
+            {
+              "id": "C",
+              "text": "The hello.py file is automatically deleted from the project folder."
+            },
+            {
+              "id": "D",
+              "text": "Python runs but cannot use the print() function."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "If Python is not added to PATH, the terminal cannot find the python command.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M0.2",
+          "type": "drag_drop",
+          "title": "Check Python Version in VS Code Terminal",
+          "question": "Arrange the blocks to open a built-in terminal in VS Code and check the currently installed Python 3 version.",
+          "codeSnippet": null,
+          "template": "[DROP_ZONE_1] -> [DROP_ZONE_2] -> Run command: [DROP_ZONE_3] [DROP_ZONE_4]",
+          "poolItems": [
+            { "id": "terminal", "text": "Terminal" },
+            { "id": "new-terminal", "text": "New Terminal" },
+            { "id": "python3", "text": "python3" },
+            { "id": "version", "text": "--version" },
+            { "id": "file", "text": "File" },
+            { "id": "open-folder", "text": "Open Folder" },
+            { "id": "v", "text": "-v" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "terminal",
+            "DROP_ZONE_2": "new-terminal",
+            "DROP_ZONE_3": "python3",
+            "DROP_ZONE_4": "version"
+          },
+          "explanation": "In VS Code, Terminal > New Terminal opens the built-in terminal. The command python3 --version checks the installed Python 3 version.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M0.3",
+          "type": "multiple_choice",
+          "title": "Compare Plus and Comma in print()",
+          "question": "Predict the exact output of the two statements below.",
+          "codeSnippet": {
+            "language": "python",
+            "code": "print(\"Python\" + \"World\")\nprint(\"Python\", \"World\")"
+          },
+          "options": [
+            { "id": "A", "text": "PythonWorld and PythonWorld" },
+            { "id": "B", "text": "Python World and Python World" },
+            { "id": "C", "text": "PythonWorld and Python World" },
+            {
+              "id": "D",
+              "text": "Python raises a SyntaxError because the operator is invalid."
+            }
+          ],
+          "correctOptionId": "C",
+          "explanation": "The + operator concatenates strings without adding a space. print() with comma-separated values inserts a space between displayed values.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M0.4",
+          "type": "drag_drop",
+          "title": "Fix print() Syntax",
+          "question": "Fix the syntax error to correctly output the message: Welcome to Python!",
+          "codeSnippet": null,
+          "template": "[DROP_ZONE_1][DROP_ZONE_2]\"Welcome to Python!\"[DROP_ZONE_3]",
+          "poolItems": [
+            { "id": "print", "text": "print" },
+            { "id": "open-paren", "text": "(" },
+            { "id": "close-paren", "text": ")" },
+            { "id": "f", "text": "f" },
+            { "id": "quote", "text": "\"" },
+            { "id": "display", "text": "display" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "print",
+            "DROP_ZONE_2": "open-paren",
+            "DROP_ZONE_3": "close-paren"
+          },
+          "explanation": "A print call needs the function name followed by parentheses around the value to display.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M0.5",
+          "type": "multiple_choice",
+          "title": "Identify a NameError in print()",
+          "question": "What type of error will Python raise if you execute the following line of code?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "print(Hello, World!)"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "TypeError, because the arguments passed to the function have the wrong type."
+            },
+            {
+              "id": "B",
+              "text": "NameError, because Python treats Hello as an undefined variable name."
+            },
+            {
+              "id": "C",
+              "text": "SyntaxError, because the closing parenthesis is missing."
+            },
+            {
+              "id": "D",
+              "text": "Python automatically recognizes the text as a plain string."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "Without quotation marks, Hello is interpreted as a variable name. Since it has not been defined, Python raises a NameError.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 1,
+      "chapterTitle": "Chapter 1: Basic Data Types + Operators",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M1.1",
+          "type": "multiple_choice",
+          "title": "Implicit String Conversion",
+          "question": "Look at the following Python code snippet. What will happen when a user enters the number 5 during execution?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "user_input = input(\"Enter a number: \")\nresult = user_input + 10\nprint(result)"
+          },
+          "options": [
+            { "id": "A", "text": "It displays 15." },
+            { "id": "B", "text": "It displays 510." },
+            {
+              "id": "C",
+              "text": "TypeError: can only concatenate str (not \"int\") to str"
+            },
+            { "id": "D", "text": "ValueError: invalid literal for int()" }
+          ],
+          "correctOptionId": "C",
+          "explanation": "input() returns a string. Adding that string directly to the integer 10 raises a TypeError.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M1.2",
+          "type": "drag_drop",
+          "title": "Apply Type Casting",
+          "question": "Arrange the blocks to read a floating-point number from the user, convert it into an integer, square it, and display the result.",
+          "codeSnippet": null,
+          "template": "raw_val = input()\nnum = [DROP_ZONE_1]([DROP_ZONE_2](raw_val))\nsquare_val = num [DROP_ZONE_3] 2\n[DROP_ZONE_4](square_val)",
+          "poolItems": [
+            { "id": "int", "text": "int" },
+            { "id": "float", "text": "float" },
+            { "id": "power", "text": "**" },
+            { "id": "multiply", "text": "*" },
+            { "id": "print", "text": "print" },
+            { "id": "str", "text": "str" },
+            { "id": "caret", "text": "^" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "int",
+            "DROP_ZONE_2": "float",
+            "DROP_ZONE_3": "power",
+            "DROP_ZONE_4": "print"
+          },
+          "explanation": "The value is parsed as a float first, converted to an integer, squared with **, and displayed with print().",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M1.3",
+          "type": "multiple_choice",
+          "title": "Evaluate Operator Chains",
+          "question": "Evaluate the order of operations and predict the exact final output of the following mathematical expression in Python.",
+          "codeSnippet": {
+            "language": "python",
+            "code": "result = 25 // 4 % 3\nprint(result)"
+          },
+          "options": [
+            { "id": "A", "text": "0" },
+            { "id": "B", "text": "2" },
+            { "id": "C", "text": "0.25" },
+            { "id": "D", "text": "1" }
+          ],
+          "correctOptionId": "A",
+          "explanation": "Floor division and modulo have the same precedence and are evaluated left to right: 25 // 4 is 6, and 6 % 3 is 0.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M1.4",
+          "type": "drag_drop",
+          "title": "Convert Seconds to Minutes",
+          "question": "Complete the time converter script by dragging the correct operators to calculate total minutes and remaining seconds from a raw integer input of total seconds.",
+          "codeSnippet": null,
+          "template": "total_seconds = 365\nminutes = total_seconds [DROP_ZONE_1] 60\nseconds = total_seconds [DROP_ZONE_2] 60\nprint(f\"{minutes}m {seconds}s\")",
+          "poolItems": [
+            { "id": "floor-div", "text": "//" },
+            { "id": "mod", "text": "%" },
+            { "id": "divide", "text": "/" },
+            { "id": "multiply", "text": "*" },
+            { "id": "plus", "text": "+" },
+            { "id": "double-mod", "text": "%%" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "floor-div",
+            "DROP_ZONE_2": "mod"
+          },
+          "explanation": "// gives the whole number of minutes, while % gives the remaining seconds after full minutes are removed.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M1.5",
+          "type": "multiple_choice",
+          "title": "Recognize Invalid Variable Names",
+          "question": "Which of the following variable declarations will cause a SyntaxError during interpretation due to Python's strict naming rules?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "# Option A: user_age = 19\n# Option B: 2_player_score = 450\n# Option C: _total_points = 1000\n# Option D: class_name = \"Python World\""
+          },
+          "options": [
+            { "id": "A", "text": "Option A" },
+            { "id": "B", "text": "Option B" },
+            { "id": "C", "text": "Option C" },
+            { "id": "D", "text": "Option D" }
+          ],
+          "correctOptionId": "B",
+          "explanation": "A Python variable name cannot start with a digit, so 2_player_score is invalid syntax.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 2,
+      "chapterTitle": "Chapter 2: Conditions",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M2.1",
+          "type": "multiple_choice",
+          "title": "Indentation Error Trap",
+          "question": "Review the code snippet below carefully. What will happen when Python tries to interpret and execute this specific conditional block?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "score = 85\nif score >= 70:\nprint(\"Passed\")\nelse:\n    print(\"Keep trying\")"
+          },
+          "options": [
+            { "id": "A", "text": "It prints Passed." },
+            { "id": "B", "text": "It prints Keep trying." },
+            {
+              "id": "C",
+              "text": "It throws a SyntaxError: invalid syntax on the else: line."
+            },
+            {
+              "id": "D",
+              "text": "It throws an IndentationError: expected an indented block after 'if' statement."
+            }
+          ],
+          "correctOptionId": "D",
+          "explanation": "The statement inside the if block must be indented. Python raises an IndentationError when the block is missing.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M2.2",
+          "type": "drag_drop",
+          "title": "Fix Equality in a Condition",
+          "question": "A student wants to unlock a feature only when the user's role is exactly \"mentor\". Drag and drop the correct tokens to fix the check and print the message.",
+          "codeSnippet": null,
+          "template": "role = \"mentor\"\n\nif role [DROP_ZONE_1] \"mentor\"[DROP_ZONE_2]\n    [DROP_ZONE_3]\"Welcome Mentor!\"[DROP_ZONE_4]",
+          "poolItems": [
+            { "id": "eq", "text": "==" },
+            { "id": "colon", "text": ":" },
+            { "id": "print-open", "text": "print(" },
+            { "id": "close-paren", "text": ")" },
+            { "id": "assign", "text": "=" },
+            { "id": "if", "text": "if" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "eq",
+            "DROP_ZONE_2": "colon",
+            "DROP_ZONE_3": "print-open",
+            "DROP_ZONE_4": "close-paren"
+          },
+          "explanation": "Use == for comparison, end the if header with :, and call print() with parentheses around the message.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M2.3",
+          "type": "multiple_choice",
+          "title": "Evaluate and/or Precedence",
+          "question": "Predict the final output of the program when evaluating mixed boolean logic gates with the following input states.",
+          "codeSnippet": {
+            "language": "python",
+            "code": "is_logged_in = False\nis_admin = True\nhas_premium = True\n\nif is_logged_in and has_premium or is_admin:\n    print(\"Access Granted\")\nelse:\n    print(\"Access Denied\")"
+          },
+          "options": [
+            { "id": "A", "text": "Access Denied" },
+            { "id": "B", "text": "Access Granted" },
+            {
+              "id": "C",
+              "text": "It throws a TypeError because you cannot chain and with or without parentheses."
+            },
+            {
+              "id": "D",
+              "text": "Nothing prints because the condition resolves to None."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "and is evaluated before or. The admin branch is True, so the full condition becomes True.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M2.4",
+          "type": "drag_drop",
+          "title": "Complete Boundary Logic",
+          "question": "Complete the access gate code so that it prints \"Restricted\" only when is_locked is True or when attempts have reached at least 3. Otherwise, it should print \"Clear\".",
+          "codeSnippet": null,
+          "template": "is_locked = False\nattempts = 3\n\nif is_locked [DROP_ZONE_1] attempts [DROP_ZONE_2] 3:\n    print(\"Restricted\")\n[DROP_ZONE_3]\n    print(\"Clear\")",
+          "poolItems": [
+            { "id": "or", "text": "or" },
+            { "id": "gte", "text": ">=" },
+            { "id": "else", "text": "else:" },
+            { "id": "and", "text": "and" },
+            { "id": "eq", "text": "==" },
+            { "id": "elif", "text": "elif" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "or",
+            "DROP_ZONE_2": "gte",
+            "DROP_ZONE_3": "else"
+          },
+          "explanation": "or allows either restriction condition to trigger, >= checks the minimum attempt threshold, and else handles the clear fallback.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M2.5",
+          "type": "multiple_choice",
+          "title": "Branch Ordering Trap",
+          "question": "Look at this poorly structured conditional chain. If a user has xp = 120 and completed_intro = True, what message will they see?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "xp = 120\ncompleted_intro = True\n\nif xp >= 100:\n    print(\"Level Up Available\")\nelif completed_intro and xp >= 100:\n    print(\"Master Arena Unlocked\")\nelse:\n    print(\"Keep Practicing\")"
+          },
+          "options": [
+            { "id": "A", "text": "Master Arena Unlocked" },
+            { "id": "B", "text": "Level Up Available" },
+            { "id": "C", "text": "Level Up Available Master Arena Unlocked" },
+            { "id": "D", "text": "Keep Practicing" }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The first if condition is already True, so Python executes that branch and skips the later elif branch.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 3,
+      "chapterTitle": "Chapter 3: Loops",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M3.1",
+          "type": "multiple_choice",
+          "title": "Binary Float Precision Trap",
+          "question": "Review the following Python program carefully. What exact output will be displayed on the screen when this condition is evaluated by the interpreter?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "num1 = 0.1\nnum2 = 0.2\ntotal = num1 + num2\n\nif total == 0.3:\n    print(\"Perfect match\")\nelse:\n    print(f\"Mismatch: {total}\")"
+          },
+          "options": [
+            { "id": "A", "text": "Perfect match" },
+            { "id": "B", "text": "Mismatch: 0.3" },
+            { "id": "C", "text": "Mismatch: 0.30000000000000004" },
+            {
+              "id": "D",
+              "text": "It triggers a TypeError because you cannot format float values inside an f-string directly."
+            }
+          ],
+          "correctOptionId": "C",
+          "explanation": "Binary floating-point arithmetic cannot represent 0.1 and 0.2 exactly, so their sum is displayed as 0.30000000000000004.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M3.2",
+          "type": "drag_drop",
+          "title": "Chain Explicit Type Conversions",
+          "question": "A system receives a price label string \"19.99\" from an API. Parse it to the whole-number component, double it, convert the result back into text, and output it.",
+          "codeSnippet": null,
+          "template": "price_string = \"19.99\"\n\nclean_integer = [DROP_ZONE_1]([DROP_ZONE_2](price_string))\nfinal_text = [DROP_ZONE_3](clean_integer * 2) + \" dollars\"\n\nprint(final_text)",
+          "poolItems": [
+            { "id": "int", "text": "int" },
+            { "id": "float", "text": "float" },
+            { "id": "str", "text": "str" },
+            { "id": "bool", "text": "bool" },
+            { "id": "type", "text": "type" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "int",
+            "DROP_ZONE_2": "float",
+            "DROP_ZONE_3": "str"
+          },
+          "explanation": "float() parses the decimal string, int() keeps the whole-number component, and str() makes the final integer safe to concatenate with text.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M3.3",
+          "type": "multiple_choice",
+          "title": "Evaluate Nested Expression Types",
+          "question": "If you evaluate the exact data type of the nested expression below using Python's built-in type() function, what will be the final printed output?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "print(type(15 / 3 == 5))"
+          },
+          "options": [
+            { "id": "A", "text": "<class 'int'>" },
+            { "id": "B", "text": "<class 'float'>" },
+            { "id": "C", "text": "<class 'bool'>" },
+            {
+              "id": "D",
+              "text": "It throws a SyntaxError because an evaluation operator == cannot be nested inside type()."
+            }
+          ],
+          "correctOptionId": "C",
+          "explanation": "15 / 3 produces 5.0, and 5.0 == 5 evaluates to True. The type of True is bool.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M3.4",
+          "type": "drag_drop",
+          "title": "Concatenate Strings and Numbers",
+          "question": "A developer wants to safely log a user's progress. The code must concatenate distinct strings while incorporating numbers cleanly. Rearrange the blocks to output exactly: Level: 5 | Status: True.",
+          "codeSnippet": null,
+          "template": "lvl = 5\nactive = True\n\nlog_msg = \"Level: \" [DROP_ZONE_1] [DROP_ZONE_2](lvl) [DROP_ZONE_3] \" | Status: \" + str(active)\nprint(log_msg)",
+          "poolItems": [
+            { "id": "plus", "text": "+" },
+            { "id": "str", "text": "str" },
+            { "id": "comma", "text": "," },
+            { "id": "int", "text": "int" },
+            { "id": "f", "text": "f" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "plus",
+            "DROP_ZONE_2": "str",
+            "DROP_ZONE_3": "plus"
+          },
+          "explanation": "Manual string concatenation requires +, and non-string values such as integers must be converted with str() first.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M3.5",
+          "type": "multiple_choice",
+          "title": "Invalid Literal Runtime Failure",
+          "question": "Look at the following type conversion scripts. Which of these independent blocks will fail at runtime and raise an unhandled ValueError exception in Python?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "# Block 1\nval_1 = int(\"15.0\")\n\n# Block 2\nval_2 = int(15.9)\n\n# Block 3\nval_3 = float(\"15\")\n\n# Block 4\nval_4 = str(15)"
+          },
+          "options": [
+            { "id": "A", "text": "Block 1 only" },
+            { "id": "B", "text": "Block 2 only" },
+            { "id": "C", "text": "Block 1 and Block 3" },
+            { "id": "D", "text": "Block 1 and Block 2" }
+          ],
+          "correctOptionId": "A",
+          "explanation": "int(\"15.0\") fails because the string is not a valid integer literal. The other conversions are valid.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 4,
+      "chapterTitle": "Chapter 4: Basic Data Structures",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M4.1",
+          "type": "multiple_choice",
+          "title": "String Multiplication Trap",
+          "question": "Review the following interactive Python script. If the user executes this code and types exactly 10 when prompted, what output will be displayed on the screen?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "multiplier = input(\"Enter standard multiplier limit: \")\nbase_value = multiplier * 3\nprint(base_value)"
+          },
+          "options": [
+            { "id": "A", "text": "30" },
+            { "id": "B", "text": "101010" },
+            { "id": "C", "text": "10 10 10" },
+            {
+              "id": "D",
+              "text": "It triggers a TypeError: can only concatenate str (not \"int\") to str."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "input() returns the text \"10\". Multiplying a string by 3 repeats the string three times.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M4.2",
+          "type": "drag_drop",
+          "title": "Consolidate Multi-Variable Input",
+          "question": "A system needs to gather a user's location profiling metrics. Prompt for a city name, gather an area code as an integer, and combine them into a formatted record.",
+          "codeSnippet": null,
+          "template": "city_name = [DROP_ZONE_1](\"Target city: \")\narea_code = [DROP_ZONE_2]([DROP_ZONE_3](\"Area identification code: \"))\nprint(\"Location: \" + city_name + \" | Code: \" + [DROP_ZONE_4](area_code))",
+          "poolItems": [
+            { "id": "input", "text": "input" },
+            { "id": "int", "text": "int" },
+            { "id": "str", "text": "str" },
+            { "id": "float", "text": "float" },
+            { "id": "print", "text": "print" },
+            { "id": "get", "text": "get" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "input",
+            "DROP_ZONE_2": "int",
+            "DROP_ZONE_3": "input",
+            "DROP_ZONE_4": "str"
+          },
+          "explanation": "input() collects raw text, int() converts the area code, and str() converts it back to text for concatenation.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M4.3",
+          "type": "drag_drop",
+          "title": "Calculate a Decimal Markup",
+          "question": "Complete the decimal price calculation gate. The program must accept raw numeric text input for a single item's price, process a 15% markup, and display the final total.",
+          "codeSnippet": null,
+          "template": "base_price = [DROP_ZONE_1]([DROP_ZONE_2](\"Item price: \"))\nfinal_total = base_price [DROP_ZONE_3] 1.15\n\nprint(\"Total cost:\", final_total)",
+          "poolItems": [
+            { "id": "float", "text": "float" },
+            { "id": "input", "text": "input" },
+            { "id": "multiply", "text": "*" },
+            { "id": "int", "text": "int" },
+            { "id": "divide", "text": "/" },
+            { "id": "plus", "text": "+" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "float",
+            "DROP_ZONE_2": "input",
+            "DROP_ZONE_3": "multiply"
+          },
+          "explanation": "float(input(...)) safely parses a decimal price, and multiplying by 1.15 applies a 15% markup.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M4.4",
+          "type": "multiple_choice",
+          "title": "Resolve input() Type",
+          "question": "If you pass a chained interactive user evaluation statement into Python's built-in type() function, what data type will be resolved and output if the user inputs 4.5?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "print(type(input(\"Enter raw reading: \")))"
+          },
+          "options": [
+            { "id": "A", "text": "<class 'int'>" },
+            { "id": "B", "text": "<class 'float'>" },
+            { "id": "C", "text": "<class 'str'>" },
+            {
+              "id": "D",
+              "text": "It causes an immediate runtime crash because type() cannot evaluate an active input block stream."
+            }
+          ],
+          "correctOptionId": "C",
+          "explanation": "input() always returns a string unless you explicitly convert the value.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M4.5",
+          "type": "multiple_choice",
+          "title": "Predict Concatenation Logic",
+          "question": "Look at the following interaction program flow. If a user runs this block, enters 2 for the first prompt, and enters 3 for the second prompt, what output will display?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "num_a = input(\"Enter first variable: \")\nnum_b = input(\"Enter second variable: \")\ntotal = num_a + num_b\n\nif total == 5:\n    print(\"Result matches integer calculations\")\nelse:\n    print(\"Result matches string concatenation\")"
+          },
+          "options": [
+            { "id": "A", "text": "Result matches integer calculations" },
+            { "id": "B", "text": "Result matches string concatenation" },
+            {
+              "id": "C",
+              "text": "It throws a TypeError on the condition line."
+            },
+            {
+              "id": "D",
+              "text": "Nothing will be output because a string check cannot be run inside a default if condition block."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The inputs are strings, so total becomes \"23\", not the integer 5. The condition is false and the else branch runs.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 5,
+      "chapterTitle": "Chapter 5: Function",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M5.1",
+          "type": "multiple_choice",
+          "title": "Compound Precedence Chain",
+          "question": "Analyze the following Python program carefully. What exact numerical or boolean result will be displayed on the screen after the interpreter evaluates this complex operator chain?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "result = 5 + 3 * 2 ** 3 / 4 // 2\nprint(result)"
+          },
+          "options": [
+            { "id": "A", "text": "8.0" },
+            { "id": "B", "text": "11.0" },
+            { "id": "C", "text": "8" },
+            { "id": "D", "text": "7.0" }
+          ],
+          "correctOptionId": "A",
+          "explanation": "Exponentiation runs first, then multiplication/division/floor division left to right, and finally addition. Because / is involved, the final result is a float.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M5.2",
+          "type": "drag_drop",
+          "title": "Fix Shortcut Accumulation Logic",
+          "question": "A student wants to track a game score. The score should start at 10, double itself first, and then subtract the remainder of limit divided by 5. Drag and drop the correct shortcut operators.",
+          "codeSnippet": null,
+          "template": "score = 10\nlimit = 17\n\nscore [DROP_ZONE_1] 2\nscore [DROP_ZONE_2] limit [DROP_ZONE_3] 5\n\nprint(score)",
+          "poolItems": [
+            { "id": "mul-assign", "text": "*=" },
+            { "id": "sub-assign", "text": "-=" },
+            { "id": "mod", "text": "%" },
+            { "id": "mod-assign", "text": "%=" },
+            { "id": "assign", "text": "=" },
+            { "id": "floor-div", "text": "//" },
+            { "id": "add-assign", "text": "+=" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "mul-assign",
+            "DROP_ZONE_2": "sub-assign",
+            "DROP_ZONE_3": "mod"
+          },
+          "explanation": "*= doubles the score from 10 to 20. The expression limit % 5 is 2, and -= subtracts it to produce 18.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M5.3",
+          "type": "multiple_choice",
+          "title": "Assignment vs Equality Defect",
+          "question": "A developer attempts to write a quick status validation gate script. What will be the exact outcome when Python interprets and attempts to run this specific syntax structure?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "current_points = 100\n\nif current_points = 100:\n    print(\"Maximum tier achieved\")\nelse:\n    print(\"Keep playing\")"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "It executes successfully and outputs Maximum tier achieved."
+            },
+            {
+              "id": "B",
+              "text": "It executes successfully and outputs Keep playing."
+            },
+            {
+              "id": "C",
+              "text": "It crashes immediately with a SyntaxError: invalid syntax on the if line."
+            },
+            {
+              "id": "D",
+              "text": "It crashes with a TypeError because an integer cannot resolve to a true/false statement."
+            }
+          ],
+          "correctOptionId": "C",
+          "explanation": "A condition needs a comparison such as ==. A single = is assignment and is invalid in this if statement.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M5.4",
+          "type": "drag_drop",
+          "title": "Build a Boolean Threshold Gate",
+          "question": "Complete the threshold gate algorithm. The gate should only trigger a True value if alpha is strictly greater than beta, and beta is not equal to zero.",
+          "codeSnippet": null,
+          "template": "alpha = 25\nbeta = 12\n\nis_valid_gate = alpha [DROP_ZONE_1] beta [DROP_ZONE_2] beta [DROP_ZONE_3] 0\nprint(is_valid_gate)",
+          "poolItems": [
+            { "id": "gt", "text": ">" },
+            { "id": "and", "text": "and" },
+            { "id": "ne", "text": "!=" },
+            { "id": "eq", "text": "==" },
+            { "id": "or", "text": "or" },
+            { "id": "not", "text": "not" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "gt",
+            "DROP_ZONE_2": "and",
+            "DROP_ZONE_3": "ne"
+          },
+          "explanation": "> checks the ordering, and requires both checks to pass, and != ensures beta is not zero.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M5.5",
+          "type": "multiple_choice",
+          "title": "Short-Circuit Boolean Logic",
+          "question": "Examine the execution stream below. What exact string message will be printed to the output log after evaluating this compound logic gate?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "score_limit = 80\nhas_token = False\nis_admin = True\n\nif is_admin or score_limit >= 100 and has_token:\n    print(\"Verification Bypass Activated\")\nelse:\n    print(\"Standard Gate Required\")"
+          },
+          "options": [
+            { "id": "A", "text": "Standard Gate Required" },
+            { "id": "B", "text": "Verification Bypass Activated" },
+            {
+              "id": "C",
+              "text": "It throws a ValueError because math comparison cannot be mixed with logical keywords directly."
+            },
+            {
+              "id": "D",
+              "text": "Nothing will display because the code results in an infinite conditional loop."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "is_admin is True, so the or condition short-circuits and the bypass message is printed.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 6,
+      "chapterTitle": "Chapter 6: String Processing",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M6.1",
+          "type": "multiple_choice",
+          "title": "Short-Circuit Function Call Trap",
+          "question": "Analyze the following Python code snippet carefully. If the variable is_admin is set to True, what exact text output will be displayed on the screen after execution?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "is_admin = True\naccess_logged = False\n\ndef log_access():\n    global access_logged\n    access_logged = True\n    return True\n\nif is_admin or log_access():\n    print(f\"Gate Open | Log Status: {access_logged}\")\nelse:\n    print(f\"Gate Closed | Log Status: {access_logged}\")"
+          },
+          "options": [
+            { "id": "A", "text": "Gate Open | Log Status: True" },
+            { "id": "B", "text": "Gate Open | Log Status: False" },
+            { "id": "C", "text": "Gate Closed | Log Status: False" },
+            {
+              "id": "D",
+              "text": "It throws a NameError because a function execution call cannot be placed inside an if condition directly."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The left side of or is already True, so Python does not call log_access(). The log flag remains False.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M6.2",
+          "type": "drag_drop",
+          "title": "Fix an Explicit Range Check",
+          "question": "A student wants to throw an alert if a user's age is outside the valid student bracket of 18 to 25 inclusive. Complete the split boundary evaluation.",
+          "codeSnippet": null,
+          "template": "age = 30\n\nif age [DROP_ZONE_1] 18 [DROP_ZONE_2] age [DROP_ZONE_3] 25[DROP_ZONE_4]\n    print(\"Alert: Out of range!\")",
+          "poolItems": [
+            { "id": "lt", "text": "<" },
+            { "id": "or", "text": "or" },
+            { "id": "gt", "text": ">" },
+            { "id": "colon", "text": ":" },
+            { "id": "and", "text": "and" },
+            { "id": "eq", "text": "==" },
+            { "id": "not", "text": "not" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "lt",
+            "DROP_ZONE_2": "or",
+            "DROP_ZONE_3": "gt",
+            "DROP_ZONE_4": "colon"
+          },
+          "explanation": "An invalid age is either below 18 or above 25. The condition header must end with a colon.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M6.3",
+          "type": "multiple_choice",
+          "title": "Truthiness Comparison Trap",
+          "question": "Predict the final displayed output of this condition script. Pay close attention to how implicit string truthiness evaluates with logical operators.",
+          "codeSnippet": {
+            "language": "python",
+            "code": "user_role = \"student\"\n\nif user_role == \"admin\" or \"mentor\":\n    print(\"Access Privilege Granted\")\nelse:\n    print(\"Standard Privilege Enforced\")"
+          },
+          "options": [
+            { "id": "A", "text": "Standard Privilege Enforced" },
+            { "id": "B", "text": "Access Privilege Granted" },
+            {
+              "id": "C",
+              "text": "It crashes immediately with a TypeError: bad operand type for unary 'or'."
+            },
+            {
+              "id": "D",
+              "text": "It triggers an IndentationError because strings must be wrapped in nested parentheses inside an if line."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The non-empty string \"mentor\" is truthy, so the full or expression is truthy even when user_role is not admin.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M6.4",
+          "type": "drag_drop",
+          "title": "Override Logical Precedence",
+          "question": "Complete the premium platform registration verification algorithm. The user must have a token or elite role, and must not be blacklisted.",
+          "codeSnippet": null,
+          "template": "has_token = False\nis_elite = True\nis_blacklisted = False\n\nis_validated = [DROP_ZONE_1] has_token [DROP_ZONE_2] is_elite [DROP_ZONE_3] and [DROP_ZONE_4] is_blacklisted\nprint(is_validated)",
+          "poolItems": [
+            { "id": "open-paren", "text": "(" },
+            { "id": "or", "text": "or" },
+            { "id": "close-paren", "text": ")" },
+            { "id": "not", "text": "not" },
+            { "id": "and", "text": "and" },
+            { "id": "clear", "text": "clear" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "open-paren",
+            "DROP_ZONE_2": "or",
+            "DROP_ZONE_3": "close-paren",
+            "DROP_ZONE_4": "not"
+          },
+          "explanation": "Parentheses force the token-or-elite check to run before and, and not reverses the blacklist flag.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M6.5",
+          "type": "multiple_choice",
+          "title": "Double Reversal Logic",
+          "question": "Review the following nested logical conditional structure. What string output will the application display when executing this block?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "is_verified = False\nhas_payment = True\n\nif not (not is_verified and has_payment):\n    print(\"Execution Strategy Alpha Triggered\")\nelse:\n    print(\"Execution Strategy Beta Triggered\")"
+          },
+          "options": [
+            { "id": "A", "text": "Execution Strategy Beta Triggered" },
+            { "id": "B", "text": "Execution Strategy Alpha Triggered" },
+            {
+              "id": "C",
+              "text": "It throws a SyntaxError because nesting a not directly in front of open parentheses is illegal."
+            },
+            {
+              "id": "D",
+              "text": "Nothing prints because the double negative resolves entirely to None."
+            }
+          ],
+          "correctOptionId": "A",
+          "explanation": "not is_verified is True and has_payment is True, so the inner expression is True. The outer not makes it False, causing the else branch to run.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 7,
+      "chapterTitle": "Chapter 7: Basic File Reading and Writing",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M7.1",
+          "type": "multiple_choice",
+          "title": "Off-By-One Accumulator Trap",
+          "question": "Review the following Python calculation block carefully. What exact integer value will be stored in the variable total_sum and printed to the screen after the loop finishes its execution?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "total_sum = 0\n\nfor multiplier in range(1, 5):\n    if multiplier % 2 == 0:\n        total_sum += multiplier * 2\n    else:\n        total_sum += multiplier\nprint(total_sum)"
+          },
+          "options": [
+            { "id": "A", "text": "17" },
+            { "id": "B", "text": "12" },
+            { "id": "C", "text": "22" },
+            { "id": "D", "text": "16" }
+          ],
+          "correctOptionId": "D",
+          "explanation": "range(1, 5) produces 1, 2, 3, and 4. The sum is 1 + 4 + 3 + 8 = 16.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M7.2",
+          "type": "drag_drop",
+          "title": "Fix an Infinite while Loop",
+          "question": "A student wants to build an automated security validation countdown that counts backward from 3 to 1. Drag and drop the correct operators to repair the loop.",
+          "codeSnippet": null,
+          "template": "countdown = 3\n\nwhile countdown [DROP_ZONE_1] 0:\n    print(\"Verification Index:\", countdown)\n    countdown [DROP_ZONE_2] 1\n\nprint(\"System Secure\")",
+          "poolItems": [
+            { "id": "gt", "text": ">" },
+            { "id": "sub-assign", "text": "-=" },
+            { "id": "add-assign", "text": "+=" },
+            { "id": "lt", "text": "<" },
+            { "id": "eq", "text": "==" },
+            { "id": "ne", "text": "!=" },
+            { "id": "mul-assign", "text": "*=" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "gt",
+            "DROP_ZONE_2": "sub-assign"
+          },
+          "explanation": "The loop should continue while countdown is greater than 0, and -= decreases the value so the loop eventually stops.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M7.3",
+          "type": "multiple_choice",
+          "title": "Indentation Scope in a Loop",
+          "question": "Analyze the nested indentation levels in the program below. What exact text sequence output will be generated when this script is interpreted?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "points = 0\n\nfor cycle in range(3):\n    points += 10\n    if points == 20:\n        print(\"Checkpoint reached\")\nprint(f\"Final Reward: {points}\")"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "Checkpoint reached, Final Reward: 10, Final Reward: 20, Final Reward: 30"
+            },
+            { "id": "B", "text": "Checkpoint reached, then Final Reward: 30" },
+            {
+              "id": "C",
+              "text": "Checkpoint reached, Checkpoint reached, then Final Reward: 30"
+            },
+            {
+              "id": "D",
+              "text": "It triggers an immediate IndentationError: unexpected unindent on the final print line."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The checkpoint prints only when points reaches 20. The final print is outside the loop, so it runs once after points reaches 30.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M7.4",
+          "type": "drag_drop",
+          "title": "Build a Reverse Filtering Loop",
+          "question": "Complete the reverse data filtering script. The loop must start at 6, count downward, skip index 4, and stop before reaching 0.",
+          "codeSnippet": null,
+          "template": "for index in range(6, 0, [DROP_ZONE_1]):\n    if index == 4:\n        [DROP_ZONE_2]\n    print(\"Processing index:\", index)",
+          "poolItems": [
+            { "id": "neg-two", "text": "-2" },
+            { "id": "neg-one", "text": "-1" },
+            { "id": "continue", "text": "continue" },
+            { "id": "break", "text": "break" },
+            { "id": "zero", "text": "0" },
+            { "id": "one", "text": "1" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "neg-one",
+            "DROP_ZONE_2": "continue"
+          },
+          "explanation": "A step of -1 counts down by one. continue skips the print statement for index 4 and moves to the next loop iteration.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M7.5",
+          "type": "multiple_choice",
+          "title": "Nested Loop break Scope",
+          "question": "Look at this nested loop matrix analyzer block carefully. What will be the exact total number of times the text message \"Analyzing...\" is printed to the console log?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "for outer in range(1, 4):\n    for inner in range(1, 4):\n        if inner == 2:\n            break\n        print(\"Analyzing...\")"
+          },
+          "options": [
+            { "id": "A", "text": "9" },
+            { "id": "B", "text": "1" },
+            { "id": "C", "text": "3" },
+            { "id": "D", "text": "0" }
+          ],
+          "correctOptionId": "C",
+          "explanation": "For each outer loop, the inner loop prints once when inner is 1, then breaks when inner is 2. This happens three times.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    },
+    {
+      "chapterOrder": 8,
+      "chapterTitle": "Chapter 8: Exception",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "M8.1",
+          "type": "multiple_choice",
+          "title": "Continuous Flow with finally",
+          "question": "Review the following data logging function carefully. What exact sequence of text outputs will be displayed on the screen if the function is invoked with load_score(\"ninety\")?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def load_score(text):\n    try:\n        score = int(text)\n    except ValueError:\n        print(\"Invalid format caught\")\n        return 0\n    else:\n        print(\"Score synchronized successfully\")\n        return score\n    finally:\n        print(\"System evaluation finalized\")\n\nfinal_result = load_score(\"ninety\")"
+          },
+          "options": [
+            { "id": "A", "text": "Invalid format caught" },
+            {
+              "id": "B",
+              "text": "Invalid format caught, then System evaluation finalized"
+            },
+            {
+              "id": "C",
+              "text": "Invalid format caught, Score synchronized successfully, then System evaluation finalized"
+            },
+            {
+              "id": "D",
+              "text": "It triggers a SyntaxError because a return statement cannot be placed inside an except block when a finally block is attached."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The conversion fails, so except runs. The finally block still runs before the function fully returns.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 2,
+          "label": "M8.2",
+          "type": "drag_drop",
+          "title": "Construct a Safe Parser",
+          "question": "A secure payment gateway must convert text input into an integer, reject negative values, and handle parsing failures by returning None instead of crashing.",
+          "codeSnippet": null,
+          "template": "def parse_payment(text):\n    [DROP_ZONE_1]:\n        amount = int(text)\n        if amount < 0:\n            [DROP_ZONE_2] ValueError(\"Negative amount protection triggered\")\n        return amount\n    [DROP_ZONE_3] ValueError:\n        print(\"Secure logging: Parsing transaction failed.\")\n        return [DROP_ZONE_4]",
+          "poolItems": [
+            { "id": "try", "text": "try" },
+            { "id": "raise", "text": "raise" },
+            { "id": "except", "text": "except" },
+            { "id": "none", "text": "None" },
+            { "id": "finally", "text": "finally" },
+            { "id": "catch", "text": "catch" },
+            { "id": "zero", "text": "0" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "try",
+            "DROP_ZONE_2": "raise",
+            "DROP_ZONE_3": "except",
+            "DROP_ZONE_4": "none"
+          },
+          "explanation": "try wraps risky conversion code, raise intentionally triggers a validation error, except catches ValueError, and None signals a controlled failure.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 3,
+          "label": "M8.3",
+          "type": "multiple_choice",
+          "title": "Exception Alias Scope Trap",
+          "question": "Analyze the syntax structure of this error handler carefully. What will happen when Python runs this block?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "try:\n    result = 10 / 0\nexcept ZeroDivisionError as error:\n    print(\"Zero division detected\")\n\nprint(error)"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "It prints Zero division detected followed by division by zero."
+            },
+            {
+              "id": "B",
+              "text": "It prints Zero division detected followed by <class 'ZeroDivisionError'>."
+            },
+            {
+              "id": "C",
+              "text": "It prints Zero division detected and then crashes with a NameError: name 'error' is not defined."
+            },
+            {
+              "id": "D",
+              "text": "It causes a compile-time SyntaxError because assigning an alias using as is illegal outside of file reading streams."
+            }
+          ],
+          "correctOptionId": "C",
+          "explanation": "Python clears the exception alias after the except block, so accessing error afterward raises a NameError.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 4,
+          "label": "M8.4",
+          "type": "drag_drop",
+          "title": "Place else and finally Blocks",
+          "question": "Complete the data stream resource manager script. If setup succeeds, save the database state. Regardless of success or failure, always release the system locks.",
+          "codeSnippet": null,
+          "template": "try:\n    tier = int(input_data)\n    print(f\"Tier defined: {tier}\")\nexcept ValueError:\n    print(\"Logging Alert: Invalid data literal encountered\")\n[DROP_ZONE_1]\n    print(\"Database State Saved Successfully\")\n[DROP_ZONE_2]\n    print(\"System Security Lock Released\")",
+          "poolItems": [
+            { "id": "else", "text": "else:" },
+            { "id": "finally", "text": "finally:" },
+            { "id": "except", "text": "except:" },
+            { "id": "then", "text": "then:" },
+            { "id": "always", "text": "always:" }
+          ],
+          "correctDropZoneMap": {
+            "DROP_ZONE_1": "else",
+            "DROP_ZONE_2": "finally"
+          },
+          "explanation": "else runs only when the try block succeeds. finally always runs, making it the right place for cleanup.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        },
+        {
+          "order": 5,
+          "label": "M8.5",
+          "type": "multiple_choice",
+          "title": "Avoid Broad Exception Masking",
+          "question": "Review this badly designed exception handling structure. Why is trapping errors using a broad, unqualified except Exception: clause or raw except: considered a dangerous programming practice here?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "try:\n    # A typo mistake is made: 'prnt' instead of 'print'\n    prnt(\"User metadata processing completed\")\nexcept Exception:\n    print(\"A standard data conversion issue occurred. Using safe fallback 0.\")\n    score = 0"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "It will trigger a critical compile-time SyntaxError due to the typo."
+            },
+            {
+              "id": "B",
+              "text": "It creates a dangerous logic obfuscation bug by capturing a NameError and silently masking it as an expected data conversion failure."
+            },
+            {
+              "id": "C",
+              "text": "It forces the program to crash immediately with an unhandled TypeError instead."
+            },
+            {
+              "id": "D",
+              "text": "It prevents the execution of any subsequent conditional chains or loops downstream."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "A broad exception handler hides programming mistakes such as misspelled function names, making the program report the wrong failure reason.",
+          "xp": 100,
+          "estimatedMinutes": 2
+        }
+      ]
+    }
+  ]
+}
