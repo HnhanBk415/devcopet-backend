@@ -26,13 +26,15 @@ function listChapterDirs(basePath: string): string[] {
       .filter(
         (dirent) => dirent.isDirectory() && dirent.name.startsWith('chapter-'),
       )
-      .map((dirent) => dirent.name);
+      .map((dirent) => dirent.name)
+      .sort();
   } catch {
     return [];
   }
 }
 
-export async function seedPythonDsa(
+async function seedCourseContent(
+  contentFolder: string,
   CourseModel: Model<any>,
 
   ChapterModel: Model<any>,
@@ -41,7 +43,7 @@ export async function seedPythonDsa(
 
   QuizModel?: Model<any>,
 ): Promise<void> {
-  const basePath = path.resolve(__dirname, 'content', 'python-dsa');
+  const basePath = path.resolve(__dirname, 'content', contentFolder);
   const courseJsonPath = path.join(basePath, 'course.json');
 
   if (!fs.existsSync(courseJsonPath)) {
@@ -186,4 +188,40 @@ export async function seedPythonDsa(
   });
 
   console.log(`[Seed] Done updating totals for Course: ${courseData.title}`);
+}
+
+export async function seedPythonBasic(
+  CourseModel: Model<any>,
+
+  ChapterModel: Model<any>,
+
+  LessonModel: Model<any>,
+
+  QuizModel?: Model<any>,
+): Promise<void> {
+  return seedCourseContent(
+    'python-basic',
+    CourseModel,
+    ChapterModel,
+    LessonModel,
+    QuizModel,
+  );
+}
+
+export async function seedPythonDsa(
+  CourseModel: Model<any>,
+
+  ChapterModel: Model<any>,
+
+  LessonModel: Model<any>,
+
+  QuizModel?: Model<any>,
+): Promise<void> {
+  return seedCourseContent(
+    'python-dsa',
+    CourseModel,
+    ChapterModel,
+    LessonModel,
+    QuizModel,
+  );
 }

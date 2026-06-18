@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Opening Files with with open()",
+    "slug": "opening-files-with-with-open",
+    "description": "Files let a program read from and write to the outside world.",
+    "order": 1,
+    "type": "reading",
+    "filename": "01-opening-files-with-with-open.md",
+    "quizFile": "01-opening-files-with-with-open.quiz.json",
+    "estimatedMinutes": 14,
+    "xpReward": 110,
+    "isPublished": true
+  },
+  {
+    "title": "Reading Whole Files and Lines",
+    "slug": "reading-whole-files-and-lines",
+    "description": "Reading files is how programs load saved information.",
+    "order": 2,
+    "type": "reading",
+    "filename": "02-reading-whole-files-and-lines.md",
+    "quizFile": "02-reading-whole-files-and-lines.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 120,
+    "isPublished": true
+  },
+  {
+    "title": "Writing and Appending Text",
+    "slug": "writing-and-appending-text",
+    "description": "Writing creates or replaces content; appending adds to the end.",
+    "order": 3,
+    "type": "reading",
+    "filename": "03-writing-and-appending-text.md",
+    "quizFile": "03-writing-and-appending-text.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 120,
+    "isPublished": true
+  },
+  {
+    "title": "Simple CSV-Style Data",
+    "slug": "simple-csv-style-data",
+    "description": "CSV-style text stores table-like data using separators.",
+    "order": 4,
+    "type": "reading",
+    "filename": "04-simple-csv-style-data.md",
+    "quizFile": "04-simple-csv-style-data.quiz.json",
+    "estimatedMinutes": 16,
+    "xpReward": 130,
+    "isPublished": true
+  },
+  {
+    "title": "Applied Practice: Save Progress",
+    "slug": "mini-task-save-progress",
+    "description": "Build a small save system for learning progress.",
+    "order": 5,
+    "type": "project",
+    "filename": "05-mini-task-save-progress.md",
+    "quizFile": "05-mini-task-save-progress.quiz.json",
+    "estimatedMinutes": 18,
+    "xpReward": 140,
+    "isPublished": true
+  }
+]

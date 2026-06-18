@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 2: Conditions",
+  "slug": "conditions",
+  "description": "Teach programs to choose the right path with if, elif, else, boolean logic, and readable branching.",
+  "order": 2,
+  "estimatedMinutes": 64,
+  "isPublished": true
+}

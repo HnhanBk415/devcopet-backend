@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 4: Basic Data Structures",
+  "slug": "basic-data-structures",
+  "description": "Organize real data with lists, tuples, dictionaries, and sets, then choose the right tool for the job.",
+  "order": 4,
+  "estimatedMinutes": 66,
+  "isPublished": true
+}

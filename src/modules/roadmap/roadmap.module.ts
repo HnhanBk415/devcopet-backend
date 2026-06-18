@@ -5,6 +5,9 @@ import { RoadmapService } from './roadmap.service';
 import { World, WorldSchema } from './schemas/world.schema';
 import { Level, LevelSchema } from './schemas/level.schema';
 import { Node, NodeSchema } from './schemas/node.schema';
+import { Course, CourseSchema } from '../courses/schemas/course.schema';
+import { Chapter, ChapterSchema } from '../chapters/schemas/chapter.schema';
+import { Lesson, LessonSchema } from '../lessons/schemas/lesson.schema';
 
 @Module({
   imports: [
@@ -12,6 +15,9 @@ import { Node, NodeSchema } from './schemas/node.schema';
       { name: World.name, schema: WorldSchema },
       { name: Level.name, schema: LevelSchema },
       { name: Node.name, schema: NodeSchema },
+      { name: Course.name, schema: CourseSchema },
+      { name: Chapter.name, schema: ChapterSchema },
+      { name: Lesson.name, schema: LessonSchema },
     ]),
   ],
   controllers: [RoadmapController],
