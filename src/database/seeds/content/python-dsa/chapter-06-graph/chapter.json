@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 6: Graph",
+  "slug": "graph",
+  "description": "Learn graph concepts, graph representation, BFS, DFS, connected components, and shortest path basics.",
+  "order": 6,
+  "estimatedMinutes": 100,
+  "isPublished": true
+}

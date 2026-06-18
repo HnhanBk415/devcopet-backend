@@ -1,0 +1,62 @@
+{
+  "title": "Tree and Binary Tree Concept Quiz",
+  "description": "A quick check to review tree and binary tree basics.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "In a tree, what is the root?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The top node of the tree"
+        },
+        {
+          "id": "b",
+          "text": "Any node with no parent and no value"
+        },
+        {
+          "id": "c",
+          "text": "The last item in a Python list"
+        },
+        {
+          "id": "d",
+          "text": "A node that must have exactly three children"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "The root is the top node of a tree.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "class TreeNode:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\nroot = TreeNode(\"A\")\nroot.left = TreeNode(\"B\")\nroot.right = TreeNode(\"C\")\n\nprint(root.left.value)",
+      "options": [
+        {
+          "id": "a",
+          "text": "A"
+        },
+        {
+          "id": "b",
+          "text": "B"
+        },
+        {
+          "id": "c",
+          "text": "C"
+        },
+        {
+          "id": "d",
+          "text": "None"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "root.left points to the node with value B, so the output is B.",
+      "points": 1
+    }
+  ]
+}

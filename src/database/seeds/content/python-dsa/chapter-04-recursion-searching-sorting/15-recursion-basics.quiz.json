@@ -1,0 +1,62 @@
+{
+  "title": "Recursion Basics Quiz",
+  "description": "A quick check to review the basic idea of recursion.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is recursion?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A function calling itself to solve a smaller version of a problem"
+        },
+        {
+          "id": "b",
+          "text": "A way to permanently delete a list"
+        },
+        {
+          "id": "c",
+          "text": "A Python keyword for sorting numbers"
+        },
+        {
+          "id": "d",
+          "text": "A loop that must always use range()"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Recursion happens when a function calls itself, usually with a smaller input.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "def countdown(n):\n    if n == 0:\n        print(\"Done\")\n        return\n    print(n)\n    countdown(n - 1)\n\ncountdown(2)",
+      "options": [
+        {
+          "id": "a",
+          "text": "2\n1\nDone"
+        },
+        {
+          "id": "b",
+          "text": "1\n2\nDone"
+        },
+        {
+          "id": "c",
+          "text": "2\nDone\n1"
+        },
+        {
+          "id": "d",
+          "text": "Done\n1\n2"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "The function prints 2, then calls countdown(1), then prints 1, then reaches countdown(0) and prints Done.",
+      "points": 1
+    }
+  ]
+}

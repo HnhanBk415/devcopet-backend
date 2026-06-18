@@ -1,0 +1,62 @@
+{
+  "title": "Base Case, Recursive Case, and Call Stack Quiz",
+  "description": "A quick check to review base case, recursive case, and call stack behavior.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is the purpose of a base case in recursion?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To stop the recursive function"
+        },
+        {
+          "id": "b",
+          "text": "To make the function run forever"
+        },
+        {
+          "id": "c",
+          "text": "To sort a list automatically"
+        },
+        {
+          "id": "d",
+          "text": "To create a new Python file"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "The base case is the condition that stops recursion.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "def factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(3))",
+      "options": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "6"
+        },
+        {
+          "id": "c",
+          "text": "9"
+        },
+        {
+          "id": "d",
+          "text": "RecursionError"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "factorial(3) returns 3 * factorial(2), which becomes 3 * 2 * 1 = 6.",
+      "points": 1
+    }
+  ]
+}

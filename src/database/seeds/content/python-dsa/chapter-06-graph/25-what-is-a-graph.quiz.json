@@ -1,0 +1,61 @@
+{
+  "title": "What is a Graph Quiz",
+  "description": "A quick check to review graph basics.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What are the two main parts of a graph?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nodes and edges"
+        },
+        {
+          "id": "b",
+          "text": "Stacks and queues"
+        },
+        {
+          "id": "c",
+          "text": "Indexes and slices"
+        },
+        {
+          "id": "d",
+          "text": "Functions and strings"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "A graph is made of nodes, also called vertices, and edges, which are connections between nodes.",
+      "points": 1
+    },
+    {
+      "type": "multiple_choice",
+      "questionText": "Which example is commonly modeled as a graph?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A road map with cities and roads"
+        },
+        {
+          "id": "b",
+          "text": "A single integer variable"
+        },
+        {
+          "id": "c",
+          "text": "Only a print statement"
+        },
+        {
+          "id": "d",
+          "text": "A string with one character"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "A road map can be modeled as a graph where cities are nodes and roads are edges.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "title": "Breadth-First Search on Tree Quiz",
+  "description": "A quick check to review BFS on trees.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "Which data structure is commonly used for BFS?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Queue"
+        },
+        {
+          "id": "b",
+          "text": "Stack only"
+        },
+        {
+          "id": "c",
+          "text": "Heap only"
+        },
+        {
+          "id": "d",
+          "text": "String"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "BFS uses a queue to process nodes in First In, First Out order.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "For a tree with root A, left child B, and right child C, what is the BFS order?",
+      "codeSnippet": "Tree:\n    A\n   / \\\n  B   C\n\nBFS visits level by level.",
+      "options": [
+        {
+          "id": "a",
+          "text": "A B C"
+        },
+        {
+          "id": "b",
+          "text": "B A C"
+        },
+        {
+          "id": "c",
+          "text": "B C A"
+        },
+        {
+          "id": "d",
+          "text": "C B A"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "BFS visits the root first, then its children from left to right.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "title": "Merge Sort and Quick Sort Concepts Quiz",
+  "description": "A quick check to review merge sort, quick sort, and divide-and-conquer sorting.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What strategy do merge sort and quick sort both use?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Divide and conquer"
+        },
+        {
+          "id": "b",
+          "text": "Random guessing"
+        },
+        {
+          "id": "c",
+          "text": "String concatenation only"
+        },
+        {
+          "id": "d",
+          "text": "First In, First Out"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Both merge sort and quick sort divide the problem into smaller parts and solve them.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "def quick_sort(numbers):\n    if len(numbers) <= 1:\n        return numbers\n\n    pivot = numbers[0]\n    left = []\n    equal = []\n    right = []\n\n    for number in numbers:\n        if number < pivot:\n            left.append(number)\n        elif number == pivot:\n            equal.append(number)\n        else:\n            right.append(number)\n\n    return quick_sort(left) + equal + quick_sort(right)\n\nprint(quick_sort([3, 1, 2]))",
+      "options": [
+        {
+          "id": "a",
+          "text": "[3, 1, 2]"
+        },
+        {
+          "id": "b",
+          "text": "[1, 2, 3]"
+        },
+        {
+          "id": "c",
+          "text": "[2, 1, 3]"
+        },
+        {
+          "id": "d",
+          "text": "3"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "The quick_sort function partitions the values and returns them in ascending order.",
+      "points": 1
+    }
+  ]
+}

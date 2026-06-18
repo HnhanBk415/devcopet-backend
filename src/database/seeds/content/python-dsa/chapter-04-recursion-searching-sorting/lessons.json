@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Recursion Basics",
+    "slug": "recursion-basics",
+    "description": "Understand what recursion is and how a function can call itself to solve smaller versions of a problem.",
+    "order": 1,
+    "type": "reading",
+    "filename": "15-recursion-basics.md",
+    "quizFile": "15-recursion-basics.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Base Case, Recursive Case, and Call Stack",
+    "slug": "base-case-recursive-case-call-stack",
+    "description": "Learn the two essential parts of recursion and how recursive calls are stored in the call stack.",
+    "order": 2,
+    "type": "reading",
+    "filename": "16-base-case-recursive-case-call-stack.md",
+    "quizFile": "16-base-case-recursive-case-call-stack.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Linear Search and Binary Search",
+    "slug": "linear-search-binary-search",
+    "description": "Compare linear search and binary search, and understand when each searching technique should be used.",
+    "order": 3,
+    "type": "reading",
+    "filename": "17-linear-search-binary-search.md",
+    "quizFile": "17-linear-search-binary-search.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Basic Sorting Algorithms",
+    "slug": "basic-sorting-algorithms",
+    "description": "Learn the core idea behind simple sorting algorithms such as bubble sort, selection sort, and insertion sort.",
+    "order": 4,
+    "type": "reading",
+    "filename": "18-basic-sorting-algorithms.md",
+    "quizFile": "18-basic-sorting-algorithms.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Merge Sort and Quick Sort Concepts",
+    "slug": "merge-sort-quick-sort-concepts",
+    "description": "Understand the divide-and-conquer idea behind merge sort and quick sort.",
+    "order": 5,
+    "type": "reading",
+    "filename": "19-merge-sort-quick-sort-concepts.md",
+    "quizFile": "19-merge-sort-quick-sort-concepts.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

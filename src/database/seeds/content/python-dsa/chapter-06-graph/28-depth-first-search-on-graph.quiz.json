@@ -1,0 +1,61 @@
+{
+  "title": "Depth-First Search on Graph Quiz",
+  "description": "A quick check to review DFS on graphs.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "DFS explores a graph in which style?",
+      "options": [
+        {
+          "id": "a",
+          "text": "As deeply as possible before backtracking"
+        },
+        {
+          "id": "b",
+          "text": "Only level by level with a queue"
+        },
+        {
+          "id": "c",
+          "text": "By sorting all nodes first"
+        },
+        {
+          "id": "d",
+          "text": "By deleting visited nodes"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "DFS goes deep along a path before backtracking to explore other paths.",
+      "points": 1
+    },
+    {
+      "type": "multiple_choice",
+      "questionText": "Which structure can DFS use besides recursion?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Stack"
+        },
+        {
+          "id": "b",
+          "text": "Only a heap"
+        },
+        {
+          "id": "c",
+          "text": "Only a string"
+        },
+        {
+          "id": "d",
+          "text": "Only a sorted list"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "DFS can be implemented recursively or with an explicit stack.",
+      "points": 1
+    }
+  ]
+}

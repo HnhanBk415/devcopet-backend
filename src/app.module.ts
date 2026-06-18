@@ -13,6 +13,7 @@ import { ProgressModule } from './modules/progress/progress.module';
 import { PetsModule } from './modules/pets/pets.module';
 import { OnboardingModule } from './modules/onboarding/onboarding.module';
 import { PersonalityEngineModule } from './modules/personality-engine/personality-engine.module';
+import { AiChatModule } from './modules/ai-chat/ai-chat.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { PersonalityEngineModule } from './modules/personality-engine/personalit
     PetsModule,
     OnboardingModule,
     PersonalityEngineModule,
+    AiChatModule,
   ],
 })
 export class AppModule {}

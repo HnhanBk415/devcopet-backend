@@ -1,0 +1,62 @@
+[
+  {
+    "title": "What is a Graph?",
+    "slug": "what-is-a-graph",
+    "description": "Understand graph nodes, edges, and common real-world graph examples.",
+    "order": 1,
+    "type": "reading",
+    "filename": "25-what-is-a-graph.md",
+    "quizFile": "25-what-is-a-graph.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Graph Representation",
+    "slug": "graph-representation",
+    "description": "Learn how to represent graphs using edge lists, adjacency lists, and adjacency matrices.",
+    "order": 2,
+    "type": "reading",
+    "filename": "26-graph-representation.md",
+    "quizFile": "26-graph-representation.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Breadth-First Search on Graph",
+    "slug": "breadth-first-search-on-graph",
+    "description": "Learn how BFS visits graph nodes level by level using a queue.",
+    "order": 3,
+    "type": "reading",
+    "filename": "27-breadth-first-search-on-graph.md",
+    "quizFile": "27-breadth-first-search-on-graph.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Depth-First Search on Graph",
+    "slug": "depth-first-search-on-graph",
+    "description": "Learn how DFS explores a graph deeply using recursion or a stack.",
+    "order": 4,
+    "type": "reading",
+    "filename": "28-depth-first-search-on-graph.md",
+    "quizFile": "28-depth-first-search-on-graph.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Connected Components and Shortest Path Introduction",
+    "slug": "connected-components-shortest-path-introduction",
+    "description": "Understand connected components and the basic idea of shortest path in unweighted graphs.",
+    "order": 5,
+    "type": "reading",
+    "filename": "29-connected-components-shortest-path-introduction.md",
+    "quizFile": "29-connected-components-shortest-path-introduction.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

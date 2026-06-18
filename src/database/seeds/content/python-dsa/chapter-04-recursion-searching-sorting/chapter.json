@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 4: Recursion, Searching & Sorting",
+  "slug": "recursion-searching-sorting",
+  "description": "Learn recursion, call stack behavior, searching techniques, basic sorting algorithms, and divide-and-conquer sorting concepts.",
+  "order": 4,
+  "estimatedMinutes": 95,
+  "isPublished": true
+}

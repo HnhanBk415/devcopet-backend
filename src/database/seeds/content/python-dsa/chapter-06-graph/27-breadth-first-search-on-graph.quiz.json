@@ -1,0 +1,61 @@
+{
+  "title": "Breadth-First Search on Graph Quiz",
+  "description": "A quick check to review BFS on graphs.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "Which data structure does BFS use?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Queue"
+        },
+        {
+          "id": "b",
+          "text": "Stack"
+        },
+        {
+          "id": "c",
+          "text": "Only a string"
+        },
+        {
+          "id": "d",
+          "text": "Only a tuple"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "BFS uses a queue to process nodes in the order they are discovered.",
+      "points": 1
+    },
+    {
+      "type": "multiple_choice",
+      "questionText": "Why does BFS need a visited set?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To avoid visiting the same node repeatedly"
+        },
+        {
+          "id": "b",
+          "text": "To convert all nodes to strings"
+        },
+        {
+          "id": "c",
+          "text": "To sort the graph automatically"
+        },
+        {
+          "id": "d",
+          "text": "To delete all edges"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Graphs may contain cycles, so a visited set prevents repeated visits and infinite loops.",
+      "points": 1
+    }
+  ]
+}

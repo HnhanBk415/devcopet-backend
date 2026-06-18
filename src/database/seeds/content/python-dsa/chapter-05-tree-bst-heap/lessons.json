@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Tree and Binary Tree Concept",
+    "slug": "tree-binary-tree-concept",
+    "description": "Understand what a tree is, how binary trees work, and how nodes connect in a hierarchy.",
+    "order": 1,
+    "type": "reading",
+    "filename": "20-tree-binary-tree-concept.md",
+    "quizFile": "20-tree-binary-tree-concept.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Tree Traversal",
+    "slug": "tree-traversal",
+    "description": "Learn preorder, inorder, and postorder traversal for binary trees.",
+    "order": 2,
+    "type": "reading",
+    "filename": "21-tree-traversal.md",
+    "quizFile": "21-tree-traversal.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Breadth-First Search on Tree",
+    "slug": "breadth-first-search-on-tree",
+    "description": "Learn how to visit a tree level by level using breadth-first search and a queue.",
+    "order": 3,
+    "type": "reading",
+    "filename": "22-breadth-first-search-on-tree.md",
+    "quizFile": "22-breadth-first-search-on-tree.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Binary Search Tree",
+    "slug": "binary-search-tree",
+    "description": "Understand the Binary Search Tree rule and how search and insertion work.",
+    "order": 4,
+    "type": "reading",
+    "filename": "23-binary-search-tree.md",
+    "quizFile": "23-binary-search-tree.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  },
+  {
+    "title": "Heap and Priority Queue",
+    "slug": "heap-priority-queue",
+    "description": "Learn how heaps support priority queues and how Python heapq works.",
+    "order": 5,
+    "type": "reading",
+    "filename": "24-heap-priority-queue.md",
+    "quizFile": "24-heap-priority-queue.quiz.json",
+    "estimatedMinutes": 20,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

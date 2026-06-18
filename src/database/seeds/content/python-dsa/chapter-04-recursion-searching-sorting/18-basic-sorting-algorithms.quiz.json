@@ -1,0 +1,62 @@
+{
+  "title": "Basic Sorting Algorithms Quiz",
+  "description": "A quick check to review simple sorting algorithms.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What does sorting do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Arranges data in a specific order"
+        },
+        {
+          "id": "b",
+          "text": "Deletes all duplicated files"
+        },
+        {
+          "id": "c",
+          "text": "Turns strings into integers automatically"
+        },
+        {
+          "id": "d",
+          "text": "Stops a recursive function"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Sorting means arranging data in an order, such as ascending or descending order.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "numbers = [3, 1, 2]\nnumbers.sort()\nprint(numbers)",
+      "options": [
+        {
+          "id": "a",
+          "text": "[3, 1, 2]"
+        },
+        {
+          "id": "b",
+          "text": "[1, 2, 3]"
+        },
+        {
+          "id": "c",
+          "text": "[2, 1, 3]"
+        },
+        {
+          "id": "d",
+          "text": "None"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "numbers.sort() sorts the list in place, so the printed list is [1, 2, 3].",
+      "points": 1
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import { Model, Types } from 'mongoose';
 import { Chapter, ChapterDocument } from '../chapters/schemas/chapter.schema';
 import { Course, CourseDocument } from '../courses/schemas/course.schema';
 import { Lesson, LessonDocument } from '../lessons/schemas/lesson.schema';
+import type { AiRoadmapContext, RoadmapMode } from '../ai-chat/ai-chat.types';
 
 type EasyRoadmapStatus = 'locked' | 'available' | 'completed';
 type ChallengeOptionId = 'A' | 'B' | 'C' | 'D';
@@ -19,7 +20,7 @@ type MediumChallengeType = 'multiple_choice' | 'drag_drop';
 const EASY_NODE_DURATION_MINUTES = 1;
 const CHALLENGE_OPTION_IDS: ChallengeOptionId[] = ['A', 'B', 'C', 'D'];
 const MEDIUM_NODE_COUNT_PER_CHAPTER = 5;
-const MEDIUM_NODE_ID_PATTERN = /^(.+)-medium-c(\d+)-n(\d+)$/;
+const ADVANCED_NODE_ID_PATTERN = /^(.+)-(medium|hard)-c(\d+)-n(\d+)$/;
 
 interface LeanCourse {
   _id: Types.ObjectId;
@@ -135,7 +136,7 @@ interface MediumChapterData {
 
 interface MediumChallengeFile {
   courseSlug: string;
-  mode: 'medium';
+  mode: 'medium' | 'hard';
   chapters: MediumChapterData[];
 }
 
@@ -478,6 +479,64 @@ export class RoadmapService {
     };
   }
 
+  async getAiRoadmapContext(
+    mode: RoadmapMode,
+    nodeId: string,
+  ): Promise<AiRoadmapContext> {
+    if (mode === 'easy') {
+      const { node, chapter, course, lesson } =
+        await this.getEasyNodeContext(nodeId);
+      const challenge = this.findEasyChallenge(course.slug, chapter, lesson);
+
+      return {
+        mode,
+        course: {
+          id: String(course._id),
+          slug: course.slug,
+          title: course.title,
+        },
+        chapter: {
+          id: String(chapter._id),
+          title: chapter.title,
+          order: chapter.order,
+        },
+        node,
+        relatedLesson: {
+          id: String(lesson._id),
+          title: lesson.title,
+          description: lesson.description || '',
+          href: `/lesson/${String(lesson._id)}`,
+        },
+        challenge: this.toPublicChallenge(lesson, challenge),
+        ...(node.status === 'completed'
+          ? { review: this.toFallbackReview(challenge, node.id) }
+          : {}),
+      };
+    }
+
+    const { node, course, chapter, chapterData, challenge } =
+      await this.getAdvancedNodeContext(mode, nodeId);
+
+    return {
+      mode,
+      course: {
+        id: String(course._id),
+        slug: course.slug,
+        title: course.title,
+      },
+      chapter: {
+        ...(chapter ? { id: String(chapter._id) } : {}),
+        title: chapter?.title ?? chapterData.chapterTitle,
+        order: chapterData.chapterOrder,
+      },
+      node,
+      challenge: this.toPublicMediumChallenge(nodeId, challenge),
+      ...(node.status === 'completed'
+        ? { review: this.toFallbackMediumReview(challenge, node.id) }
+        : {}),
+    };
+  }
+
   private async getEasyNodeContext(nodeId: string): Promise<EasyNodeContext> {
     if (!Types.ObjectId.isValid(nodeId)) {
       throw new NotFoundException(`Easy roadmap node not found: ${nodeId}`);
@@ -649,7 +708,14 @@ export class RoadmapService {
   private async getMediumNodeContext(
     nodeId: string,
   ): Promise<MediumNodeContext> {
-    const parsedNodeId = this.parseMediumNodeId(nodeId);
+    return this.getAdvancedNodeContext('medium', nodeId);
+  }
+
+  private async getAdvancedNodeContext(
+    mode: 'medium' | 'hard',
+    nodeId: string,
+  ): Promise<MediumNodeContext> {
+    const parsedNodeId = this.parseAdvancedNodeId(mode, nodeId);
     const course = await this.courseModel
       .findOne({ slug: parsedNodeId.courseSlug, isPublished: true })
       .lean<LeanCourse>()
@@ -661,13 +727,15 @@ export class RoadmapService {
       );
     }
 
-    const challengeFile = this.loadMediumChallengeFile(course.slug);
+    const challengeFile = this.loadAdvancedChallengeFile(mode, course.slug);
     const chapterData = challengeFile.chapters.find(
       (chapter) => chapter.chapterOrder === parsedNodeId.chapterOrder,
     );
 
     if (!chapterData) {
-      throw new NotFoundException(`Medium roadmap node not found: ${nodeId}`);
+      throw new NotFoundException(
+        `${this.capitalizeMode(mode)} roadmap node not found: ${nodeId}`,
+      );
     }
 
     const challenge = chapterData.nodes.find(
@@ -675,7 +743,9 @@ export class RoadmapService {
     );
 
     if (!challenge) {
-      throw new NotFoundException(`Medium roadmap node not found: ${nodeId}`);
+      throw new NotFoundException(
+        `${this.capitalizeMode(mode)} roadmap node not found: ${nodeId}`,
+      );
     }
 
     const chapter = await this.chapterModel
@@ -708,26 +778,41 @@ export class RoadmapService {
     };
   }
 
-  private parseMediumNodeId(nodeId: string): {
+  private parseAdvancedNodeId(
+    expectedMode: 'medium' | 'hard',
+    nodeId: string,
+  ): {
     courseSlug: string;
+    mode: 'medium' | 'hard';
     chapterOrder: number;
     nodeOrder: number;
   } {
-    const match = MEDIUM_NODE_ID_PATTERN.exec(nodeId);
+    const match = ADVANCED_NODE_ID_PATTERN.exec(nodeId);
 
-    if (!match) {
-      throw new NotFoundException(`Medium roadmap node not found: ${nodeId}`);
+    if (!match || match[2] !== expectedMode) {
+      throw new NotFoundException(
+        `${this.capitalizeMode(expectedMode)} roadmap node not found: ${nodeId}`,
+      );
     }
 
     return {
       courseSlug: match[1],
-      chapterOrder: Number(match[2]),
-      nodeOrder: Number(match[3]),
+      mode: match[2],
+      chapterOrder: Number(match[3]),
+      nodeOrder: Number(match[4]),
     };
   }
 
   private loadMediumChallengeFile(courseSlug: string): MediumChallengeFile {
-    const cached = this.mediumChallengeCache.get(courseSlug);
+    return this.loadAdvancedChallengeFile('medium', courseSlug);
+  }
+
+  private loadAdvancedChallengeFile(
+    mode: 'medium' | 'hard',
+    courseSlug: string,
+  ): MediumChallengeFile {
+    const cacheKey = `${mode}:${courseSlug}`;
+    const cached = this.mediumChallengeCache.get(cacheKey);
     if (cached) return cached;
 
     const filePath = path.resolve(
@@ -737,12 +822,12 @@ export class RoadmapService {
       'seeds',
       'content',
       courseSlug,
-      'medium-roadmap-challenges.json',
+      `${mode}-roadmap-challenges.json`,
     );
 
     if (!fs.existsSync(filePath)) {
       throw new NotFoundException(
-        `Medium challenge data not found for course: ${courseSlug}`,
+        `${this.capitalizeMode(mode)} challenge data not found for course: ${courseSlug}`,
       );
     }
 
@@ -750,8 +835,8 @@ export class RoadmapService {
       fs.readFileSync(filePath, 'utf-8'),
     ) as MediumChallengeFile;
 
-    this.assertValidMediumChallengeFile(parsed, courseSlug);
-    this.mediumChallengeCache.set(courseSlug, parsed);
+    this.assertValidAdvancedChallengeFile(parsed, courseSlug, mode);
+    this.mediumChallengeCache.set(cacheKey, parsed);
     return parsed;
   }
 
@@ -759,26 +844,34 @@ export class RoadmapService {
     challengeFile: MediumChallengeFile,
     courseSlug: string,
   ) {
+    this.assertValidAdvancedChallengeFile(challengeFile, courseSlug, 'medium');
+  }
+
+  private assertValidAdvancedChallengeFile(
+    challengeFile: MediumChallengeFile,
+    courseSlug: string,
+    mode: 'medium' | 'hard',
+  ) {
     if (
       challengeFile.courseSlug !== courseSlug ||
-      challengeFile.mode !== 'medium'
+      challengeFile.mode !== mode
     ) {
       throw new BadRequestException(
-        `Invalid Medium challenge data for course: ${courseSlug}`,
+        `Invalid ${this.capitalizeMode(mode)} challenge data for course: ${courseSlug}`,
       );
     }
 
     for (const chapter of challengeFile.chapters) {
       if (chapter.nodes.length !== MEDIUM_NODE_COUNT_PER_CHAPTER) {
         throw new BadRequestException(
-          `Medium chapter ${chapter.chapterOrder} must contain exactly ${MEDIUM_NODE_COUNT_PER_CHAPTER} nodes.`,
+          `${this.capitalizeMode(mode)} chapter ${chapter.chapterOrder} must contain exactly ${MEDIUM_NODE_COUNT_PER_CHAPTER} nodes.`,
         );
       }
 
       for (const node of chapter.nodes) {
         if (node.type !== 'multiple_choice' && node.type !== 'drag_drop') {
           throw new BadRequestException(
-            `Unsupported Medium node type in chapter ${chapter.chapterOrder}.`,
+            `Unsupported ${this.capitalizeMode(mode)} node type in chapter ${chapter.chapterOrder}.`,
           );
         }
       }
@@ -791,6 +884,10 @@ export class RoadmapService {
     nodeOrder: number,
   ): string {
     return `${courseSlug}-medium-c${chapterOrder}-n${nodeOrder}`;
+  }
+
+  private capitalizeMode(mode: 'medium' | 'hard'): string {
+    return mode.charAt(0).toUpperCase() + mode.slice(1);
   }
 
   private toPublicMediumChallenge(

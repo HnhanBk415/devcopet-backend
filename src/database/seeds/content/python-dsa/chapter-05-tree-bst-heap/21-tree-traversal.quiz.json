@@ -1,0 +1,62 @@
+{
+  "title": "Tree Traversal Quiz",
+  "description": "A quick check to review preorder, inorder, and postorder traversal.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "Which traversal visits the root first?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Preorder"
+        },
+        {
+          "id": "b",
+          "text": "Inorder"
+        },
+        {
+          "id": "c",
+          "text": "Postorder"
+        },
+        {
+          "id": "d",
+          "text": "Level order only"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Preorder traversal visits Root, then Left, then Right.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "For a tree with root A, left child B, and right child C, what is the preorder output?",
+      "codeSnippet": "Tree:\n    A\n   / \\\n  B   C\n\nPreorder = Root, Left, Right",
+      "options": [
+        {
+          "id": "a",
+          "text": "A B C"
+        },
+        {
+          "id": "b",
+          "text": "B A C"
+        },
+        {
+          "id": "c",
+          "text": "B C A"
+        },
+        {
+          "id": "d",
+          "text": "C B A"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Preorder visits the root first, then the left subtree, then the right subtree.",
+      "points": 1
+    }
+  ]
+}

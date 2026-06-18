@@ -1,0 +1,62 @@
+{
+  "title": "Graph Representation Quiz",
+  "description": "A quick check to review common graph representations.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "Which representation maps each node to its neighbors?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Adjacency list"
+        },
+        {
+          "id": "b",
+          "text": "Integer list only"
+        },
+        {
+          "id": "c",
+          "text": "Call stack"
+        },
+        {
+          "id": "d",
+          "text": "String slicing"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "An adjacency list stores each node and the list of nodes connected to it.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "graph = {\n    \"A\": [\"B\", \"C\"],\n    \"B\": [\"A\"],\n    \"C\": [\"A\"]\n}\n\nprint(graph[\"A\"])",
+      "options": [
+        {
+          "id": "a",
+          "text": "['B', 'C']"
+        },
+        {
+          "id": "b",
+          "text": "['A']"
+        },
+        {
+          "id": "c",
+          "text": "B"
+        },
+        {
+          "id": "d",
+          "text": "None"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "graph['A'] stores the neighbors of A, which are B and C.",
+      "points": 1
+    }
+  ]
+}

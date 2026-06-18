@@ -1,0 +1,62 @@
+{
+  "title": "Heap and Priority Queue Quiz",
+  "description": "A quick check to review heaps and priority queues in Python.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What type of heap does Python's heapq module provide by default?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Min-heap"
+        },
+        {
+          "id": "b",
+          "text": "Max-heap"
+        },
+        {
+          "id": "c",
+          "text": "Binary Search Tree only"
+        },
+        {
+          "id": "d",
+          "text": "Stack only"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Python's heapq module provides a min-heap, where the smallest item is removed first.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "import heapq\n\nheap = []\nheapq.heappush(heap, 5)\nheapq.heappush(heap, 2)\nheapq.heappush(heap, 8)\n\nprint(heapq.heappop(heap))",
+      "options": [
+        {
+          "id": "a",
+          "text": "2"
+        },
+        {
+          "id": "b",
+          "text": "5"
+        },
+        {
+          "id": "c",
+          "text": "8"
+        },
+        {
+          "id": "d",
+          "text": "[2, 5, 8]"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "heapq is a min-heap, so heappop removes and returns the smallest value, which is 2.",
+      "points": 1
+    }
+  ]
+}

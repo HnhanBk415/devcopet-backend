@@ -1,0 +1,62 @@
+{
+  "title": "Binary Search Tree Quiz",
+  "description": "A quick check to review the Binary Search Tree rule.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "In a Binary Search Tree, where do smaller values usually go?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To the left subtree"
+        },
+        {
+          "id": "b",
+          "text": "To the right subtree"
+        },
+        {
+          "id": "c",
+          "text": "Only to the root"
+        },
+        {
+          "id": "d",
+          "text": "Into a queue"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "In a BST, values smaller than the current node go to the left subtree.",
+      "points": 1
+    },
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "class TreeNode:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\ndef search_bst(root, target):\n    current = root\n    while current is not None:\n        if current.value == target:\n            return True\n        elif target < current.value:\n            current = current.left\n        else:\n            current = current.right\n    return False\n\nroot = TreeNode(8)\nroot.left = TreeNode(3)\nroot.right = TreeNode(10)\n\nprint(search_bst(root, 10))",
+      "options": [
+        {
+          "id": "a",
+          "text": "True"
+        },
+        {
+          "id": "b",
+          "text": "False"
+        },
+        {
+          "id": "c",
+          "text": "10"
+        },
+        {
+          "id": "d",
+          "text": "None"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "The target 10 exists as the right child of the root, so search_bst returns True.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Chapter 5: Tree, BST & Heap",
+  "slug": "tree-bst-heap",
+  "description": "Learn tree structures, binary trees, tree traversal, breadth-first search, binary search trees, heaps, and priority queues.",
+  "order": 5,
+  "estimatedMinutes": 100,
+  "isPublished": true
+}

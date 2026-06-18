@@ -1,0 +1,61 @@
+{
+  "title": "Connected Components and Shortest Path Introduction Quiz",
+  "description": "A quick check to review connected components and shortest path basics.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is a connected component?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A group of nodes connected to each other"
+        },
+        {
+          "id": "b",
+          "text": "A Python string method"
+        },
+        {
+          "id": "c",
+          "text": "A list that must be sorted"
+        },
+        {
+          "id": "d",
+          "text": "A recursive base case only"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "A connected component is a group of nodes where each node can reach other nodes in the same group.",
+      "points": 1
+    },
+    {
+      "type": "multiple_choice",
+      "questionText": "Which algorithm is commonly used to find the shortest path distance in an unweighted graph?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Breadth-First Search"
+        },
+        {
+          "id": "b",
+          "text": "String slicing"
+        },
+        {
+          "id": "c",
+          "text": "Bubble sort"
+        },
+        {
+          "id": "d",
+          "text": "Binary Search Tree insertion"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "BFS explores nodes level by level, so it can find the shortest path in an unweighted graph.",
+      "points": 1
+    }
+  ]
+}
