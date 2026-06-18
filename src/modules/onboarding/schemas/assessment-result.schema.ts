@@ -8,46 +8,73 @@ export class AssessmentResult {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   userId!: Types.ObjectId;
 
+  /** Version of assessment questions used */
+  @Prop({ default: 'v1' })
+  assessmentVersion!: string;
+
+  /** Version of scoring algorithm used */
+  @Prop({ default: 'v1' })
+  scoringVersion!: string;
+
+  /** Raw answers: { "1": "A", "2": "C", ... } */
   @Prop({ type: Map, of: String, required: true })
   answers!: Map<string, string>;
 
-  @Prop({ default: 0 })
-  guidanceNeedRaw!: number;
+  // ── 8 Personality Trait Raw Scores ──
 
   @Prop({ default: 0 })
-  decisivenessRaw!: number;
+  analytical!: number;
 
   @Prop({ default: 0 })
-  failureSensitivityRaw!: number;
+  creative!: number;
 
   @Prop({ default: 0 })
-  explorationRaw!: number;
+  disciplined!: number;
 
   @Prop({ default: 0 })
-  precisionRaw!: number;
+  independent!: number;
 
   @Prop({ default: 0 })
-  motivationStyleRaw!: number;
+  empathetic!: number;
 
   @Prop({ default: 0 })
-  guidanceNeedNorm!: number;
+  competitive!: number;
 
   @Prop({ default: 0 })
-  decisivenessNorm!: number;
+  adaptable!: number;
 
   @Prop({ default: 0 })
-  failureSensitivityNorm!: number;
+  curious!: number;
+
+  // ── 8 Personality Trait Normalized Scores (0-1) ──
 
   @Prop({ default: 0 })
-  explorationNorm!: number;
+  analyticalNorm!: number;
 
   @Prop({ default: 0 })
-  precisionNorm!: number;
+  creativeNorm!: number;
 
   @Prop({ default: 0 })
-  motivationStyleNorm!: number;
+  disciplinedNorm!: number;
 
-  @Prop({ default: 'Balanced' })
+  @Prop({ default: 0 })
+  independentNorm!: number;
+
+  @Prop({ default: 0 })
+  empatheticNorm!: number;
+
+  @Prop({ default: 0 })
+  competitiveNorm!: number;
+
+  @Prop({ default: 0 })
+  adaptableNorm!: number;
+
+  @Prop({ default: 0 })
+  curiousNorm!: number;
+
+  // ── Top 3 Dominant Traits ──
+
+  @Prop({ required: true })
   primaryPersonality!: string;
 
   @Prop({ type: String, default: null })
@@ -55,6 +82,12 @@ export class AssessmentResult {
 
   @Prop({ type: String, default: null })
   secondaryModifier!: string | null;
+
+  @Prop({ type: String, default: null })
+  tertiaryPersonality!: string | null;
+
+  @Prop()
+  completedAt!: Date;
 }
 
 export const AssessmentResultSchema =

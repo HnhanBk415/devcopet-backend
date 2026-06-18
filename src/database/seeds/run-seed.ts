@@ -1,3 +1,7 @@
+import * as dns from 'node:dns';
+// Force Google DNS — VNPT DNS không resolve được MongoDB Atlas
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { CourseSchema } from '../../modules/courses/schemas/course.schema';

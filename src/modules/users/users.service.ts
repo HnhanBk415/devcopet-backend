@@ -74,4 +74,11 @@ export class UsersService {
       { new: true },
     );
   }
+
+  async markOnboardingCompleted(userId: string): Promise<void> {
+    const result = await this.userModel.findByIdAndUpdate(userId, {
+      onboardingCompleted: true,
+    });
+    if (!result) throw new NotFoundException('User not found');
+  }
 }
