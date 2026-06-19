@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+﻿import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Course, CourseDocument } from './schemas/course.schema';
 
 @Injectable()
@@ -16,7 +16,16 @@ export class CoursesService {
       .exec();
   }
 
-  async findById(id: string) {
-    return this.courseModel.findById(id).exec();
+  async findByIdOrSlug(courseIdOrSlug: string) {
+    const query = Types.ObjectId.isValid(courseIdOrSlug)
+      ? { _id: courseIdOrSlug, isPublished: true }
+      : { slug: courseIdOrSlug, isPublished: true };
+    const course = await this.courseModel.findOne(query).exec();
+
+    if (!course) {
+      throw new NotFoundException(`Course not found: ${courseIdOrSlug}`);
+    }
+
+    return course;
   }
 }

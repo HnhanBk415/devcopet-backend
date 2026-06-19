@@ -1,14 +1,24 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+﻿import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Quiz, QuizDocument, QuestionType } from './schemas/quiz.schema';
 import { SubmitQuizAnswerDto } from './dto/submit-quiz.dto';
+import {
+  LessonProgress,
+  LessonProgressDocument,
+} from '../progress/schemas/lesson-progress.schema';
+import { LessonsService } from '../lessons/lessons.service';
 
 @Injectable()
 export class QuizzesService {
-  constructor(@InjectModel(Quiz.name) private quizModel: Model<QuizDocument>) {}
+  constructor(
+    @InjectModel(Quiz.name) private quizModel: Model<QuizDocument>,
+    @InjectModel(LessonProgress.name)
+    private lessonProgressModel: Model<LessonProgressDocument>,
+    private readonly lessonsService: LessonsService,
+  ) {}
 
-  async findByLessonId(lessonId: string) {
+  async findByLessonId(lessonId: string, userId: string) {
     const objectId = new Types.ObjectId(lessonId);
     const quiz = await this.quizModel
       .findOne({ lessonId: objectId, isPublished: true })
@@ -18,16 +28,30 @@ export class QuizzesService {
       throw new NotFoundException(`Quiz for lesson ${lessonId} not found`);
     }
 
+    await this.lessonsService.assertLessonUnlockedForUser(
+      String(quiz.lessonId),
+      userId,
+    );
+
     return this.sanitizeQuiz(quiz);
   }
 
-  async submitQuiz(quizId: string, answers: SubmitQuizAnswerDto[]) {
+  async submitQuiz(
+    quizId: string,
+    answers: SubmitQuizAnswerDto[],
+    userId: string,
+  ) {
     const objectId = new Types.ObjectId(quizId);
     const quiz = await this.quizModel.findById(objectId).exec();
 
     if (!quiz) {
       throw new NotFoundException(`Quiz ${quizId} not found`);
     }
+
+    await this.lessonsService.assertLessonUnlockedForUser(
+      String(quiz.lessonId),
+      userId,
+    );
 
     let correctCount = 0;
     let earnedPoints = 0;
@@ -92,6 +116,28 @@ export class QuizzesService {
     const percentage =
       totalPoints > 0 ? Math.round((earnedPoints / totalPoints) * 100) : 0;
     const passed = percentage >= quiz.passingScore;
+
+    if (passed) {
+      await this.lessonProgressModel
+        .findOneAndUpdate(
+          {
+            userId: new Types.ObjectId(userId),
+            lessonId: quiz.lessonId,
+          },
+          {
+            $set: {
+              completed: true,
+              quizScore: percentage,
+            },
+          },
+          {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true,
+          },
+        )
+        .exec();
+    }
 
     return {
       totalQuestions: quiz.questions.length,

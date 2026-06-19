@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AiChatController } from './ai-chat.controller';
 import { AiChatService } from './ai-chat.service';
+import { GeminiProvider } from './providers/gemini.provider';
+import { AiChatLogService } from './services/ai-chat-log.service';
+import { AiChatPromptService } from './services/ai-chat-prompt.service';
+import { AiChatUsageService } from './services/ai-chat-usage.service';
 import { AiChatLog, AiChatLogSchema } from './schemas/ai-chat-log.schema';
 import { AiChatUsage, AiChatUsageSchema } from './schemas/ai-chat-usage.schema';
 import { User, UserSchema } from '../users/schemas/user.schema';
@@ -22,7 +26,13 @@ import { RoadmapModule } from '../roadmap/roadmap.module';
     ]),
   ],
   controllers: [AiChatController],
-  providers: [AiChatService],
+  providers: [
+    AiChatService,
+    AiChatUsageService,
+    AiChatPromptService,
+    AiChatLogService,
+    GeminiProvider,
+  ],
   exports: [AiChatService],
 })
 export class AiChatModule {}

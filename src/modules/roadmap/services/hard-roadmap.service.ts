@@ -1,0 +1,20 @@
+import { Injectable } from '@nestjs/common';
+import { AdvancedRoadmapBaseService } from './advanced-roadmap-base.service';
+import { RoadmapChallengeLoaderService } from './roadmap-challenge-loader.service';
+import { RoadmapQueryService } from './roadmap-query.service';
+import { RoadmapReviewService } from './roadmap-review.service';
+import { RoadmapStatusService } from './roadmap-status.service';
+
+@Injectable()
+export class HardRoadmapService extends AdvancedRoadmapBaseService {
+  protected readonly mode = 'hard' as const;
+
+  constructor(
+    challengeLoader: RoadmapChallengeLoaderService,
+    queryService: RoadmapQueryService,
+    reviewService: RoadmapReviewService,
+    statusService: RoadmapStatusService,
+  ) {
+    super(challengeLoader, queryService, reviewService, statusService);
+  }
+}
