@@ -11,9 +11,9 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     private readonly authService: AuthService,
   ) {
     super({
-      clientID: configService.get<string>('FACEBOOK_APP_ID') || 'NOT_CONFIGURED',
-      clientSecret: configService.get<string>('FACEBOOK_APP_SECRET') || 'NOT_CONFIGURED',
-      callbackURL: configService.get<string>('FACEBOOK_CALLBACK_URL') || '',
+      clientID: configService.getOrThrow<string>('FACEBOOK_APP_ID'),
+      clientSecret: configService.getOrThrow<string>('FACEBOOK_APP_SECRET'),
+      callbackURL: configService.getOrThrow<string>('FACEBOOK_CALLBACK_URL'),
       scope: ['email'],
       profileFields: ['id', 'displayName', 'emails', 'photos'],
     });
@@ -26,10 +26,8 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     done: (err: Error | null, user?: unknown) => void,
   ) {
     try {
-      // Facebook may not return email (privacy settings)
       const email =
-        profile.emails?.[0]?.value ??
-        `facebook_${profile.id}@devcopet.local`;
+        profile.emails?.[0]?.value ?? `facebook_${profile.id}@devcopet.local`;
 
       const result = await this.authService.validateOrCreateSocialUser({
         provider: 'facebook',

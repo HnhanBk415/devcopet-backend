@@ -15,11 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return users', async () => {
-      // Vì hàm getUsers gọi appService.getAllUsers() trả về Promise,
-      // ta sửa lại test để gọi đúng tên hàm.
-      const result = await appController.getUsers();
-      expect(result).toBeDefined();
+    it('should return health status', () => {
+      expect(appController.getHealth()).toEqual({ status: 'ok' });
     });
   });
 });

@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -30,9 +34,6 @@ export class OnboardingService {
     private readonly usersService: UsersService,
   ) {}
 
-  /**
-   * Return all 15 onboarding questions (served from constant).
-   */
   getQuestions() {
     return {
       totalQuestions: ONBOARDING_QUESTIONS.length,
@@ -41,132 +42,29 @@ export class OnboardingService {
     };
   }
 
-  /**
-   * Submit all 15 answers, calculate personality scores,
-   * create AssessmentResult + UserPersonality,
-   * and mark onboardingCompleted on User.
-   */
   async submitAnswers(userId: string, dto: SubmitAnswersDto) {
-    // 1. Validate: exactly 15 answers
+    await this.assertOnboardingNotCompleted(userId);
+
     if (!dto.answers || dto.answers.length !== ONBOARDING_QUESTIONS.length) {
       throw new BadRequestException(
         `Expected ${ONBOARDING_QUESTIONS.length} answers, got ${dto.answers?.length ?? 0}`,
       );
     }
 
-    // 2. Validate each answer and build answers map
-    const answersMap = new Map<string, string>();
-    for (const answer of dto.answers) {
-      const question = ONBOARDING_QUESTIONS.find(
-        (q) => q.questionNumber === answer.questionNumber,
-      );
-      if (!question) {
-        throw new BadRequestException(
-          `Invalid question number: ${answer.questionNumber}`,
-        );
-      }
+    const answersMap = this.validateAndBuildAnswersMap(dto);
+    const rawScores = this.calculateRawScores(dto);
+    const normalizedScores = this.calculateNormalizedScores(rawScores);
+    const dominantTraits = [...PERSONALITY_TRAITS]
+      .sort((a, b) => rawScores[b] - rawScores[a])
+      .slice(0, 3);
 
-      const validKeys = question.options.map((o) => o.key);
-      if (!validKeys.includes(answer.selectedOption)) {
-        throw new BadRequestException(
-          `Invalid option "${answer.selectedOption}" for question ${answer.questionNumber}. Valid: ${validKeys.join(', ')}`,
-        );
-      }
-
-      answersMap.set(String(answer.questionNumber), answer.selectedOption);
-    }
-
-    // 3. Calculate raw scores
-    const rawScores: Record<PersonalityTrait, number> = {
-      analytical: 0,
-      creative: 0,
-      disciplined: 0,
-      independent: 0,
-      empathetic: 0,
-      competitive: 0,
-      adaptable: 0,
-      curious: 0,
-    };
-
-    for (const answer of dto.answers) {
-      const question = ONBOARDING_QUESTIONS.find(
-        (q) => q.questionNumber === answer.questionNumber,
-      )!;
-      const option = question.options.find(
-        (o) => o.key === answer.selectedOption,
-      )!;
-
-      for (const trait of PERSONALITY_TRAITS) {
-        rawScores[trait] +=
-          (option.scores as Record<string, number>)[trait] ?? 0;
-      }
-    }
-
-    // 4. Calculate max possible score per trait for normalization
-    const maxPossibleScores = this.calculateMaxPossibleScores();
-
-    // 5. Normalize scores (0-1)
-    const normalizedScores: Record<PersonalityTrait, number> = {
-      analytical: 0,
-      creative: 0,
-      disciplined: 0,
-      independent: 0,
-      empathetic: 0,
-      competitive: 0,
-      adaptable: 0,
-      curious: 0,
-    };
-
-    for (const trait of PERSONALITY_TRAITS) {
-      const maxScore = maxPossibleScores[trait];
-      normalizedScores[trait] =
-        maxScore > 0
-          ? Math.round((rawScores[trait] / maxScore) * 100) / 100
-          : 0;
-    }
-
-    // 6. Determine top 3 dominant traits
-    const sortedTraits = [...PERSONALITY_TRAITS].sort(
-      (a, b) => rawScores[b] - rawScores[a],
-    );
-    const dominantTraits = sortedTraits.slice(0, 3);
-
-    // 7. Save AssessmentResult (immutable snapshot)
-    const assessmentResult = await this.assessmentModel.create({
-      userId: new Types.ObjectId(userId),
-      assessmentVersion: 'v1',
-      scoringVersion: 'v1',
-      answers: answersMap,
-      // Raw scores
-      analytical: rawScores.analytical,
-      creative: rawScores.creative,
-      disciplined: rawScores.disciplined,
-      independent: rawScores.independent,
-      empathetic: rawScores.empathetic,
-      competitive: rawScores.competitive,
-      adaptable: rawScores.adaptable,
-      curious: rawScores.curious,
-      // Normalized scores
-      analyticalNorm: normalizedScores.analytical,
-      creativeNorm: normalizedScores.creative,
-      disciplinedNorm: normalizedScores.disciplined,
-      independentNorm: normalizedScores.independent,
-      empatheticNorm: normalizedScores.empathetic,
-      competitiveNorm: normalizedScores.competitive,
-      adaptableNorm: normalizedScores.adaptable,
-      curiousNorm: normalizedScores.curious,
-      // Top traits
-      primaryPersonality: dominantTraits[0],
-      secondaryPersonality: dominantTraits[1] ?? null,
-      tertiaryPersonality: dominantTraits[2] ?? null,
-      completedAt: new Date(),
-    });
-
-    // 8. Upsert UserPersonality (living document)
-    await this.personalityModel.findOneAndUpdate(
-      { userId: new Types.ObjectId(userId) },
-      {
-        // Raw scores
+    let assessmentResult: AssessmentResultDocument;
+    try {
+      assessmentResult = await this.assessmentModel.create({
+        userId: new Types.ObjectId(userId),
+        assessmentVersion: 'v1',
+        scoringVersion: 'v1',
+        answers: answersMap,
         analytical: rawScores.analytical,
         creative: rawScores.creative,
         disciplined: rawScores.disciplined,
@@ -175,7 +73,6 @@ export class OnboardingService {
         competitive: rawScores.competitive,
         adaptable: rawScores.adaptable,
         curious: rawScores.curious,
-        // Normalized scores
         analyticalNorm: normalizedScores.analytical,
         creativeNorm: normalizedScores.creative,
         disciplinedNorm: normalizedScores.disciplined,
@@ -184,7 +81,37 @@ export class OnboardingService {
         competitiveNorm: normalizedScores.competitive,
         adaptableNorm: normalizedScores.adaptable,
         curiousNorm: normalizedScores.curious,
-        // Meta
+        primaryPersonality: dominantTraits[0],
+        secondaryPersonality: dominantTraits[1] ?? null,
+        tertiaryPersonality: dominantTraits[2] ?? null,
+        completedAt: new Date(),
+      });
+    } catch (error) {
+      if (this.isDuplicateKeyError(error)) {
+        throw new ConflictException('Onboarding has already been completed.');
+      }
+      throw error;
+    }
+
+    await this.personalityModel.findOneAndUpdate(
+      { userId: new Types.ObjectId(userId) },
+      {
+        analytical: rawScores.analytical,
+        creative: rawScores.creative,
+        disciplined: rawScores.disciplined,
+        independent: rawScores.independent,
+        empathetic: rawScores.empathetic,
+        competitive: rawScores.competitive,
+        adaptable: rawScores.adaptable,
+        curious: rawScores.curious,
+        analyticalNorm: normalizedScores.analytical,
+        creativeNorm: normalizedScores.creative,
+        disciplinedNorm: normalizedScores.disciplined,
+        independentNorm: normalizedScores.independent,
+        empatheticNorm: normalizedScores.empathetic,
+        competitiveNorm: normalizedScores.competitive,
+        adaptableNorm: normalizedScores.adaptable,
+        curiousNorm: normalizedScores.curious,
         dominantTraits,
         lastUpdatedFrom: 'onboarding',
         sourceAssessmentId: assessmentResult._id,
@@ -192,10 +119,8 @@ export class OnboardingService {
       { upsert: true, new: true },
     );
 
-    // 9. Mark onboardingCompleted on User
     await this.usersService.markOnboardingCompleted(userId);
 
-    // 10. Build response
     const topTraits = dominantTraits.map((trait) => ({
       key: trait,
       nameVi: TRAIT_DISPLAY_NAMES[trait].vi,
@@ -214,9 +139,6 @@ export class OnboardingService {
     };
   }
 
-  /**
-   * Get the current personality profile for a user.
-   */
   async getUserPersonality(userId: string) {
     const personality = await this.personalityModel
       .findOne({ userId: new Types.ObjectId(userId) })
@@ -258,10 +180,108 @@ export class OnboardingService {
     };
   }
 
-  /**
-   * Calculate max possible score per trait across all questions.
-   * For each question, pick the option that gives the highest score for that trait.
-   */
+  private async assertOnboardingNotCompleted(userId: string) {
+    const objectUserId = new Types.ObjectId(userId);
+    const [userCompleted, existingPersonality, existingAssessment] =
+      await Promise.all([
+        this.usersService.hasCompletedOnboarding(userId),
+        this.personalityModel.exists({ userId: objectUserId }).exec(),
+        this.assessmentModel.exists({ userId: objectUserId }).exec(),
+      ]);
+
+    if (userCompleted || existingPersonality || existingAssessment) {
+      throw new ConflictException('Onboarding has already been completed.');
+    }
+  }
+
+  private validateAndBuildAnswersMap(dto: SubmitAnswersDto) {
+    const answersMap = new Map<string, string>();
+
+    for (const answer of dto.answers) {
+      const question = ONBOARDING_QUESTIONS.find(
+        (q) => q.questionNumber === answer.questionNumber,
+      );
+      if (!question) {
+        throw new BadRequestException(
+          `Invalid question number: ${answer.questionNumber}`,
+        );
+      }
+
+      const validKeys = question.options.map((o) => o.key);
+      if (!validKeys.includes(answer.selectedOption)) {
+        throw new BadRequestException(
+          `Invalid option "${answer.selectedOption}" for question ${answer.questionNumber}. Valid: ${validKeys.join(', ')}`,
+        );
+      }
+
+      const answerKey = String(answer.questionNumber);
+      if (answersMap.has(answerKey)) {
+        throw new BadRequestException(
+          `Duplicate answer for question ${answer.questionNumber}`,
+        );
+      }
+
+      answersMap.set(answerKey, answer.selectedOption);
+    }
+
+    return answersMap;
+  }
+
+  private calculateRawScores(dto: SubmitAnswersDto) {
+    const rawScores: Record<PersonalityTrait, number> = {
+      analytical: 0,
+      creative: 0,
+      disciplined: 0,
+      independent: 0,
+      empathetic: 0,
+      competitive: 0,
+      adaptable: 0,
+      curious: 0,
+    };
+
+    for (const answer of dto.answers) {
+      const question = ONBOARDING_QUESTIONS.find(
+        (q) => q.questionNumber === answer.questionNumber,
+      )!;
+      const option = question.options.find(
+        (o) => o.key === answer.selectedOption,
+      )!;
+
+      for (const trait of PERSONALITY_TRAITS) {
+        rawScores[trait] +=
+          (option.scores as Record<string, number>)[trait] ?? 0;
+      }
+    }
+
+    return rawScores;
+  }
+
+  private calculateNormalizedScores(
+    rawScores: Record<PersonalityTrait, number>,
+  ) {
+    const maxPossibleScores = this.calculateMaxPossibleScores();
+    const normalizedScores: Record<PersonalityTrait, number> = {
+      analytical: 0,
+      creative: 0,
+      disciplined: 0,
+      independent: 0,
+      empathetic: 0,
+      competitive: 0,
+      adaptable: 0,
+      curious: 0,
+    };
+
+    for (const trait of PERSONALITY_TRAITS) {
+      const maxScore = maxPossibleScores[trait];
+      normalizedScores[trait] =
+        maxScore > 0
+          ? Math.round((rawScores[trait] / maxScore) * 100) / 100
+          : 0;
+    }
+
+    return normalizedScores;
+  }
+
   private calculateMaxPossibleScores(): Record<PersonalityTrait, number> {
     const maxScores: Record<PersonalityTrait, number> = {
       analytical: 0,
@@ -288,5 +308,14 @@ export class OnboardingService {
     }
 
     return maxScores;
+  }
+
+  private isDuplicateKeyError(error: unknown): boolean {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      (error as { code?: number }).code === 11000
+    );
   }
 }

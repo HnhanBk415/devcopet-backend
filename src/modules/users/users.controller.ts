@@ -6,11 +6,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
-  async findAll() {
-    return this.usersService.findAll();
-  }
-
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async getMe(@Req() req: { user: { userId: string } }) {

@@ -92,3 +92,5 @@ export class AssessmentResult {
 
 export const AssessmentResultSchema =
   SchemaFactory.createForClass(AssessmentResult);
+
+AssessmentResultSchema.index({ userId: 1 }, { unique: true });

@@ -13,7 +13,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // strips properties not in DTO
-      forbidNonWhitelisted: false,
+      forbidNonWhitelisted: true,
       transform: true, // auto-transforms primitive types
     }),
   );

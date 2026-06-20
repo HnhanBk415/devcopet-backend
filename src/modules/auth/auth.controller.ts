@@ -7,7 +7,7 @@ import {
   Get,
   Res,
 } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -32,10 +32,6 @@ interface AuthResult {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // LOCAL AUTH
-  // ─────────────────────────────────────────────────────────────────────────────
-
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
@@ -57,75 +53,49 @@ export class AuthController {
     return this.authService.logout(req.user.userId);
   }
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // GITHUB OAUTH
-  // ─────────────────────────────────────────────────────────────────────────────
-
   @UseGuards(GithubAuthGuard)
   @Get('github')
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   githubLogin() {
-    // Passport redirects to GitHub — no body needed
+    // Passport redirects to GitHub.
   }
 
   @UseGuards(GithubAuthGuard)
   @Get('github/callback')
-  githubCallback(
-    @Req() req: { user: AuthResult },
-    @Res() res: Response,
-  ) {
-    const result = req.user;
-    const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:5173';
-    return res.redirect(
-      `${frontendUrl}/auth/callback?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`,
-    );
+  githubCallback(@Req() req: { user: AuthResult }, @Res() res: Response) {
+    return this.redirectToFrontendAuthCallback(req.user, res);
   }
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // GOOGLE OAUTH
-  // ─────────────────────────────────────────────────────────────────────────────
 
   @UseGuards(GoogleAuthGuard)
   @Get('google')
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   googleLogin() {
-    // Passport redirects to Google
+    // Passport redirects to Google.
   }
 
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
-  googleCallback(
-    @Req() req: { user: AuthResult },
-    @Res() res: Response,
-  ) {
-    const result = req.user;
-    const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:5173';
-    return res.redirect(
-      `${frontendUrl}/auth/callback?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`,
-    );
+  googleCallback(@Req() req: { user: AuthResult }, @Res() res: Response) {
+    return this.redirectToFrontendAuthCallback(req.user, res);
   }
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // FACEBOOK OAUTH
-  // ─────────────────────────────────────────────────────────────────────────────
 
   @UseGuards(FacebookAuthGuard)
   @Get('facebook')
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   facebookLogin() {
-    // Passport redirects to Facebook
+    // Passport redirects to Facebook.
   }
 
   @UseGuards(FacebookAuthGuard)
   @Get('facebook/callback')
-  facebookCallback(
-    @Req() req: { user: AuthResult },
-    @Res() res: Response,
-  ) {
-    const result = req.user;
+  facebookCallback(@Req() req: { user: AuthResult }, @Res() res: Response) {
+    return this.redirectToFrontendAuthCallback(req.user, res);
+  }
+
+  private redirectToFrontendAuthCallback(result: AuthResult, res: Response) {
     const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:5173';
-    return res.redirect(
-      `${frontendUrl}/auth/callback?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`,
-    );
+    const params = new URLSearchParams({
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+    });
+
+    return res.redirect(`${frontendUrl}/auth/callback?${params.toString()}`);
   }
 }

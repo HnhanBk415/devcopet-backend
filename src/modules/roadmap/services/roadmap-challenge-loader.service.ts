@@ -101,9 +101,22 @@ export class RoadmapChallengeLoaderService {
     }
 
     for (const chapter of challengeFile.chapters) {
-      if (chapter.nodes.length !== ADVANCED_NODE_COUNT_PER_CHAPTER) {
+      if (
+        mode === 'medium' &&
+        chapter.nodes.length !== ADVANCED_NODE_COUNT_PER_CHAPTER
+      ) {
         throw new BadRequestException(
           `${capitalizeMode(mode)} chapter ${chapter.chapterOrder} must contain exactly ${ADVANCED_NODE_COUNT_PER_CHAPTER} nodes.`,
+        );
+      }
+
+      if (
+        mode === 'hard' &&
+        (chapter.nodes.length < 1 ||
+          chapter.nodes.length > ADVANCED_NODE_COUNT_PER_CHAPTER)
+      ) {
+        throw new BadRequestException(
+          `${capitalizeMode(mode)} chapter ${chapter.chapterOrder} must contain between 1 and ${ADVANCED_NODE_COUNT_PER_CHAPTER} nodes while hard content is being authored.`,
         );
       }
 

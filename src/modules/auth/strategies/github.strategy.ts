@@ -11,9 +11,9 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     private readonly authService: AuthService,
   ) {
     super({
-      clientID: configService.get<string>('GITHUB_CLIENT_ID') || 'NOT_CONFIGURED',
-      clientSecret: configService.get<string>('GITHUB_CLIENT_SECRET') || 'NOT_CONFIGURED',
-      callbackURL: configService.get<string>('GITHUB_CALLBACK_URL') || '',
+      clientID: configService.getOrThrow<string>('GITHUB_CLIENT_ID'),
+      clientSecret: configService.getOrThrow<string>('GITHUB_CLIENT_SECRET'),
+      callbackURL: configService.getOrThrow<string>('GITHUB_CALLBACK_URL'),
       scope: ['user:email'],
     });
   }
@@ -25,7 +25,6 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     done: (err: Error | null, user?: unknown) => void,
   ) {
     try {
-      // GitHub may return multiple emails; prefer the primary verified one
       const email =
         profile.emails?.find((e) => e.value)?.value ??
         `github_${profile.id}@devcopet.local`;
@@ -34,7 +33,8 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         provider: 'github',
         providerId: profile.id,
         email,
-        username: profile.username ?? profile.displayName ?? `github_${profile.id}`,
+        username:
+          profile.username ?? profile.displayName ?? `github_${profile.id}`,
         avatarUrl: profile.photos?.[0]?.value,
       });
 

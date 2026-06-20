@@ -11,9 +11,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     private readonly authService: AuthService,
   ) {
     super({
-      clientID: configService.get<string>('GOOGLE_CLIENT_ID') || 'NOT_CONFIGURED',
-      clientSecret: configService.get<string>('GOOGLE_CLIENT_SECRET') || 'NOT_CONFIGURED',
-      callbackURL: configService.get<string>('GOOGLE_CALLBACK_URL') || '',
+      clientID: configService.getOrThrow<string>('GOOGLE_CLIENT_ID'),
+      clientSecret: configService.getOrThrow<string>('GOOGLE_CLIENT_SECRET'),
+      callbackURL: configService.getOrThrow<string>('GOOGLE_CALLBACK_URL'),
       scope: ['email', 'profile'],
     });
   }
@@ -26,8 +26,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   ) {
     try {
       const email =
-        profile.emails?.[0]?.value ??
-        `google_${profile.id}@devcopet.local`;
+        profile.emails?.[0]?.value ?? `google_${profile.id}@devcopet.local`;
 
       const result = await this.authService.validateOrCreateSocialUser({
         provider: 'google',

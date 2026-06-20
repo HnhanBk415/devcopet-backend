@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
-import { JwtModule, type JwtModuleOptions } from '@nestjs/jwt';
+import {
+  JwtModule,
+  type JwtModuleOptions,
+  type JwtSignOptions,
+} from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
@@ -14,14 +18,13 @@ import { UsersModule } from '../users/users.module';
   imports: [
     UsersModule,
     PassportModule,
-    // Use registerAsync so ConfigService is available at injection time
     JwtModule.registerAsync({
       inject: [ConfigService],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      useFactory: (configService: ConfigService): any => ({
-        secret: configService.get<string>('JWT_ACCESS_SECRET'),
+      useFactory: (configService: ConfigService): JwtModuleOptions => ({
+        secret: configService.getOrThrow<string>('JWT_ACCESS_SECRET'),
         signOptions: {
-          expiresIn: configService.get<string>('JWT_ACCESS_EXPIRES_IN') ?? '15m',
+          expiresIn: (configService.get<string>('JWT_ACCESS_EXPIRES_IN') ??
+            '15m') as JwtSignOptions['expiresIn'],
         },
       }),
     }),

@@ -8,6 +8,15 @@ export enum UserRole {
   STUDENT = 'student',
 }
 
+export const AUTH_PROVIDERS = [
+  'local',
+  'google',
+  'github',
+  'facebook',
+] as const;
+export type AuthProvider = (typeof AUTH_PROVIDERS)[number];
+export type SocialProvider = Exclude<AuthProvider, 'local'>;
+
 @Schema({ timestamps: true })
 export class User {
   @Prop({ required: true, trim: true })
@@ -16,7 +25,6 @@ export class User {
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
   email!: string;
 
-  // Optional — social users may have no local password
   @Prop()
   passwordHash?: string;
 
@@ -30,25 +38,21 @@ export class User {
   @Prop()
   avatarUrl?: string;
 
-  // Social provider IDs — sparse index allows null but enforces uniqueness when set
-  @Prop({ sparse: true })
+  @Prop({ unique: true, sparse: true })
   githubId?: string;
 
-  @Prop({ sparse: true })
+  @Prop({ unique: true, sparse: true })
   googleId?: string;
 
-  @Prop({ sparse: true })
+  @Prop({ unique: true, sparse: true })
   facebookId?: string;
 
-  // Tracks which auth methods this account has used e.g. ['local', 'github', 'google']
-  @Prop({ type: [String], default: [] })
-  authProviders!: string[];
+  @Prop({ type: [String], enum: AUTH_PROVIDERS, default: [] })
+  authProviders!: AuthProvider[];
 
-  // Hashed refresh token — null when logged out
   @Prop()
   refreshTokenHash?: string;
 
-  // Game state
   @Prop({ default: 1 })
   level!: number;
 
@@ -67,6 +71,6 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.index({ googleId: 1 }, { sparse: true });
-UserSchema.index({ facebookId: 1 }, { sparse: true });
-UserSchema.index({ githubId: 1 }, { sparse: true });
+UserSchema.index({ googleId: 1 }, { unique: true, sparse: true });
+UserSchema.index({ facebookId: 1 }, { unique: true, sparse: true });
+UserSchema.index({ githubId: 1 }, { unique: true, sparse: true });

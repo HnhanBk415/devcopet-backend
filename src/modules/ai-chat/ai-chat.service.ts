@@ -109,7 +109,7 @@ export class AiChatService {
         );
       }
 
-      await this.logService.logSuccess({
+      await this.logSuccessSafely({
         userId,
         nodeId,
         mode,
@@ -138,9 +138,9 @@ export class AiChatService {
       };
     } catch (error) {
       if (usageReserved) {
-        await this.usageService.refundUsage(userId);
+        await this.refundUsageSafely(userId);
       }
-      await this.logService.logError({
+      await this.logErrorSafely({
         userId,
         nodeId,
         mode,
@@ -176,6 +176,34 @@ export class AiChatService {
       globalRemaining: Math.max(usage.globalLimit - usage.globalUsed, 0),
       resetAt: this.usageService.getResetAtIso(),
     };
+  }
+
+  private async logSuccessSafely(
+    input: Parameters<AiChatLogService['logSuccess']>[0],
+  ) {
+    try {
+      await this.logService.logSuccess(input);
+    } catch {
+      // Logging failure should not block a successful AI answer.
+    }
+  }
+
+  private async logErrorSafely(
+    input: Parameters<AiChatLogService['logError']>[0],
+  ) {
+    try {
+      await this.logService.logError(input);
+    } catch {
+      // Preserve the original user-facing error if error logging fails.
+    }
+  }
+
+  private async refundUsageSafely(userId: string) {
+    try {
+      await this.usageService.refundUsage(userId);
+    } catch {
+      // Keep provider/quota errors from being masked by refund failures.
+    }
   }
 
   private async getUserOrThrow(userId: string) {

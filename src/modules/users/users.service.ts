@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from './schemas/user.schema';
+import { SocialProvider, User, UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UsersService {
@@ -14,15 +14,8 @@ export class UsersService {
     return created.save();
   }
 
-  async findAll() {
-    return this.userModel
-      .find()
-      .select('-passwordHash -refreshTokenHash')
-      .lean();
-  }
-
   async findByEmail(email: string): Promise<UserDocument | null> {
-    return this.userModel.findOne({ email: email.toLowerCase() });
+    return this.userModel.findOne({ email: email.toLowerCase().trim() });
   }
 
   /** Raw document with all fields — used internally by AuthService */
@@ -31,7 +24,7 @@ export class UsersService {
   }
 
   async findBySocialId(
-    provider: 'google' | 'facebook' | 'github',
+    provider: SocialProvider,
     providerId: string,
   ): Promise<UserDocument | null> {
     return this.userModel.findOne({ [`${provider}Id`]: providerId });
@@ -60,7 +53,7 @@ export class UsersService {
   /** Links a social provider ID to an existing user */
   async linkSocialProvider(
     userId: string,
-    provider: string,
+    provider: SocialProvider,
     providerId: string,
     avatarUrl?: string,
   ): Promise<UserDocument | null> {
@@ -73,6 +66,16 @@ export class UsersService {
       },
       { new: true },
     );
+  }
+
+  async hasCompletedOnboarding(userId: string): Promise<boolean> {
+    const user = await this.userModel
+      .findById(userId)
+      .select({ onboardingCompleted: 1 })
+      .lean<{ onboardingCompleted?: boolean }>()
+      .exec();
+    if (!user) throw new NotFoundException('User not found');
+    return user.onboardingCompleted === true;
   }
 
   async markOnboardingCompleted(userId: string): Promise<void> {
