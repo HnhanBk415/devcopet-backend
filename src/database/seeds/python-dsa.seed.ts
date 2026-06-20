@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -33,6 +35,142 @@ function listChapterDirs(basePath: string): string[] {
   }
 }
 
+function listArenaQuestionFiles(basePath: string): string[] {
+  try {
+    return fs
+      .readdirSync(basePath, { withFileTypes: true })
+      .filter(
+        (dirent) =>
+          dirent.isFile() &&
+          /^arena-questions\.(easy|medium|hard)\.json$/.test(dirent.name),
+      )
+      .map((dirent) => dirent.name)
+      .sort();
+  } catch {
+    return [];
+  }
+}
+
+function formatDropZoneLabel(id: string): string {
+  return id
+    .split('_')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function normalizeArenaQuestion(question: any, courseSlug: string): any {
+  const normalized = {
+    ...question,
+    courseSlug,
+    isActive: question.isActive ?? true,
+  };
+
+  if (normalized.type === 'drag_drop') {
+    normalized.dropZones =
+      Array.isArray(normalized.dropZones) && normalized.dropZones.length > 0
+        ? normalized.dropZones
+        : Object.keys(normalized.correctDropZoneMap ?? {}).map((id) => ({
+            id,
+            label: formatDropZoneLabel(id),
+          }));
+  }
+
+  return normalized;
+}
+
+function assertArenaQuestion(question: any, source: string): void {
+  const required = [
+    'courseSlug',
+    'difficulty',
+    'chapterOrder',
+    'title',
+    'question',
+    'type',
+    'explanation',
+    'conceptTags',
+  ];
+
+  for (const field of required) {
+    if (
+      question[field] === undefined ||
+      question[field] === null ||
+      question[field] === ''
+    ) {
+      throw new Error(`[Seed] Arena question missing ${field}: ${source}`);
+    }
+  }
+
+  if (!['easy', 'medium', 'hard'].includes(question.difficulty)) {
+    throw new Error(`[Seed] Invalid arena difficulty in ${source}`);
+  }
+
+  if (!['multiple_choice', 'drag_drop'].includes(question.type)) {
+    throw new Error(`[Seed] Invalid arena question type in ${source}`);
+  }
+
+  if (!Array.isArray(question.conceptTags)) {
+    throw new Error(`[Seed] conceptTags must be an array in ${source}`);
+  }
+
+  if (question.type === 'multiple_choice') {
+    const optionIds = new Set(
+      (question.options ?? []).map((option: any) => option.id),
+    );
+    if (!question.correctOptionId || !optionIds.has(question.correctOptionId)) {
+      throw new Error(`[Seed] correctOptionId is invalid in ${source}`);
+    }
+  }
+
+  if (question.type === 'drag_drop') {
+    const poolIds = new Set(
+      (question.poolItems ?? []).map((item: any) => item.id),
+    );
+    const map = question.correctDropZoneMap ?? {};
+    for (const itemId of Object.values(map)) {
+      if (!poolIds.has(itemId)) {
+        throw new Error(
+          `[Seed] correctDropZoneMap references missing pool item in ${source}`,
+        );
+      }
+    }
+  }
+}
+
+async function seedArenaQuestions(
+  basePath: string,
+  courseSlug: string,
+  ArenaQuestionModel: Model<any>,
+): Promise<void> {
+  const files = listArenaQuestionFiles(basePath);
+  if (files.length === 0) {
+    console.log(`[Seed] No arena question files found for ${courseSlug}`);
+    return;
+  }
+
+  const questions = files.flatMap((filename) => {
+    const filePath = path.join(basePath, filename);
+    const data = readJson<any[]>(filePath);
+    return data.map((question, index) => {
+      const normalized = normalizeArenaQuestion(question, courseSlug);
+      assertArenaQuestion(
+        normalized,
+        `${filename} #${index + 1} ${normalized.title ?? ''}`,
+      );
+      return normalized;
+    });
+  });
+
+  await ArenaQuestionModel.deleteMany({ courseSlug });
+  if (questions.length > 0) {
+    await ArenaQuestionModel.insertMany(questions, { ordered: true });
+  }
+
+  console.log(
+    `[Seed] Arena questions seeded for ${courseSlug}: ${questions.length}`,
+  );
+}
+
 async function seedCourseContent(
   contentFolder: string,
   CourseModel: Model<any>,
@@ -42,6 +180,8 @@ async function seedCourseContent(
   LessonModel: Model<any>,
 
   QuizModel?: Model<any>,
+
+  ArenaQuestionModel?: Model<any>,
 ): Promise<void> {
   const basePath = path.resolve(__dirname, 'content', contentFolder);
   const courseJsonPath = path.join(basePath, 'course.json');
@@ -188,6 +328,10 @@ async function seedCourseContent(
   });
 
   console.log(`[Seed] Done updating totals for Course: ${courseData.title}`);
+
+  if (ArenaQuestionModel) {
+    await seedArenaQuestions(basePath, courseData.slug, ArenaQuestionModel);
+  }
 }
 
 export async function seedPythonBasic(
@@ -198,6 +342,8 @@ export async function seedPythonBasic(
   LessonModel: Model<any>,
 
   QuizModel?: Model<any>,
+
+  ArenaQuestionModel?: Model<any>,
 ): Promise<void> {
   return seedCourseContent(
     'python-basic',
@@ -205,6 +351,7 @@ export async function seedPythonBasic(
     ChapterModel,
     LessonModel,
     QuizModel,
+    ArenaQuestionModel,
   );
 }
 
@@ -216,6 +363,8 @@ export async function seedPythonDsa(
   LessonModel: Model<any>,
 
   QuizModel?: Model<any>,
+
+  ArenaQuestionModel?: Model<any>,
 ): Promise<void> {
   return seedCourseContent(
     'python-dsa',
@@ -223,5 +372,6 @@ export async function seedPythonDsa(
     ChapterModel,
     LessonModel,
     QuizModel,
+    ArenaQuestionModel,
   );
 }

@@ -14,6 +14,7 @@ import { PetsModule } from './modules/pets/pets.module';
 import { OnboardingModule } from './modules/onboarding/onboarding.module';
 import { PersonalityEngineModule } from './modules/personality-engine/personality-engine.module';
 import { AiChatModule } from './modules/ai-chat/ai-chat.module';
+import { ArenaModule } from './modules/arena/arena.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { AiChatModule } from './modules/ai-chat/ai-chat.module';
     OnboardingModule,
     PersonalityEngineModule,
     AiChatModule,
+    ArenaModule,
   ],
 })
 export class AppModule {}
