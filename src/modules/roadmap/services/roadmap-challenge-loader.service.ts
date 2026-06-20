@@ -54,10 +54,7 @@ export class RoadmapChallengeLoaderService {
     const cached = this.advancedChallengeCache.get(cacheKey);
     if (cached) return cached;
 
-    const targetCourseSlug =
-      mode === 'hard' && courseSlug === 'python-basic'
-        ? 'python-dsa'
-        : courseSlug;
+    const targetCourseSlug = courseSlug;
 
     const filePath = this.resolveChallengePath(
       targetCourseSlug,
@@ -96,10 +93,7 @@ export class RoadmapChallengeLoaderService {
     courseSlug: string,
     mode: AdvancedRoadmapMode,
   ) {
-    const expectedSlug =
-      mode === 'hard' && courseSlug === 'python-basic'
-        ? 'python-dsa'
-        : courseSlug;
+    const expectedSlug = courseSlug;
 
     if (
       challengeFile.courseSlug !== expectedSlug ||
