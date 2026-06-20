@@ -1,0 +1,9 @@
+{
+  "title": "Basic File Reading and Writing",
+  "slug": "basic-file-reading-writing",
+  "description": "Learn opening files, reading content, writing text, appending text, simple CSV-style data, and saving progress.",
+  "order": 7,
+  "estimatedMinutes": 75,
+  "rankName": "Thistle Rank",
+  "isPublished": true
+}

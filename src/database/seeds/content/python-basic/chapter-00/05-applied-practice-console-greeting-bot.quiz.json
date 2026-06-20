@@ -1,0 +1,62 @@
+{
+  "title": "Applied Practice: Console Greeting Bot Quiz",
+  "description": "Check your understanding of the Chapter 0 applied practice.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "code_output",
+      "questionText": "What is the output of the following code?",
+      "codeSnippet": "print(\"Assistant:\", \"DevCopet\")\nprint(\"Level:\", 1)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Assistant: DevCopet\nLevel: 1"
+        },
+        {
+          "id": "b",
+          "text": "Assistant:DevCopet\nLevel:1"
+        },
+        {
+          "id": "c",
+          "text": "DevCopet Assistant\n1 Level"
+        },
+        {
+          "id": "d",
+          "text": "The code causes a NameError"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Commas in print() separate values with spaces, so the labels and values are displayed clearly.",
+      "points": 1
+    },
+    {
+      "type": "multiple_choice",
+      "questionText": "Which version correctly prints the message Welcome to Python!?",
+      "options": [
+        {
+          "id": "a",
+          "text": "print(\"Welcome to Python!\")"
+        },
+        {
+          "id": "b",
+          "text": "print(Welcome to Python!)"
+        },
+        {
+          "id": "c",
+          "text": "print \"Welcome to Python!\""
+        },
+        {
+          "id": "d",
+          "text": "# print(\"Welcome to Python!\")"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "The correct version uses print() with the text inside quotation marks.",
+      "points": 1
+    }
+  ]
+}

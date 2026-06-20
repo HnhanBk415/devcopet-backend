@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Why Exceptions Happen",
+    "slug": "why-exceptions-happen",
+    "description": "Exceptions are Python’s way of saying “I cannot continue safely.”",
+    "order": 1,
+    "type": "reading",
+    "filename": "42-why-exceptions-happen.md",
+    "quizFile": "42-why-exceptions-happen.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "try and except",
+    "slug": "try-and-except",
+    "description": "try/except lets your program handle expected failure without crashing.",
+    "order": 2,
+    "type": "reading",
+    "filename": "43-try-and-except.md",
+    "quizFile": "43-try-and-except.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "else and finally",
+    "slug": "else-and-finally",
+    "description": "try/except can do more than catch errors.",
+    "order": 3,
+    "type": "reading",
+    "filename": "44-else-and-finally.md",
+    "quizFile": "44-else-and-finally.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Raising Errors Intentionally",
+    "slug": "raising-errors-intentionally",
+    "description": "Sometimes your function should reject bad data immediately.",
+    "order": 4,
+    "type": "reading",
+    "filename": "45-raising-errors-intentionally.md",
+    "quizFile": "45-raising-errors-intentionally.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Applied Practice: Safe Number Parser",
+    "slug": "applied-practice-safe-number-parser",
+    "description": "Build a safe parser that turns text into numbers when possible and gives useful feedback when not.",
+    "order": 5,
+    "type": "reading",
+    "filename": "46-applied-practice-safe-number-parser.md",
+    "quizFile": "46-applied-practice-safe-number-parser.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

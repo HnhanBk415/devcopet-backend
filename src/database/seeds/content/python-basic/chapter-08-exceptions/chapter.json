@@ -1,0 +1,9 @@
+{
+  "title": "Exceptions",
+  "slug": "exceptions",
+  "description": "Learn why exceptions happen, how try/except works, else/finally, raising errors, and safe parsing.",
+  "order": 8,
+  "estimatedMinutes": 75,
+  "rankName": "Amber Rank",
+  "isPublished": true
+}

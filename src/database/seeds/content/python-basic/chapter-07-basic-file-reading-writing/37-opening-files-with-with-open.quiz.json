@@ -1,0 +1,62 @@
+{
+  "title": "Opening Files with with open() Quiz",
+  "description": "Check your understanding of Opening Files with with open().",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is the main idea of Opening Files with with open()?",
+      "options": [
+        {
+          "id": "a",
+          "text": "with open() closes the file automatically."
+        },
+        {
+          "id": "b",
+          "text": "Python ignores this concept completely."
+        },
+        {
+          "id": "c",
+          "text": "This concept is only used for deleting files."
+        },
+        {
+          "id": "d",
+          "text": "This concept only works inside comments."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "with open() closes the file automatically.",
+      "points": 1
+    },
+    {
+      "type": "code_reasoning",
+      "questionText": "What should you do when reading a small Python example?",
+      "codeSnippet": "with open(\"notes.txt\", \"w\") as file:\n    file.write(\"Hello file\")",
+      "options": [
+        {
+          "id": "a",
+          "text": "Read it line by line and predict the result"
+        },
+        {
+          "id": "b",
+          "text": "Ignore the order of the lines"
+        },
+        {
+          "id": "c",
+          "text": "Assume Python will fix mistakes automatically"
+        },
+        {
+          "id": "d",
+          "text": "Delete all variable names first"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Python runs code step by step, so reading line by line helps you understand the behavior.",
+      "points": 1
+    }
+  ]
+}

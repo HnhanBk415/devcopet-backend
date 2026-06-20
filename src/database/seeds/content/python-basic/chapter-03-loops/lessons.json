@@ -1,0 +1,62 @@
+[
+  {
+    "title": "while Loops",
+    "slug": "while-loops",
+    "description": "A while loop repeats as long as a condition stays True.",
+    "order": 1,
+    "type": "reading",
+    "filename": "17-while-loops.md",
+    "quizFile": "17-while-loops.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "for Loops with range()",
+    "slug": "for-loops-with-range",
+    "description": "A for loop with range() is ideal when you know the number of repeats.",
+    "order": 2,
+    "type": "reading",
+    "filename": "18-for-loops-with-range.md",
+    "quizFile": "18-for-loops-with-range.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Looping Through Strings and Simple Lists",
+    "slug": "looping-through-strings-and-simple-lists",
+    "description": "Collections let you store many items; loops let you process each item without copying code.",
+    "order": 3,
+    "type": "reading",
+    "filename": "19-looping-through-strings-and-simple-lists.md",
+    "quizFile": "19-looping-through-strings-and-simple-lists.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "break and continue",
+    "slug": "break-and-continue",
+    "description": "Sometimes a loop should stop early or skip a bad item.",
+    "order": 4,
+    "type": "reading",
+    "filename": "20-break-and-continue.md",
+    "quizFile": "20-break-and-continue.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Applied Practice: Training Counter",
+    "slug": "applied-practice-training-counter",
+    "description": "Create a training counter that tracks progress over several rounds.",
+    "order": 5,
+    "type": "reading",
+    "filename": "21-applied-practice-training-counter.md",
+    "quizFile": "21-applied-practice-training-counter.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

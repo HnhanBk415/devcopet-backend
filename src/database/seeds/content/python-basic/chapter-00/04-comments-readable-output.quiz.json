@@ -1,0 +1,61 @@
+{
+  "title": "Comments and Readable Output Quiz",
+  "description": "Check your understanding of comments and clear output.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What does Python do with a line that starts with #?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It ignores the line as a comment"
+        },
+        {
+          "id": "b",
+          "text": "It prints the line automatically"
+        },
+        {
+          "id": "c",
+          "text": "It converts the line into a number"
+        },
+        {
+          "id": "d",
+          "text": "It deletes the file"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "In Python, # starts a comment, and Python ignores that comment when running the program.",
+      "points": 1
+    },
+    {
+      "type": "multiple_choice",
+      "questionText": "Which output is easier for a user to understand?",
+      "options": [
+        {
+          "id": "a",
+          "text": "print(100)"
+        },
+        {
+          "id": "b",
+          "text": "print(\"Score:\", 100)"
+        },
+        {
+          "id": "c",
+          "text": "print()"
+        },
+        {
+          "id": "d",
+          "text": "# 100"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "Adding the label Score: makes the output easier to understand.",
+      "points": 1
+    }
+  ]
+}

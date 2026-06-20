@@ -1,0 +1,62 @@
+{
+  "title": "String Indexing and Slicing Quiz",
+  "description": "Check your understanding of String Indexing and Slicing.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is the main idea of String Indexing and Slicing?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Indexing gets one character; slicing gets a part of the string."
+        },
+        {
+          "id": "b",
+          "text": "Python ignores this concept completely."
+        },
+        {
+          "id": "c",
+          "text": "This concept is only used for deleting files."
+        },
+        {
+          "id": "d",
+          "text": "This concept only works inside comments."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Indexing gets one character; slicing gets a part of the string.",
+      "points": 1
+    },
+    {
+      "type": "code_reasoning",
+      "questionText": "What should you do when reading a small Python example?",
+      "codeSnippet": "word = \"Python\"\nprint(word[0])\nprint(word[1:4])",
+      "options": [
+        {
+          "id": "a",
+          "text": "Read it line by line and predict the result"
+        },
+        {
+          "id": "b",
+          "text": "Ignore the order of the lines"
+        },
+        {
+          "id": "c",
+          "text": "Assume Python will fix mistakes automatically"
+        },
+        {
+          "id": "d",
+          "text": "Delete all variable names first"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Python runs code step by step, so reading line by line helps you understand the behavior.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Functions",
+  "slug": "functions",
+  "description": "Learn how to define functions, pass arguments, return values, understand scope, and design clean APIs.",
+  "order": 5,
+  "estimatedMinutes": 75,
+  "rankName": "Moss Green Rank",
+  "isPublished": true
+}

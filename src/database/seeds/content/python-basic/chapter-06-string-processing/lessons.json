@@ -1,0 +1,62 @@
+[
+  {
+    "title": "String Indexing and Slicing",
+    "slug": "string-indexing-and-slicing",
+    "description": "Strings are sequences, so you can access characters by position and extract pieces with slicing.",
+    "order": 1,
+    "type": "reading",
+    "filename": "32-string-indexing-and-slicing.md",
+    "quizFile": "32-string-indexing-and-slicing.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Common String Methods",
+    "slug": "common-string-methods",
+    "description": "String methods are ready-made tools for cleaning and transforming text.",
+    "order": 2,
+    "type": "reading",
+    "filename": "33-common-string-methods.md",
+    "quizFile": "33-common-string-methods.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Searching and Checking Strings",
+    "slug": "searching-and-checking-strings",
+    "description": "Programs often need to validate text before trusting it.",
+    "order": 3,
+    "type": "reading",
+    "filename": "34-searching-and-checking-strings.md",
+    "quizFile": "34-searching-and-checking-strings.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Splitting and Joining Text",
+    "slug": "splitting-and-joining-text",
+    "description": "split() breaks text into pieces; join() puts pieces back together.",
+    "order": 4,
+    "type": "reading",
+    "filename": "35-splitting-and-joining-text.md",
+    "quizFile": "35-splitting-and-joining-text.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Applied Practice: Username Formatter",
+    "slug": "applied-practice-username-formatter",
+    "description": "Build a username formatter that cleans input and produces consistent usernames.",
+    "order": 5,
+    "type": "reading",
+    "filename": "36-applied-practice-username-formatter.md",
+    "quizFile": "36-applied-practice-username-formatter.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

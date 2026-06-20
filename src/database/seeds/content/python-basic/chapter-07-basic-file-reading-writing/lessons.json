@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Opening Files with with open()",
+    "slug": "opening-files-with-with-open",
+    "description": "Files let a program read from and write to the outside world.",
+    "order": 1,
+    "type": "reading",
+    "filename": "37-opening-files-with-with-open.md",
+    "quizFile": "37-opening-files-with-with-open.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Reading Whole Files and Lines",
+    "slug": "reading-whole-files-and-lines",
+    "description": "Reading files is how programs load saved information.",
+    "order": 2,
+    "type": "reading",
+    "filename": "38-reading-whole-files-and-lines.md",
+    "quizFile": "38-reading-whole-files-and-lines.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Writing and Appending Text",
+    "slug": "writing-and-appending-text",
+    "description": "Writing creates or replaces content; appending adds to the end.",
+    "order": 3,
+    "type": "reading",
+    "filename": "39-writing-and-appending-text.md",
+    "quizFile": "39-writing-and-appending-text.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Simple CSV-Style Data",
+    "slug": "simple-csv-style-data",
+    "description": "CSV-style text stores table-like data using separators.",
+    "order": 4,
+    "type": "reading",
+    "filename": "40-simple-csv-style-data.md",
+    "quizFile": "40-simple-csv-style-data.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Applied Practice: Save Progress",
+    "slug": "applied-practice-save-progress",
+    "description": "Build a small save system for learning progress.",
+    "order": 5,
+    "type": "reading",
+    "filename": "41-applied-practice-save-progress.md",
+    "quizFile": "41-applied-practice-save-progress.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

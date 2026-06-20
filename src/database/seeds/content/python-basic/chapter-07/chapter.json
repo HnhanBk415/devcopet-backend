@@ -1,8 +1,0 @@
-{
-  "title": "Chapter 7: Basic File Reading and Writing",
-  "slug": "basic-file-reading-and-writing",
-  "description": "Read and write simple files so programs can remember data between runs.",
-  "order": 7,
-  "estimatedMinutes": 78,
-  "isPublished": true
-}

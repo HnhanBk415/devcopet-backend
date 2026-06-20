@@ -1,0 +1,62 @@
+{
+  "title": "Printing Text, Numbers, and Multiple Values Quiz",
+  "description": "Check your understanding of print(), strings, numbers, commas, and plus signs.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "code_output",
+      "questionText": "What is the exact output of the following two statements?",
+      "codeSnippet": "print(\"Python\" + \"World\")\nprint(\"Python\", \"World\")",
+      "options": [
+        {
+          "id": "a",
+          "text": "PythonWorld\nPythonWorld"
+        },
+        {
+          "id": "b",
+          "text": "Python World\nPython World"
+        },
+        {
+          "id": "c",
+          "text": "PythonWorld\nPython World"
+        },
+        {
+          "id": "d",
+          "text": "The code causes a SyntaxError"
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "explanation": "+ joins the strings directly, while the comma prints values with a space between them.",
+      "points": 1
+    },
+    {
+      "type": "multiple_choice",
+      "questionText": "What type of error will Python raise if you execute print(Hello) without defining Hello first?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TypeError"
+        },
+        {
+          "id": "b",
+          "text": "NameError"
+        },
+        {
+          "id": "c",
+          "text": "FileNotFoundError"
+        },
+        {
+          "id": "d",
+          "text": "No error"
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "Without quotes, Python treats Hello as a variable name. If it is not defined, Python raises NameError.",
+      "points": 1
+    }
+  ]
+}

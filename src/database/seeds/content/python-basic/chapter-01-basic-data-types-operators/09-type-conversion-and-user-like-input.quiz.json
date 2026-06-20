@@ -1,0 +1,62 @@
+{
+  "title": "Type Conversion and User-Like Input Quiz",
+  "description": "Check your understanding of Type Conversion and User-Like Input.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is the main idea of Type Conversion and User-Like Input?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Convert text before doing numeric calculations."
+        },
+        {
+          "id": "b",
+          "text": "Python ignores this concept completely."
+        },
+        {
+          "id": "c",
+          "text": "This concept is only used for deleting files."
+        },
+        {
+          "id": "d",
+          "text": "This concept only works inside comments."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Convert text before doing numeric calculations.",
+      "points": 1
+    },
+    {
+      "type": "code_reasoning",
+      "questionText": "What should you do when reading a small Python example?",
+      "codeSnippet": "raw_age = \"18\"\nage = int(raw_age)\nprint(age + 1)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Read it line by line and predict the result"
+        },
+        {
+          "id": "b",
+          "text": "Ignore the order of the lines"
+        },
+        {
+          "id": "c",
+          "text": "Assume Python will fix mistakes automatically"
+        },
+        {
+          "id": "d",
+          "text": "Delete all variable names first"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Python runs code step by step, so reading line by line helps you understand the behavior.",
+      "points": 1
+    }
+  ]
+}

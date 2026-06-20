@@ -1,0 +1,62 @@
+{
+  "title": "Choosing the Right Data Structure Quiz",
+  "description": "Check your understanding of Choosing the Right Data Structure.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is the main idea of Choosing the Right Data Structure?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Choose the structure based on how you need to use the data."
+        },
+        {
+          "id": "b",
+          "text": "Python ignores this concept completely."
+        },
+        {
+          "id": "c",
+          "text": "This concept is only used for deleting files."
+        },
+        {
+          "id": "d",
+          "text": "This concept only works inside comments."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Choose the structure based on how you need to use the data.",
+      "points": 1
+    },
+    {
+      "type": "code_reasoning",
+      "questionText": "What should you do when reading a small Python example?",
+      "codeSnippet": "todo = [\"learn\", \"practice\"]\nprofile = {\"name\": \"Nova\", \"level\": 1}\nunique_tags = {\"python\", \"basic\"}\nprint(todo, profile, unique_tags)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Read it line by line and predict the result"
+        },
+        {
+          "id": "b",
+          "text": "Ignore the order of the lines"
+        },
+        {
+          "id": "c",
+          "text": "Assume Python will fix mistakes automatically"
+        },
+        {
+          "id": "d",
+          "text": "Delete all variable names first"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Python runs code step by step, so reading line by line helps you understand the behavior.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Basic Data Structures",
+  "slug": "basic-data-structures",
+  "description": "Learn lists, tuples, dictionaries, sets, and how to choose the right structure.",
+  "order": 4,
+  "estimatedMinutes": 75,
+  "rankName": "Crimson Rank",
+  "isPublished": true
+}

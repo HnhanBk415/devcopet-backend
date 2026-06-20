@@ -1,0 +1,62 @@
+{
+  "title": "Looping Through Strings and Simple Lists Quiz",
+  "description": "Check your understanding of Looping Through Strings and Simple Lists.",
+  "passingScore": 50,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "questionText": "What is the main idea of Looping Through Strings and Simple Lists?",
+      "options": [
+        {
+          "id": "a",
+          "text": "You can loop through strings and lists one item at a time."
+        },
+        {
+          "id": "b",
+          "text": "Python ignores this concept completely."
+        },
+        {
+          "id": "c",
+          "text": "This concept is only used for deleting files."
+        },
+        {
+          "id": "d",
+          "text": "This concept only works inside comments."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "You can loop through strings and lists one item at a time.",
+      "points": 1
+    },
+    {
+      "type": "code_reasoning",
+      "questionText": "What should you do when reading a small Python example?",
+      "codeSnippet": "name = \"Nova\"\nfor letter in name:\n    print(letter)\n\nitems = [\"coin\", \"gem\"]\nfor item in items:\n    print(item)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Read it line by line and predict the result"
+        },
+        {
+          "id": "b",
+          "text": "Ignore the order of the lines"
+        },
+        {
+          "id": "c",
+          "text": "Assume Python will fix mistakes automatically"
+        },
+        {
+          "id": "d",
+          "text": "Delete all variable names first"
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "Python runs code step by step, so reading line by line helps you understand the behavior.",
+      "points": 1
+    }
+  ]
+}

@@ -1,53 +1,153 @@
+# Running Your First Python File
+
 ## Purpose and Use Case
 
-A program must be saved and executed before it can produce observable output.
+Writing code and running code are two different actions.
 
-Saving records the latest source code; running sends that code to the Python interpreter.
+A beginner often writes a Python file but forgets that the computer does not run it until they execute it.
+
+This lesson shows the basic idea of creating a Python file and running it from a terminal.
 
 ## Core Concept
 
-> To run Python code, save it in a `.py` file and ask the interpreter to execute that file. If you edit the file, **save before running again**.
+A Python file usually ends with:
+
+```text
+.py
+```
+
+Example:
+
+```text
+hello.py
+```
+
+Inside the file, you write Python code. Then you run the file using Python.
+
+Typical command:
+
+```bash
+python hello.py
+```
+
+or on some systems:
+
+```bash
+python3 hello.py
+```
 
 ## Technical Breakdown
 
-- Create a file such as `main.py`.
-- Write a small visible action, usually a `print()` call.
-- Open a terminal in the same folder.
-- Run `python main.py` or `python3 main.py`, depending on your setup.
-- If the output looks old, your file was probably not saved.
+Suppose you create a file named:
 
-### Concept Summary
-
-| Step | Command / action | What should happen |
-|---|---|---|
-| Write | `print("Hello")` | Code exists in editor |
-| Save | Cmd+S / Ctrl+S | Disk has latest version |
-| Run | `python main.py` | Terminal prints output |
-
-### Guided Example
-
-```python
-# main.py
-print("Program started")
-print("Python is running this file")
+```text
+hello.py
 ```
 
-### Implementation Steps
+Inside it, you write:
 
-1. **Predict** what each line should do before running it.
-2. **Run** the code and compare the terminal output with your prediction.
-3. **Change one value** and run again.
-4. **Explain the result** in one concise sentence.
+```python
+print("Hello from a Python file!")
+```
+
+To run it, open a terminal in the same folder and run:
+
+```bash
+python hello.py
+```
+
+Output:
+
+```text
+Hello from a Python file!
+```
+
+On some computers, the command may be:
+
+```bash
+python3 hello.py
+```
+
+The exact command depends on how Python is installed.
+
+## File Name vs Code Content
+
+The file name and code content are different things.
+
+File name:
+
+```text
+hello.py
+```
+
+Code inside the file:
+
+```python
+print("Hello")
+```
+
+The file name helps your computer locate the program. The code inside the file tells Python what to do.
+
+## Try it Yourself
+
+Pretend this code is inside `hello.py`.
+
+```python-run
+print("Hello from my first Python file!")
+print("I wrote code.")
+print("Then I ran the file.")
+```
+
+## Common Beginner Mistakes
+
+A common mistake is writing code in a file but not running it.
+
+Another mistake is running the command from the wrong folder.
+
+If your terminal says the file cannot be found, check:
+
+```text
+Is the file name correct?
+Are you in the correct folder?
+Does the file end with .py?
+```
+
+## PATH Problem
+
+On Windows, if Python is not added to PATH, the terminal may show:
+
+```text
+'python' is not recognized as an internal or external command
+```
+
+This means the terminal cannot find the Python command. It does not mean your Python file is deleted.
 
 ## Best Practices
 
-- **Tip 1:** Always check the terminal path with `pwd` if Python says the file does not exist.
-- **Tip 2:** Use one file while learning basics. Multiple files too early add noise.
-- **Tip 3:** Make output obvious so you know which version ran.
+Use clear file names.
 
-> **Common mistake:** Avoid copying code mechanically. Before running it, predict what should happen; after running it, explain why it happened.
+Good examples:
 
-## Practice Check
+```text
+hello.py
+greeting_bot.py
+practice_print.py
+```
 
-- Update the displayed message, save the file, and verify that the terminal reflects the latest version.
-- Modify one value in the guided example and predict the new output before executing it.
+Avoid file names with spaces when you are beginning.
+
+Save your file before running it. Run your file after every small change.
+
+## Concept Summary
+
+A Python file stores code. Running the file tells Python to execute that code.
+
+Key ideas:
+
+```text
+Python files usually end with .py
+Writing code is not the same as running code
+Use python file_name.py or python3 file_name.py to run
+Terminal folder matters
+PATH helps the terminal find Python
+```

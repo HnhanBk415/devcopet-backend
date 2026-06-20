@@ -1,0 +1,9 @@
+{
+  "title": "Basic Data Types + Operators",
+  "slug": "basic-data-types-operators",
+  "description": "Learn variables, basic data types, conversion, arithmetic, assignment, comparison, and logical operators.",
+  "order": 1,
+  "estimatedMinutes": 90,
+  "rankName": "Teal Rank",
+  "isPublished": true
+}

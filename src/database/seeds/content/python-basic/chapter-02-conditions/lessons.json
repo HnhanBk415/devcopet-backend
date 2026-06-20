@@ -1,0 +1,62 @@
+[
+  {
+    "title": "if Statements",
+    "slug": "if-statements",
+    "description": "An if statement lets your program react.",
+    "order": 1,
+    "type": "reading",
+    "filename": "12-if-statements.md",
+    "quizFile": "12-if-statements.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "else for Alternative Paths",
+    "slug": "else-for-alternative-paths",
+    "description": "else gives your program a backup path.",
+    "order": 2,
+    "type": "reading",
+    "filename": "13-else-for-alternative-paths.md",
+    "quizFile": "13-else-for-alternative-paths.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "elif for Multiple Choices",
+    "slug": "elif-for-multiple-choices",
+    "description": "Real apps often have more than two outcomes.",
+    "order": 3,
+    "type": "reading",
+    "filename": "14-elif-for-multiple-choices.md",
+    "quizFile": "14-elif-for-multiple-choices.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Nested Conditions and Guard Clauses",
+    "slug": "nested-conditions-and-guard-clauses",
+    "description": "Nested conditions can express detailed rules, but too many stages become hard to read.",
+    "order": 4,
+    "type": "reading",
+    "filename": "15-nested-conditions-and-guard-clauses.md",
+    "quizFile": "15-nested-conditions-and-guard-clauses.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Applied Practice: Access Gate",
+    "slug": "applied-practice-access-gate",
+    "description": "Build a small access gate like a real app feature.",
+    "order": 5,
+    "type": "reading",
+    "filename": "16-applied-practice-access-gate.md",
+    "quizFile": "16-applied-practice-access-gate.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 15,
+    "isPublished": true
+  }
+]

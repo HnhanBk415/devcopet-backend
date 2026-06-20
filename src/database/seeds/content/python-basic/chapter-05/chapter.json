@@ -1,8 +1,0 @@
-{
-  "title": "Chapter 5: Function",
-  "slug": "function",
-  "description": "Package logic into reusable functions with parameters, return values, scope, and clean defaults.",
-  "order": 5,
-  "estimatedMinutes": 68,
-  "isPublished": true
-}

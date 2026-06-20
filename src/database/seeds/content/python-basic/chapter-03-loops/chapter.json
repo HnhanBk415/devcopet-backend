@@ -1,0 +1,9 @@
+{
+  "title": "Loops",
+  "slug": "loops",
+  "description": "Learn while loops, for loops, looping through simple collections, break, continue, and a training counter.",
+  "order": 3,
+  "estimatedMinutes": 75,
+  "rankName": "Amber Rank",
+  "isPublished": true
+}

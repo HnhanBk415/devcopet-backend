@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Defining and Calling Functions",
+    "slug": "defining-and-calling-functions",
+    "description": "A function gives a name to a reusable piece of logic.",
+    "order": 1,
+    "type": "reading",
+    "filename": "27-defining-and-calling-functions.md",
+    "quizFile": "27-defining-and-calling-functions.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Parameters and Arguments",
+    "slug": "parameters-and-arguments",
+    "description": "Parameters make functions flexible.",
+    "order": 2,
+    "type": "reading",
+    "filename": "28-parameters-and-arguments.md",
+    "quizFile": "28-parameters-and-arguments.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Return Values",
+    "slug": "return-values",
+    "description": "print shows a value; return sends a value back to the caller.",
+    "order": 3,
+    "type": "reading",
+    "filename": "29-return-values.md",
+    "quizFile": "29-return-values.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Scope and Local Variables",
+    "slug": "scope-and-local-variables",
+    "description": "Scope controls where names exist.",
+    "order": 4,
+    "type": "reading",
+    "filename": "30-scope-and-local-variables.md",
+    "quizFile": "30-scope-and-local-variables.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Default Arguments and Clean APIs",
+    "slug": "default-arguments-and-clean-apis",
+    "description": "Default arguments make common cases simple while still allowing customization.",
+    "order": 5,
+    "type": "reading",
+    "filename": "31-default-arguments-and-clean-apis.md",
+    "quizFile": "31-default-arguments-and-clean-apis.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  }
+]

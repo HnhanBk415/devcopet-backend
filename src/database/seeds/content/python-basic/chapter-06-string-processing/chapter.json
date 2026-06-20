@@ -1,0 +1,9 @@
+{
+  "title": "String Processing",
+  "slug": "string-processing",
+  "description": "Learn indexing, slicing, methods, searching, checking, splitting, joining, and username formatting.",
+  "order": 6,
+  "estimatedMinutes": 75,
+  "rankName": "Teal Rank",
+  "isPublished": true
+}

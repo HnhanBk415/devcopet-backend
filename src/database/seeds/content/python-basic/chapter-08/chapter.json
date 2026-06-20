@@ -1,8 +1,0 @@
-{
-  "title": "Chapter 8: Exception",
-  "slug": "exception",
-  "description": "Handle failure like a developer: catch expected errors, clean up safely, and raise useful exceptions.",
-  "order": 8,
-  "estimatedMinutes": 75,
-  "isPublished": true
-}

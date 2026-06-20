@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Lists: Ordered Mutable Data",
+    "slug": "lists-ordered-mutable-data",
+    "description": "A list is an ordered, changeable collection.",
+    "order": 1,
+    "type": "reading",
+    "filename": "22-lists-ordered-mutable-data.md",
+    "quizFile": "22-lists-ordered-mutable-data.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Tuples: Fixed Records",
+    "slug": "tuples-fixed-records",
+    "description": "A tuple is an ordered collection that should not change.",
+    "order": 2,
+    "type": "reading",
+    "filename": "23-tuples-fixed-records.md",
+    "quizFile": "23-tuples-fixed-records.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Dictionaries: Key-Value Data",
+    "slug": "dictionaries-key-value-data",
+    "description": "A dictionary stores data by meaningful keys instead of numeric positions.",
+    "order": 3,
+    "type": "reading",
+    "filename": "24-dictionaries-key-value-data.md",
+    "quizFile": "24-dictionaries-key-value-data.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Sets: Unique Collections",
+    "slug": "sets-unique-collections",
+    "description": "A set stores unique values.",
+    "order": 4,
+    "type": "reading",
+    "filename": "25-sets-unique-collections.md",
+    "quizFile": "25-sets-unique-collections.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  },
+  {
+    "title": "Choosing the Right Data Structure",
+    "slug": "choosing-the-right-data-structure",
+    "description": "Choosing a data structure is a design decision.",
+    "order": 5,
+    "type": "reading",
+    "filename": "26-choosing-the-right-data-structure.md",
+    "quizFile": "26-choosing-the-right-data-structure.quiz.json",
+    "estimatedMinutes": 15,
+    "xpReward": 10,
+    "isPublished": true
+  }
+]
