@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -22,6 +23,8 @@ import {
 
 @Injectable()
 export class EasyRoadmapService {
+  private readonly mode = 'easy' as const;
+
   constructor(
     private readonly challengeLoader: RoadmapChallengeLoaderService,
     private readonly queryService: RoadmapQueryService,
@@ -29,7 +32,7 @@ export class EasyRoadmapService {
     private readonly statusService: RoadmapStatusService,
   ) {}
 
-  async getRoadmap(courseSlug: string) {
+  async getRoadmap(courseSlug: string, userId: string) {
     const course = await this.queryService.findCourseBySlugOrThrow(courseSlug);
     const chapters = await this.queryService.findPublishedChapters(course._id);
     const lessons = await this.queryService.findPublishedLessons(
@@ -38,14 +41,22 @@ export class EasyRoadmapService {
     const lessonsByChapterId = groupBy(lessons, (lesson) =>
       String(lesson.chapterId),
     );
+    const orderedNodeIds = this.getOrderedLessonIds(
+      chapters,
+      lessonsByChapterId,
+    );
+    const statusMap = await this.statusService.getStatusMap(
+      userId,
+      course.slug,
+      this.mode,
+      orderedNodeIds,
+    );
 
-    let globalLessonIndex = 0;
     const responseChapters = chapters.map((chapter, chapterIndex) => {
       const chapterLessons = lessonsByChapterId.get(String(chapter._id)) || [];
       const chapterLabelOrder = chapterIndex + 1;
 
       const nodes = chapterLessons.map((lesson) => {
-        globalLessonIndex++;
         const lessonId = String(lesson._id);
         const chapterId = String(chapter._id);
 
@@ -58,7 +69,7 @@ export class EasyRoadmapService {
           label: `${chapterLabelOrder}.${lesson.order}`,
           title: lesson.title,
           description: lesson.description || '',
-          status: this.statusService.getEasyStatus(globalLessonIndex),
+          status: statusMap.get(lessonId) ?? 'locked',
           xp: lesson.xpReward ?? 0,
           duration: EASY_NODE_DURATION_MINUTES,
           href: `/lesson/${lessonId}`,
@@ -95,16 +106,15 @@ export class EasyRoadmapService {
     };
   }
 
-  async getNodeChallenge(nodeId: string) {
-    const { node, chapter, course, lesson } = await this.getNodeContext(nodeId);
+  async getNodeChallenge(nodeId: string, userId: string) {
+    const { node, chapter, course, lesson } = await this.getNodeContext(
+      nodeId,
+      userId,
+    );
     const challenge = this.findChallenge(course.slug, chapter, lesson);
 
     if (node.status === 'locked') {
-      return {
-        node,
-        challenge: null,
-        message: 'This roadmap node is locked.',
-      };
+      throw new ForbiddenException('This roadmap node is locked.');
     }
 
     if (node.status === 'completed') {
@@ -121,34 +131,51 @@ export class EasyRoadmapService {
     };
   }
 
-  async submitNodeChallenge(nodeId: string, selectedOptionId: string) {
+  async submitNodeChallenge(
+    nodeId: string,
+    selectedOptionId: string,
+    userId: string,
+  ) {
+    const { node, chapter, course, lesson } = await this.getNodeContext(
+      nodeId,
+      userId,
+    );
+    const challenge = this.findChallenge(course.slug, chapter, lesson);
+
+    if (node.status === 'locked') {
+      throw new ForbiddenException('This roadmap node is locked.');
+    }
+
+    if (node.status === 'completed') {
+      return {
+        correct: true,
+        alreadyCompleted: true,
+        message: 'This roadmap node is already completed.',
+        review: this.reviewService.toEasyFallbackReview(challenge, node.id),
+      };
+    }
+
     if (!isChallengeOptionId(selectedOptionId)) {
       throw new BadRequestException(
         'selectedOptionId must be one of A, B, C, or D.',
       );
     }
 
-    const { node, chapter, course, lesson } = await this.getNodeContext(nodeId);
-    const challenge = this.findChallenge(course.slug, chapter, lesson);
-
-    if (node.status === 'locked') {
-      throw new BadRequestException('This roadmap node is locked.');
-    }
-
-    if (node.status === 'completed') {
-      return {
-        message: 'This roadmap node is already completed.',
-        review: this.reviewService.toEasyFallbackReview(challenge, node.id),
-      };
-    }
-
     const correct = selectedOptionId === challenge.correctOptionId;
 
     if (correct) {
+      await this.statusService.markNodeCompleted(
+        userId,
+        course.slug,
+        this.mode,
+        node.id,
+      );
+
       return {
         correct: true,
         message: 'Correct. Nice work.',
         explanation: challenge.explanation,
+        nextNode: await this.getNextNode(course.slug, node.id, userId),
       };
     }
 
@@ -160,7 +187,10 @@ export class EasyRoadmapService {
     };
   }
 
-  async getNodeContext(nodeId: string): Promise<EasyNodeContext> {
+  async getNodeContext(
+    nodeId: string,
+    userId = 'dev-roadmap-user',
+  ): Promise<EasyNodeContext> {
     const lesson = await this.queryService.findEasyLessonOrThrow(nodeId);
     const chapter = await this.queryService.findChapterByIdOrThrow(
       lesson.chapterId,
@@ -182,11 +212,18 @@ export class EasyRoadmapService {
     const lessons = await this.queryService.findPublishedLessons(
       chapters.map((item) => item._id),
     );
-
-    const globalLessonIndex = this.findGlobalLessonIndex(
+    const lessonsByChapterId = groupBy(lessons, (item) =>
+      String(item.chapterId),
+    );
+    const orderedNodeIds = this.getOrderedLessonIds(
       chapters,
-      lessons,
-      String(lesson._id),
+      lessonsByChapterId,
+    );
+    const statusMap = await this.statusService.getStatusMap(
+      userId,
+      course.slug,
+      this.mode,
+      orderedNodeIds,
     );
 
     const lessonId = String(lesson._id);
@@ -199,7 +236,7 @@ export class EasyRoadmapService {
         chapterId,
         label: `${chapterLabelOrder}.${lesson.order}`,
         title: lesson.title,
-        status: this.statusService.getEasyStatus(globalLessonIndex),
+        status: statusMap.get(lessonId) ?? 'locked',
       },
       chapter,
       course,
@@ -243,27 +280,55 @@ export class EasyRoadmapService {
     };
   }
 
-  private findGlobalLessonIndex(
+  private getOrderedLessonIds(
     chapters: LeanChapter[],
-    lessons: LeanLesson[],
-    lessonId: string,
-  ): number {
-    const lessonsByChapterId = groupBy(lessons, (lesson) =>
-      String(lesson.chapterId),
-    );
-    let globalLessonIndex = 0;
+    lessonsByChapterId: Map<string, LeanLesson[]>,
+  ): string[] {
+    const orderedIds: string[] = [];
 
     for (const chapter of chapters) {
       const chapterLessons = lessonsByChapterId.get(String(chapter._id)) || [];
 
       for (const lesson of chapterLessons) {
-        globalLessonIndex++;
-        if (String(lesson._id) === lessonId) {
-          return globalLessonIndex;
-        }
+        orderedIds.push(String(lesson._id));
       }
     }
 
-    return 1;
+    return orderedIds;
+  }
+
+  private async getNextNode(
+    courseSlug: string,
+    nodeId: string,
+    userId: string,
+  ) {
+    const course = await this.queryService.findCourseBySlugOrThrow(courseSlug);
+    const chapters = await this.queryService.findPublishedChapters(course._id);
+    const lessons = await this.queryService.findPublishedLessons(
+      chapters.map((chapter) => chapter._id),
+    );
+    const lessonsByChapterId = groupBy(lessons, (lesson) =>
+      String(lesson.chapterId),
+    );
+    const orderedNodeIds = this.getOrderedLessonIds(
+      chapters,
+      lessonsByChapterId,
+    );
+    const currentIndex = orderedNodeIds.indexOf(nodeId);
+    const nextNodeId = orderedNodeIds[currentIndex + 1];
+
+    if (!nextNodeId) return null;
+
+    const statusMap = await this.statusService.getStatusMap(
+      userId,
+      course.slug,
+      this.mode,
+      orderedNodeIds,
+    );
+
+    return {
+      id: nextNodeId,
+      status: statusMap.get(nextNodeId) ?? 'locked',
+    };
   }
 }

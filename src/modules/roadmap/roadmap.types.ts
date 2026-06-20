@@ -3,8 +3,19 @@ import { Types } from 'mongoose';
 export type RoadmapStatus = 'locked' | 'available' | 'completed';
 export type ChallengeOptionId = 'A' | 'B' | 'C' | 'D';
 export type ChallengePromptType = 'code_mcq' | 'concept_mcq';
+export type RoadmapMode = 'easy' | 'medium' | 'hard';
 export type AdvancedRoadmapMode = 'medium' | 'hard';
-export type AdvancedChallengeType = 'multiple_choice' | 'drag_drop';
+export type AdvancedChallengeType =
+  | 'multiple_choice'
+  | 'drag_drop'
+  | 'code_trace'
+  | 'bug_hunt'
+  | 'choose_better_algorithm'
+  | 'simulation'
+  | 'fill_missing_line'
+  | 'drag_drop_matching'
+  | 'ordering_steps'
+  | 'ranking';
 
 export interface LeanCourse {
   _id: Types.ObjectId;
@@ -108,9 +119,15 @@ export interface AdvancedDragDropChallengeData extends AdvancedBaseChallengeData
   correctDropZoneMap: Record<string, string>;
 }
 
+export interface AdvancedGenericChallengeData extends AdvancedBaseChallengeData {
+  type: Exclude<AdvancedChallengeType, 'multiple_choice' | 'drag_drop'>;
+  [key: string]: unknown;
+}
+
 export type AdvancedChallengeData =
   | AdvancedMultipleChoiceChallengeData
-  | AdvancedDragDropChallengeData;
+  | AdvancedDragDropChallengeData
+  | AdvancedGenericChallengeData;
 
 export interface AdvancedChapterData {
   chapterOrder: number;
@@ -137,4 +154,8 @@ export interface AdvancedNodeContext {
   chapterData: AdvancedChapterData;
   challenge: AdvancedChallengeData;
   globalNodeIndex: number;
+}
+
+export interface RoadmapOrderedNode {
+  id: string;
 }

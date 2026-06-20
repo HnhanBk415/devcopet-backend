@@ -1,0 +1,31 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+import type { RoadmapMode } from '../roadmap.types';
+
+export type RoadmapProgressDocument = HydratedDocument<RoadmapProgress>;
+
+@Schema({ timestamps: true })
+export class RoadmapProgress {
+  @Prop({ required: true, trim: true })
+  userId!: string;
+
+  @Prop({ required: true, trim: true })
+  courseSlug!: string;
+
+  @Prop({ required: true, enum: ['easy', 'medium', 'hard'] })
+  mode!: RoadmapMode;
+
+  @Prop({ required: true, trim: true })
+  nodeId!: string;
+
+  @Prop({ required: true, default: Date.now })
+  completedAt!: Date;
+}
+
+export const RoadmapProgressSchema =
+  SchemaFactory.createForClass(RoadmapProgress);
+
+RoadmapProgressSchema.index(
+  { userId: 1, courseSlug: 1, mode: 1, nodeId: 1 },
+  { unique: true },
+);

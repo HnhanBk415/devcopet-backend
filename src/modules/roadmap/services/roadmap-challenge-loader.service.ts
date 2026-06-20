@@ -54,8 +54,13 @@ export class RoadmapChallengeLoaderService {
     const cached = this.advancedChallengeCache.get(cacheKey);
     if (cached) return cached;
 
+    const targetCourseSlug =
+      mode === 'hard' && courseSlug === 'python-basic'
+        ? 'python-dsa'
+        : courseSlug;
+
     const filePath = this.resolveChallengePath(
-      courseSlug,
+      targetCourseSlug,
       `${mode}-roadmap-challenges.json`,
     );
 
@@ -91,8 +96,13 @@ export class RoadmapChallengeLoaderService {
     courseSlug: string,
     mode: AdvancedRoadmapMode,
   ) {
+    const expectedSlug =
+      mode === 'hard' && courseSlug === 'python-basic'
+        ? 'python-dsa'
+        : courseSlug;
+
     if (
-      challengeFile.courseSlug !== courseSlug ||
+      challengeFile.courseSlug !== expectedSlug ||
       challengeFile.mode !== mode
     ) {
       throw new BadRequestException(
@@ -108,7 +118,19 @@ export class RoadmapChallengeLoaderService {
       }
 
       for (const node of chapter.nodes) {
-        if (node.type !== 'multiple_choice' && node.type !== 'drag_drop') {
+        const validTypes = [
+          'multiple_choice',
+          'drag_drop',
+          'code_trace',
+          'bug_hunt',
+          'choose_better_algorithm',
+          'simulation',
+          'fill_missing_line',
+          'drag_drop_matching',
+          'ordering_steps',
+          'ranking',
+        ];
+        if (!validTypes.includes(node.type)) {
           throw new BadRequestException(
             `Unsupported ${capitalizeMode(mode)} node type in chapter ${chapter.chapterOrder}.`,
           );
