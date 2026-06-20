@@ -3,45 +3,6 @@
   "mode": "hard",
   "chapters": [
     {
-      "chapterOrder": 0,
-      "chapterTitle": "Chapter 0: Introduction + Output/Print in Python",
-      "nodes": [
-        {
-          "order": 1,
-          "label": "H0.1",
-          "type": "multiple_choice",
-          "title": "Nested print() Evaluation",
-          "question": "What is the exact output displayed in the terminal after executing this code?",
-          "codeSnippet": {
-            "language": "python",
-            "code": "print(print(\"Hello\"), print(\"World\"))"
-          },
-          "options": [
-            {
-              "id": "A",
-              "text": "Hello, then World on a new line, and finally None None"
-            },
-            {
-              "id": "B",
-              "text": "Hello World"
-            },
-            {
-              "id": "C",
-              "text": "Hello, then World on a new line, and then an error"
-            },
-            {
-              "id": "D",
-              "text": "SyntaxError: invalid syntax"
-            }
-          ],
-          "correctOptionId": "A",
-          "explanation": "Trong Python, các đối số của hàm được chạy trước từ trái qua phải. Đầu tiên, print('Hello') chạy, hiển thị 'Hello' lên màn hình và trả về giá trị mặc định là None. Tiếp theo, print('World') chạy, hiển thị 'World' và trả về None. Cuối cùng, hàm print(None, None) ngoài cùng chạy và hiển thị 'None None'.",
-          "xp": 120,
-          "estimatedMinutes": 4
-        }
-      ]
-    },
-    {
       "chapterOrder": 1,
       "chapterTitle": "Chapter 1: Algorithm Mindset & Big O",
       "nodes": [
@@ -74,7 +35,7 @@
             }
           ],
           "correctOptionId": "C",
-          "explanation": "Vòng lặp đầu tiên là O(n). Vòng lặp lồng nhau là O(n²). Khi kết hợp, O(n²) là độ phức tạp lớn hơn và chiếm ưu thế, do đó độ phức tạp tổng thể là O(n²).",
+          "explanation": "The first loop is O(n). The nested loop is O(n²). When combined, O(n²) dominates, so the overall time complexity is O(n²).",
           "xp": 120,
           "estimatedMinutes": 3
         },
@@ -110,7 +71,7 @@
             "DROP_ZONE_C": "ON2",
             "DROP_ZONE_D": "OLOGN"
           },
-          "explanation": "Truy cập một phần tử trực tiếp là O(1). Vòng lặp đơn là O(n). Vòng lặp lồng nhau là O(n²). Vòng lặp chia đôi giá trị liên tục là O(log n).",
+          "explanation": "Accessing one item is O(1). A single loop is O(n). A nested loop over the same input size is O(n²). Repeatedly dividing n by 2 is O(log n).",
           "xp": 120,
           "estimatedMinutes": 4
         },
@@ -120,8 +81,11 @@
           "type": "multiple_choice",
           "title": "Duplicate Detection: Brute Force vs Set",
           "question": "You need to check whether a list contains duplicate values. Which solution is more efficient for large input?",
-          "codeSnippet": null,
-          "template": "Option A:\ndef has_duplicate(numbers):\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] == numbers[j]:\n                return True\n    return False\n\nOption B:\ndef has_duplicate(numbers):\n    seen = set()\n    for num in numbers:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",
+          "codeSnippet": {
+            "language": "python",
+            "code": "# Option A\ndef has_duplicate(numbers):\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] == numbers[j]:\n                return True\n    return False\n\n# Option B\ndef has_duplicate(numbers):\n    seen = set()\n    for num in numbers:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False"
+          },
+          "template": null,
           "options": [
             {
               "id": "A",
@@ -141,7 +105,7 @@
             }
           ],
           "correctOptionId": "C",
-          "explanation": "Option A so sánh từng cặp phần tử chạy mất O(n²). Option B duyệt qua danh sách một lần và kiểm tra trong set (O(1) trung bình), tổng thể thuật toán chạy mất O(n).",
+          "explanation": "Option A compares pairs and runs in O(n²). Option B scans once and uses set lookup, which is usually O(1) average, so the whole algorithm is O(n) average time.",
           "xp": 120,
           "estimatedMinutes": 4
         },
@@ -181,7 +145,7 @@
             "D",
             "E"
           ],
-          "explanation": "Khởi tạo tập hợp 'seen'. Với mỗi số, nếu đã có trong 'seen' thì trả về True. Nếu chưa, thêm số đó vào 'seen'. Hết vòng lặp mà không trùng thì trả về False.",
+          "explanation": "The set stores numbers that already appeared. If a number is found in seen, the function can return True immediately. If no duplicate is found after the loop, return False.",
           "xp": 120,
           "estimatedMinutes": 3
         },
@@ -190,9 +154,12 @@
           "label": "H1.5",
           "type": "multiple_choice",
           "title": "First Repeated Number",
-          "question": "You need to return the first number that appears for the second time. Which option is the most efficient for large inputs?",
-          "codeSnippet": null,
-          "template": "Example:\nnumbers = [4, 2, 7, 2, 4] -> Expected output: 2\n\nOption A:\ndef first_repeated(numbers):\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] == numbers[j]:\n                return numbers[i]\n    return None\n\nOption B:\ndef first_repeated(numbers):\n    seen = set()\n    for num in numbers:\n        if num in seen:\n            return num\n        seen.add(num)\n    return None\n\nOption C:\ndef first_repeated(numbers):\n    sorted_numbers = sorted(numbers)\n    for i in range(1, len(sorted_numbers)):\n        if sorted_numbers[i] == sorted_numbers[i - 1]:\n            return sorted_numbers[i]\n    return None",
+          "question": "You need to return the first number that appears for the second time (Example: numbers = [4, 2, 7, 2, 4] -> Expected output: 2). Which option is the most efficient for large inputs?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "# Option A\ndef first_repeated(numbers):\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] == numbers[j]:\n                return numbers[i]\n    return None\n\n# Option B\ndef first_repeated(numbers):\n    seen = set()\n    for num in numbers:\n        if num in seen:\n            return num\n        seen.add(num)\n    return None\n\n# Option C\ndef first_repeated(numbers):\n    sorted_numbers = sorted(numbers)\n    for i in range(1, len(sorted_numbers)):\n        if sorted_numbers[i] == sorted_numbers[i - 1]:\n            return sorted_numbers[i]\n    return None"
+          },
+          "template": null,
           "options": [
             {
               "id": "A",
@@ -212,7 +179,940 @@
             }
           ],
           "correctOptionId": "B",
-          "explanation": "Option B sử dụng set giúp tìm kiếm phần tử trùng với độ phức tạp thời gian O(n) và giữ nguyên thứ tự xuất hiện gốc từ trái qua phải. Option A tốn O(n²), Option C tốn O(n log n).",
+          "explanation": "Option B is O(n) average time and returns the first value that repeats while scanning left to right. Option A is O(n²). Option C sorts first, usually O(n log n), and can lose the original scan order meaning.",
+          "xp": 140,
+          "estimatedMinutes": 5
+        }
+      ]
+    },
+    {
+      "chapterOrder": 2,
+      "chapterTitle": "Chapter 2: Array, String & Hash Table",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "H2.1",
+          "type": "code_trace",
+          "title": "Code Trace: List Mutation Trap",
+          "question": "What is printed by this code?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "nums = [2, 4, 6, 8]\n\nnums.append(10)\nnums.pop(1)\nnums[2] = nums[0] + nums[-1]\n\nprint(nums)"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "[2, 4, 12, 8, 10]"
+            },
+            {
+              "id": "B",
+              "text": "[2, 6, 12, 10]"
+            },
+            {
+              "id": "C",
+              "text": "[2, 6, 12, 8]"
+            },
+            {
+              "id": "D",
+              "text": "[2, 6, 8, 12]"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "Start with [2, 4, 6, 8]. After append(10), the list becomes [2, 4, 6, 8, 10]. After pop(1), the value 4 is removed, so the list becomes [2, 6, 8, 10]. Then nums[2] = nums[0] + nums[-1] means nums[2] = 2 + 10, so the final list is [2, 6, 12, 10].",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 2,
+          "label": "H2.2",
+          "type": "bug_hunt",
+          "title": "Bug Hunt: Two Sum Same Index Bug",
+          "question": "This function tries to solve Two Sum. For nums = [3] and target = 6, the function incorrectly returns [0, 0]. What is the bug?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def two_sum(nums, target):\n    seen = {}\n\n    for i, num in enumerate(nums):\n        seen[num] = i\n\n        need = target - num\n\n        if need in seen:\n            return [seen[need], i]\n\n    return []"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "A dictionary cannot store numbers"
+            },
+            {
+              "id": "B",
+              "text": "The code stores the current number before checking the complement"
+            },
+            {
+              "id": "C",
+              "text": "target - num should be num - target"
+            },
+            {
+              "id": "D",
+              "text": "enumerate() cannot be used here"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The function stores the current number before checking the complement. For nums = [3] and target = 6, need is also 3. Since 3 was just stored in seen, the function returns the same index twice. The correct logic should check first, then store the current number.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 3,
+          "label": "H2.3",
+          "type": "fill_missing_line",
+          "title": "Fill Missing Line: First Unique Character",
+          "question": "Fill the missing line to return the index of the first non-repeating character.",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def first_unique_char(s):\n    count = {}\n\n    for ch in s:\n        count[ch] = count.get(ch, 0) + 1\n\n    for i, ch in enumerate(s):\n        if ______:\n            return i\n\n    return -1"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "count[ch] == 1"
+            },
+            {
+              "id": "B",
+              "text": "count[ch] > 1"
+            },
+            {
+              "id": "C",
+              "text": "ch not in count"
+            },
+            {
+              "id": "D",
+              "text": "i == count[ch]"
+            }
+          ],
+          "correctOptionId": "A",
+          "explanation": "The first loop counts how many times each character appears. The second loop scans the string from left to right and returns the first character whose count is exactly 1.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 4,
+          "label": "H2.4",
+          "type": "fill_missing_line",
+          "title": "Fill Missing Line: Longest Substring Without Repeating Characters",
+          "question": "Fill the missing line to solve the problem: Return the length of the longest substring without repeating characters.",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def length_of_longest_substring(s):\n    last_seen = {}\n    left = 0\n    best = 0\n\n    for right, ch in enumerate(s):\n        if ch in last_seen and last_seen[ch] >= left:\n            ______\n\n        last_seen[ch] = right\n        best = max(best, right - left + 1)\n\n    return best"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "left = last_seen[ch] + 1"
+            },
+            {
+              "id": "B",
+              "text": "right = last_seen[ch] + 1"
+            },
+            {
+              "id": "C",
+              "text": "left += 1"
+            },
+            {
+              "id": "D",
+              "text": "best = 0"
+            }
+          ],
+          "correctOptionId": "A",
+          "explanation": "When a repeated character appears inside the current window, move left past the previous occurrence of that character. The condition last_seen[ch] >= left prevents old repeated characters outside the current window from moving left incorrectly.",
+          "xp": 120,
+          "estimatedMinutes": 5
+        },
+        {
+          "order": 5,
+          "label": "H2.5",
+          "type": "ranking",
+          "title": "Ranking: Two Sum Solutions",
+          "question": "You need to solve this problem: Given a list of numbers and a target, return the indices of two numbers that add up to the target. Rank these approaches from best to worst for large input.",
+          "codeSnippet": null,
+          "poolItems": [
+            {
+              "id": "A",
+              "text": "Use a dictionary to store previous numbers and their indices while scanning once"
+            },
+            {
+              "id": "B",
+              "text": "Use nested loops to check every pair"
+            },
+            {
+              "id": "C",
+              "text": "Sort the numbers first, then use two pointers without preserving original indices"
+            },
+            {
+              "id": "D",
+              "text": "Hard-code checks for the first few positions only"
+            }
+          ],
+          "correctOrderedIds": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "explanation": "A is best because it is correct, preserves original indices, and usually runs in O(n) time. B is correct but slow because it checks every pair. C can be efficient for finding values, but without preserving original indices it may fail the actual problem requirement. D is not a reliable algorithm.",
+          "xp": 140,
+          "estimatedMinutes": 5
+        }
+      ]
+    },
+    {
+      "chapterOrder": 3,
+      "chapterTitle": "Chapter 3: Stack, Queue & Linked List",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "H3.1",
+          "type": "drag_drop",
+          "title": "Stack vs Queue Operations",
+          "question": "Consider the operations: Add A, Add B, Add C, Remove, Add D. Fill the blanks for both stack and queue behavior.",
+          "codeSnippet": null,
+          "template": "Consider the operations: Add A, Add B, Add C, Remove, Add D. Fill the blanks for both stack and queue behavior.\nstack_remove: A stack uses Add = Push and Remove = _____.\nstack_final_1: Bottom → _____, _____, _____ ← Top [slot 1]\nstack_final_2: Bottom → _____, _____, _____ ← Top [slot 2]\nstack_final_3: Bottom → _____, _____, _____ ← Top [slot 3]\nqueue_remove: A queue uses Add = Enqueue and Remove = _____.\nqueue_final_1: Front → _____, _____, _____ ← Back [slot 1]\nqueue_final_2: Front → _____, _____, _____ ← Back [slot 2]\nqueue_final_3: Front → _____, _____, _____ ← Back [slot 3]",
+          "poolItems": [
+            {
+              "id": "POP",
+              "text": "Pop"
+            },
+            {
+              "id": "DEQUEUE",
+              "text": "Dequeue"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            }
+          ],
+          "correctDropZoneMap": {
+            "stack_remove": "POP",
+            "stack_final_1": "A",
+            "stack_final_2": "B",
+            "stack_final_3": "D",
+            "queue_remove": "DEQUEUE",
+            "queue_final_1": "B",
+            "queue_final_2": "C",
+            "queue_final_3": "D"
+          },
+          "explanation": "A stack removes the newest item, so C is removed and the final stack is A, B, D. A queue removes the oldest item, so A is removed and the final queue is B, C, D.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 2,
+          "label": "H3.2",
+          "type": "multiple_choice",
+          "title": "Insert Node After B",
+          "question": "You have this linked list: A → B → D. You want to insert node C between B and D. Which code correctly inserts C after B?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "current = node_B\nnew_node = Node(\"C\")"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "current.next = new_node\nnew_node.next = current.next"
+            },
+            {
+              "id": "B",
+              "text": "new_node.next = current.next\ncurrent.next = new_node"
+            },
+            {
+              "id": "C",
+              "text": "new_node = current.next\ncurrent.next = new_node"
+            },
+            {
+              "id": "D",
+              "text": "current = new_node\nnew_node.next = current"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "First connect C to the old next node D with new_node.next = current.next. Then connect B to C with current.next = new_node. The order matters so the link to D is not lost.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 3,
+          "label": "H3.3",
+          "type": "drag_drop",
+          "title": "Quest System: Queue vs Stack",
+          "question": "Players continuously receive new quests, and completed quests should be removed from the front in the same order they were assigned. Drag the correct answer into each cell.",
+          "codeSnippet": null,
+          "template": "Players continuously receive new quests, and completed quests should be removed from the front in the same order they were assigned. Drag the correct answer into each cell.\nThe system must efficiently add a new quest to the end and remove the oldest quest from the front.\nQueue Example:\nfrom collections import deque\n\nquests = deque()\n\nquests.append(\"Find the Sword\")\nquests.append(\"Defeat the Dragon\")\n\ncompleted = quests.popleft()\n\nStack Example:\nstack = []\n\nstack.append(\"Find the Sword\")\nstack.append(\"Defeat the Dragon\")\n\ncompleted = stack.pop()\n\nColumns: Operation, Queue, Stack\nadd_quest_queue: Add quest / Queue\nadd_quest_stack: Add quest / Stack\nremove_oldest_quest_queue: Remove oldest quest / Queue\nremove_oldest_quest_stack: Remove oldest quest / Stack\nremove_newest_quest_queue: Remove newest quest / Queue\nremove_newest_quest_stack: Remove newest quest / Stack",
+          "poolItems": [
+            {
+              "id": "O1_A",
+              "text": "O(1)"
+            },
+            {
+              "id": "O1_B",
+              "text": "O(1)"
+            },
+            {
+              "id": "O1_C",
+              "text": "O(1)"
+            },
+            {
+              "id": "O1_D",
+              "text": "O(1)"
+            },
+            {
+              "id": "NOT_SUPPORTED",
+              "text": "Not supported efficiently"
+            },
+            {
+              "id": "NOT_GOAL",
+              "text": "Not the goal"
+            }
+          ],
+          "correctDropZoneMap": {
+            "add_quest_queue": "O1_A",
+            "add_quest_stack": "O1_B",
+            "remove_oldest_quest_queue": "O1_C",
+            "remove_oldest_quest_stack": "NOT_SUPPORTED",
+            "remove_newest_quest_queue": "NOT_GOAL",
+            "remove_newest_quest_stack": "O1_D"
+          },
+          "explanation": "A queue with deque supports append and popleft in O(1), which matches removing the oldest quest. A stack supports append and pop in O(1), which removes the newest quest, not the oldest.",
+          "xp": 120,
+          "estimatedMinutes": 5
+        },
+        {
+          "order": 4,
+          "label": "H3.4",
+          "type": "bug_hunt",
+          "title": "Bug Hunt: Remove Nth Node From End",
+          "question": "The code works for many cases, but it has a hidden bug. Which test case exposes the bug?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def remove_nth_from_end(head, n):\n    fast = head\n    slow = head\n    prev = None\n\n    for _ in range(n):\n        fast = fast.next\n\n    while fast:\n        fast = fast.next\n        prev = slow\n        slow = slow.next\n\n    prev.next = slow.next\n\n    return head"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "Input: 10 → 20 → 30 → 40 → None, n = 2"
+            },
+            {
+              "id": "B",
+              "text": "Input: 10 → 20 → 30 → None, n = 3"
+            },
+            {
+              "id": "C",
+              "text": "Input: 10 → 20 → 30 → None, n = 1"
+            },
+            {
+              "id": "D",
+              "text": "Input: 10 → 20 → 30 → 40 → 50 → None, n = 2"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "When n equals the length of the list, the node to remove is the head. After moving fast n steps, fast is None, so the while loop does not run and prev stays None. Then prev.next causes an error. A complete solution should handle head removal, often with a dummy node.",
+          "xp": 140,
+          "estimatedMinutes": 5
+        },
+        {
+          "order": 5,
+          "label": "H3.5",
+          "type": "drag_drop",
+          "title": "Mini LeetCode: Valid Parentheses",
+          "question": "Complete the function. Return True if every opening parenthesis ( has a matching closing parenthesis ) in the correct order. Return False otherwise.",
+          "codeSnippet": null,
+          "template": "Complete the function. Return True if every opening parenthesis ( has a matching closing parenthesis ) in the correct order. Return False otherwise.\nInput: \"()()\" -> True\nInput: \"(())\" -> True\nInput: \"(()\" -> False\nInput: \")(\" -> False\n\ndef is_valid_parentheses(s):\n    stack = []\n\n    for char in s:\n        if char == \"(\":\n            __________\n        else:\n            if __________:\n                return False\n            __________\n\n    return __________",
+          "poolItems": [
+            {
+              "id": "A",
+              "text": "stack.append(char)"
+            },
+            {
+              "id": "B",
+              "text": "not stack"
+            },
+            {
+              "id": "C",
+              "text": "stack.pop()"
+            },
+            {
+              "id": "D",
+              "text": "len(stack) == 0"
+            },
+            {
+              "id": "E",
+              "text": "char == \")\""
+            },
+            {
+              "id": "F",
+              "text": "stack[-1]"
+            }
+          ],
+          "correctDropZoneMap": {
+            "blank_1": "A",
+            "blank_2": "B",
+            "blank_3": "C",
+            "blank_4": "D"
+          },
+          "explanation": "Push opening parentheses into the stack. When a closing parenthesis appears, there must be an opening parenthesis to match it. At the end, the stack must be empty.",
+          "xp": 140,
+          "estimatedMinutes": 5
+        }
+      ]
+    },
+    {
+      "chapterOrder": 4,
+      "chapterTitle": "Chapter 4: Recursion, Searching & Sorting",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "H4.1",
+          "type": "code_trace",
+          "title": "Code Trace: Recursive Call Stack",
+          "question": "What does this code print?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def countdown(n):\n    if n == 0:\n        print(\"Go!\")\n        return\n\n    print(n)\n    countdown(n - 1)\n\ncountdown(3)"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "3\n2\n1\nGo!"
+            },
+            {
+              "id": "B",
+              "text": "Go!\n1\n2\n3"
+            },
+            {
+              "id": "C",
+              "text": "3\n2\n1\n0"
+            },
+            {
+              "id": "D",
+              "text": "1\n2\n3\nGo!"
+            }
+          ],
+          "correctOptionId": "A",
+          "explanation": "The function prints n first, then calls itself with n - 1. countdown(3) prints 3, countdown(2) prints 2, countdown(1) prints 1, and countdown(0) prints Go! and stops.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 2,
+          "label": "H4.2",
+          "type": "bug_hunt",
+          "title": "Bug Hunt: Missing Base Case",
+          "question": "This function tries to calculate the sum from 1 to n. For sum_to_n(3), the function never stops correctly. What is the bug?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def sum_to_n(n):\n    return n + sum_to_n(n - 1)"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "The function should use a dictionary"
+            },
+            {
+              "id": "B",
+              "text": "The function is missing a base case"
+            },
+            {
+              "id": "C",
+              "text": "n - 1 should be n + 1"
+            },
+            {
+              "id": "D",
+              "text": "Recursion cannot return numbers"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "The function keeps calling itself with smaller and smaller values: 3, 2, 1, 0, -1, -2, and so on. There is no stopping condition. A recursive function needs a base case.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 3,
+          "label": "H4.3",
+          "type": "fill_missing_line",
+          "title": "Fill Missing Line: Binary Search",
+          "question": "Fill the missing line to make binary search work correctly.",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def binary_search(nums, target):\n    left = 0\n    right = len(nums) - 1\n\n    while left <= right:\n        mid = (left + right) // 2\n\n        if nums[mid] == target:\n            return mid\n\n        if nums[mid] < target:\n            ______\n        else:\n            right = mid - 1\n\n    return -1"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "left = mid + 1"
+            },
+            {
+              "id": "B",
+              "text": "left = mid - 1"
+            },
+            {
+              "id": "C",
+              "text": "right = mid + 1"
+            },
+            {
+              "id": "D",
+              "text": "mid = left + 1"
+            }
+          ],
+          "correctOptionId": "A",
+          "explanation": "If nums[mid] < target, the target must be on the right side of mid. So we move the left pointer to mid + 1, removing the left half from the search range.",
+          "xp": 130,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 4,
+          "label": "H4.4",
+          "type": "choose_better_algorithm",
+          "title": "Choose Better Algorithm: Linear Search vs Binary Search",
+          "question": "You need to search for a number in a sorted list (nums = [1, 3, 5, 7, 9, 11, 13, 15], target = 13). Which approach is better for very large sorted input?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "# Option A: Linear Search\ndef search(nums, target):\n    for i, num in enumerate(nums):\n        if num == target:\n            return i\n    return -1\n\n# Option B: Binary Search\ndef search(nums, target):\n    left = 0\n    right = len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "Option A, because it checks values in order"
+            },
+            {
+              "id": "B",
+              "text": "Option B, because it uses sorted order to cut the search range in half"
+            },
+            {
+              "id": "C",
+              "text": "Both are always O(n)"
+            },
+            {
+              "id": "D",
+              "text": "Option B only works on unsorted lists"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "Option A is linear search and may check every item, so it is O(n). Option B is binary search and repeatedly cuts the search range in half, so it is O(log n). Binary search is better for large sorted lists.",
+          "xp": 130,
+          "estimatedMinutes": 5
+        },
+        {
+          "order": 5,
+          "label": "H4.5",
+          "type": "ranking",
+          "title": "Ranking: Sorting and Searching Strategies",
+          "question": "You need to answer many search queries on the same list of numbers. The list is not sorted at first. Rank these approaches from best to worst for many repeated searches.",
+          "codeSnippet": null,
+          "poolItems": [
+            {
+              "id": "A",
+              "text": "Sort the list once, then use binary search for each query"
+            },
+            {
+              "id": "B",
+              "text": "Use linear search for every query"
+            },
+            {
+              "id": "C",
+              "text": "Use nested loops for every query"
+            },
+            {
+              "id": "D",
+              "text": "Randomly guess indexes until the target is found"
+            }
+          ],
+          "correctOrderedIds": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "explanation": "A is best for many repeated searches because sorting once costs O(n log n), then each search costs only O(log n). B works, but each query costs O(n). C is worse because nested loops are unnecessary. D is not a reliable algorithm.",
+          "xp": 140,
+          "estimatedMinutes": 5
+        }
+      ]
+    },
+    {
+      "chapterOrder": 5,
+      "chapterTitle": "Chapter 5: Tree, BST & Heap",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "H5.1",
+          "type": "drag_drop",
+          "title": "Tree Detective: Identify Node Roles",
+          "question": "Look at the binary tree and drag each label to the correct answer.",
+          "codeSnippet": null,
+          "template": "Look at this binary tree:\n        A\n       / \\\n      B   C\n     / \\   \\\n    D   E   F\n\nDrag each label to the correct answer.\nROOT: Root node\nLEAF: Leaf nodes\nPARENT_D: Parent of D\nCHILDREN_B: Children of B\nRIGHT_C: Right child of C",
+          "poolItems": [
+            {
+              "id": "A_NODE",
+              "text": "A"
+            },
+            {
+              "id": "LEAVES",
+              "text": "D, E, F"
+            },
+            {
+              "id": "B_NODE",
+              "text": "B"
+            },
+            {
+              "id": "D_E",
+              "text": "D and E"
+            },
+            {
+              "id": "F_NODE",
+              "text": "F"
+            }
+          ],
+          "correctDropZoneMap": {
+            "ROOT": "A_NODE",
+            "LEAF": "LEAVES",
+            "PARENT_D": "B_NODE",
+            "CHILDREN_B": "D_E",
+            "RIGHT_C": "F_NODE"
+          },
+          "explanation": "A is the root. D, E, and F are leaves because they have no children. B is the parent of D and E. F is the right child of C.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 2,
+          "label": "H5.2",
+          "type": "multiple_choice",
+          "title": "BFS Visit Order",
+          "question": "You are doing BFS on this tree. BFS visits nodes level by level. What is the correct BFS order?",
+          "codeSnippet": null,
+          "template": "        A\n       / \\\n      B   C\n     /   / \\\n    D   E   F",
+          "options": [
+            {
+              "id": "A",
+              "text": "A → B → D → C → E → F"
+            },
+            {
+              "id": "B",
+              "text": "A → B → C → D → E → F"
+            },
+            {
+              "id": "C",
+              "text": "D → B → A → C → E → F"
+            },
+            {
+              "id": "D",
+              "text": "A → C → F → E → B → D"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "BFS uses a queue and visits level by level. First A, then B and C, then D, E, and F.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 3,
+          "label": "H5.3",
+          "type": "drag_drop",
+          "title": "Min-Heap Pop Order",
+          "question": "If we keep popping values from the heap, arrange the values in the correct order.",
+          "codeSnippet": null,
+          "template": "You have this min-heap:\n        2\n       / \\\n      5   3\n     / \\\n    9   8\n\nA min-heap follows this rule: The smallest value comes out first.\nIf we keep popping values from the heap, arrange the values in the correct order.\nPlace one value into each position: position_1, position_2, position_3, position_4, position_5.",
+          "poolItems": [
+            {
+              "id": "N2",
+              "text": "2"
+            },
+            {
+              "id": "N3",
+              "text": "3"
+            },
+            {
+              "id": "N5",
+              "text": "5"
+            },
+            {
+              "id": "N8",
+              "text": "8"
+            },
+            {
+              "id": "N9",
+              "text": "9"
+            }
+          ],
+          "correctDropZoneMap": {
+            "position_1": "N2",
+            "position_2": "N3",
+            "position_3": "N5",
+            "position_4": "N8",
+            "position_5": "N9"
+          },
+          "explanation": "A min-heap always pops the smallest remaining value first. The values come out in ascending order: 2, 3, 5, 8, 9.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 4,
+          "label": "H5.4",
+          "type": "bug_hunt",
+          "title": "Bug Hunt: Priority Queue Without Heap Pop",
+          "question": "A task manager should always process the task with the smallest priority number first. What is the mistake in the code?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "tasks = []\n\ntasks.append((3, \"Clean UI\"))\ntasks.append((1, \"Fix bug\"))\ntasks.append((2, \"Write docs\"))\n\nwhile tasks:\n    priority, task = tasks.pop(0)\n    print(task)"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "append() cannot store tuples in a list."
+            },
+            {
+              "id": "B",
+              "text": "pop(0) removes items by arrival order, not by smallest priority."
+            },
+            {
+              "id": "C",
+              "text": "The task names must be numbers."
+            },
+            {
+              "id": "D",
+              "text": "The priority values should start from 0."
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "tasks.pop(0) removes the first inserted item, so it behaves like a normal queue. A priority queue should remove the item with the smallest priority, which can be done with heapq.heappush and heapq.heappop.",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 5,
+          "label": "H5.5",
+          "type": "drag_drop",
+          "title": "Mini LeetCode: Maximum Depth of Binary Tree",
+          "question": "Complete the function. Given the root of a binary tree, return its maximum depth.",
+          "codeSnippet": null,
+          "template": "Complete the function. Given the root of a binary tree, return its maximum depth.\n\nExample Tree:\n        3\n       / \\\n      9   20\n         /  \\\n        15   7\n\nExpected Output: 3\n\nCode:\ndef max_depth(root):\n    if root is None:\n        __________\n\n    left_depth = __________\n    right_depth = __________\n\n    return __________",
+          "poolItems": [
+            {
+              "id": "A",
+              "text": "0"
+            },
+            {
+              "id": "B",
+              "text": "max_depth(root.left)"
+            },
+            {
+              "id": "C",
+              "text": "max_depth(root.right)"
+            },
+            {
+              "id": "D",
+              "text": "1 + max(left_depth, right_depth)"
+            },
+            {
+              "id": "E",
+              "text": "root.val"
+            },
+            {
+              "id": "F",
+              "text": "left_depth + right_depth"
+            }
+          ],
+          "correctDropZoneMap": {
+            "blank_1": "A",
+            "blank_2": "B",
+            "blank_3": "C",
+            "blank_4": "D"
+          },
+          "explanation": "An empty tree has depth 0. For each node, compute the depth of the left and right subtrees, take the larger one, and add 1 for the current node.",
+          "xp": 140,
+          "estimatedMinutes": 5
+        }
+      ]
+    },
+    {
+      "chapterOrder": 6,
+      "chapterTitle": "Chapter 6: Graph",
+      "nodes": [
+        {
+          "order": 1,
+          "label": "H6.1",
+          "type": "choose_better_algorithm",
+          "title": "Choose Representation: Sparse Graph",
+          "question": "A social network graph has 10,000 users and 20,000 friendship connections. Most users are connected to only a few other users. Which graph representation is usually better for memory?",
+          "codeSnippet": null,
+          "options": [
+            {
+              "id": "A",
+              "text": "Adjacency matrix, because it stores every possible connection"
+            },
+            {
+              "id": "B",
+              "text": "Adjacency list, because it stores only existing connections"
+            },
+            {
+              "id": "C",
+              "text": "A stack, because graphs always need LIFO behavior"
+            },
+            {
+              "id": "D",
+              "text": "A sorted string of user names"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "This is a sparse graph because the number of edges is much smaller than the maximum possible number of edges. An adjacency matrix for 10,000 users needs space for 10,000 × 10,000 possible connections. An adjacency list stores only the existing edges, so it is usually much more memory efficient for sparse graphs. Space Complexity: Adjacency matrix: O(V²), Adjacency list: O(V + E).",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 2,
+          "label": "H6.2",
+          "type": "multiple_choice",
+          "title": "BFS Simulation: Shortest Distance",
+          "question": "Starting from A, what is the shortest number of edges needed to reach F?",
+          "codeSnippet": null,
+          "template": "Given this unweighted graph:\nA: B, C\nB: D\nC: E\nD: F\nE: F\nF:",
+          "options": [
+            {
+              "id": "A",
+              "text": "1"
+            },
+            {
+              "id": "B",
+              "text": "2"
+            },
+            {
+              "id": "C",
+              "text": "3"
+            },
+            {
+              "id": "D",
+              "text": "4"
+            }
+          ],
+          "correctOptionId": "C",
+          "explanation": "BFS explores level by level. Starting from A, the levels are: Distance 0: A; Distance 1: B, C; Distance 2: D, E; Distance 3: F. So the shortest path length from A to F is 3. Possible shortest paths: A → B → D → F or A → C → E → F. Time Complexity: O(V + E), Space Complexity: O(V).",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 3,
+          "label": "H6.3",
+          "type": "multiple_choice",
+          "title": "DFS Trace: Visit Order",
+          "question": "Starting from A, assuming neighbors are visited from left to right, what is a valid DFS order?",
+          "codeSnippet": null,
+          "template": "Given this graph:\nA: B, C\nB: D, E\nC: F\nD:\nE:\nF:",
+          "options": [
+            {
+              "id": "A",
+              "text": "A, B, D, E, C, F"
+            },
+            {
+              "id": "B",
+              "text": "A, B, C, D, E, F"
+            },
+            {
+              "id": "C",
+              "text": "A, C, F, B, D, E"
+            },
+            {
+              "id": "D",
+              "text": "D, E, B, F, C, A"
+            }
+          ],
+          "correctOptionId": "A",
+          "explanation": "DFS goes as deep as possible before backtracking. Starting from A, we visit A, then move to B, then to B's first neighbor D. We backtrack to B and visit E. We backtrack all the way to A and visit C, and then C's neighbor F. So the valid DFS order is: A, B, D, E, C, F. Time Complexity: O(V + E), Space Complexity: O(V).",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 4,
+          "label": "H6.4",
+          "type": "bug_hunt",
+          "title": "Bug Hunt: Missing Visited Set",
+          "question": "This DFS function is used on a graph that may contain cycles (like A -> B -> C -> A). What is the main problem?",
+          "codeSnippet": {
+            "language": "python",
+            "code": "def dfs(node):\n    print(node)\n\n    for neighbor in graph[node]:\n        dfs(neighbor)"
+          },
+          "options": [
+            {
+              "id": "A",
+              "text": "DFS cannot be used on graphs"
+            },
+            {
+              "id": "B",
+              "text": "The function may recurse forever because there is no visited set"
+            },
+            {
+              "id": "C",
+              "text": "The graph must be sorted first"
+            },
+            {
+              "id": "D",
+              "text": "The function should use binary search"
+            }
+          ],
+          "correctOptionId": "B",
+          "explanation": "Without a visited set, DFS keeps revisiting the same nodes in a cycle (A → B → C → A) forever, leading to infinite recursion. A safer version should pass a visited set and return early if a node has already been visited. Time Complexity: O(V + E) with a visited set, Space Complexity: O(V).",
+          "xp": 120,
+          "estimatedMinutes": 4
+        },
+        {
+          "order": 5,
+          "label": "H6.5",
+          "type": "ordering_steps",
+          "title": "Ordering Steps: Count Connected Components",
+          "question": "Arrange the steps to count the number of connected components in an undirected graph.",
+          "codeSnippet": null,
+          "poolItems": [
+            {
+              "id": "A",
+              "text": "Create an empty visited set"
+            },
+            {
+              "id": "B",
+              "text": "Initialize components = 0"
+            },
+            {
+              "id": "C",
+              "text": "Loop through every node in the graph"
+            },
+            {
+              "id": "D",
+              "text": "If the node is not visited, start BFS or DFS from that node"
+            },
+            {
+              "id": "E",
+              "text": "Mark all reachable nodes as visited during the traversal"
+            },
+            {
+              "id": "F",
+              "text": "Increase components by 1 for each new traversal"
+            },
+            {
+              "id": "G",
+              "text": "Return components"
+            }
+          ],
+          "correctOrderedIds": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "F",
+            "E",
+            "G"
+          ],
+          "explanation": "First, create a visited set (A) and count variable (B). Loop through every node (C). If a node hasn't been visited (D), it indicates a new connected component, so increment the component count (F) and perform BFS/DFS to traverse and mark all reachable nodes as visited (E). Finally, return the count (G). Time Complexity: O(V + E), Space Complexity: O(V).",
           "xp": 140,
           "estimatedMinutes": 5
         }
