@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "Which file extension is commonly used for Python files?",
+      "question": "Which file extension is commonly used for Python files?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "A student installed Python on Windows but forgot to check Add Python to PATH. What may happen when they run python hello.py in Command Prompt?",
+      "question": "A student installed Python on Windows but forgot to check Add Python to PATH. What may happen when they run python hello.py in Command Prompt?",
       "options": [
         {
           "id": "a",

@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of else for Alternative Paths?",
+      "question": "What is the main idea of else for Alternative Paths?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "score = 55\nif score >= 70:\n    print(\"Passed\")\nelse:\n    print(\"Keep trying\")",
       "options": [
         {

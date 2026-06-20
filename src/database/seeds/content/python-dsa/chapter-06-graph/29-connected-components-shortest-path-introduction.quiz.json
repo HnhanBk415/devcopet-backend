@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is a connected component?",
+      "question": "What is a connected component?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "Which algorithm is commonly used to find the shortest path distance in an unweighted graph?",
+      "question": "Which algorithm is commonly used to find the shortest path distance in an unweighted graph?",
       "options": [
         {
           "id": "a",

@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Searching and Checking Strings?",
+      "question": "What is the main idea of Searching and Checking Strings?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "email = \"nova@example.com\"\nprint(\"@\" in email)\nprint(email.endswith(\".com\"))",
       "options": [
         {

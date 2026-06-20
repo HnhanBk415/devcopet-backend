@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of String Indexing and Slicing?",
+      "question": "What is the main idea of String Indexing and Slicing?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "word = \"Python\"\nprint(word[0])\nprint(word[1:4])",
       "options": [
         {

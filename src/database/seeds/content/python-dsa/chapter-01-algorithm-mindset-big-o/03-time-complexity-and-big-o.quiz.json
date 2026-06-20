@@ -6,7 +6,6 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "codeSnippet": "",
       "options": [
         {
           "id": "a",
@@ -33,11 +32,11 @@
       "explanation": "Big O describes how the number of operations grows when the input size grows.",
       "difficulty": "easy",
       "points": 1,
-      "tags": []
+      "tags": [],
+      "question": "What does Big O notation describe?"
     },
     {
       "type": "multiple_choice",
-      "codeSnippet": "",
       "options": [
         {
           "id": "a",
@@ -64,7 +63,8 @@
       "explanation": "A loop that visits every item once grows linearly with the input size, so it is O(n).",
       "difficulty": "easy",
       "points": 1,
-      "tags": []
+      "tags": [],
+      "question": "What is the time complexity of a loop that visits every item in a collection once?"
     }
   ],
   "title": "Time Complexity and Big O Quiz"

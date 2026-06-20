@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is recursion?",
+      "question": "What is recursion?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "def countdown(n):\n    if n == 0:\n        print(\"Done\")\n        return\n    print(n)\n    countdown(n - 1)\n\ncountdown(2)",
       "options": [
         {

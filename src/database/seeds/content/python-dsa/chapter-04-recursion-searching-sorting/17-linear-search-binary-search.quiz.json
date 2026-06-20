@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What condition must be true before using binary search?",
+      "question": "What condition must be true before using binary search?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "def linear_search(numbers, target):\n    for i in range(len(numbers)):\n        if numbers[i] == target:\n            return i\n    return -1\n\nprint(linear_search([4, 8, 2, 9, 5], 9))",
       "options": [
         {

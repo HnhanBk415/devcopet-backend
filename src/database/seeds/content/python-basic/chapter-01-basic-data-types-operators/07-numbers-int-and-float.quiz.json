@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Numbers: int and float?",
+      "question": "What is the main idea of Numbers: int and float?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "coins = 25\nprice = 3.5\ntotal = coins + price\nprint(total)",
       "options": [
         {

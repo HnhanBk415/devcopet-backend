@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What does sorting do?",
+      "question": "What does sorting do?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "numbers = [3, 1, 2]\nnumbers.sort()\nprint(numbers)",
       "options": [
         {

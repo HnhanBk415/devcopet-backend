@@ -1,4 +1,5 @@
-﻿import {
+import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -26,8 +27,9 @@ export class LessonsService {
   ) {}
 
   async findByChapterId(chapterId: string, userId: string) {
+    const chapterObjectId = this.toObjectId(chapterId, 'chapterId');
     const chapter = await this.chapterModel
-      .findOne({ _id: chapterId, isPublished: true })
+      .findOne({ _id: chapterObjectId, isPublished: true })
       .lean<LeanChapter>()
       .exec();
 
@@ -67,8 +69,9 @@ export class LessonsService {
   }
 
   async assertLessonUnlockedForUser(lessonId: string, userId: string) {
+    const lessonObjectId = this.toObjectId(lessonId, 'lessonId');
     const lesson = await this.lessonModel
-      .findOne({ _id: lessonId, isPublished: true })
+      .findOne({ _id: lessonObjectId, isPublished: true })
       .lean<LeanLesson>()
       .exec();
 
@@ -160,6 +163,14 @@ export class LessonsService {
     }
 
     return groups;
+  }
+
+  private toObjectId(value: string, fieldName: string) {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId.`);
+    }
+
+    return new Types.ObjectId(value);
   }
 
   private toLessonListItem(lesson: LeanLesson, status: LessonStatus) {

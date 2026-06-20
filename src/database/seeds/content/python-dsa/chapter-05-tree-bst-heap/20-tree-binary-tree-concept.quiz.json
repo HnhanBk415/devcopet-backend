@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "In a tree, what is the root?",
+      "question": "In a tree, what is the root?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "class TreeNode:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\nroot = TreeNode(\"A\")\nroot.left = TreeNode(\"B\")\nroot.right = TreeNode(\"C\")\n\nprint(root.left.value)",
       "options": [
         {

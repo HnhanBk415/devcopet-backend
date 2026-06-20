@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of break and continue?",
+      "question": "What is the main idea of break and continue?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "for number in range(1, 6):\n    if number == 3:\n        continue\n    if number == 5:\n        break\n    print(number)",
       "options": [
         {

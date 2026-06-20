@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What does Python do with your code?",
+      "question": "What does Python do with your code?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "print(\"Start\")\nprint(\"Done\")",
       "options": [
         {

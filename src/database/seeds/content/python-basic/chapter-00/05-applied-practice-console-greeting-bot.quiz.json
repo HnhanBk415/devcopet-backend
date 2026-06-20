@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "print(\"Assistant:\", \"DevCopet\")\nprint(\"Level:\", 1)",
       "options": [
         {
@@ -33,7 +33,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "Which version correctly prints the message Welcome to Python!?",
+      "question": "Which version correctly prints the message Welcome to Python!?",
       "options": [
         {
           "id": "a",

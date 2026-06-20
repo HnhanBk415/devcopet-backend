@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Opening Files with with open()?",
+      "question": "What is the main idea of Opening Files with with open()?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "with open(\"notes.txt\", \"w\") as file:\n    file.write(\"Hello file\")",
       "options": [
         {

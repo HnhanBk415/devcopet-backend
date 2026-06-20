@@ -5,7 +5,7 @@
     "questions": [
         {
             "type": "multiple_choice",
-            "questionText": "What does traversal mean?",
+            "question": "What does traversal mean?",
             "options": [
                 {
                     "id": "a",
@@ -32,7 +32,7 @@
         },
         {
             "type": "code_output",
-            "questionText": "What is the output of the following code?",
+            "question": "What is the output of the following code?",
             "codeSnippet": "numbers = [3, 5, 7]\nnumbers.append(9)\nnumbers[1] = 10\nprint(numbers)",
             "options": [
                 {

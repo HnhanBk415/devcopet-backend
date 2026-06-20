@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "Which rule does a queue follow?",
+      "question": "Which rule does a queue follow?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "from collections import deque\n\nqueue = deque()\nqueue.append(\"A\")\nqueue.append(\"B\")\nqueue.append(\"C\")\nprint(queue.popleft())",
       "options": [
         {

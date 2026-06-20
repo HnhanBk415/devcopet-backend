@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "Which traversal visits the root first?",
+      "question": "Which traversal visits the root first?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "For a tree with root A, left child B, and right child C, what is the preorder output?",
+      "question": "For a tree with root A, left child B, and right child C, what is the preorder output?",
       "codeSnippet": "Tree:\n    A\n   / \\\n  B   C\n\nPreorder = Root, Left, Right",
       "options": [
         {

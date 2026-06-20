@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What does Python do with a line that starts with #?",
+      "question": "What does Python do with a line that starts with #?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "Which output is easier for a user to understand?",
+      "question": "Which output is easier for a user to understand?",
       "options": [
         {
           "id": "a",

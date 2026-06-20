@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Looping Through Strings and Simple Lists?",
+      "question": "What is the main idea of Looping Through Strings and Simple Lists?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "name = \"Nova\"\nfor letter in name:\n    print(letter)\n\nitems = [\"coin\", \"gem\"]\nfor item in items:\n    print(item)",
       "options": [
         {

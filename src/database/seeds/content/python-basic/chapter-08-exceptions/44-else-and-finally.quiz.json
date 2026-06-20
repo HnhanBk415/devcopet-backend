@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of else and finally?",
+      "question": "What is the main idea of else and finally?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "text = \"12\"\ntry:\n    number = int(text)\nexcept ValueError:\n    print(\"Invalid\")\nelse:\n    print(\"Parsed:\", number)\nfinally:\n    print(\"Done\")",
       "options": [
         {

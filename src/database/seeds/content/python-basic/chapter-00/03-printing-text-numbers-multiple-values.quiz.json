@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "code_output",
-      "questionText": "What is the exact output of the following two statements?",
+      "question": "What is the exact output of the following two statements?",
       "codeSnippet": "print(\"Python\" + \"World\")\nprint(\"Python\", \"World\")",
       "options": [
         {
@@ -33,7 +33,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "What type of error will Python raise if you execute print(Hello) without defining Hello first?",
+      "question": "What type of error will Python raise if you execute print(Hello) without defining Hello first?",
       "options": [
         {
           "id": "a",

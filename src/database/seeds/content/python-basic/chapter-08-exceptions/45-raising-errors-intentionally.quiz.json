@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Raising Errors Intentionally?",
+      "question": "What is the main idea of Raising Errors Intentionally?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "def set_level(level):\n    if level < 1:\n        raise ValueError(\"Level must be positive\")\n    return level\n\nprint(set_level(3))",
       "options": [
         {

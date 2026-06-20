@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "Which data structure is commonly used for BFS?",
+      "question": "Which data structure is commonly used for BFS?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "For a tree with root A, left child B, and right child C, what is the BFS order?",
+      "question": "For a tree with root A, left child B, and right child C, what is the BFS order?",
       "codeSnippet": "Tree:\n    A\n   / \\\n  B   C\n\nBFS visits level by level.",
       "options": [
         {

@@ -5,7 +5,7 @@
     "questions": [
         {
             "type": "multiple_choice",
-            "questionText": "What does it mean that Python strings are immutable?",
+            "question": "What does it mean that Python strings are immutable?",
             "options": [
                 {
                     "id": "a",
@@ -32,7 +32,7 @@
         },
         {
             "type": "code_output",
-            "questionText": "What is the output of the following code?",
+            "question": "What is the output of the following code?",
             "codeSnippet": "word = \"hello\"\nprint(word[::-1])",
             "options": [
                 {

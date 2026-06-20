@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Arithmetic and Assignment Operators?",
+      "question": "What is the main idea of Arithmetic and Assignment Operators?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "score = 10\nscore += 5\nscore *= 2\nprint(score)",
       "options": [
         {

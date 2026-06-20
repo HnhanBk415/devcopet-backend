@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Type Conversion and User-Like Input?",
+      "question": "What is the main idea of Type Conversion and User-Like Input?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "raw_age = \"18\"\nage = int(raw_age)\nprint(age + 1)",
       "options": [
         {

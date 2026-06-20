@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Scope and Local Variables?",
+      "question": "What is the main idea of Scope and Local Variables?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "def show_level():\n    level = 3\n    print(level)\n\nshow_level()",
       "options": [
         {

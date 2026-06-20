@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Writing and Appending Text?",
+      "question": "What is the main idea of Writing and Appending Text?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "with open(\"log.txt\", \"w\") as file:\n    file.write(\"Start\\n\")\nwith open(\"log.txt\", \"a\") as file:\n    file.write(\"Next\\n\")",
       "options": [
         {

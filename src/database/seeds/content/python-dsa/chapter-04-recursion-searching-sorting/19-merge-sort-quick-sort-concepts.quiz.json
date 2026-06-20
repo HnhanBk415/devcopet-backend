@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What strategy do merge sort and quick sort both use?",
+      "question": "What strategy do merge sort and quick sort both use?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "def quick_sort(numbers):\n    if len(numbers) <= 1:\n        return numbers\n\n    pivot = numbers[0]\n    left = []\n    equal = []\n    right = []\n\n    for number in numbers:\n        if number < pivot:\n            left.append(number)\n        elif number == pivot:\n            equal.append(number)\n        else:\n            right.append(number)\n\n    return quick_sort(left) + equal + quick_sort(right)\n\nprint(quick_sort([3, 1, 2]))",
       "options": [
         {

@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Choosing the Right Data Structure?",
+      "question": "What is the main idea of Choosing the Right Data Structure?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "todo = [\"learn\", \"practice\"]\nprofile = {\"name\": \"Nova\", \"level\": 1}\nunique_tags = {\"python\", \"basic\"}\nprint(todo, profile, unique_tags)",
       "options": [
         {

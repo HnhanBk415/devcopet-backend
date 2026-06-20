@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Comparison and Logical Operators?",
+      "question": "What is the main idea of Comparison and Logical Operators?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "level = 5\nhas_badge = True\ncan_enter = level >= 5 and has_badge\nprint(can_enter)",
       "options": [
         {

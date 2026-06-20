@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "Which data structure does BFS use?",
+      "question": "Which data structure does BFS use?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "Why does BFS need a visited set?",
+      "question": "Why does BFS need a visited set?",
       "options": [
         {
           "id": "a",

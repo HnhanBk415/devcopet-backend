@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "DFS explores a graph in which style?",
+      "question": "DFS explores a graph in which style?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "Which structure can DFS use besides recursion?",
+      "question": "Which structure can DFS use besides recursion?",
       "options": [
         {
           "id": "a",

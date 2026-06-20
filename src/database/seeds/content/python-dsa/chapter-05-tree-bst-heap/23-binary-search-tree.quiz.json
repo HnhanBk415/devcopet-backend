@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "In a Binary Search Tree, where do smaller values usually go?",
+      "question": "In a Binary Search Tree, where do smaller values usually go?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "class TreeNode:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\ndef search_bst(root, target):\n    current = root\n    while current is not None:\n        if current.value == target:\n            return True\n        elif target < current.value:\n            current = current.left\n        else:\n            current = current.right\n    return False\n\nroot = TreeNode(8)\nroot.left = TreeNode(3)\nroot.right = TreeNode(10)\n\nprint(search_bst(root, 10))",
       "options": [
         {

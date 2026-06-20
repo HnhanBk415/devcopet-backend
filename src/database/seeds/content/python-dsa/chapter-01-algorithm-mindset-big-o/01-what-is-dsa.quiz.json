@@ -6,7 +6,6 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "codeSnippet": "",
       "options": [
         {
           "id": "a",
@@ -33,7 +32,8 @@
       "explanation": "DSA stands for Data Structures and Algorithms.",
       "difficulty": "easy",
       "points": 1,
-      "tags": []
+      "tags": [],
+      "question": "What is DSA?"
     },
     {
       "type": "code_output",
@@ -64,7 +64,8 @@
       "explanation": "The algorithm checks each number and keeps the largest value. The largest number is 10.",
       "difficulty": "easy",
       "points": 1,
-      "tags": []
+      "tags": [],
+      "question": "What is the output of the following code?"
     }
   ],
   "title": "What is DSA Quiz"

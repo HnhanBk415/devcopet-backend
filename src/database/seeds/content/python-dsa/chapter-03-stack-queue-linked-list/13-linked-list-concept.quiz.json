@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What does a linked list node usually contain?",
+      "question": "What does a linked list node usually contain?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\nfirst = Node(10)\nsecond = Node(20)\nfirst.next = second\n\nprint(first.next.value)",
       "options": [
         {

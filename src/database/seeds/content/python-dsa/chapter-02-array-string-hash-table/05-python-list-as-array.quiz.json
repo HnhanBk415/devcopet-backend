@@ -5,7 +5,7 @@
     "questions": [
         {
             "type": "multiple_choice",
-            "questionText": "What is the index of the first item in a Python list?",
+            "question": "What is the index of the first item in a Python list?",
             "options": [
                 {
                     "id": "a",
@@ -32,7 +32,7 @@
         },
         {
             "type": "code_output",
-            "questionText": "What is the output of the following code?",
+            "question": "What is the output of the following code?",
             "codeSnippet": "numbers = [10, 20, 30, 40]\nprint(numbers[-1])",
             "options": [
                 {

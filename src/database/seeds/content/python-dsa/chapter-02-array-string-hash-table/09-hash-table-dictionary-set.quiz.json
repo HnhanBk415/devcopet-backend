@@ -5,7 +5,7 @@
     "questions": [
         {
             "type": "multiple_choice",
-            "questionText": "When should you use a set?",
+            "question": "When should you use a set?",
             "options": [
                 {
                     "id": "a",
@@ -32,7 +32,7 @@
         },
         {
             "type": "code_output",
-            "questionText": "What is the output of the following code?",
+            "question": "What is the output of the following code?",
             "codeSnippet": "word = \"banana\"\nfreq = {}\n\nfor char in word:\n    if char not in freq:\n        freq[char] = 0\n    freq[char] += 1\n\nprint(freq[\"a\"])",
             "options": [
                 {

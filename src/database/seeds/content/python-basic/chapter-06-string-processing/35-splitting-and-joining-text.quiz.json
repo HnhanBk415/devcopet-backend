@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What is the main idea of Splitting and Joining Text?",
+      "question": "What is the main idea of Splitting and Joining Text?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_reasoning",
-      "questionText": "What should you do when reading a small Python example?",
+      "question": "What should you do when reading a small Python example?",
       "codeSnippet": "line = \"python,basic,course\"\nparts = line.split(\",\")\nprint(parts)\nprint(\" | \".join(parts))",
       "options": [
         {

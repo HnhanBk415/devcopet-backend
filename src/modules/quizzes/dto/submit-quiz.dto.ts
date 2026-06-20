@@ -1,14 +1,16 @@
 import {
   IsArray,
-  IsNumber,
+  IsInt,
   IsOptional,
   IsString,
+  Min,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class SubmitQuizAnswerDto {
-  @IsNumber()
+  @IsInt()
+  @Min(0)
   questionIndex!: number;
 
   @IsOptional()

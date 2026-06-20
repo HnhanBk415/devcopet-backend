@@ -1,4 +1,8 @@
-﻿import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Quiz, QuizDocument, QuestionType } from './schemas/quiz.schema';
@@ -19,7 +23,7 @@ export class QuizzesService {
   ) {}
 
   async findByLessonId(lessonId: string, userId: string) {
-    const objectId = new Types.ObjectId(lessonId);
+    const objectId = this.toObjectId(lessonId, 'lessonId');
     const quiz = await this.quizModel
       .findOne({ lessonId: objectId, isPublished: true })
       .exec();
@@ -41,8 +45,10 @@ export class QuizzesService {
     answers: SubmitQuizAnswerDto[],
     userId: string,
   ) {
-    const objectId = new Types.ObjectId(quizId);
-    const quiz = await this.quizModel.findById(objectId).exec();
+    const objectId = this.toObjectId(quizId, 'quizId');
+    const quiz = await this.quizModel
+      .findOne({ _id: objectId, isPublished: true })
+      .exec();
 
     if (!quiz) {
       throw new NotFoundException(`Quiz ${quizId} not found`);
@@ -125,10 +131,8 @@ export class QuizzesService {
             lessonId: quiz.lessonId,
           },
           {
-            $set: {
-              completed: true,
-              quizScore: percentage,
-            },
+            $set: { completed: true },
+            $max: { quizScore: percentage },
           },
           {
             new: true,
@@ -151,6 +155,14 @@ export class QuizzesService {
   }
 
   // ─── Private helpers ────────────────────────────────────────────────────────
+
+  private toObjectId(value: string, fieldName: string) {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId.`);
+    }
+
+    return new Types.ObjectId(value);
+  }
 
   private sanitizeQuiz(quiz: QuizDocument) {
     return {

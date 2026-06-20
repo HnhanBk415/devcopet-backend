@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "Which representation maps each node to its neighbors?",
+      "question": "Which representation maps each node to its neighbors?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "code_output",
-      "questionText": "What is the output of the following code?",
+      "question": "What is the output of the following code?",
       "codeSnippet": "graph = {\n    \"A\": [\"B\", \"C\"],\n    \"B\": [\"A\"],\n    \"C\": [\"A\"]\n}\n\nprint(graph[\"A\"])",
       "options": [
         {

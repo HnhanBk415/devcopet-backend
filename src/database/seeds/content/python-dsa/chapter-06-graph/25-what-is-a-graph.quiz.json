@@ -5,7 +5,7 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What are the two main parts of a graph?",
+      "question": "What are the two main parts of a graph?",
       "options": [
         {
           "id": "a",
@@ -32,7 +32,7 @@
     },
     {
       "type": "multiple_choice",
-      "questionText": "Which example is commonly modeled as a graph?",
+      "question": "Which example is commonly modeled as a graph?",
       "options": [
         {
           "id": "a",
