@@ -5,7 +5,12 @@ import {
   RoadmapProgress,
   RoadmapProgressDocument,
 } from '../schemas/roadmap-progress.schema';
-import type { RoadmapMode, RoadmapStatus } from '../roadmap.types';
+import type {
+  RoadmapCompletion,
+  RoadmapCompletionReview,
+  RoadmapMode,
+  RoadmapStatus,
+} from '../roadmap.types';
 
 @Injectable()
 export class RoadmapStatusService {
@@ -62,22 +67,45 @@ export class RoadmapStatusService {
     courseSlug: string,
     mode: RoadmapMode,
     nodeId: string,
+    review?: RoadmapCompletionReview,
   ): Promise<void> {
+    const completedAt = review?.completedAt
+      ? new Date(review.completedAt)
+      : new Date();
+    const setOnInsert: Partial<RoadmapProgress> = {
+      userId,
+      courseSlug,
+      mode,
+      nodeId,
+      completedAt,
+    };
+    const update: {
+      $setOnInsert: Partial<RoadmapProgress>;
+      $set?: Partial<RoadmapProgress>;
+    } = { $setOnInsert: setOnInsert };
+
+    if (review) {
+      update.$set = { review };
+    }
+
     await this.roadmapProgressModel
-      .updateOne(
-        { userId, courseSlug, mode, nodeId },
-        {
-          $setOnInsert: {
-            userId,
-            courseSlug,
-            mode,
-            nodeId,
-            completedAt: new Date(),
-          },
-        },
-        { upsert: true },
-      )
+      .updateOne({ userId, courseSlug, mode, nodeId }, update, { upsert: true })
       .exec();
+  }
+
+  async getNodeCompletion(
+    userId: string,
+    courseSlug: string,
+    mode: RoadmapMode,
+    nodeId: string,
+  ): Promise<RoadmapCompletion | null> {
+    const row = await this.roadmapProgressModel
+      .findOne({ userId, courseSlug, mode, nodeId })
+      .select({ completedAt: 1, review: 1 })
+      .lean<RoadmapCompletion | null>()
+      .exec();
+
+    return row;
   }
 
   async resetRoadmapProgress(

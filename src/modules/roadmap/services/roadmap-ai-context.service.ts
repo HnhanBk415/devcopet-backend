@@ -7,6 +7,7 @@ import { EasyRoadmapService } from './easy-roadmap.service';
 import { HardRoadmapService } from './hard-roadmap.service';
 import { MediumRoadmapService } from './medium-roadmap.service';
 import { RoadmapReviewService } from './roadmap-review.service';
+import { RoadmapStatusService } from './roadmap-status.service';
 
 @Injectable()
 export class RoadmapAiContextService {
@@ -15,6 +16,7 @@ export class RoadmapAiContextService {
     private readonly hardRoadmapService: HardRoadmapService,
     private readonly mediumRoadmapService: MediumRoadmapService,
     private readonly reviewService: RoadmapReviewService,
+    private readonly statusService: RoadmapStatusService,
   ) {}
 
   async getContext(
@@ -30,6 +32,15 @@ export class RoadmapAiContextService {
         chapter,
         lesson,
       );
+      const completion =
+        node.status === 'completed'
+          ? await this.statusService.getNodeCompletion(
+              userId,
+              course.slug,
+              mode,
+              node.id,
+            )
+          : null;
 
       return {
         mode,
@@ -53,9 +64,9 @@ export class RoadmapAiContextService {
         challenge: this.easyRoadmapService.toPublicChallenge(lesson, challenge),
         ...(node.status === 'completed'
           ? {
-              review: this.reviewService.toEasyFallbackReview(
+              review: this.reviewService.toEasyCompletedReview(
                 challenge,
-                node.id,
+                completion,
               ),
             }
           : {}),
@@ -66,6 +77,15 @@ export class RoadmapAiContextService {
       mode === 'hard' ? this.hardRoadmapService : this.mediumRoadmapService;
     const { node, course, chapter, chapterData, challenge } =
       await roadmapService.getNodeContext(nodeId, userId);
+    const completion =
+      node.status === 'completed'
+        ? await this.statusService.getNodeCompletion(
+            userId,
+            course.slug,
+            mode,
+            node.id,
+          )
+        : null;
 
     return {
       mode,
@@ -83,9 +103,9 @@ export class RoadmapAiContextService {
       challenge: roadmapService.toPublicChallenge(nodeId, challenge),
       ...(node.status === 'completed'
         ? {
-            review: this.reviewService.toAdvancedFallbackReview(
+            review: this.reviewService.toAdvancedCompletedReview(
               challenge,
-              node.id,
+              completion,
             ),
           }
         : {}),

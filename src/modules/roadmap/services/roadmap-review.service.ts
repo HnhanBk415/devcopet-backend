@@ -3,12 +3,10 @@ import type {
   AdvancedChallengeData,
   ChallengeOptionId,
   EasyChallengeData,
+  RoadmapCompletion,
+  RoadmapCompletionReview,
 } from '../roadmap.types';
-import {
-  isChallengeOptionId,
-  isStringRecord,
-  toDeterministicCompletedAt,
-} from '../utils/roadmap.util';
+import { isChallengeOptionId, isStringRecord } from '../utils/roadmap.util';
 
 function getUnknownField(source: AdvancedChallengeData, key: string): unknown {
   return (source as Record<string, unknown>)[key];
@@ -29,55 +27,143 @@ function getStringArrayField(
   return value;
 }
 
+function toCompletedAt(value?: Date | null): string {
+  return (value ?? new Date(0)).toISOString();
+}
+
+function isCompletionReview(value: unknown): value is RoadmapCompletionReview {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    (value as RoadmapCompletionReview).correct === true &&
+    typeof (value as RoadmapCompletionReview).explanation === 'string' &&
+    typeof (value as RoadmapCompletionReview).completedAt === 'string'
+  );
+}
+
 @Injectable()
 export class RoadmapReviewService {
-  toEasyFallbackReview(
+  toEasyReview(
     challenge: EasyChallengeData,
-    nodeId: string,
-  ): {
-    selectedOptionId: ChallengeOptionId;
-    correctOptionId: ChallengeOptionId;
-    correct: boolean;
-    explanation: string;
-    completedAt: string;
-  } {
-    const selectedOptionId = challenge.correctOptionId;
-
+    selectedOptionId: ChallengeOptionId,
+    completedAt = new Date(),
+  ): RoadmapCompletionReview {
     return {
       selectedOptionId,
       correctOptionId: challenge.correctOptionId,
-      correct: selectedOptionId === challenge.correctOptionId,
+      correct: true,
       explanation: challenge.explanation,
-      completedAt: toDeterministicCompletedAt(nodeId),
+      completedAt: completedAt.toISOString(),
     };
   }
 
-  toAdvancedFallbackReview(challenge: AdvancedChallengeData, nodeId: string) {
+  toEasyCompletedReview(
+    challenge: EasyChallengeData,
+    completion: RoadmapCompletion | null,
+  ): RoadmapCompletionReview {
+    if (isCompletionReview(completion?.review)) {
+      return completion.review;
+    }
+
+    return this.toEasyReview(
+      challenge,
+      challenge.correctOptionId,
+      completion?.completedAt ?? new Date(0),
+    );
+  }
+
+  toAdvancedOptionReview(
+    challenge: AdvancedChallengeData,
+    selectedOptionId: ChallengeOptionId,
+    correctOptionId: ChallengeOptionId,
+    completedAt = new Date(),
+  ): RoadmapCompletionReview {
+    return {
+      selectedOptionId,
+      correctOptionId,
+      correct: true,
+      explanation: challenge.explanation,
+      completedAt: completedAt.toISOString(),
+    };
+  }
+
+  toAdvancedDropZoneReview(
+    challenge: AdvancedChallengeData,
+    dropZoneMap: Record<string, string>,
+    correctDropZoneMap: Record<string, string>,
+    completedAt = new Date(),
+  ): RoadmapCompletionReview {
+    return {
+      dropZoneMap,
+      correctDropZoneMap,
+      correct: true,
+      explanation: challenge.explanation,
+      completedAt: completedAt.toISOString(),
+    };
+  }
+
+  toAdvancedMatchingReview(
+    challenge: AdvancedChallengeData,
+    matchingMap: Record<string, string>,
+    correctMatchingMap: Record<string, string>,
+    completedAt = new Date(),
+  ): RoadmapCompletionReview {
+    return {
+      matchingMap,
+      correctMatchingMap,
+      correct: true,
+      explanation: challenge.explanation,
+      completedAt: completedAt.toISOString(),
+    };
+  }
+
+  toAdvancedOrderingReview(
+    challenge: AdvancedChallengeData,
+    orderedIds: string[],
+    correctOrderedIds: string[],
+    completedAt = new Date(),
+  ): RoadmapCompletionReview {
+    return {
+      orderedIds,
+      correctOrderedIds,
+      correct: true,
+      explanation: challenge.explanation,
+      completedAt: completedAt.toISOString(),
+    };
+  }
+
+  toAdvancedCompletedReview(
+    challenge: AdvancedChallengeData,
+    completion: RoadmapCompletion | null,
+  ): RoadmapCompletionReview {
+    if (isCompletionReview(completion?.review)) {
+      return completion.review;
+    }
+
+    const completedAt = completion?.completedAt ?? new Date(0);
     const correctOptionId = getUnknownField(challenge, 'correctOptionId');
 
     if (
       typeof correctOptionId === 'string' &&
       isChallengeOptionId(correctOptionId)
     ) {
-      return {
-        selectedOptionId: correctOptionId,
+      return this.toAdvancedOptionReview(
+        challenge,
         correctOptionId,
-        correct: true,
-        explanation: challenge.explanation,
-        completedAt: toDeterministicCompletedAt(nodeId),
-      };
+        correctOptionId,
+        completedAt,
+      );
     }
 
     const correctDropZoneMap = getUnknownField(challenge, 'correctDropZoneMap');
 
     if (isStringRecord(correctDropZoneMap)) {
-      return {
-        dropZoneMap: correctDropZoneMap,
+      return this.toAdvancedDropZoneReview(
+        challenge,
         correctDropZoneMap,
-        correct: true,
-        explanation: challenge.explanation,
-        completedAt: toDeterministicCompletedAt(nodeId),
-      };
+        correctDropZoneMap,
+        completedAt,
+      );
     }
 
     const correctMatchingMap =
@@ -85,13 +171,12 @@ export class RoadmapReviewService {
       getUnknownField(challenge, 'correctMatching');
 
     if (isStringRecord(correctMatchingMap)) {
-      return {
-        matchingMap: correctMatchingMap,
+      return this.toAdvancedMatchingReview(
+        challenge,
         correctMatchingMap,
-        correct: true,
-        explanation: challenge.explanation,
-        completedAt: toDeterministicCompletedAt(nodeId),
-      };
+        correctMatchingMap,
+        completedAt,
+      );
     }
 
     const correctOrderedIds =
@@ -99,19 +184,18 @@ export class RoadmapReviewService {
       getStringArrayField(challenge, 'correctOrder');
 
     if (correctOrderedIds) {
-      return {
-        orderedIds: correctOrderedIds,
+      return this.toAdvancedOrderingReview(
+        challenge,
         correctOrderedIds,
-        correct: true,
-        explanation: challenge.explanation,
-        completedAt: toDeterministicCompletedAt(nodeId),
-      };
+        correctOrderedIds,
+        completedAt,
+      );
     }
 
     return {
       correct: true,
       explanation: challenge.explanation,
-      completedAt: toDeterministicCompletedAt(nodeId),
+      completedAt: toCompletedAt(completion?.completedAt),
     };
   }
 }

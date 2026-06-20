@@ -124,17 +124,30 @@ export abstract class AdvancedRoadmapBaseService {
   }
 
   async getNodeChallenge(nodeId: string, userId: string) {
-    const { node, challenge } = await this.getNodeContext(nodeId, userId);
+    const { node, challenge, course } = await this.getNodeContext(
+      nodeId,
+      userId,
+    );
 
     if (node.status === 'locked') {
       throw new ForbiddenException('This roadmap node is locked.');
     }
 
     if (node.status === 'completed') {
+      const completion = await this.statusService.getNodeCompletion(
+        userId,
+        course.slug,
+        this.mode,
+        node.id,
+      );
+
       return {
         node,
         challenge: this.toPublicChallenge(nodeId, challenge),
-        review: this.reviewService.toAdvancedFallbackReview(challenge, node.id),
+        review: this.reviewService.toAdvancedCompletedReview(
+          challenge,
+          completion,
+        ),
       };
     }
 
@@ -159,11 +172,21 @@ export abstract class AdvancedRoadmapBaseService {
     }
 
     if (node.status === 'completed') {
+      const completion = await this.statusService.getNodeCompletion(
+        userId,
+        course.slug,
+        this.mode,
+        node.id,
+      );
+
       return {
         correct: true,
         alreadyCompleted: true,
         message: 'This node is already completed.',
-        review: this.reviewService.toAdvancedFallbackReview(challenge, node.id),
+        review: this.reviewService.toAdvancedCompletedReview(
+          challenge,
+          completion,
+        ),
       };
     }
 
@@ -195,12 +218,21 @@ export abstract class AdvancedRoadmapBaseService {
       }
 
       const correct = selectedOptionId === correctOptionId;
-      if (correct) {
+      const review = correct
+        ? this.reviewService.toAdvancedOptionReview(
+            challenge,
+            selectedOptionId,
+            correctOptionId,
+          )
+        : undefined;
+
+      if (review) {
         await this.statusService.markNodeCompleted(
           userId,
           course.slug,
           this.mode,
           node.id,
+          review,
         );
       }
 
@@ -210,7 +242,10 @@ export abstract class AdvancedRoadmapBaseService {
         correctOptionId,
         explanation: challenge.explanation,
         ...(correct
-          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          ? {
+              review,
+              nextNode: await this.getNextNode(course.slug, node.id, userId),
+            }
           : {}),
       };
     }
@@ -225,12 +260,21 @@ export abstract class AdvancedRoadmapBaseService {
         dropZoneMap,
         challenge.correctDropZoneMap,
       );
-      if (correct) {
+      const review = correct
+        ? this.reviewService.toAdvancedDropZoneReview(
+            challenge,
+            dropZoneMap,
+            challenge.correctDropZoneMap,
+          )
+        : undefined;
+
+      if (review) {
         await this.statusService.markNodeCompleted(
           userId,
           course.slug,
           this.mode,
           node.id,
+          review,
         );
       }
 
@@ -240,7 +284,10 @@ export abstract class AdvancedRoadmapBaseService {
         correctDropZoneMap: challenge.correctDropZoneMap,
         explanation: challenge.explanation,
         ...(correct
-          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          ? {
+              review,
+              nextNode: await this.getNextNode(course.slug, node.id, userId),
+            }
           : {}),
       };
     }
@@ -253,12 +300,21 @@ export abstract class AdvancedRoadmapBaseService {
 
       const correctMatchingMap = this.getCorrectMatchingMap(challenge);
       const correct = isSameStringRecord(matchingMap, correctMatchingMap);
-      if (correct) {
+      const review = correct
+        ? this.reviewService.toAdvancedMatchingReview(
+            challenge,
+            matchingMap,
+            correctMatchingMap,
+          )
+        : undefined;
+
+      if (review) {
         await this.statusService.markNodeCompleted(
           userId,
           course.slug,
           this.mode,
           node.id,
+          review,
         );
       }
 
@@ -268,7 +324,10 @@ export abstract class AdvancedRoadmapBaseService {
         correctMatchingMap,
         explanation: challenge.explanation,
         ...(correct
-          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          ? {
+              review,
+              nextNode: await this.getNextNode(course.slug, node.id, userId),
+            }
           : {}),
       };
     }
@@ -286,12 +345,21 @@ export abstract class AdvancedRoadmapBaseService {
 
       const correctOrderedIds = this.getCorrectOrderedIds(challenge);
       const correct = this.isSameStringArray(orderedIds, correctOrderedIds);
-      if (correct) {
+      const review = correct
+        ? this.reviewService.toAdvancedOrderingReview(
+            challenge,
+            orderedIds,
+            correctOrderedIds,
+          )
+        : undefined;
+
+      if (review) {
         await this.statusService.markNodeCompleted(
           userId,
           course.slug,
           this.mode,
           node.id,
+          review,
         );
       }
 
@@ -301,7 +369,10 @@ export abstract class AdvancedRoadmapBaseService {
         correctOrderedIds,
         explanation: challenge.explanation,
         ...(correct
-          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          ? {
+              review,
+              nextNode: await this.getNextNode(course.slug, node.id, userId),
+            }
           : {}),
       };
     }

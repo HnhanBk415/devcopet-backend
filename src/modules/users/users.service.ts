@@ -84,4 +84,62 @@ export class UsersService {
     });
     if (!result) throw new NotFoundException('User not found');
   }
+
+  async updateProfile(
+    userId: string,
+    data: { username?: string; bio?: string },
+  ): Promise<UserDocument> {
+    const user = await this.userModel
+      .findByIdAndUpdate(userId, { $set: data }, { new: true })
+      .select('-passwordHash -refreshTokenHash');
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
+
+  async getLeaderboard() {
+    return this.userModel
+      .find({ onboardingCompleted: true })
+      .sort({ exp: -1, level: -1 })
+      .limit(20)
+      .select('username level exp avatarUrl bio')
+      .lean()
+      .exec();
+  }
+
+  async getRandomOpponent(userId: string) {
+    const count = await this.userModel.countDocuments({
+      _id: { $ne: userId },
+      onboardingCompleted: true,
+    });
+    if (count === 0) {
+      const fallbackCount = await this.userModel.countDocuments({
+        _id: { $ne: userId },
+      });
+      if (fallbackCount === 0) {
+        return null;
+      }
+      const random = Math.floor(Math.random() * fallbackCount);
+      return this.userModel
+        .findOne({ _id: { $ne: userId } })
+        .skip(random)
+        .select('username level exp avatarUrl bio')
+        .lean()
+        .exec();
+    }
+    const random = Math.floor(Math.random() * count);
+    return this.userModel
+      .findOne({ _id: { $ne: userId }, onboardingCompleted: true })
+      .skip(random)
+      .select('username level exp avatarUrl bio')
+      .lean()
+      .exec();
+  }
+
+  async updateXp(userId: string, expChange: number): Promise<UserDocument> {
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException('User not found');
+    user.exp = Math.max(0, (user.exp || 0) + expChange);
+    user.level = Math.floor(user.exp / 1000) + 1;
+    return user.save();
+  }
 }

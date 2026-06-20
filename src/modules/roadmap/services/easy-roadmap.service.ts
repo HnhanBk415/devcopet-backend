@@ -118,10 +118,17 @@ export class EasyRoadmapService {
     }
 
     if (node.status === 'completed') {
+      const completion = await this.statusService.getNodeCompletion(
+        userId,
+        course.slug,
+        this.mode,
+        node.id,
+      );
+
       return {
         node,
         challenge: this.toPublicChallenge(lesson, challenge),
-        review: this.reviewService.toEasyFallbackReview(challenge, node.id),
+        review: this.reviewService.toEasyCompletedReview(challenge, completion),
       };
     }
 
@@ -147,11 +154,18 @@ export class EasyRoadmapService {
     }
 
     if (node.status === 'completed') {
+      const completion = await this.statusService.getNodeCompletion(
+        userId,
+        course.slug,
+        this.mode,
+        node.id,
+      );
+
       return {
         correct: true,
         alreadyCompleted: true,
         message: 'This roadmap node is already completed.',
-        review: this.reviewService.toEasyFallbackReview(challenge, node.id),
+        review: this.reviewService.toEasyCompletedReview(challenge, completion),
       };
     }
 
@@ -164,17 +178,24 @@ export class EasyRoadmapService {
     const correct = selectedOptionId === challenge.correctOptionId;
 
     if (correct) {
+      const review = this.reviewService.toEasyReview(
+        challenge,
+        selectedOptionId,
+      );
+
       await this.statusService.markNodeCompleted(
         userId,
         course.slug,
         this.mode,
         node.id,
+        review,
       );
 
       return {
         correct: true,
         message: 'Correct. Nice work.',
         explanation: challenge.explanation,
+        review,
         nextNode: await this.getNextNode(course.slug, node.id, userId),
       };
     }

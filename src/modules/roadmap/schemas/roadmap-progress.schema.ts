@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import type { RoadmapMode } from '../roadmap.types';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import type { RoadmapCompletionReview, RoadmapMode } from '../roadmap.types';
 
 export type RoadmapProgressDocument = HydratedDocument<RoadmapProgress>;
 
@@ -20,6 +20,9 @@ export class RoadmapProgress {
 
   @Prop({ required: true, default: Date.now })
   completedAt!: Date;
+
+  @Prop({ type: MongooseSchema.Types.Mixed, default: null })
+  review?: RoadmapCompletionReview | null;
 }
 
 export const RoadmapProgressSchema =

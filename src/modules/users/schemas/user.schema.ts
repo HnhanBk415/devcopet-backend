@@ -38,6 +38,9 @@ export class User {
   @Prop()
   avatarUrl?: string;
 
+  @Prop({ trim: true })
+  bio?: string;
+
   @Prop({ unique: true, sparse: true })
   githubId?: string;
 
