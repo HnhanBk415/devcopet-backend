@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SocialProvider, User, UserDocument } from './schemas/user.schema';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class UsersService {
@@ -87,7 +88,7 @@ export class UsersService {
 
   async updateProfile(
     userId: string,
-    data: { username?: string; bio?: string },
+    data: UpdateProfileDto,
   ): Promise<UserDocument> {
     const user = await this.userModel
       .findByIdAndUpdate(userId, { $set: data }, { new: true })
@@ -136,10 +137,34 @@ export class UsersService {
   }
 
   async updateXp(userId: string, expChange: number): Promise<UserDocument> {
-    const user = await this.userModel.findById(userId);
+    const user = await this.userModel
+      .findByIdAndUpdate(
+        userId,
+        [
+          {
+            $set: {
+              exp: {
+                $max: [
+                  0,
+                  {
+                    $add: [{ $ifNull: ['$exp', 0] }, Math.trunc(expChange)],
+                  },
+                ],
+              },
+            },
+          },
+          {
+            $set: {
+              level: {
+                $add: [{ $floor: { $divide: ['$exp', 1000] } }, 1],
+              },
+            },
+          },
+        ],
+        { new: true },
+      )
+      .select('-passwordHash -refreshTokenHash');
     if (!user) throw new NotFoundException('User not found');
-    user.exp = Math.max(0, (user.exp || 0) + expChange);
-    user.level = Math.floor(user.exp / 1000) + 1;
-    return user.save();
+    return user;
   }
 }

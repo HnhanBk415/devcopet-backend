@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { SubmitBattleDto } from './dto/submit-battle.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,7 +26,7 @@ export class UsersController {
   @Patch('profile')
   async updateProfile(
     @Req() req: { user: { userId: string } },
-    @Body() dto: { username?: string; bio?: string },
+    @Body() dto: UpdateProfileDto,
   ) {
     return this.usersService.updateProfile(req.user.userId, dto);
   }
@@ -56,7 +58,7 @@ export class UsersController {
   @Post('battle/submit')
   async submitBattle(
     @Req() req: { user: { userId: string } },
-    @Body() dto: { expChange: number },
+    @Body() dto: SubmitBattleDto,
   ) {
     return this.usersService.updateXp(req.user.userId, dto.expChange);
   }
