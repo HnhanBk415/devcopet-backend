@@ -95,7 +95,8 @@ export class RoadmapService {
   async getAiRoadmapContext(
     mode: RoadmapMode,
     nodeId: string,
+    userId: string,
   ): Promise<AiRoadmapContext> {
-    return this.roadmapAiContextService.getContext(mode, nodeId);
+    return this.roadmapAiContextService.getContext(mode, nodeId, userId);
   }
 }

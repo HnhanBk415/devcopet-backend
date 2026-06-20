@@ -42,7 +42,7 @@ export class AiChatService {
 
     const [user, context, usage] = await Promise.all([
       this.getUserOrThrow(userId),
-      this.roadmapService.getAiRoadmapContext(mode, nodeId),
+      this.roadmapService.getAiRoadmapContext(mode, nodeId, userId),
       this.usageService.getUsageSnapshot(userId),
     ]);
 
@@ -76,7 +76,11 @@ export class AiChatService {
     this.promptService.assertPromptId(promptId);
 
     const user = await this.getUserOrThrow(userId);
-    const context = await this.roadmapService.getAiRoadmapContext(mode, nodeId);
+    const context = await this.roadmapService.getAiRoadmapContext(
+      mode,
+      nodeId,
+      userId,
+    );
 
     if (context.node.status === 'locked') {
       throw new BadRequestException('Unlock this node before using AI help.');

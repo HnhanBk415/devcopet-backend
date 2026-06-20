@@ -189,7 +189,7 @@ export class EasyRoadmapService {
 
   async getNodeContext(
     nodeId: string,
-    userId = 'dev-roadmap-user',
+    userId: string,
   ): Promise<EasyNodeContext> {
     const lesson = await this.queryService.findEasyLessonOrThrow(nodeId);
     const chapter = await this.queryService.findChapterByIdOrThrow(

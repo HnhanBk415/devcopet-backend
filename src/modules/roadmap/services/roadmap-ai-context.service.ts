@@ -20,10 +20,11 @@ export class RoadmapAiContextService {
   async getContext(
     mode: RoadmapMode,
     nodeId: string,
+    userId: string,
   ): Promise<AiRoadmapContext> {
     if (mode === 'easy') {
       const { node, chapter, course, lesson } =
-        await this.easyRoadmapService.getNodeContext(nodeId);
+        await this.easyRoadmapService.getNodeContext(nodeId, userId);
       const challenge = this.easyRoadmapService.findChallenge(
         course.slug,
         chapter,
@@ -64,7 +65,7 @@ export class RoadmapAiContextService {
     const roadmapService =
       mode === 'hard' ? this.hardRoadmapService : this.mediumRoadmapService;
     const { node, course, chapter, chapterData, challenge } =
-      await roadmapService.getNodeContext(nodeId);
+      await roadmapService.getNodeContext(nodeId, userId);
 
     return {
       mode,

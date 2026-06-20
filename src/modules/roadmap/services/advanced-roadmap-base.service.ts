@@ -313,7 +313,7 @@ export abstract class AdvancedRoadmapBaseService {
 
   async getNodeContext(
     nodeId: string,
-    userId = 'dev-roadmap-user',
+    userId: string,
   ): Promise<AdvancedNodeContext> {
     const parsedNodeId = this.parseNodeId(this.mode, nodeId);
     const course = await this.queryService.findCourseBySlugOrThrow(

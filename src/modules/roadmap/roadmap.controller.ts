@@ -6,24 +6,18 @@ import {
   Param,
   Post,
   Req,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RoadmapService } from './roadmap.service';
 import type { RoadmapMode } from './roadmap.types';
 
 type RoadmapRequest = {
-  user?: { userId?: string };
-  headers?: Record<string, string | string[] | undefined>;
+  user: { userId: string };
 };
 
-const DEV_ROADMAP_USER_ID = 'dev-roadmap-user';
-
 function getRoadmapUserId(req: RoadmapRequest): string {
-  const headerUserId = req.headers?.['x-roadmap-user-id'];
-  if (typeof headerUserId === 'string' && headerUserId.trim()) {
-    return headerUserId.trim();
-  }
-
-  return req.user?.userId ?? DEV_ROADMAP_USER_ID;
+  return req.user.userId;
 }
 
 function parseRoadmapMode(mode: string): RoadmapMode {
@@ -34,6 +28,7 @@ function parseRoadmapMode(mode: string): RoadmapMode {
   throw new BadRequestException('mode must be one of easy, medium, or hard.');
 }
 
+@UseGuards(JwtAuthGuard)
 @Controller('roadmaps')
 export class RoadmapController {
   constructor(private readonly roadmapService: RoadmapService) {}
