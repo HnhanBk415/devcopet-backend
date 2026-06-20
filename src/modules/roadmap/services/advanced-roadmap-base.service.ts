@@ -1,4 +1,8 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common';
 import type {
   AdvancedChallengeData,
   AdvancedChallengeFile,
@@ -17,6 +21,21 @@ import {
   isStringRecord,
 } from '../utils/roadmap.util';
 
+type PublicAdvancedChallenge = {
+  id: string;
+  type: string;
+  title: string;
+  question: string;
+  promptType?: string;
+  codeSnippet?: unknown;
+  options?: Array<{ id: string; text: string }>;
+  template?: string;
+  poolItems?: Array<{ id: string; text: string }>;
+  estimatedMinutes?: number;
+  xp?: number;
+  [key: string]: unknown;
+};
+
 export abstract class AdvancedRoadmapBaseService {
   protected abstract readonly mode: AdvancedRoadmapMode;
   constructor(
@@ -26,11 +45,21 @@ export abstract class AdvancedRoadmapBaseService {
     protected readonly statusService: RoadmapStatusService,
   ) {}
 
-  async getRoadmap(courseSlug: string) {
+  async getRoadmap(courseSlug: string, userId: string) {
     const course = await this.queryService.findCourseBySlugOrThrow(courseSlug);
     const challengeFile = this.challengeLoader.loadAdvancedChallengeFile(
       this.mode,
       course.slug,
+    );
+    const orderedNodeIds = this.getOrderedAdvancedNodeIds(
+      course.slug,
+      challengeFile,
+    );
+    const statusMap = await this.statusService.getStatusMap(
+      userId,
+      course.slug,
+      this.mode,
+      orderedNodeIds,
     );
 
     const chapters = await this.queryService.findPublishedChapters(course._id);
@@ -38,28 +67,27 @@ export abstract class AdvancedRoadmapBaseService {
       chapters.map((chapter) => [chapter.order, chapter]),
     );
 
-    let globalNodeIndex = 0;
     const responseChapters = challengeFile.chapters.map((chapterData) => {
       const chapter = chaptersByOrder.get(chapterData.chapterOrder);
       const chapterId = chapter ? String(chapter._id) : undefined;
 
       const nodes = chapterData.nodes.map((challenge) => {
-        globalNodeIndex++;
+        const nodeId = this.toNodeId(
+          this.mode,
+          course.slug,
+          chapterData.chapterOrder,
+          challenge.order,
+        );
 
         return {
-          id: this.toNodeId(
-            this.mode,
-            course.slug,
-            chapterData.chapterOrder,
-            challenge.order,
-          ),
+          id: nodeId,
           ...(chapterId ? { chapterId } : {}),
           chapterOrder: chapterData.chapterOrder,
           order: challenge.order,
           label: challenge.label,
           title: challenge.title,
           type: challenge.type,
-          status: this.statusService.getAdvancedStatus(globalNodeIndex),
+          status: statusMap.get(nodeId) ?? 'locked',
           xp: challenge.xp,
           estimatedMinutes: challenge.estimatedMinutes,
         };
@@ -95,15 +123,11 @@ export abstract class AdvancedRoadmapBaseService {
     };
   }
 
-  async getNodeChallenge(nodeId: string) {
-    const { node, challenge } = await this.getNodeContext(nodeId);
+  async getNodeChallenge(nodeId: string, userId: string) {
+    const { node, challenge } = await this.getNodeContext(nodeId, userId);
 
     if (node.status === 'locked') {
-      return {
-        node,
-        challenge: null,
-        message: 'This roadmap node is locked.',
-      };
+      throw new ForbiddenException('This roadmap node is locked.');
     }
 
     if (node.status === 'completed') {
@@ -120,11 +144,27 @@ export abstract class AdvancedRoadmapBaseService {
     };
   }
 
-  async submitNodeChallenge(nodeId: string, payload: Record<string, unknown>) {
-    const { node, challenge } = await this.getNodeContext(nodeId);
+  async submitNodeChallenge(
+    nodeId: string,
+    payload: Record<string, unknown>,
+    userId: string,
+  ) {
+    const { node, challenge, course } = await this.getNodeContext(
+      nodeId,
+      userId,
+    );
 
     if (node.status === 'locked') {
-      throw new BadRequestException('This roadmap node is locked.');
+      throw new ForbiddenException('This roadmap node is locked.');
+    }
+
+    if (node.status === 'completed') {
+      return {
+        correct: true,
+        alreadyCompleted: true,
+        message: 'This node is already completed.',
+        review: this.reviewService.toAdvancedFallbackReview(challenge, node.id),
+      };
     }
 
     if (payload?.type !== challenge.type) {
@@ -133,8 +173,10 @@ export abstract class AdvancedRoadmapBaseService {
       );
     }
 
-    if (challenge.type === 'multiple_choice') {
+    if (this.isOptionBasedChallenge(challenge.type)) {
       const selectedOptionId = payload.selectedOptionId;
+      const correctOptionId = (challenge as Record<string, unknown>)
+        .correctOptionId;
       if (
         typeof selectedOptionId !== 'string' ||
         !isChallengeOptionId(selectedOptionId)
@@ -143,36 +185,136 @@ export abstract class AdvancedRoadmapBaseService {
           'selectedOptionId must be one of A, B, C, or D.',
         );
       }
+      if (
+        typeof correctOptionId !== 'string' ||
+        !isChallengeOptionId(correctOptionId)
+      ) {
+        throw new BadRequestException(
+          `Missing correct option data for ${challenge.type}.`,
+        );
+      }
 
-      const correct = selectedOptionId === challenge.correctOptionId;
+      const correct = selectedOptionId === correctOptionId;
+      if (correct) {
+        await this.statusService.markNodeCompleted(
+          userId,
+          course.slug,
+          this.mode,
+          node.id,
+        );
+      }
 
       return {
         correct,
         message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
-        correctOptionId: challenge.correctOptionId,
+        correctOptionId,
         explanation: challenge.explanation,
+        ...(correct
+          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          : {}),
       };
     }
 
-    const dropZoneMap = payload.dropZoneMap;
-    if (!isStringRecord(dropZoneMap)) {
-      throw new BadRequestException('dropZoneMap must be an object.');
+    if (challenge.type === 'drag_drop') {
+      const dropZoneMap = payload.dropZoneMap;
+      if (!isStringRecord(dropZoneMap)) {
+        throw new BadRequestException('dropZoneMap must be an object.');
+      }
+
+      const correct = isSameStringRecord(
+        dropZoneMap,
+        challenge.correctDropZoneMap,
+      );
+      if (correct) {
+        await this.statusService.markNodeCompleted(
+          userId,
+          course.slug,
+          this.mode,
+          node.id,
+        );
+      }
+
+      return {
+        correct,
+        message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
+        correctDropZoneMap: challenge.correctDropZoneMap,
+        explanation: challenge.explanation,
+        ...(correct
+          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          : {}),
+      };
     }
 
-    const correct = isSameStringRecord(
-      dropZoneMap,
-      challenge.correctDropZoneMap,
-    );
+    if (challenge.type === 'drag_drop_matching') {
+      const matchingMap = payload.matchingMap;
+      if (!isStringRecord(matchingMap)) {
+        throw new BadRequestException('matchingMap must be an object.');
+      }
 
-    return {
-      correct,
-      message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
-      correctDropZoneMap: challenge.correctDropZoneMap,
-      explanation: challenge.explanation,
-    };
+      const correctMatchingMap = this.getCorrectMatchingMap(challenge);
+      const correct = isSameStringRecord(matchingMap, correctMatchingMap);
+      if (correct) {
+        await this.statusService.markNodeCompleted(
+          userId,
+          course.slug,
+          this.mode,
+          node.id,
+        );
+      }
+
+      return {
+        correct,
+        message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
+        correctMatchingMap,
+        explanation: challenge.explanation,
+        ...(correct
+          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          : {}),
+      };
+    }
+
+    if (challenge.type === 'ordering_steps' || challenge.type === 'ranking') {
+      const orderedIds = payload.orderedIds;
+      if (
+        !Array.isArray(orderedIds) ||
+        !orderedIds.every((item) => typeof item === 'string')
+      ) {
+        throw new BadRequestException(
+          'orderedIds must be an array of strings.',
+        );
+      }
+
+      const correctOrderedIds = this.getCorrectOrderedIds(challenge);
+      const correct = this.isSameStringArray(orderedIds, correctOrderedIds);
+      if (correct) {
+        await this.statusService.markNodeCompleted(
+          userId,
+          course.slug,
+          this.mode,
+          node.id,
+        );
+      }
+
+      return {
+        correct,
+        message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
+        correctOrderedIds,
+        explanation: challenge.explanation,
+        ...(correct
+          ? { nextNode: await this.getNextNode(course.slug, node.id, userId) }
+          : {}),
+      };
+    }
+
+    throw new BadRequestException(
+      `Unsupported ${capitalizeMode(this.mode)} node type: ${challenge.type}.`,
+    );
   }
 
-  async getNodeContext(nodeId: string): Promise<AdvancedNodeContext> {
+  async getNodeContext(
+    nodeId: string,
+    userId = 'dev-roadmap-user',
+  ): Promise<AdvancedNodeContext> {
     const parsedNodeId = this.parseNodeId(this.mode, nodeId);
     const course = await this.queryService.findCourseBySlugOrThrow(
       parsedNodeId.courseSlug,
@@ -210,6 +352,16 @@ export abstract class AdvancedRoadmapBaseService {
       chapterData.chapterOrder,
       challenge.order,
     );
+    const orderedNodeIds = this.getOrderedAdvancedNodeIds(
+      course.slug,
+      challengeFile,
+    );
+    const statusMap = await this.statusService.getStatusMap(
+      userId,
+      course.slug,
+      this.mode,
+      orderedNodeIds,
+    );
 
     return {
       node: {
@@ -217,7 +369,7 @@ export abstract class AdvancedRoadmapBaseService {
         label: challenge.label,
         title: challenge.title,
         type: challenge.type,
-        status: this.statusService.getAdvancedStatus(globalNodeIndex),
+        status: statusMap.get(nodeId) ?? 'locked',
       },
       course,
       ...(chapter ? { chapter } : {}),
@@ -227,31 +379,24 @@ export abstract class AdvancedRoadmapBaseService {
     };
   }
 
-  toPublicChallenge(nodeId: string, challenge: AdvancedChallengeData) {
-    const baseChallenge = {
+  toPublicChallenge(
+    nodeId: string,
+    challenge: AdvancedChallengeData,
+  ): PublicAdvancedChallenge {
+    const publicChallenge: PublicAdvancedChallenge = {
       id: `${this.mode}-challenge-${nodeId}`,
       type: challenge.type,
       title: challenge.title,
       question: challenge.question,
-      codeSnippet: challenge.codeSnippet ?? null,
-      xp: challenge.xp,
-      estimatedMinutes: challenge.estimatedMinutes,
     };
 
-    if (challenge.type === 'multiple_choice') {
-      return {
-        ...baseChallenge,
-        type: challenge.type,
-        options: challenge.options,
-      };
+    for (const [key, value] of Object.entries(challenge)) {
+      if (key !== 'explanation' && !key.startsWith('correct')) {
+        publicChallenge[key] = value;
+      }
     }
 
-    return {
-      ...baseChallenge,
-      type: challenge.type,
-      template: challenge.template,
-      poolItems: challenge.poolItems,
-    };
+    return publicChallenge;
   }
 
   private parseNodeId(
@@ -305,5 +450,110 @@ export abstract class AdvancedRoadmapBaseService {
     }
 
     return 1;
+  }
+
+  private getOrderedAdvancedNodeIds(
+    courseSlug: string,
+    challengeFile: AdvancedChallengeFile,
+  ): string[] {
+    const orderedIds: string[] = [];
+
+    for (const chapter of challengeFile.chapters) {
+      for (const node of chapter.nodes) {
+        orderedIds.push(
+          this.toNodeId(
+            this.mode,
+            courseSlug,
+            chapter.chapterOrder,
+            node.order,
+          ),
+        );
+      }
+    }
+
+    return orderedIds;
+  }
+
+  private async getNextNode(
+    courseSlug: string,
+    nodeId: string,
+    userId: string,
+  ) {
+    const challengeFile = this.challengeLoader.loadAdvancedChallengeFile(
+      this.mode,
+      courseSlug,
+    );
+    const orderedNodeIds = this.getOrderedAdvancedNodeIds(
+      courseSlug,
+      challengeFile,
+    );
+    const currentIndex = orderedNodeIds.indexOf(nodeId);
+    const nextNodeId = orderedNodeIds[currentIndex + 1];
+
+    if (!nextNodeId) return null;
+
+    const statusMap = await this.statusService.getStatusMap(
+      userId,
+      courseSlug,
+      this.mode,
+      orderedNodeIds,
+    );
+
+    return {
+      id: nextNodeId,
+      status: statusMap.get(nextNodeId) ?? 'locked',
+    };
+  }
+
+  private isOptionBasedChallenge(type: AdvancedChallengeData['type']): boolean {
+    return [
+      'multiple_choice',
+      'code_trace',
+      'bug_hunt',
+      'choose_better_algorithm',
+      'simulation',
+      'fill_missing_line',
+    ].includes(type);
+  }
+
+  private getCorrectMatchingMap(
+    challenge: AdvancedChallengeData,
+  ): Record<string, string> {
+    const source = challenge as Record<string, unknown>;
+    const correctMatching =
+      source.correctMatchingMap ??
+      source.correctMatching ??
+      source.correctDropZoneMap;
+
+    if (!isStringRecord(correctMatching)) {
+      throw new BadRequestException(
+        `Missing correct matching data for ${challenge.type}.`,
+      );
+    }
+
+    return correctMatching;
+  }
+
+  private getCorrectOrderedIds(challenge: AdvancedChallengeData): string[] {
+    const source = challenge as Record<string, unknown>;
+    const correctOrder = source.correctOrderedIds ?? source.correctOrder;
+
+    if (
+      !Array.isArray(correctOrder) ||
+      !correctOrder.every((item) => typeof item === 'string')
+    ) {
+      throw new BadRequestException(
+        `Missing correct ordering data for ${challenge.type}.`,
+      );
+    }
+
+    return correctOrder;
+  }
+
+  private isSameStringArray(received: string[], expected: string[]): boolean {
+    return (
+      received.length === expected.length &&
+      expected.every((item, index) => received[index] === item)
+    );
   }
 }
