@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { SocialProvider, User, UserDocument } from './schemas/user.schema';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
+const BATTLE_WIN_XP = 150;
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -166,5 +168,9 @@ export class UsersService {
       .select('-passwordHash -refreshTokenHash');
     if (!user) throw new NotFoundException('User not found');
     return user;
+  }
+
+  async awardBattleWinXp(userId: string): Promise<UserDocument> {
+    return this.updateXp(userId, BATTLE_WIN_XP);
   }
 }

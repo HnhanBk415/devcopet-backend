@@ -10,7 +10,6 @@ import {
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { SubmitBattleDto } from './dto/submit-battle.dto';
 
 @Controller('users')
 export class UsersController {
@@ -56,10 +55,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Post('battle/submit')
-  async submitBattle(
-    @Req() req: { user: { userId: string } },
-    @Body() dto: SubmitBattleDto,
-  ) {
-    return this.usersService.updateXp(req.user.userId, dto.expChange);
+  async submitBattle(@Req() req: { user: { userId: string } }) {
+    return this.usersService.awardBattleWinXp(req.user.userId);
   }
 }

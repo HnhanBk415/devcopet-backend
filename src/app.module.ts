@@ -9,8 +9,6 @@ import { ChaptersModule } from './modules/chapters/chapters.module';
 import { LessonsModule } from './modules/lessons/lessons.module';
 import { QuizzesModule } from './modules/quizzes/quizzes.module';
 import { RoadmapModule } from './modules/roadmap/roadmap.module';
-import { ProgressModule } from './modules/progress/progress.module';
-import { PetsModule } from './modules/pets/pets.module';
 import { OnboardingModule } from './modules/onboarding/onboarding.module';
 import { PersonalityEngineModule } from './modules/personality-engine/personality-engine.module';
 import { AiChatModule } from './modules/ai-chat/ai-chat.module';
@@ -35,8 +33,6 @@ import { AiChatModule } from './modules/ai-chat/ai-chat.module';
     LessonsModule,
     QuizzesModule,
     RoadmapModule,
-    ProgressModule,
-    PetsModule,
     OnboardingModule,
     PersonalityEngineModule,
     AiChatModule,
