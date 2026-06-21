@@ -1,0 +1,702 @@
+[
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 0,
+"chapterTitle": "Setup and First Steps",
+"lessonSlug": "printing-text-numbers-multiple-values",
+"lessonTitle": "Printing Text, Numbers, and Multiple Values",
+"title": "Print a Number",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "print(123)"
+},
+"options": [
+{ "id": "A", "text": "123" },
+{ "id": "B", "text": "\"123\"" },
+{ "id": "C", "text": "print(123)" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "A",
+"explanation": "print(123) displays the number 123 on the screen.",
+"conceptTags": ["print", "number", "output"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 0,
+"chapterTitle": "Setup and First Steps",
+"lessonSlug": "printing-text-numbers-multiple-values",
+"lessonTitle": "Printing Text, Numbers, and Multiple Values",
+"title": "Print Multiple Values",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "print(\"Level\", 1)"
+},
+"options": [
+{ "id": "A", "text": "Level 1" },
+{ "id": "B", "text": "\"Level\" 1" },
+{ "id": "C", "text": "Level, 1" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "A",
+"explanation": "When print() receives multiple values, it separates them with a space by default.",
+"conceptTags": ["print", "multiple-values", "output"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "variables-and-naming-data",
+"lessonTitle": "Variables and Naming Data",
+"title": "Read a Variable",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "name = \"Luna\"\nprint(name)"
+},
+"options": [
+{ "id": "A", "text": "name" },
+{ "id": "B", "text": "Luna" },
+{ "id": "C", "text": "\"name\"" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "B",
+"explanation": "The variable name stores the string Luna, so print(name) displays Luna.",
+"conceptTags": ["variables", "assignment", "print"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "numbers-int-and-float",
+"lessonTitle": "Numbers: int and float",
+"title": "Integer Addition",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "a = 7\nb = 3\nprint(a + b)"
+},
+"options": [
+{ "id": "A", "text": "10" },
+{ "id": "B", "text": "73" },
+{ "id": "C", "text": "a + b" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "A",
+"explanation": "Both a and b are numbers, so a + b performs numeric addition.",
+"conceptTags": ["numbers", "addition", "variables"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "numbers-int-and-float",
+"lessonTitle": "Numbers: int and float",
+"title": "Float Result",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "price = 2.5\nprint(price)"
+},
+"options": [
+{ "id": "A", "text": "2" },
+{ "id": "B", "text": "2.5" },
+{ "id": "C", "text": "\"2.5\"" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "B",
+"explanation": "2.5 is a float value, and print(price) displays 2.5.",
+"conceptTags": ["float", "numbers", "print"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "strings-booleans-and-none",
+"lessonTitle": "Strings, Booleans, and None",
+"title": "String Value",
+"question": "Which data type is the value stored in message?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "message = \"Game Start\""
+},
+"options": [
+{ "id": "A", "text": "int" },
+{ "id": "B", "text": "float" },
+{ "id": "C", "text": "str" },
+{ "id": "D", "text": "bool" }
+],
+"correctOptionId": "C",
+"explanation": "Text inside quotes is a string, and Python's string type is str.",
+"conceptTags": ["string", "data-types", "variables"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "strings-booleans-and-none",
+"lessonTitle": "Strings, Booleans, and None",
+"title": "Boolean Value",
+"question": "What value is stored in is_ready?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "is_ready = True"
+},
+"options": [
+{ "id": "A", "text": "true" },
+{ "id": "B", "text": "True" },
+{ "id": "C", "text": "\"True\"" },
+{ "id": "D", "text": "1" }
+],
+"correctOptionId": "B",
+"explanation": "Python boolean values are written as True and False with capital first letters.",
+"conceptTags": ["boolean", "data-types", "true-false"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "arithmetic-and-assignment-operators",
+"lessonTitle": "Arithmetic and Assignment Operators",
+"title": "Multiplication Operator",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "print(4 * 3)"
+},
+"options": [
+{ "id": "A", "text": "7" },
+{ "id": "B", "text": "12" },
+{ "id": "C", "text": "43" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "B",
+"explanation": "The * operator multiplies numbers, so 4 * 3 equals 12.",
+"conceptTags": ["operators", "multiplication", "arithmetic"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "arithmetic-and-assignment-operators",
+"lessonTitle": "Arithmetic and Assignment Operators",
+"title": "Update with Plus Equals",
+"question": "What is the final value of coins?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "coins = 5\ncoins += 3"
+},
+"options": [
+{ "id": "A", "text": "3" },
+{ "id": "B", "text": "5" },
+{ "id": "C", "text": "8" },
+{ "id": "D", "text": "15" }
+],
+"correctOptionId": "C",
+"explanation": "coins += 3 means coins = coins + 3, so the final value is 8.",
+"conceptTags": ["assignment", "plus-equals", "operators"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 1,
+"chapterTitle": "Basic Data Types and Operators",
+"lessonSlug": "comparison-and-logical-operators",
+"lessonTitle": "Comparison and Logical Operators",
+"title": "Greater Than",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "print(10 > 3)"
+},
+"options": [
+{ "id": "A", "text": "True" },
+{ "id": "B", "text": "False" },
+{ "id": "C", "text": "10 > 3" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "A",
+"explanation": "10 is greater than 3, so the comparison returns True.",
+"conceptTags": ["comparison", "boolean", "greater-than"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 2,
+"chapterTitle": "Conditions",
+"lessonSlug": "if-statements",
+"lessonTitle": "if Statements",
+"title": "Simple If Statement",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "level = 3\nif level > 1:\n    print(\"Unlocked\")"
+},
+"options": [
+{ "id": "A", "text": "Unlocked" },
+{ "id": "B", "text": "Locked" },
+{ "id": "C", "text": "level > 1" },
+{ "id": "D", "text": "Nothing" }
+],
+"correctOptionId": "A",
+"explanation": "The condition level > 1 is True, so the indented print statement runs.",
+"conceptTags": ["if", "condition", "comparison"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 2,
+"chapterTitle": "Conditions",
+"lessonSlug": "else-for-alternative-paths",
+"lessonTitle": "else for Alternative Paths",
+"title": "If Else Output",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "hp = 0\nif hp > 0:\n    print(\"Alive\")\nelse:\n    print(\"Game Over\")"
+},
+"options": [
+{ "id": "A", "text": "Alive" },
+{ "id": "B", "text": "Game Over" },
+{ "id": "C", "text": "hp > 0" },
+{ "id": "D", "text": "Nothing" }
+],
+"correctOptionId": "B",
+"explanation": "hp > 0 is False, so the else block runs.",
+"conceptTags": ["if-else", "condition", "branching"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 2,
+"chapterTitle": "Conditions",
+"lessonSlug": "elif-for-multiple-choices",
+"lessonTitle": "elif for Multiple Choices",
+"title": "Elif Choice",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "score = 75\nif score >= 90:\n    print(\"A\")\nelif score >= 70:\n    print(\"B\")\nelse:\n    print(\"C\")"
+},
+"options": [
+{ "id": "A", "text": "A" },
+{ "id": "B", "text": "B" },
+{ "id": "C", "text": "C" },
+{ "id": "D", "text": "Nothing" }
+],
+"correctOptionId": "B",
+"explanation": "score is not at least 90, but it is at least 70, so the elif block prints B.",
+"conceptTags": ["elif", "condition", "comparison"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 3,
+"chapterTitle": "Loops",
+"lessonSlug": "for-loops-with-range",
+"lessonTitle": "for Loops with range()",
+"title": "Range Loop Count",
+"question": "How many times does this loop print Hi?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "for i in range(3):\n    print(\"Hi\")"
+},
+"options": [
+{ "id": "A", "text": "1" },
+{ "id": "B", "text": "2" },
+{ "id": "C", "text": "3" },
+{ "id": "D", "text": "4" }
+],
+"correctOptionId": "C",
+"explanation": "range(3) produces 0, 1, and 2, so the loop runs 3 times.",
+"conceptTags": ["for-loop", "range", "iteration"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 3,
+"chapterTitle": "Loops",
+"lessonSlug": "while-loops",
+"lessonTitle": "while Loops",
+"title": "While Loop Output",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "count = 1\nwhile count <= 2:\n    print(count)\n    count += 1"
+},
+"options": [
+{ "id": "A", "text": "1 then 2" },
+{ "id": "B", "text": "1 only" },
+{ "id": "C", "text": "2 only" },
+{ "id": "D", "text": "Infinite loop" }
+],
+"correctOptionId": "A",
+"explanation": "The loop prints 1, then increases count, prints 2, and stops when count becomes 3.",
+"conceptTags": ["while-loop", "counter", "iteration"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 3,
+"chapterTitle": "Loops",
+"lessonSlug": "break-and-continue",
+"lessonTitle": "break and continue",
+"title": "Break Statement",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "for number in range(5):\n    if number == 2:\n        break\n    print(number)"
+},
+"options": [
+{ "id": "A", "text": "0 1" },
+{ "id": "B", "text": "0 1 2" },
+{ "id": "C", "text": "1 2" },
+{ "id": "D", "text": "2 3 4" }
+],
+"correctOptionId": "A",
+"explanation": "The loop prints 0 and 1, then stops when number becomes 2 because of break.",
+"conceptTags": ["break", "for-loop", "control-flow"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 4,
+"chapterTitle": "Basic Data Structures",
+"lessonSlug": "lists-ordered-mutable-data",
+"lessonTitle": "Lists: Ordered Mutable Data",
+"title": "List Index",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "items = [\"sword\", \"shield\", \"potion\"]\nprint(items[0])"
+},
+"options": [
+{ "id": "A", "text": "sword" },
+{ "id": "B", "text": "shield" },
+{ "id": "C", "text": "potion" },
+{ "id": "D", "text": "0" }
+],
+"correctOptionId": "A",
+"explanation": "Python list indexing starts at 0, so items[0] is sword.",
+"conceptTags": ["list", "indexing", "zero-based-index"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 4,
+"chapterTitle": "Basic Data Structures",
+"lessonSlug": "lists-ordered-mutable-data",
+"lessonTitle": "Lists: Ordered Mutable Data",
+"title": "Append to List",
+"question": "What is the final value of numbers?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "numbers = [1, 2]\nnumbers.append(3)"
+},
+"options": [
+{ "id": "A", "text": "[1, 2]" },
+{ "id": "B", "text": "[1, 2, 3]" },
+{ "id": "C", "text": "[3, 1, 2]" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "B",
+"explanation": "append() adds the new item to the end of the list.",
+"conceptTags": ["list", "append", "mutable"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 4,
+"chapterTitle": "Basic Data Structures",
+"lessonSlug": "dictionaries-key-value-data",
+"lessonTitle": "Dictionaries: Key-Value Data",
+"title": "Dictionary Lookup",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "player = {\"name\": \"Kai\", \"level\": 2}\nprint(player[\"name\"])"
+},
+"options": [
+{ "id": "A", "text": "Kai" },
+{ "id": "B", "text": "name" },
+{ "id": "C", "text": "2" },
+{ "id": "D", "text": "player" }
+],
+"correctOptionId": "A",
+"explanation": "player[\"name\"] gets the value stored under the key name.",
+"conceptTags": ["dictionary", "key-value", "lookup"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 4,
+"chapterTitle": "Basic Data Structures",
+"lessonSlug": "sets-unique-collections",
+"lessonTitle": "Sets: Unique Collections",
+"title": "Set Removes Duplicates",
+"question": "What is the main feature of a set in Python?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "badges = {\"gold\", \"silver\", \"gold\"}"
+},
+"options": [
+{ "id": "A", "text": "It stores duplicate values many times" },
+{ "id": "B", "text": "It stores only unique values" },
+{ "id": "C", "text": "It always keeps items sorted" },
+{ "id": "D", "text": "It only stores numbers" }
+],
+"correctOptionId": "B",
+"explanation": "A set stores unique values, so duplicate values are not kept as separate items.",
+"conceptTags": ["set", "unique", "duplicates"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 5,
+"chapterTitle": "Functions",
+"lessonSlug": "defining-and-calling-functions",
+"lessonTitle": "Defining and Calling Functions",
+"title": "Function Call",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "def greet():\n    print(\"Welcome\")\n\ngreet()"
+},
+"options": [
+{ "id": "A", "text": "Welcome" },
+{ "id": "B", "text": "greet" },
+{ "id": "C", "text": "def greet()" },
+{ "id": "D", "text": "Nothing" }
+],
+"correctOptionId": "A",
+"explanation": "Calling greet() runs the function body, so it prints Welcome.",
+"conceptTags": ["function", "call", "print"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 5,
+"chapterTitle": "Functions",
+"lessonSlug": "parameters-and-arguments",
+"lessonTitle": "Parameters and Arguments",
+"title": "Function Argument",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "def say_hi(name):\n    print(\"Hi\", name)\n\nsay_hi(\"Mina\")"
+},
+"options": [
+{ "id": "A", "text": "Hi name" },
+{ "id": "B", "text": "Hi Mina" },
+{ "id": "C", "text": "Mina Hi" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "B",
+"explanation": "The argument Mina is passed into the name parameter, so the output is Hi Mina.",
+"conceptTags": ["function", "parameters", "arguments"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 5,
+"chapterTitle": "Functions",
+"lessonSlug": "return-values",
+"lessonTitle": "Return Values",
+"title": "Return a Value",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "def add_two(x):\n    return x + 2\n\nprint(add_two(5))"
+},
+"options": [
+{ "id": "A", "text": "5" },
+{ "id": "B", "text": "2" },
+{ "id": "C", "text": "7" },
+{ "id": "D", "text": "add_two" }
+],
+"correctOptionId": "C",
+"explanation": "add_two(5) returns 5 + 2, which is 7.",
+"conceptTags": ["function", "return", "addition"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 6,
+"chapterTitle": "String Processing",
+"lessonSlug": "string-indexing-and-slicing",
+"lessonTitle": "String Indexing and Slicing",
+"title": "String Index",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "word = \"Python\"\nprint(word[0])"
+},
+"options": [
+{ "id": "A", "text": "P" },
+{ "id": "B", "text": "y" },
+{ "id": "C", "text": "Python" },
+{ "id": "D", "text": "0" }
+],
+"correctOptionId": "A",
+"explanation": "String indexing starts at 0, so word[0] is P.",
+"conceptTags": ["string", "indexing", "zero-based-index"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 6,
+"chapterTitle": "String Processing",
+"lessonSlug": "common-string-methods",
+"lessonTitle": "Common String Methods",
+"title": "Uppercase Method",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "text = \"hello\"\nprint(text.upper())"
+},
+"options": [
+{ "id": "A", "text": "hello" },
+{ "id": "B", "text": "HELLO" },
+{ "id": "C", "text": "Hello" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "B",
+"explanation": "upper() returns a new string with all letters converted to uppercase.",
+"conceptTags": ["string", "method", "upper"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 6,
+"chapterTitle": "String Processing",
+"lessonSlug": "splitting-and-joining-text",
+"lessonTitle": "Splitting and Joining Text",
+"title": "Split Text",
+"question": "What does this code output?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "text = \"red blue\"\nprint(text.split())"
+},
+"options": [
+{ "id": "A", "text": "[\"red\", \"blue\"]" },
+{ "id": "B", "text": "red blue" },
+{ "id": "C", "text": "[\"red blue\"]" },
+{ "id": "D", "text": "Error" }
+],
+"correctOptionId": "A",
+"explanation": "split() separates the string by spaces and returns a list of words.",
+"conceptTags": ["string", "split", "list"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 7,
+"chapterTitle": "Basic File Reading and Writing",
+"lessonSlug": "opening-files-with-with-open",
+"lessonTitle": "Opening Files with with open()",
+"title": "With Open Purpose",
+"question": "Why is with open(...) commonly used when working with files?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "with open(\"notes.txt\", \"r\") as file:\n    content = file.read()"
+},
+"options": [
+{ "id": "A", "text": "It automatically closes the file after the block" },
+{ "id": "B", "text": "It deletes the file" },
+{ "id": "C", "text": "It only works with numbers" },
+{ "id": "D", "text": "It prevents all errors" }
+],
+"correctOptionId": "A",
+"explanation": "The with statement helps manage the file resource and closes it automatically after the block.",
+"conceptTags": ["file", "with-open", "resource-management"],
+"isActive": true
+},
+{
+"courseSlug": "python-basic",
+"difficulty": "easy",
+"chapterOrder": 8,
+"chapterTitle": "Exceptions",
+"lessonSlug": "try-and-except",
+"lessonTitle": "try and except",
+"title": "Try Except Purpose",
+"question": "What is the main purpose of try and except?",
+"type": "multiple_choice",
+"codeSnippet": {
+"language": "python",
+"code": "try:\n    number = int(\"abc\")\nexcept ValueError:\n    print(\"Invalid number\")"
+},
+"options": [
+{ "id": "A", "text": "To repeat code many times" },
+{ "id": "B", "text": "To handle errors without crashing the program" },
+{ "id": "C", "text": "To create a list" },
+{ "id": "D", "text": "To define a function" }
+],
+"correctOptionId": "B",
+"explanation": "try and except allow the program to handle expected errors safely.",
+"conceptTags": ["exception", "try-except", "error-handling"],
+"isActive": true
+}
+]

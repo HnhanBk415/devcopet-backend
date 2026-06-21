@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -70,6 +70,42 @@ export class User {
 
   @Prop({ default: false })
   petProfileInitialized!: boolean;
+  @Prop({ default: 1000, min: 1000 })
+  arenaRating!: number;
+
+  @Prop({
+    type: String,
+    enum: ['Beginner', 'Fresher', 'Senior', 'Expert'],
+    default: 'Beginner',
+  })
+  arenaRank!: string;
+
+  @Prop({ default: 0, min: 0 })
+  arenaTotalMatches!: number;
+
+  @Prop({ default: 0, min: 0 })
+  arenaWins!: number;
+
+  @Prop({ default: 0, min: 0 })
+  arenaLosses!: number;
+
+  @Prop({ default: 0, min: 0 })
+  arenaDraws!: number;
+
+  @Prop({ default: 0, min: 0 })
+  matchesInCurrentRank!: number;
+
+  @Prop({ default: 0, min: 0 })
+  winsInCurrentRank!: number;
+
+  @Prop({ default: 0, min: 0 })
+  lossesInCurrentRank!: number;
+
+  @Prop({ type: [Types.ObjectId], default: [] })
+  recentArenaQuestionIds!: Types.ObjectId[];
+
+  @Prop()
+  lastArenaPlayedAt?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

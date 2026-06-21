@@ -8,6 +8,7 @@ import { CourseSchema } from '../../modules/courses/schemas/course.schema';
 import { ChapterSchema } from '../../modules/chapters/schemas/chapter.schema';
 import { LessonSchema } from '../../modules/lessons/schemas/lesson.schema';
 import { QuizSchema } from '../../modules/quizzes/schemas/quiz.schema';
+import { ArenaQuestionSchema } from '../../modules/arena/schemas/arena-question.schema';
 
 import { seedPythonBasic, seedPythonDsa } from './python-dsa.seed';
 
@@ -31,10 +32,23 @@ async function run() {
     const ChapterModel = getModel('Chapter', ChapterSchema);
     const LessonModel = getModel('Lesson', LessonSchema);
     const QuizModel = getModel('Quiz', QuizSchema);
+    const ArenaQuestionModel = getModel('ArenaQuestion', ArenaQuestionSchema);
 
     // Call seed functions
-    await seedPythonBasic(CourseModel, ChapterModel, LessonModel, QuizModel);
-    await seedPythonDsa(CourseModel, ChapterModel, LessonModel, QuizModel);
+    await seedPythonBasic(
+      CourseModel,
+      ChapterModel,
+      LessonModel,
+      QuizModel,
+      ArenaQuestionModel,
+    );
+    await seedPythonDsa(
+      CourseModel,
+      ChapterModel,
+      LessonModel,
+      QuizModel,
+      ArenaQuestionModel,
+    );
 
     console.log('[Seed] Done');
   } catch (error) {
