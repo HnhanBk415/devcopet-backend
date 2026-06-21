@@ -16,16 +16,62 @@ import type {
 export class ArenaBotService {
   createBotForRank(rank: ArenaRank): ArenaRuntimePlayer {
     const botDifficulty = ARENA_BOT_BY_RANK[rank];
-    const botNames: Record<ArenaBotDifficulty, string> = {
-      easy: 'Arena Bot Rookie',
-      medium: 'Arena Bot Scout',
-      hard: 'Arena Bot Ace',
-      elite: 'Arena Bot Elite',
+    const pools: Record<ArenaBotDifficulty, string[]> = {
+      easy: [
+        'GiaHuy_98',
+        'MinhTuan_SE',
+        'ThuTrang_Dev',
+        'HoangSon_Coder',
+        'NgocAnh_Python',
+        'TuanAnh_Code',
+        'ThanhHa_SE',
+        'BaoLong_IT',
+        'BaoChau_03',
+        'HoangLong_IT',
+      ],
+      medium: [
+        'CodeMaster_X',
+        'ThanhTung_Dev',
+        'Alex_Nguyen',
+        'Pythonista_99',
+        'DevPro_VN',
+        'QuangHuy_Coder',
+        'MinhPhuong_IT',
+        'HoangNam_SE',
+        'MinhQuan_SE',
+        'DuyKhanh_Dev',
+      ],
+      hard: [
+        'AlgoWizard',
+        'CyberNinja',
+        'KernelLord',
+        'TuanDat_AI',
+        'DataSci_Minh',
+        'CodeKnight',
+        'ShadowCoder',
+        'BaoChau_Senior',
+        'AnhTu_Master',
+        'ThanhTruc_Pro',
+      ],
+      elite: [
+        'StackOverflow_God',
+        'SystemArchitect',
+        'DevOps_Legend',
+        'ByteBoss',
+        'MainFrame_Guru',
+        'PyGrandMaster',
+        'BinaryBoss_101',
+        'AlgorithmPro',
+        'CyberGod',
+        'Pythonista_Pro',
+      ],
     };
+    const pool = pools[botDifficulty];
+    const username = pool[Math.floor(Math.random() * pool.length)];
 
     return {
       userId: `bot_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
-      username: botNames[botDifficulty],
+      username,
       isBot: true,
       botDifficulty,
       arenaRank: rank,

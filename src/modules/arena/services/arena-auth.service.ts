@@ -52,6 +52,21 @@ export class ArenaAuthService {
       }
     }
 
+    // Trích xuất từ Cookie của Handshake Headers (dc_access_token)
+    const cookieHeader = client.handshake.headers.cookie;
+    if (cookieHeader) {
+      const cookieToken = cookieHeader
+        .split(';')
+        .map((part) => part.trim())
+        .find((part) => part.startsWith('dc_access_token='));
+      if (cookieToken) {
+        const token = decodeURIComponent(
+          cookieToken.slice('dc_access_token='.length),
+        );
+        return this.normalizeToken(token);
+      }
+    }
+
     return null;
   }
 
