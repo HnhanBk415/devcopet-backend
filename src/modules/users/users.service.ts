@@ -40,7 +40,10 @@ export class UsersService {
       .select('-passwordHash -refreshTokenHash')
       .lean();
     if (!user) throw new NotFoundException('User not found');
-    return user;
+    return {
+      ...user,
+      petName: user.petName ?? 'Axo-Script',
+    };
   }
 
   /** Saves a hashed refresh token (or clears it on logout) */
@@ -92,8 +95,19 @@ export class UsersService {
     userId: string,
     data: UpdateProfileDto,
   ): Promise<UserDocument> {
+    const update: Partial<UpdateProfileDto> & {
+      petProfileInitialized?: boolean;
+    } = {
+      ...data,
+    };
+
+    if (data.petName) {
+      update.petName = data.petName.trim();
+      update.petProfileInitialized = true;
+    }
+
     const user = await this.userModel
-      .findByIdAndUpdate(userId, { $set: data }, { new: true })
+      .findByIdAndUpdate(userId, { $set: update }, { new: true })
       .select('-passwordHash -refreshTokenHash');
     if (!user) throw new NotFoundException('User not found');
     return user;

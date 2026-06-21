@@ -3,19 +3,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CoursesController } from './courses.controller';
 import { CoursesService } from './courses.service';
 import { Course, CourseSchema } from './schemas/course.schema';
-import { Lesson, LessonSchema } from '../lessons/schemas/lesson.schema';
-import {
-  LessonProgress,
-  LessonProgressSchema,
-} from '../progress/schemas/lesson-progress.schema';
+import { ProgressModule } from '../progress/progress.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Course.name, schema: CourseSchema },
-      { name: Lesson.name, schema: LessonSchema },
-      { name: LessonProgress.name, schema: LessonProgressSchema },
-    ]),
+    ProgressModule,
+    MongooseModule.forFeature([{ name: Course.name, schema: CourseSchema }]),
   ],
   controllers: [CoursesController],
   providers: [CoursesService],

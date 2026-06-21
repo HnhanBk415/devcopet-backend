@@ -5,18 +5,15 @@ import { ChaptersService } from './chapters.service';
 import { Chapter, ChapterSchema } from './schemas/chapter.schema';
 import { CoursesModule } from '../courses/courses.module';
 import { Lesson, LessonSchema } from '../lessons/schemas/lesson.schema';
-import {
-  LessonProgress,
-  LessonProgressSchema,
-} from '../progress/schemas/lesson-progress.schema';
+import { ProgressModule } from '../progress/progress.module';
 
 @Module({
   imports: [
     CoursesModule,
+    ProgressModule,
     MongooseModule.forFeature([
       { name: Chapter.name, schema: ChapterSchema },
       { name: Lesson.name, schema: LessonSchema },
-      { name: LessonProgress.name, schema: LessonProgressSchema },
     ]),
   ],
   controllers: [ChaptersController],

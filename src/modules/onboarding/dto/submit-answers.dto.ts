@@ -5,9 +5,12 @@ import {
   IsArray,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Max,
+  MaxLength,
   Min,
+  MinLength,
   ValidateNested,
 } from 'class-validator';
 
@@ -32,4 +35,13 @@ export class SubmitAnswersDto {
   @ValidateNested({ each: true })
   @Type(() => AnswerItemDto)
   answers!: AnswerItemDto[];
+
+  @IsOptional()
+  @Transform(({ value }: { value: unknown }): unknown =>
+    typeof value === 'string' ? value.trim() : value,
+  )
+  @IsString()
+  @MinLength(2)
+  @MaxLength(30)
+  petName?: string;
 }

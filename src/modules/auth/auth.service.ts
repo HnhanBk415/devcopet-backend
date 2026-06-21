@@ -84,6 +84,7 @@ export class AuthService {
     coins?: number;
     onboardingCompleted?: boolean;
     petProfileInitialized?: boolean;
+    petName?: string;
     authProviders?: string[];
   }) {
     return {
@@ -97,6 +98,7 @@ export class AuthService {
       coins: user.coins,
       onboardingCompleted: user.onboardingCompleted,
       petProfileInitialized: user.petProfileInitialized,
+      petName: user.petName ?? 'Axo-Script',
       authProviders: user.authProviders,
     };
   }

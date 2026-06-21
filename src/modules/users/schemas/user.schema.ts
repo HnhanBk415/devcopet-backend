@@ -70,6 +70,10 @@ export class User {
 
   @Prop({ default: false })
   petProfileInitialized!: boolean;
+
+  @Prop({ default: 'Axo-Script', trim: true })
+  petName!: string;
+
   @Prop({ default: 1000, min: 1000 })
   arenaRating!: number;
 

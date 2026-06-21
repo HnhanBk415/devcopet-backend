@@ -12,6 +12,7 @@ import {
   LessonProgressDocument,
 } from '../progress/schemas/lesson-progress.schema';
 import { LessonsService } from '../lessons/lessons.service';
+import { ProgressService } from '../progress/progress.service';
 
 @Injectable()
 export class QuizzesService {
@@ -20,6 +21,7 @@ export class QuizzesService {
     @InjectModel(LessonProgress.name)
     private lessonProgressModel: Model<LessonProgressDocument>,
     private readonly lessonsService: LessonsService,
+    private readonly progressService: ProgressService,
   ) {}
 
   async findByLessonId(lessonId: string, userId: string) {
@@ -54,7 +56,7 @@ export class QuizzesService {
       throw new NotFoundException(`Quiz ${quizId} not found`);
     }
 
-    await this.lessonsService.assertLessonUnlockedForUser(
+    const lesson = await this.lessonsService.assertLessonUnlockedForUser(
       String(quiz.lessonId),
       userId,
     );
@@ -142,6 +144,11 @@ export class QuizzesService {
         )
         .exec();
     }
+    const progress = await this.progressService.getLessonProgressSnapshot(
+      lesson.courseId,
+      userId,
+      String(quiz.lessonId),
+    );
 
     return {
       totalQuestions: quiz.questions.length,
@@ -150,6 +157,7 @@ export class QuizzesService {
       earnedPoints,
       percentage,
       passed,
+      progress,
       results,
     };
   }

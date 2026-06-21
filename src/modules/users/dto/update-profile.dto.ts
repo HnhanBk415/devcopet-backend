@@ -11,4 +11,10 @@ export class UpdateProfileDto {
   @IsString()
   @MaxLength(160)
   bio?: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(2)
+  @MaxLength(30)
+  petName?: string;
 }

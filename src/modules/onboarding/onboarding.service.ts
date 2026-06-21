@@ -118,6 +118,9 @@ export class OnboardingService {
       { upsert: true, new: true },
     );
 
+    if (dto.petName) {
+      await this.usersService.updateProfile(userId, { petName: dto.petName });
+    }
     await this.usersService.markOnboardingCompleted(userId);
 
     const topTraits = dominantTraits.map((trait) => ({
@@ -135,6 +138,7 @@ export class OnboardingService {
         normalized: normalizedScores,
       },
       topTraits,
+      ...(dto.petName ? { petName: dto.petName } : {}),
     };
   }
 

@@ -8,10 +8,12 @@ import {
   LessonProgressSchema,
 } from '../progress/schemas/lesson-progress.schema';
 import { LessonsModule } from '../lessons/lessons.module';
+import { ProgressModule } from '../progress/progress.module';
 
 @Module({
   imports: [
     LessonsModule,
+    ProgressModule,
     MongooseModule.forFeature([
       { name: Quiz.name, schema: QuizSchema },
       { name: LessonProgress.name, schema: LessonProgressSchema },

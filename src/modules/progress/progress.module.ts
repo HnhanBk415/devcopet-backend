@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProgressController } from './progress.controller';
 import { ProgressService } from './progress.service';
+import { Chapter, ChapterSchema } from '../chapters/schemas/chapter.schema';
+import { Lesson, LessonSchema } from '../lessons/schemas/lesson.schema';
 import { Attempt, AttemptSchema } from './schemas/attempt.schema';
 import {
   LessonProgress,
@@ -16,6 +18,8 @@ import {
   imports: [
     MongooseModule.forFeature([
       { name: Attempt.name, schema: AttemptSchema },
+      { name: Chapter.name, schema: ChapterSchema },
+      { name: Lesson.name, schema: LessonSchema },
       { name: LessonProgress.name, schema: LessonProgressSchema },
       { name: WorldProgress.name, schema: WorldProgressSchema },
     ]),
