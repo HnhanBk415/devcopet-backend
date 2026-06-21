@@ -57,15 +57,35 @@ export class LessonsService {
 
   async findById(lessonId: string, userId: string) {
     const lesson = await this.assertLessonUnlockedForUser(lessonId, userId);
+    const orderedLessons = await this.getOrderedLessonsByCourse(
+      lesson.courseId,
+    );
     const statusByLessonId = await this.getLessonStatusByCourse(
       lesson.courseId,
       userId,
     );
-
-    return this.toLessonListItem(
-      lesson,
-      statusByLessonId.get(String(lesson._id)) ?? 'locked',
+    const lessonStatus = statusByLessonId.get(String(lesson._id)) ?? 'locked';
+    const currentIndex = orderedLessons.findIndex(
+      (item) => String(item._id) === String(lesson._id),
     );
+    const nextLesson =
+      currentIndex >= 0 ? orderedLessons[currentIndex + 1] : undefined;
+    const nextLessonId = nextLesson ? String(nextLesson._id) : null;
+    const nextLessonStatus = nextLessonId
+      ? (statusByLessonId.get(nextLessonId) ?? 'locked')
+      : null;
+
+    return {
+      ...this.toLessonListItem(lesson, lessonStatus),
+      currentLesson: {
+        id: String(lesson._id),
+        lessonId: String(lesson._id),
+        status: lessonStatus,
+      },
+      nextLessonId,
+      isNextLessonUnlocked:
+        nextLessonStatus === 'available' || nextLessonStatus === 'completed',
+    };
   }
 
   async assertLessonUnlockedForUser(lessonId: string, userId: string) {
@@ -98,23 +118,7 @@ export class LessonsService {
     courseId: Types.ObjectId,
     userId: string,
   ) {
-    const chapters = await this.chapterModel
-      .find({ courseId, isPublished: true })
-      .sort({ order: 1 })
-      .lean<LeanChapter[]>()
-      .exec();
-    const lessons = await this.lessonModel
-      .find({ courseId, isPublished: true })
-      .lean<LeanLesson[]>()
-      .exec();
-    const lessonsByChapterId = this.groupBy(lessons, (lesson) =>
-      String(lesson.chapterId),
-    );
-    const orderedLessons = chapters.flatMap((chapter) =>
-      (lessonsByChapterId.get(String(chapter._id)) ?? []).sort(
-        (a, b) => a.order - b.order,
-      ),
-    );
+    const orderedLessons = await this.getOrderedLessonsByCourse(courseId);
     const progress = await this.lessonProgressModel
       .find({
         userId: new Types.ObjectId(userId),
@@ -150,6 +154,29 @@ export class LessonsService {
     }
 
     return statusByLessonId;
+  }
+
+  private async getOrderedLessonsByCourse(
+    courseId: Types.ObjectId,
+  ): Promise<LeanLesson[]> {
+    const chapters = await this.chapterModel
+      .find({ courseId, isPublished: true })
+      .sort({ order: 1 })
+      .lean<LeanChapter[]>()
+      .exec();
+    const lessons = await this.lessonModel
+      .find({ courseId, isPublished: true })
+      .lean<LeanLesson[]>()
+      .exec();
+    const lessonsByChapterId = this.groupBy(lessons, (lesson) =>
+      String(lesson.chapterId),
+    );
+
+    return chapters.flatMap((chapter) =>
+      (lessonsByChapterId.get(String(chapter._id)) ?? []).sort(
+        (a, b) => a.order - b.order,
+      ),
+    );
   }
 
   private groupBy<T>(items: T[], getKey: (item: T) => string) {

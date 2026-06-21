@@ -8,6 +8,7 @@ import type {
   AdvancedChallengeFile,
   AdvancedNodeContext,
   AdvancedRoadmapMode,
+  LeanCourse,
 } from '../roadmap.types';
 import { RoadmapChallengeLoaderService } from './roadmap-challenge-loader.service';
 import { RoadmapQueryService } from './roadmap-query.service';
@@ -16,6 +17,7 @@ import { RoadmapStatusService } from './roadmap-status.service';
 import {
   ADVANCED_NODE_ID_PATTERN,
   capitalizeMode,
+  groupBy,
   isChallengeOptionId,
   isSameStringRecord,
   isStringRecord,
@@ -47,6 +49,8 @@ export abstract class AdvancedRoadmapBaseService {
 
   async getRoadmap(courseSlug: string, userId: string) {
     const course = await this.queryService.findCourseBySlugOrThrow(courseSlug);
+    await this.assertDifficultyUnlocked(course, userId);
+
     const challengeFile = this.challengeLoader.loadAdvancedChallengeFile(
       this.mode,
       course.slug,
@@ -390,6 +394,8 @@ export abstract class AdvancedRoadmapBaseService {
     const course = await this.queryService.findCourseBySlugOrThrow(
       parsedNodeId.courseSlug,
     );
+    await this.assertDifficultyUnlocked(course, userId);
+
     const challengeFile = this.challengeLoader.loadAdvancedChallengeFile(
       this.mode,
       course.slug,
@@ -504,6 +510,84 @@ export abstract class AdvancedRoadmapBaseService {
     return `${courseSlug}-${mode}-c${chapterOrder}-n${nodeOrder}`;
   }
 
+  private async assertDifficultyUnlocked(
+    course: LeanCourse,
+    userId: string,
+  ): Promise<void> {
+    const prerequisites = [
+      await this.getEasyCompletionSummary(course, userId),
+      ...(this.mode === 'hard'
+        ? [
+            await this.getAdvancedCompletionSummary(
+              course.slug,
+              'medium',
+              userId,
+            ),
+          ]
+        : []),
+    ];
+    const prerequisite = prerequisites.find((item) => !item.complete);
+
+    if (!prerequisite) return;
+
+    throw new ForbiddenException(
+      `${capitalizeMode(this.mode)} roadmap is locked until ${prerequisite.requiredMode} reaches 100%.`,
+    );
+  }
+
+  private async getEasyCompletionSummary(course: LeanCourse, userId: string) {
+    const chapters = await this.queryService.findPublishedChapters(course._id);
+    const lessons = await this.queryService.findPublishedLessons(
+      chapters.map((chapter) => chapter._id),
+    );
+    const lessonsByChapterId = groupBy(lessons, (lesson) =>
+      String(lesson.chapterId),
+    );
+    const orderedNodeIds = chapters.flatMap((chapter) =>
+      (lessonsByChapterId.get(String(chapter._id)) ?? [])
+        .sort((a, b) => a.order - b.order)
+        .map((lesson) => String(lesson._id)),
+    );
+    const summary = await this.statusService.getCompletionSummary(
+      userId,
+      course.slug,
+      'easy',
+      orderedNodeIds,
+    );
+
+    return {
+      ...summary,
+      requiredMode: 'easy' as const,
+    };
+  }
+
+  private async getAdvancedCompletionSummary(
+    courseSlug: string,
+    mode: AdvancedRoadmapMode,
+    userId: string,
+  ) {
+    const challengeFile = this.challengeLoader.loadAdvancedChallengeFile(
+      mode,
+      courseSlug,
+    );
+    const orderedNodeIds = this.getOrderedAdvancedNodeIdsForMode(
+      mode,
+      courseSlug,
+      challengeFile,
+    );
+    const summary = await this.statusService.getCompletionSummary(
+      userId,
+      courseSlug,
+      mode,
+      orderedNodeIds,
+    );
+
+    return {
+      ...summary,
+      requiredMode: mode,
+    };
+  }
+
   private findGlobalNodeIndex(
     challengeFile: AdvancedChallengeFile,
     chapterOrder: number,
@@ -527,17 +611,24 @@ export abstract class AdvancedRoadmapBaseService {
     courseSlug: string,
     challengeFile: AdvancedChallengeFile,
   ): string[] {
+    return this.getOrderedAdvancedNodeIdsForMode(
+      this.mode,
+      courseSlug,
+      challengeFile,
+    );
+  }
+
+  private getOrderedAdvancedNodeIdsForMode(
+    mode: AdvancedRoadmapMode,
+    courseSlug: string,
+    challengeFile: AdvancedChallengeFile,
+  ): string[] {
     const orderedIds: string[] = [];
 
     for (const chapter of challengeFile.chapters) {
       for (const node of chapter.nodes) {
         orderedIds.push(
-          this.toNodeId(
-            this.mode,
-            courseSlug,
-            chapter.chapterOrder,
-            node.order,
-          ),
+          this.toNodeId(mode, courseSlug, chapter.chapterOrder, node.order),
         );
       }
     }

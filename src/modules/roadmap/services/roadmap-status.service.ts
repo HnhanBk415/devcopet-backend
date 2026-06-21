@@ -12,6 +12,13 @@ import type {
   RoadmapStatus,
 } from '../roadmap.types';
 
+export type RoadmapCompletionSummary = {
+  completedNodes: number;
+  totalNodes: number;
+  percent: number;
+  complete: boolean;
+};
+
 @Injectable()
 export class RoadmapStatusService {
   constructor(
@@ -91,6 +98,31 @@ export class RoadmapStatusService {
     await this.roadmapProgressModel
       .updateOne({ userId, courseSlug, mode, nodeId }, update, { upsert: true })
       .exec();
+  }
+
+  async getCompletionSummary(
+    userId: string,
+    courseSlug: string,
+    mode: RoadmapMode,
+    orderedNodeIds: string[],
+  ): Promise<RoadmapCompletionSummary> {
+    const completedNodeIds = await this.getCompletedNodeIds(
+      userId,
+      courseSlug,
+      mode,
+    );
+    const completedNodes = orderedNodeIds.filter((nodeId) =>
+      completedNodeIds.has(nodeId),
+    ).length;
+    const totalNodes = orderedNodeIds.length;
+
+    return {
+      completedNodes,
+      totalNodes,
+      percent:
+        totalNodes === 0 ? 0 : Math.round((completedNodes / totalNodes) * 100),
+      complete: totalNodes > 0 && completedNodes === totalNodes,
+    };
   }
 
   async getNodeCompletion(
