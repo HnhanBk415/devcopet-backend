@@ -21,7 +21,7 @@ export class Chapter {
   @Prop({ default: '' })
   description!: string;
 
-  @Prop({ required: true, min: 1 })
+  @Prop({ required: true, min: 0 })
   order!: number;
 
   @Prop({ default: 0, min: 0 })
