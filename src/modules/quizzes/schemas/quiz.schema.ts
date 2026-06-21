@@ -8,6 +8,7 @@ export enum QuestionType {
   TRUE_FALSE = 'true_false',
   FILL_BLANK = 'fill_blank',
   CODE_OUTPUT = 'code_output',
+  CODE_REASONING = 'code_reasoning',
 }
 
 export enum QuestionDifficulty {

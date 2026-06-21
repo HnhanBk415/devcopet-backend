@@ -85,7 +85,8 @@ export class QuizzesService {
       if (
         q.type === QuestionType.MULTIPLE_CHOICE ||
         q.type === QuestionType.TRUE_FALSE ||
-        q.type === QuestionType.CODE_OUTPUT
+        q.type === QuestionType.CODE_OUTPUT ||
+        q.type === QuestionType.CODE_REASONING
       ) {
         isCorrect = this.areOptionAnswersEqual(
           submitted.selectedOptionIds ?? [],
