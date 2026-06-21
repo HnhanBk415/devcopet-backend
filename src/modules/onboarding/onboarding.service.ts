@@ -58,10 +58,9 @@ export class OnboardingService {
       .sort((a, b) => rawScores[b] - rawScores[a])
       .slice(0, 3);
 
-    let assessmentResult: AssessmentResultDocument;
-    try {
-      assessmentResult = await this.assessmentModel.create({
-        userId: new Types.ObjectId(userId),
+    const assessmentResult = await this.assessmentModel.findOneAndUpdate(
+      { userId: new Types.ObjectId(userId) },
+      {
         assessmentVersion: 'v1',
         scoringVersion: 'v1',
         answers: answersMap,
@@ -85,12 +84,12 @@ export class OnboardingService {
         secondaryPersonality: dominantTraits[1] ?? null,
         tertiaryPersonality: dominantTraits[2] ?? null,
         completedAt: new Date(),
-      });
-    } catch (error) {
-      if (this.isDuplicateKeyError(error)) {
-        throw new ConflictException('Onboarding has already been completed.');
-      }
-      throw error;
+      },
+      { upsert: true, new: true },
+    );
+
+    if (!assessmentResult) {
+      throw new BadRequestException('Failed to save assessment result.');
     }
 
     await this.personalityModel.findOneAndUpdate(
@@ -119,6 +118,9 @@ export class OnboardingService {
       { upsert: true, new: true },
     );
 
+    if (dto.petName) {
+      await this.usersService.updateProfile(userId, { petName: dto.petName });
+    }
     await this.usersService.markOnboardingCompleted(userId);
 
     const topTraits = dominantTraits.map((trait) => ({
@@ -136,6 +138,7 @@ export class OnboardingService {
         normalized: normalizedScores,
       },
       topTraits,
+      ...(dto.petName ? { petName: dto.petName } : {}),
     };
   }
 
@@ -181,15 +184,10 @@ export class OnboardingService {
   }
 
   private async assertOnboardingNotCompleted(userId: string) {
-    const objectUserId = new Types.ObjectId(userId);
-    const [userCompleted, existingPersonality, existingAssessment] =
-      await Promise.all([
-        this.usersService.hasCompletedOnboarding(userId),
-        this.personalityModel.exists({ userId: objectUserId }).exec(),
-        this.assessmentModel.exists({ userId: objectUserId }).exec(),
-      ]);
+    const userCompleted =
+      await this.usersService.hasCompletedOnboarding(userId);
 
-    if (userCompleted || existingPersonality || existingAssessment) {
+    if (userCompleted) {
       throw new ConflictException('Onboarding has already been completed.');
     }
   }

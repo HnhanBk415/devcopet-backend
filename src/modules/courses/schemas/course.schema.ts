@@ -56,5 +56,3 @@ export class Course {
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);
-
-CourseSchema.index({ slug: 1 }, { unique: true });

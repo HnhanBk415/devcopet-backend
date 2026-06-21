@@ -1,32 +1,30 @@
-import * as dns from 'node:dns';
-// Force Google DNS — VNPT DNS không resolve được MongoDB Atlas
-dns.setServers(['8.8.8.8', '8.8.4.4']);
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = process.env.PORT ?? 3000;
 
-  // Global validation pipe — strips unknown fields and validates all DTOs
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // strips properties not in DTO
+      whitelist: true,
       forbidNonWhitelisted: true,
-      transform: true, // auto-transforms primitive types
+      transform: true,
     }),
   );
 
-  // CORS — allow the React frontend to call the backend
   app.enableCors({
     origin: process.env.FRONTEND_URL ?? 'http://localhost:5173',
     credentials: true,
   });
 
-  await app.listen(process.env.PORT ?? 3000);
-  console.log(
-    ` Devcopet backend running on: http://localhost:${process.env.PORT ?? 3000}`,
+  app.enableShutdownHooks();
+
+  await app.listen(port);
+  Logger.log(
+    `Devcopet backend running on: http://localhost:${port}`,
+    'Bootstrap',
   );
 }
 void bootstrap();

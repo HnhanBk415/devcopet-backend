@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 
-export type AiChatLogDocument = HydratedDocument<AiChatLog>;
+export type AiChatLogDocument = Omit<HydratedDocument<AiChatLog>, 'model'> & {
+  model: string;
+};
 
 @Schema({ timestamps: true, collection: 'ai_chat_logs' })
 export class AiChatLog {

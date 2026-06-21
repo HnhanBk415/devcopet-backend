@@ -2,6 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SocialProvider, User, UserDocument } from './schemas/user.schema';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+
+const BATTLE_WIN_XP = 150;
 
 @Injectable()
 export class UsersService {
@@ -37,7 +40,10 @@ export class UsersService {
       .select('-passwordHash -refreshTokenHash')
       .lean();
     if (!user) throw new NotFoundException('User not found');
-    return user;
+    return {
+      ...user,
+      petName: user.petName ?? 'Axo-Script',
+    };
   }
 
   /** Saves a hashed refresh token (or clears it on logout) */
@@ -83,5 +89,102 @@ export class UsersService {
       onboardingCompleted: true,
     });
     if (!result) throw new NotFoundException('User not found');
+  }
+
+  async updateProfile(
+    userId: string,
+    data: UpdateProfileDto,
+  ): Promise<UserDocument> {
+    const update: Partial<UpdateProfileDto> & {
+      petProfileInitialized?: boolean;
+    } = {
+      ...data,
+    };
+
+    if (data.petName) {
+      update.petName = data.petName.trim();
+      update.petProfileInitialized = true;
+    }
+
+    const user = await this.userModel
+      .findByIdAndUpdate(userId, { $set: update }, { new: true })
+      .select('-passwordHash -refreshTokenHash');
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
+
+  async getLeaderboard() {
+    return this.userModel
+      .find({ onboardingCompleted: true })
+      .sort({ exp: -1, level: -1 })
+      .limit(20)
+      .select('username level exp avatarUrl bio')
+      .lean()
+      .exec();
+  }
+
+  async getRandomOpponent(userId: string) {
+    const count = await this.userModel.countDocuments({
+      _id: { $ne: userId },
+      onboardingCompleted: true,
+    });
+    if (count === 0) {
+      const fallbackCount = await this.userModel.countDocuments({
+        _id: { $ne: userId },
+      });
+      if (fallbackCount === 0) {
+        return null;
+      }
+      const random = Math.floor(Math.random() * fallbackCount);
+      return this.userModel
+        .findOne({ _id: { $ne: userId } })
+        .skip(random)
+        .select('username level exp avatarUrl bio')
+        .lean()
+        .exec();
+    }
+    const random = Math.floor(Math.random() * count);
+    return this.userModel
+      .findOne({ _id: { $ne: userId }, onboardingCompleted: true })
+      .skip(random)
+      .select('username level exp avatarUrl bio')
+      .lean()
+      .exec();
+  }
+
+  async updateXp(userId: string, expChange: number): Promise<UserDocument> {
+    const user = await this.userModel
+      .findByIdAndUpdate(
+        userId,
+        [
+          {
+            $set: {
+              exp: {
+                $max: [
+                  0,
+                  {
+                    $add: [{ $ifNull: ['$exp', 0] }, Math.trunc(expChange)],
+                  },
+                ],
+              },
+            },
+          },
+          {
+            $set: {
+              level: {
+                $add: [{ $floor: { $divide: ['$exp', 1000] } }, 1],
+              },
+            },
+          },
+        ],
+        { new: true },
+      )
+      .select('-passwordHash -refreshTokenHash');
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
+
+  async awardBattleWinXp(userId: string): Promise<UserDocument> {
+    return this.updateXp(userId, BATTLE_WIN_XP);
   }
 }

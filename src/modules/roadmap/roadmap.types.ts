@@ -159,3 +159,22 @@ export interface AdvancedNodeContext {
 export interface RoadmapOrderedNode {
   id: string;
 }
+
+export interface RoadmapCompletionReview {
+  correct: true;
+  explanation: string;
+  completedAt: string;
+  selectedOptionId?: ChallengeOptionId;
+  correctOptionId?: ChallengeOptionId;
+  dropZoneMap?: Record<string, string>;
+  correctDropZoneMap?: Record<string, string>;
+  matchingMap?: Record<string, string>;
+  correctMatchingMap?: Record<string, string>;
+  orderedIds?: string[];
+  correctOrderedIds?: string[];
+}
+
+export interface RoadmapCompletion {
+  completedAt: Date;
+  review?: RoadmapCompletionReview | null;
+}

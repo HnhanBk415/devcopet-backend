@@ -5,7 +5,19 @@ import {
   RoadmapProgress,
   RoadmapProgressDocument,
 } from '../schemas/roadmap-progress.schema';
-import type { RoadmapMode, RoadmapStatus } from '../roadmap.types';
+import type {
+  RoadmapCompletion,
+  RoadmapCompletionReview,
+  RoadmapMode,
+  RoadmapStatus,
+} from '../roadmap.types';
+
+export type RoadmapCompletionSummary = {
+  completedNodes: number;
+  totalNodes: number;
+  percent: number;
+  complete: boolean;
+};
 
 @Injectable()
 export class RoadmapStatusService {
@@ -62,22 +74,70 @@ export class RoadmapStatusService {
     courseSlug: string,
     mode: RoadmapMode,
     nodeId: string,
+    review?: RoadmapCompletionReview,
   ): Promise<void> {
+    const completedAt = review?.completedAt
+      ? new Date(review.completedAt)
+      : new Date();
+    const setOnInsert: Partial<RoadmapProgress> = {
+      userId,
+      courseSlug,
+      mode,
+      nodeId,
+      completedAt,
+    };
+    const update: {
+      $setOnInsert: Partial<RoadmapProgress>;
+      $set?: Partial<RoadmapProgress>;
+    } = { $setOnInsert: setOnInsert };
+
+    if (review) {
+      update.$set = { review };
+    }
+
     await this.roadmapProgressModel
-      .updateOne(
-        { userId, courseSlug, mode, nodeId },
-        {
-          $setOnInsert: {
-            userId,
-            courseSlug,
-            mode,
-            nodeId,
-            completedAt: new Date(),
-          },
-        },
-        { upsert: true },
-      )
+      .updateOne({ userId, courseSlug, mode, nodeId }, update, { upsert: true })
       .exec();
+  }
+
+  async getCompletionSummary(
+    userId: string,
+    courseSlug: string,
+    mode: RoadmapMode,
+    orderedNodeIds: string[],
+  ): Promise<RoadmapCompletionSummary> {
+    const completedNodeIds = await this.getCompletedNodeIds(
+      userId,
+      courseSlug,
+      mode,
+    );
+    const completedNodes = orderedNodeIds.filter((nodeId) =>
+      completedNodeIds.has(nodeId),
+    ).length;
+    const totalNodes = orderedNodeIds.length;
+
+    return {
+      completedNodes,
+      totalNodes,
+      percent:
+        totalNodes === 0 ? 0 : Math.round((completedNodes / totalNodes) * 100),
+      complete: totalNodes > 0 && completedNodes === totalNodes,
+    };
+  }
+
+  async getNodeCompletion(
+    userId: string,
+    courseSlug: string,
+    mode: RoadmapMode,
+    nodeId: string,
+  ): Promise<RoadmapCompletion | null> {
+    const row = await this.roadmapProgressModel
+      .findOne({ userId, courseSlug, mode, nodeId })
+      .select({ completedAt: 1, review: 1 })
+      .lean<RoadmapCompletion | null>()
+      .exec();
+
+    return row;
   }
 
   async resetRoadmapProgress(
