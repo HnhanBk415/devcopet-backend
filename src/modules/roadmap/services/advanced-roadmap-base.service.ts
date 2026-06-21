@@ -526,12 +526,12 @@ export abstract class AdvancedRoadmapBaseService {
           ]
         : []),
     ];
-    const prerequisite = prerequisites.find((item) => !item.complete);
+    const prerequisite = prerequisites.find((item) => item.completedNodes < 5);
 
     if (!prerequisite) return;
 
     throw new ForbiddenException(
-      `${capitalizeMode(this.mode)} roadmap is locked until ${prerequisite.requiredMode} reaches 100%.`,
+      `${capitalizeMode(this.mode)} roadmap is locked until you complete at least 5 nodes in ${prerequisite.requiredMode}.`,
     );
   }
 
