@@ -78,6 +78,7 @@ export class CoursesService {
             title: string;
             description: string;
             order: number;
+            estimatedMinutes?: number;
           }[]
         >()
         .exec(),
@@ -97,6 +98,7 @@ export class CoursesService {
         order: number;
         status: string;
         canAccess: boolean;
+        estimatedMinutes?: number;
       }>
     >();
     for (const lesson of lessons) {
@@ -113,6 +115,7 @@ export class CoursesService {
         order: lesson.order,
         status,
         canAccess: status !== 'locked',
+        estimatedMinutes: lesson.estimatedMinutes,
       });
     }
 
