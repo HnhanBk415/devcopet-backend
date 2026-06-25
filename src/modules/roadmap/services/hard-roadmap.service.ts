@@ -5,6 +5,8 @@ import { RoadmapQueryService } from './roadmap-query.service';
 import { RoadmapReviewService } from './roadmap-review.service';
 import { RoadmapStatusService } from './roadmap-status.service';
 
+import { UsersService } from '../../users/users.service';
+
 @Injectable()
 export class HardRoadmapService extends AdvancedRoadmapBaseService {
   protected readonly mode = 'hard' as const;
@@ -14,7 +16,14 @@ export class HardRoadmapService extends AdvancedRoadmapBaseService {
     queryService: RoadmapQueryService,
     reviewService: RoadmapReviewService,
     statusService: RoadmapStatusService,
+    usersService: UsersService,
   ) {
-    super(challengeLoader, queryService, reviewService, statusService);
+    super(
+      challengeLoader,
+      queryService,
+      reviewService,
+      statusService,
+      usersService,
+    );
   }
 }

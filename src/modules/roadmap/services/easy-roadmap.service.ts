@@ -20,6 +20,7 @@ import {
   groupBy,
   isChallengeOptionId,
 } from '../utils/roadmap.util';
+import { UsersService } from '../../users/users.service';
 
 @Injectable()
 export class EasyRoadmapService {
@@ -30,6 +31,7 @@ export class EasyRoadmapService {
     private readonly queryService: RoadmapQueryService,
     private readonly reviewService: RoadmapReviewService,
     private readonly statusService: RoadmapStatusService,
+    private readonly usersService: UsersService,
   ) {}
 
   async getRoadmap(courseSlug: string, userId: string) {
@@ -117,6 +119,34 @@ export class EasyRoadmapService {
       throw new ForbiddenException('This roadmap node is locked.');
     }
 
+    const user = await this.usersService.findById(userId);
+    const explanationSpeaker = {
+      name: user?.petName || 'Your pet',
+      type: 'PET' as const,
+    };
+
+    const nextChallenge = await this.getNextChallenge(
+      course.slug,
+      node.id,
+      userId,
+    );
+
+    const baseResponse = {
+      mode: this.mode,
+      courseSlug: course.slug,
+      node: {
+        ...node,
+        mode: this.mode,
+        chapterIndex: chapter.order,
+      },
+      challenge: this.toPublicChallenge(lesson, challenge),
+      explanationSpeaker,
+      navigation: {
+        returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+        nextChallenge,
+      },
+    };
+
     if (node.status === 'completed') {
       const completion = await this.statusService.getNodeCompletion(
         userId,
@@ -126,16 +156,12 @@ export class EasyRoadmapService {
       );
 
       return {
-        node,
-        challenge: this.toPublicChallenge(lesson, challenge),
+        ...baseResponse,
         review: this.reviewService.toEasyCompletedReview(challenge, completion),
       };
     }
 
-    return {
-      node,
-      challenge: this.toPublicChallenge(lesson, challenge),
-    };
+    return baseResponse;
   }
 
   async submitNodeChallenge(
@@ -161,11 +187,31 @@ export class EasyRoadmapService {
         node.id,
       );
 
+      const user = await this.usersService.findById(userId);
+      const explanationSpeaker = {
+        name: user?.petName || 'Your pet',
+        type: 'PET' as const,
+      };
+
       return {
         correct: true,
+        status: 'PASSED',
         alreadyCompleted: true,
         message: 'This roadmap node is already completed.',
+        explanation:
+          challenge.explanation ||
+          'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
+        explanationSpeaker,
+        rewardSummary: this.getEmptyRewardSummary(),
         review: this.reviewService.toEasyCompletedReview(challenge, completion),
+        navigation: {
+          returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+          nextChallenge: await this.getNextChallenge(
+            course.slug,
+            node.id,
+            userId,
+          ),
+        },
       };
     }
 
@@ -174,6 +220,22 @@ export class EasyRoadmapService {
         'selectedOptionId must be one of A, B, C, or D.',
       );
     }
+
+    const user = await this.usersService.findById(userId);
+    const explanationSpeaker = {
+      name: user?.petName || 'Your pet',
+      type: 'PET' as const,
+    };
+
+    const nextChallenge = await this.getNextChallenge(
+      course.slug,
+      node.id,
+      userId,
+    );
+    const navigation = {
+      returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+      nextChallenge,
+    };
 
     const correct = selectedOptionId === challenge.correctOptionId;
 
@@ -193,18 +255,30 @@ export class EasyRoadmapService {
 
       return {
         correct: true,
+        status: 'PASSED',
         message: 'Correct. Nice work.',
-        explanation: challenge.explanation,
+        explanation:
+          challenge.explanation ||
+          'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
+        explanationSpeaker,
+        rewardSummary: this.getRewardSummary(challenge),
         review,
-        nextNode: await this.getNextNode(course.slug, node.id, userId),
+        navigation,
       };
     }
 
     return {
       correct: false,
-      message: 'Not quite. Review the explanation and try the lesson again.',
-      correctOptionId: challenge.correctOptionId,
-      explanation: challenge.explanation,
+      status: 'FAILED',
+      message:
+        'Not quite. Return to the roadmap and try this checkpoint again.',
+      explanation: undefined,
+      correctOptionId: undefined,
+      rewardSummary: this.getEmptyRewardSummary(),
+      navigation: {
+        returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+        nextChallenge: null,
+      },
     };
   }
 
@@ -301,6 +375,33 @@ export class EasyRoadmapService {
     };
   }
 
+  private getRewardSummary(challenge: EasyChallengeData) {
+    const xp = challenge.xp ?? 0;
+    const stars = xp > 0 ? 10 : 0;
+    const petExp = Math.floor(xp / 2);
+
+    return {
+      xp,
+      stars,
+      coins: 0,
+      petExp,
+      items: [
+        { label: 'XP', amount: xp, type: 'XP' as const },
+        { label: 'Stars', amount: stars, type: 'STAR' as const },
+      ],
+    };
+  }
+
+  private getEmptyRewardSummary() {
+    return {
+      xp: 0,
+      stars: 0,
+      coins: 0,
+      petExp: 0,
+      items: [],
+    };
+  }
+
   private getOrderedLessonIds(
     chapters: LeanChapter[],
     lessonsByChapterId: Map<string, LeanLesson[]>,
@@ -350,6 +451,20 @@ export class EasyRoadmapService {
     return {
       id: nextNodeId,
       status: statusMap.get(nextNodeId) ?? 'locked',
+    };
+  }
+
+  private async getNextChallenge(
+    courseSlug: string,
+    nodeId: string,
+    userId: string,
+  ) {
+    const nextNode = await this.getNextNode(courseSlug, nodeId, userId);
+    if (!nextNode) return null;
+    return {
+      nodeId: nextNode.id,
+      mode: this.mode,
+      courseSlug,
     };
   }
 }

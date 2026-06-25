@@ -1,4 +1,4 @@
-﻿import { Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -18,6 +18,18 @@ export class CoursesController {
   @Get(':courseId')
   async findOne(@Param('courseId') courseId: string) {
     return this.coursesService.findByIdOrSlug(courseId);
+  }
+
+  @Get(':courseId/detail')
+  @UseGuards(JwtAuthGuard)
+  async getCourseDetail(
+    @Param('courseId') courseId: string,
+    @Req() req: AuthenticatedRequest,
+  ) {
+    return this.coursesService.getCourseDetailAggregated(
+      courseId,
+      req.user.userId,
+    );
   }
 
   @Post(':courseId/reset-progress')

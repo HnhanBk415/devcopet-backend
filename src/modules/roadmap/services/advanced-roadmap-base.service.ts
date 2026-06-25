@@ -9,6 +9,7 @@ import type {
   AdvancedNodeContext,
   AdvancedRoadmapMode,
   LeanCourse,
+  RoadmapCompletionReview,
 } from '../roadmap.types';
 import { RoadmapChallengeLoaderService } from './roadmap-challenge-loader.service';
 import { RoadmapQueryService } from './roadmap-query.service';
@@ -22,6 +23,7 @@ import {
   isSameStringRecord,
   isStringRecord,
 } from '../utils/roadmap.util';
+import { UsersService } from '../../users/users.service';
 
 type PublicAdvancedChallenge = {
   id: string;
@@ -45,6 +47,7 @@ export abstract class AdvancedRoadmapBaseService {
     protected readonly queryService: RoadmapQueryService,
     protected readonly reviewService: RoadmapReviewService,
     protected readonly statusService: RoadmapStatusService,
+    protected readonly usersService: UsersService,
   ) {}
 
   async getRoadmap(courseSlug: string, userId: string) {
@@ -137,6 +140,34 @@ export abstract class AdvancedRoadmapBaseService {
       throw new ForbiddenException('This roadmap node is locked.');
     }
 
+    const user = await this.usersService.findById(userId);
+    const explanationSpeaker = {
+      name: user?.petName || 'Your pet',
+      type: 'PET' as const,
+    };
+
+    const nextChallenge = await this.getNextChallenge(
+      course.slug,
+      node.id,
+      userId,
+    );
+
+    const baseResponse = {
+      mode: this.mode,
+      courseSlug: course.slug,
+      node: {
+        ...node,
+        mode: this.mode,
+        chapterIndex: 1, // we will override this below if needed
+      },
+      challenge: this.toPublicChallenge(nodeId, challenge),
+      explanationSpeaker,
+      navigation: {
+        returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+        nextChallenge,
+      },
+    };
+
     if (node.status === 'completed') {
       const completion = await this.statusService.getNodeCompletion(
         userId,
@@ -145,20 +176,18 @@ export abstract class AdvancedRoadmapBaseService {
         node.id,
       );
 
-      return {
-        node,
-        challenge: this.toPublicChallenge(nodeId, challenge),
-        review: this.reviewService.toAdvancedCompletedReview(
-          challenge,
-          completion,
-        ),
-      };
+      if (completion && completion.review) {
+        return {
+          ...baseResponse,
+          review: this.reviewService.toAdvancedCompletedReview(
+            challenge,
+            completion,
+          ),
+        };
+      }
     }
 
-    return {
-      node,
-      challenge: this.toPublicChallenge(nodeId, challenge),
-    };
+    return baseResponse;
   }
 
   async submitNodeChallenge(
@@ -183,15 +212,37 @@ export abstract class AdvancedRoadmapBaseService {
         node.id,
       );
 
-      return {
-        correct: true,
-        alreadyCompleted: true,
-        message: 'This node is already completed.',
-        review: this.reviewService.toAdvancedCompletedReview(
-          challenge,
-          completion,
-        ),
+      const user = await this.usersService.findById(userId);
+      const explanationSpeaker = {
+        name: user?.petName || 'Your pet',
+        type: 'PET' as const,
       };
+
+      if (completion && completion.review) {
+        return {
+          correct: true,
+          status: 'PASSED',
+          alreadyCompleted: true,
+          message: 'This node is already completed.',
+          explanation:
+            challenge.explanation ||
+            'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
+          explanationSpeaker,
+          rewardSummary: this.getEmptyRewardSummary(),
+          review: this.reviewService.toAdvancedCompletedReview(
+            challenge,
+            completion,
+          ),
+          navigation: {
+            returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+            nextChallenge: await this.getNextChallenge(
+              course.slug,
+              node.id,
+              userId,
+            ),
+          },
+        };
+      }
     }
 
     if (payload?.type !== challenge.type) {
@@ -199,6 +250,10 @@ export abstract class AdvancedRoadmapBaseService {
         `type must match the node challenge type: ${challenge.type}.`,
       );
     }
+
+    let correct = false;
+    let review: RoadmapCompletionReview | undefined = undefined;
+    let returnData: Record<string, unknown> = {};
 
     if (this.isOptionBasedChallenge(challenge.type)) {
       const selectedOptionId = payload.selectedOptionId;
@@ -221,122 +276,51 @@ export abstract class AdvancedRoadmapBaseService {
         );
       }
 
-      const correct = selectedOptionId === correctOptionId;
-      const review = correct
+      correct = selectedOptionId === correctOptionId;
+      review = correct
         ? this.reviewService.toAdvancedOptionReview(
             challenge,
             selectedOptionId,
             correctOptionId,
           )
         : undefined;
-
-      if (review) {
-        await this.statusService.markNodeCompleted(
-          userId,
-          course.slug,
-          this.mode,
-          node.id,
-          review,
-        );
-      }
-
-      return {
-        correct,
-        message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
-        correctOptionId,
-        explanation: challenge.explanation,
-        ...(correct
-          ? {
-              review,
-              nextNode: await this.getNextNode(course.slug, node.id, userId),
-            }
-          : {}),
-      };
-    }
-
-    if (challenge.type === 'drag_drop') {
+      if (correct) returnData = { correctOptionId };
+    } else if (challenge.type === 'drag_drop') {
       const dropZoneMap = payload.dropZoneMap;
       if (!isStringRecord(dropZoneMap)) {
         throw new BadRequestException('dropZoneMap must be an object.');
       }
 
-      const correct = isSameStringRecord(
-        dropZoneMap,
-        challenge.correctDropZoneMap,
-      );
-      const review = correct
+      correct = isSameStringRecord(dropZoneMap, challenge.correctDropZoneMap);
+      review = correct
         ? this.reviewService.toAdvancedDropZoneReview(
             challenge,
             dropZoneMap,
             challenge.correctDropZoneMap,
           )
         : undefined;
-
-      if (review) {
-        await this.statusService.markNodeCompleted(
-          userId,
-          course.slug,
-          this.mode,
-          node.id,
-          review,
-        );
-      }
-
-      return {
-        correct,
-        message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
-        correctDropZoneMap: challenge.correctDropZoneMap,
-        explanation: challenge.explanation,
-        ...(correct
-          ? {
-              review,
-              nextNode: await this.getNextNode(course.slug, node.id, userId),
-            }
-          : {}),
-      };
-    }
-
-    if (challenge.type === 'drag_drop_matching') {
+      if (correct)
+        returnData = { correctDropZoneMap: challenge.correctDropZoneMap };
+    } else if (challenge.type === 'drag_drop_matching') {
       const matchingMap = payload.matchingMap;
       if (!isStringRecord(matchingMap)) {
         throw new BadRequestException('matchingMap must be an object.');
       }
 
       const correctMatchingMap = this.getCorrectMatchingMap(challenge);
-      const correct = isSameStringRecord(matchingMap, correctMatchingMap);
-      const review = correct
+      correct = isSameStringRecord(matchingMap, correctMatchingMap);
+      review = correct
         ? this.reviewService.toAdvancedMatchingReview(
             challenge,
             matchingMap,
             correctMatchingMap,
           )
         : undefined;
-
-      if (review) {
-        await this.statusService.markNodeCompleted(
-          userId,
-          course.slug,
-          this.mode,
-          node.id,
-          review,
-        );
-      }
-
-      return {
-        correct,
-        message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
-        correctMatchingMap,
-        explanation: challenge.explanation,
-        ...(correct
-          ? {
-              review,
-              nextNode: await this.getNextNode(course.slug, node.id, userId),
-            }
-          : {}),
-      };
-    }
-
-    if (challenge.type === 'ordering_steps' || challenge.type === 'ranking') {
+      if (correct) returnData = { correctMatchingMap };
+    } else if (
+      challenge.type === 'ordering_steps' ||
+      challenge.type === 'ranking'
+    ) {
       const orderedIds = payload.orderedIds;
       if (
         !Array.isArray(orderedIds) ||
@@ -348,42 +332,79 @@ export abstract class AdvancedRoadmapBaseService {
       }
 
       const correctOrderedIds = this.getCorrectOrderedIds(challenge);
-      const correct = this.isSameStringArray(orderedIds, correctOrderedIds);
-      const review = correct
+      correct = this.isSameStringArray(orderedIds, correctOrderedIds);
+      review = correct
         ? this.reviewService.toAdvancedOrderingReview(
             challenge,
             orderedIds,
             correctOrderedIds,
           )
         : undefined;
+      if (correct) returnData = { correctOrderedIds };
+    } else {
+      throw new BadRequestException(
+        `Unsupported ${capitalizeMode(this.mode)} node type: ${challenge.type}.`,
+      );
+    }
 
-      if (review) {
-        await this.statusService.markNodeCompleted(
-          userId,
-          course.slug,
-          this.mode,
-          node.id,
-          review,
-        );
-      }
+    const user = await this.usersService.findById(userId);
+    const explanationSpeaker = {
+      name: user?.petName || 'Your pet',
+      type: 'PET' as const,
+    };
 
+    const nextChallenge = await this.getNextChallenge(
+      course.slug,
+      node.id,
+      userId,
+    );
+    const navigation = {
+      returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+      nextChallenge,
+    };
+
+    if (correct) {
+      await this.statusService.markNodeCompleted(
+        userId,
+        course.slug,
+        this.mode,
+        node.id,
+        review,
+      );
+    }
+
+    if (!correct) {
       return {
-        correct,
-        message: correct ? 'Correct. Nice work.' : 'Not quite. Try again.',
-        correctOrderedIds,
-        explanation: challenge.explanation,
-        ...(correct
-          ? {
-              review,
-              nextNode: await this.getNextNode(course.slug, node.id, userId),
-            }
-          : {}),
+        correct: false,
+        status: 'FAILED',
+        message:
+          'Not quite. Return to the roadmap and try this checkpoint again.',
+        explanation: undefined,
+        correctOptionId: undefined,
+        correctDropZoneMap: undefined,
+        correctMatchingMap: undefined,
+        correctOrderedIds: undefined,
+        rewardSummary: this.getEmptyRewardSummary(),
+        navigation: {
+          returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+          nextChallenge: null,
+        },
       };
     }
 
-    throw new BadRequestException(
-      `Unsupported ${capitalizeMode(this.mode)} node type: ${challenge.type}.`,
-    );
+    return {
+      correct: true,
+      status: 'PASSED',
+      message: 'Correct. Nice work.',
+      explanation:
+        challenge.explanation ||
+        'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
+      explanationSpeaker,
+      rewardSummary: this.buildRewardSummary(challenge),
+      ...returnData,
+      review,
+      navigation,
+    };
   }
 
   async getNodeContext(
@@ -469,11 +490,73 @@ export abstract class AdvancedRoadmapBaseService {
 
     for (const [key, value] of Object.entries(challenge)) {
       if (key !== 'explanation' && !key.startsWith('correct')) {
-        publicChallenge[key] = value;
+        publicChallenge[key as keyof PublicAdvancedChallenge] = value;
+      }
+    }
+
+    if (this.mode === 'hard') {
+      const source = challenge as Record<string, unknown>;
+      if (Array.isArray(source.hints) && source.hints.length > 0) {
+        publicChallenge.hints = source.hints as Array<{
+          level?: number;
+          text: string;
+        }>;
+      } else if (typeof source.hint === 'string') {
+        publicChallenge.hints = [{ text: source.hint }];
+      } else {
+        const fallbackHints: Record<string, string> = {
+          multiple_choice:
+            'Compare each option against the exact requirement in the prompt. Eliminate answers that solve a different problem.',
+          code_trace:
+            'Trace the code line by line and write down how each variable changes after every statement.',
+          bug_hunt:
+            'Look for the line where the program state first becomes different from what the question expects.',
+          drag_drop_matching:
+            'Match each concept by its role first, then check whether the pair fits the code behavior.',
+          drag_drop:
+            'Use the surrounding code to infer what each blank must produce or update.',
+          ordering_steps:
+            'Start with the operation that must happen first, then place dependent steps after it.',
+          ranking:
+            'Identify the strongest criterion first, then order items from most to least suitable.',
+          fill_missing_line:
+            'Look at the line before and after the blank. The missing line must connect those two states.',
+        };
+        const hintText =
+          fallbackHints[challenge.type] ||
+          'Review the surrounding code and check how the data is transformed.';
+        publicChallenge.hints = [{ text: hintText }];
       }
     }
 
     return publicChallenge;
+  }
+
+  private buildRewardSummary(challenge: AdvancedChallengeData) {
+    const xp = challenge.xp ?? 0;
+    const stars = xp > 0 ? 10 : 0;
+    const petExp = Math.floor(xp / 2);
+
+    return {
+      xp,
+      stars,
+      coins: 0,
+      petExp,
+      items: [
+        { label: 'XP', amount: xp, type: 'XP' as const },
+        { label: 'Stars', amount: stars, type: 'STAR' as const },
+      ],
+    };
+  }
+
+  private getEmptyRewardSummary() {
+    return {
+      xp: 0,
+      stars: 0,
+      coins: 0,
+      petExp: 0,
+      items: [],
+    };
   }
 
   private parseNodeId(
@@ -664,6 +747,20 @@ export abstract class AdvancedRoadmapBaseService {
     return {
       id: nextNodeId,
       status: statusMap.get(nextNodeId) ?? 'locked',
+    };
+  }
+
+  private async getNextChallenge(
+    courseSlug: string,
+    nodeId: string,
+    userId: string,
+  ) {
+    const nextNode = await this.getNextNode(courseSlug, nodeId, userId);
+    if (!nextNode) return null;
+    return {
+      nodeId: nextNode.id,
+      mode: this.mode,
+      courseSlug,
     };
   }
 
