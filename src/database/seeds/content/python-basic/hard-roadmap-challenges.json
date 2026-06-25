@@ -35,7 +35,7 @@
             }
           ],
           "correctOptionId": "C",
-          "explanation": "The first loop is O(n). The nested loop is O(n²). When combined, O(n²) dominates, so the overall time complexity is O(n²).",
+          "explanation": "Step 1: Identify each loop separately. The first loop iterates through all n elements once, so it is O(n). Step 2: The second set of loops is nested — the outer loop runs n times and for each iteration the inner loop also runs n times, giving O(n × n) = O(n²). Step 3: When combining complexities, we take the dominant term. O(n) + O(n²) = O(n²) because n² grows much faster than n for large inputs.",
           "xp": 120,
           "estimatedMinutes": 3
         },
@@ -71,7 +71,7 @@
             "DROP_ZONE_C": "ON2",
             "DROP_ZONE_D": "OLOGN"
           },
-          "explanation": "Accessing one item is O(1). A single loop is O(n). A nested loop over the same input size is O(n²). Repeatedly dividing n by 2 is O(log n).",
+          "explanation": "Step 1: print(numbers[0]) accesses a single element at a fixed index — no loop, no scaling — so it is O(1) constant time. Step 2: 'for num in numbers: print(num)' iterates through every element exactly once, so it is O(n) linear time. Step 3: Nested loops (for i ... for j ...) iterate n × n times total, so it is O(n²) quadratic time. Step 4: 'while n > 1: n = n // 2' halves the input each iteration. The number of halvings needed to reach 1 is log₂(n), so it is O(log n) logarithmic time.",
           "xp": 120,
           "estimatedMinutes": 4
         },
@@ -406,7 +406,7 @@
             "queue_final_2": "C",
             "queue_final_3": "D"
           },
-          "explanation": "A stack removes the newest item, so C is removed and the final stack is A, B, D. A queue removes the oldest item, so A is removed and the final queue is B, C, D.",
+          "explanation": "Step 1: Start with an empty structure. Add A, Add B, Add C in order. Step 2: For a Stack (LIFO — Last In, First Out), Remove takes the most recently added item, which is C. The stack now contains [A, B]. Add D, giving [A, B, D]. Step 3: For a Queue (FIFO — First In, First Out), Remove takes the oldest item, which is A. The queue now contains [B, C]. Add D, giving [B, C, D]. Key insight: Stack uses Pop (removes from top), Queue uses Dequeue (removes from front).",
           "xp": 120,
           "estimatedMinutes": 4
         },
@@ -562,7 +562,7 @@
             "blank_3": "C",
             "blank_4": "D"
           },
-          "explanation": "Push opening parentheses into the stack. When a closing parenthesis appears, there must be an opening parenthesis to match it. At the end, the stack must be empty.",
+          "explanation": "Step 1: When we see an opening parenthesis '(', push it onto the stack with stack.append(char). Step 2: When we see a closing parenthesis ')', first check if the stack is empty ('not stack'). If it is empty, there is no matching opening parenthesis, so return False. Step 3: If the stack is not empty, pop the top element with stack.pop() to consume the matching '('. Step 4: After processing all characters, check if the stack is empty (len(stack) == 0). If empty, every '(' had a matching ')'. If not empty, some '(' were never closed.",
           "xp": 140,
           "estimatedMinutes": 5
         }
@@ -813,7 +813,7 @@
             }
           ],
           "correctOptionId": "B",
-          "explanation": "BFS uses a queue and visits level by level. First A, then B and C, then D, E, and F.",
+          "explanation": "Step 1: BFS (Breadth-First Search) uses a queue and visits all nodes at the current depth before moving to the next level. Step 2: Start at root A (level 0). Enqueue A's children: B and C (level 1). Step 3: Visit B, enqueue B's child D. Visit C, enqueue C's children E and F. Level 2 nodes are: D, E, F. Step 4: Visit D, E, F in order. All have no children, so the traversal ends. Final BFS order: A → B → C → D → E → F. Key insight: BFS always completes one level entirely before visiting the next.",
           "xp": 120,
           "estimatedMinutes": 4
         },
@@ -854,7 +854,7 @@
             "position_4": "N8",
             "position_5": "N9"
           },
-          "explanation": "A min-heap always pops the smallest remaining value first. The values come out in ascending order: 2, 3, 5, 8, 9.",
+          "explanation": "Step 1: A min-heap guarantees the smallest element is always at the root. Step 2: Pop the root (2). The heap restructures, placing the next smallest (3) at the root. Step 3: Pop 3, heap restructures with 5 at root. Pop 5, then 8, then 9. Step 4: The complete pop order is 2, 3, 5, 8, 9 — ascending order. Key insight: Repeatedly popping from a min-heap produces elements in sorted (ascending) order. This is the basis of Heap Sort. Each pop operation takes O(log n) time.",
           "xp": 120,
           "estimatedMinutes": 4
         },
@@ -931,7 +931,7 @@
             "blank_3": "C",
             "blank_4": "D"
           },
-          "explanation": "An empty tree has depth 0. For each node, compute the depth of the left and right subtrees, take the larger one, and add 1 for the current node.",
+          "explanation": "Step 1: The base case handles an empty tree — if root is None, return 0 (no depth). Step 2: Recursively compute the depth of the left subtree with max_depth(root.left). Step 3: Recursively compute the depth of the right subtree with max_depth(root.right). Step 4: The depth of the current node is 1 (for itself) plus the maximum of its two subtree depths: 1 + max(left_depth, right_depth). For the example tree (3 → 9, 20 → 15, 7): left subtree depth = 1, right subtree depth = 2, so total = 1 + 2 = 3.",
           "xp": 140,
           "estimatedMinutes": 5
         }
