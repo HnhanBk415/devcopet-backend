@@ -163,7 +163,6 @@ export class ArenaMatch {
 
 export const ArenaMatchSchema = SchemaFactory.createForClass(ArenaMatch);
 
-ArenaMatchSchema.index({ roomId: 1 }, { unique: true });
 ArenaMatchSchema.index({ 'players.userId': 1 });
 ArenaMatchSchema.index({ courseSlug: 1, createdAt: 1 });
 ArenaMatchSchema.index({ winnerUserId: 1 });

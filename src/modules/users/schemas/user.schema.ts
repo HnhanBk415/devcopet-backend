@@ -59,6 +59,12 @@ export class User {
   @Prop({ default: 1 })
   level!: number;
 
+  @Prop({ default: 0, min: 0 })
+  lifetimeXp!: number;
+
+  @Prop({ default: 0, min: 0 })
+  currentXp!: number;
+
   @Prop({ default: 0 })
   exp!: number;
 
@@ -114,6 +120,4 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.index({ googleId: 1 }, { unique: true, sparse: true });
-UserSchema.index({ facebookId: 1 }, { unique: true, sparse: true });
-UserSchema.index({ githubId: 1 }, { unique: true, sparse: true });
+UserSchema.index({ currentXp: -1 });

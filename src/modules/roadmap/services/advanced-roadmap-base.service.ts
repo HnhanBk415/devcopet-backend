@@ -24,6 +24,7 @@ import {
   isStringRecord,
 } from '../utils/roadmap.util';
 import { UsersService } from '../../users/users.service';
+import { ROADMAP_NODE_XP } from '../../users/xp.util';
 
 type PublicAdvancedChallenge = {
   id: string;
@@ -95,7 +96,7 @@ export abstract class AdvancedRoadmapBaseService {
           title: challenge.title,
           type: challenge.type,
           status: statusMap.get(nodeId) ?? 'locked',
-          xp: challenge.xp,
+          xp: ROADMAP_NODE_XP[this.mode],
           estimatedMinutes: challenge.estimatedMinutes,
         };
       });
@@ -364,13 +365,42 @@ export abstract class AdvancedRoadmapBaseService {
     };
 
     if (correct) {
-      await this.statusService.markNodeCompleted(
+      const rewardGranted = await this.statusService.tryMarkNodeCompleted(
         userId,
         course.slug,
         this.mode,
         node.id,
         review,
       );
+      if (!rewardGranted) {
+        const completion = await this.statusService.getNodeCompletion(
+          userId,
+          course.slug,
+          this.mode,
+          node.id,
+        );
+
+        return {
+          correct: true,
+          status: 'PASSED',
+          alreadyCompleted: true,
+          message: 'This node is already completed.',
+          explanation:
+            challenge.explanation ||
+            'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
+          explanationSpeaker,
+          rewardSummary: this.getEmptyRewardSummary(),
+          ...returnData,
+          review: completion?.review
+            ? this.reviewService.toAdvancedCompletedReview(
+                challenge,
+                completion,
+              )
+            : review,
+          navigation,
+        };
+      }
+      await this.usersService.awardXp(userId, ROADMAP_NODE_XP[this.mode]);
     }
 
     if (!correct) {
@@ -400,7 +430,7 @@ export abstract class AdvancedRoadmapBaseService {
         challenge.explanation ||
         'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
       explanationSpeaker,
-      rewardSummary: this.buildRewardSummary(challenge),
+      rewardSummary: this.buildRewardSummary(),
       ...returnData,
       review,
       navigation,
@@ -494,6 +524,8 @@ export abstract class AdvancedRoadmapBaseService {
       }
     }
 
+    publicChallenge.xp = ROADMAP_NODE_XP[this.mode];
+
     if (this.mode === 'hard') {
       const source = challenge as Record<string, unknown>;
       if (Array.isArray(source.hints) && source.hints.length > 0) {
@@ -532,8 +564,8 @@ export abstract class AdvancedRoadmapBaseService {
     return publicChallenge;
   }
 
-  private buildRewardSummary(challenge: AdvancedChallengeData) {
-    const xp = challenge.xp ?? 0;
+  private buildRewardSummary() {
+    const xp = ROADMAP_NODE_XP[this.mode];
     const stars = xp > 0 ? 10 : 0;
     const petExp = Math.floor(xp / 2);
 

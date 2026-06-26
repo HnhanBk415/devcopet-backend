@@ -22,9 +22,6 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   await app.listen(port);
-  Logger.log(
-    `Devcopet backend running on: http://localhost:${port}`,
-    'Bootstrap',
-  );
+  Logger.log(`Devcopet backend running on port ${port}`, 'Bootstrap');
 }
 void bootstrap();

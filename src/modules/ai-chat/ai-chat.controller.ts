@@ -10,7 +10,7 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AiChatService } from './ai-chat.service';
 import { AskRoadmapAiDto } from './dto/ask-roadmap-ai.dto';
-import type { AiPromptId, RoadmapMode } from './ai-chat.types';
+import type { RoadmapMode } from './ai-chat.types';
 
 @UseGuards(JwtAuthGuard)
 @Controller('ai-chat')
@@ -46,7 +46,7 @@ export class AiChatController {
       req.user.userId,
       mode,
       nodeId,
-      body.promptId as AiPromptId,
+      body.promptId,
     );
   }
 }

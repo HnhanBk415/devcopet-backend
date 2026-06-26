@@ -9,14 +9,18 @@ import {
 } from '../progress/schemas/lesson-progress.schema';
 import { LessonsModule } from '../lessons/lessons.module';
 import { ProgressModule } from '../progress/progress.module';
+import { UsersModule } from '../users/users.module';
+import { Course, CourseSchema } from '../courses/schemas/course.schema';
 
 @Module({
   imports: [
     LessonsModule,
     ProgressModule,
+    UsersModule,
     MongooseModule.forFeature([
       { name: Quiz.name, schema: QuizSchema },
       { name: LessonProgress.name, schema: LessonProgressSchema },
+      { name: Course.name, schema: CourseSchema },
     ]),
   ],
   controllers: [QuizzesController],

@@ -80,6 +80,8 @@ export class AuthService {
     role?: string;
     avatarUrl?: string;
     level?: number;
+    lifetimeXp?: number;
+    currentXp?: number;
     exp?: number;
     coins?: number;
     onboardingCompleted?: boolean;
@@ -94,6 +96,8 @@ export class AuthService {
       role: user.role,
       avatarUrl: user.avatarUrl,
       level: user.level,
+      lifetimeXp: user.lifetimeXp ?? user.exp ?? 0,
+      currentXp: user.currentXp ?? user.lifetimeXp ?? user.exp ?? 0,
       exp: user.exp,
       coins: user.coins,
       onboardingCompleted: user.onboardingCompleted,
@@ -122,6 +126,8 @@ export class AuthService {
         role: UserRole.STUDENT,
         authProviders: ['local'],
         level: 1,
+        lifetimeXp: 0,
+        currentXp: 0,
         exp: 0,
         coins: 0,
         onboardingCompleted: false,
@@ -261,6 +267,8 @@ export class AuthService {
             avatarUrl: profile.avatarUrl,
             role: UserRole.STUDENT,
             level: 1,
+            lifetimeXp: 0,
+            currentXp: 0,
             exp: 0,
             coins: 0,
             onboardingCompleted: false,

@@ -76,6 +76,16 @@ export class RoadmapStatusService {
     nodeId: string,
     review?: RoadmapCompletionReview,
   ): Promise<void> {
+    await this.tryMarkNodeCompleted(userId, courseSlug, mode, nodeId, review);
+  }
+
+  async tryMarkNodeCompleted(
+    userId: string,
+    courseSlug: string,
+    mode: RoadmapMode,
+    nodeId: string,
+    review?: RoadmapCompletionReview,
+  ): Promise<boolean> {
     const completedAt = review?.completedAt
       ? new Date(review.completedAt)
       : new Date();
@@ -85,19 +95,18 @@ export class RoadmapStatusService {
       mode,
       nodeId,
       completedAt,
+      ...(review ? { review } : {}),
     };
-    const update: {
-      $setOnInsert: Partial<RoadmapProgress>;
-      $set?: Partial<RoadmapProgress>;
-    } = { $setOnInsert: setOnInsert };
 
-    if (review) {
-      update.$set = { review };
-    }
-
-    await this.roadmapProgressModel
-      .updateOne({ userId, courseSlug, mode, nodeId }, update, { upsert: true })
+    const result = await this.roadmapProgressModel
+      .updateOne(
+        { userId, courseSlug, mode, nodeId },
+        { $setOnInsert: setOnInsert },
+        { upsert: true },
+      )
       .exec();
+
+    return result.upsertedCount > 0;
   }
 
   async getCompletionSummary(

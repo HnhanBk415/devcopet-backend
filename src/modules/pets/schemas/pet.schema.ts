@@ -20,8 +20,17 @@ export class Pet {
   @Prop({ default: 0, min: 0 })
   exp!: number;
 
+  @Prop({ default: 100, min: 1 })
+  nextLevelExp!: number;
+
   @Prop({ default: 1, min: 1 })
   evolutionStage!: number;
+
+  @Prop({ default: '' })
+  avatarUrl!: string;
+
+  @Prop({ default: 0, min: 0 })
+  totalFeeds!: number;
 
   @Prop({ default: 100, min: 0 })
   energy!: number;

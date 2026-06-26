@@ -21,6 +21,7 @@ import {
   isChallengeOptionId,
 } from '../utils/roadmap.util';
 import { UsersService } from '../../users/users.service';
+import { ROADMAP_NODE_XP } from '../../users/xp.util';
 
 @Injectable()
 export class EasyRoadmapService {
@@ -72,7 +73,7 @@ export class EasyRoadmapService {
           title: lesson.title,
           description: lesson.description || '',
           status: statusMap.get(lessonId) ?? 'locked',
-          xp: lesson.xpReward ?? 0,
+          xp: ROADMAP_NODE_XP.easy,
           duration: EASY_NODE_DURATION_MINUTES,
           href: `/lesson/${lessonId}`,
         };
@@ -245,13 +246,39 @@ export class EasyRoadmapService {
         selectedOptionId,
       );
 
-      await this.statusService.markNodeCompleted(
+      const rewardGranted = await this.statusService.tryMarkNodeCompleted(
         userId,
         course.slug,
         this.mode,
         node.id,
         review,
       );
+      if (!rewardGranted) {
+        const completion = await this.statusService.getNodeCompletion(
+          userId,
+          course.slug,
+          this.mode,
+          node.id,
+        );
+
+        return {
+          correct: true,
+          status: 'PASSED',
+          alreadyCompleted: true,
+          message: 'This roadmap node is already completed.',
+          explanation:
+            challenge.explanation ||
+            'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
+          explanationSpeaker,
+          rewardSummary: this.getEmptyRewardSummary(),
+          review: this.reviewService.toEasyCompletedReview(
+            challenge,
+            completion,
+          ),
+          navigation,
+        };
+      }
+      await this.usersService.awardXp(userId, ROADMAP_NODE_XP.easy);
 
       return {
         correct: true,
@@ -261,7 +288,7 @@ export class EasyRoadmapService {
           challenge.explanation ||
           'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
         explanationSpeaker,
-        rewardSummary: this.getRewardSummary(challenge),
+        rewardSummary: this.getRewardSummary(),
         review,
         navigation,
       };
@@ -370,13 +397,13 @@ export class EasyRoadmapService {
       question: challenge.question,
       ...(challenge.codeSnippet ? { codeSnippet: challenge.codeSnippet } : {}),
       options: challenge.options,
-      xp: challenge.xp,
+      xp: ROADMAP_NODE_XP.easy,
       estimatedMinutes: challenge.estimatedMinutes,
     };
   }
 
-  private getRewardSummary(challenge: EasyChallengeData) {
-    const xp = challenge.xp ?? 0;
+  private getRewardSummary() {
+    const xp = ROADMAP_NODE_XP.easy;
     const stars = xp > 0 ? 10 : 0;
     const petExp = Math.floor(xp / 2);
 

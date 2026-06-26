@@ -13,6 +13,9 @@ import {
 } from '../progress/schemas/lesson-progress.schema';
 import { LessonsService } from '../lessons/lessons.service';
 import { ProgressService } from '../progress/progress.service';
+import { UsersService } from '../users/users.service';
+import { Course, CourseDocument } from '../courses/schemas/course.schema';
+import { getLessonRewardXp } from '../users/xp.util';
 
 @Injectable()
 export class QuizzesService {
@@ -20,8 +23,11 @@ export class QuizzesService {
     @InjectModel(Quiz.name) private quizModel: Model<QuizDocument>,
     @InjectModel(LessonProgress.name)
     private lessonProgressModel: Model<LessonProgressDocument>,
+    @InjectModel(Course.name)
+    private courseModel: Model<CourseDocument>,
     private readonly lessonsService: LessonsService,
     private readonly progressService: ProgressService,
+    private readonly usersService: UsersService,
   ) {}
 
   async findByLessonId(lessonId: string, userId: string) {
@@ -125,25 +131,66 @@ export class QuizzesService {
     const percentage =
       totalPoints > 0 ? Math.round((earnedPoints / totalPoints) * 100) : 0;
     const passed = percentage >= quiz.passingScore;
+    let rewardXp = 0;
+    let alreadyCompleted = false;
 
     if (passed) {
-      await this.lessonProgressModel
-        .findOneAndUpdate(
-          {
-            userId: new Types.ObjectId(userId),
-            lessonId: quiz.lessonId,
-          },
-          {
-            $set: { completed: true },
-            $max: { quizScore: percentage },
-          },
-          {
-            new: true,
-            upsert: true,
-            setDefaultsOnInsert: true,
-          },
-        )
+      const existingCompletion = await this.lessonProgressModel
+        .findOne({
+          userId: new Types.ObjectId(userId),
+          lessonId: quiz.lessonId,
+          completed: true,
+        })
+        .select({ _id: 1 })
+        .lean()
         .exec();
+
+      alreadyCompleted = Boolean(existingCompletion);
+
+      if (!alreadyCompleted) {
+        try {
+          const updateResult = await this.lessonProgressModel
+            .updateOne(
+              {
+                userId: new Types.ObjectId(userId),
+                lessonId: quiz.lessonId,
+                completed: { $ne: true },
+              },
+              {
+                $set: { completed: true },
+                $max: { quizScore: percentage },
+              },
+              {
+                upsert: true,
+                setDefaultsOnInsert: true,
+              },
+            )
+            .exec();
+
+          if (
+            updateResult.matchedCount === 0 &&
+            updateResult.upsertedCount === 0
+          ) {
+            alreadyCompleted = true;
+          }
+        } catch (error) {
+          if (this.isDuplicateKeyError(error)) {
+            alreadyCompleted = true;
+          } else {
+            throw error;
+          }
+        }
+      }
+
+      if (!alreadyCompleted) {
+        const course = await this.courseModel
+          .findById(quiz.courseId)
+          .select({ slug: 1 })
+          .lean<{ slug?: string }>()
+          .exec();
+        rewardXp = getLessonRewardXp(course?.slug);
+        await this.usersService.awardXp(userId, rewardXp);
+      }
     }
     const progress = await this.progressService.getLessonProgressSnapshot(
       lesson.courseId,
@@ -158,6 +205,12 @@ export class QuizzesService {
       earnedPoints,
       percentage,
       passed,
+      alreadyCompleted,
+      rewardSummary: {
+        xp: rewardXp,
+        lifetimeXpIncreased: rewardXp,
+        currentXpIncreased: rewardXp,
+      },
       progress,
       results,
     };
@@ -206,5 +259,14 @@ export class QuizzesService {
     const sortedA = this.normalizeOptionIds(a);
     const sortedB = this.normalizeOptionIds(b);
     return JSON.stringify(sortedA) === JSON.stringify(sortedB);
+  }
+
+  private isDuplicateKeyError(error: unknown): boolean {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      (error as { code?: number }).code === 11000
+    );
   }
 }

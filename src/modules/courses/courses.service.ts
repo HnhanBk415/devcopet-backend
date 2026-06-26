@@ -108,15 +108,18 @@ export class CoursesService {
       }
 
       const status = statusByLessonId.get(String(lesson._id)) ?? 'locked';
-      lessonsByChapterId.get(chapterIdStr).push({
-        id: String(lesson._id),
-        title: lesson.title,
-        description: lesson.description,
-        order: lesson.order,
-        status,
-        canAccess: status !== 'locked',
-        estimatedMinutes: lesson.estimatedMinutes,
-      });
+      const chapterLessons = lessonsByChapterId.get(chapterIdStr);
+      if (chapterLessons) {
+        chapterLessons.push({
+          id: String(lesson._id),
+          title: lesson.title,
+          description: lesson.description,
+          order: lesson.order,
+          status,
+          canAccess: status !== 'locked',
+          estimatedMinutes: lesson.estimatedMinutes,
+        });
+      }
     }
 
     let courseCompletedLessons = 0;

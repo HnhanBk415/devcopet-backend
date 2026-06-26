@@ -1,15 +1,30 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { SocialProvider, User, UserDocument } from './schemas/user.schema';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { Pet, PetDocument } from '../pets/schemas/pet.schema';
+import {
+  getPetCurrentLevelProgress,
+  resolveTotalPetXpFromStoredPet,
+} from '../pets/pet-xp.util';
+import { BATTLE_WIN_XP, calculateLevelFromXp, getNextLevelXp } from './xp.util';
 
-const BATTLE_WIN_XP = 150;
+type UserXpSnapshot = {
+  lifetimeXp: number;
+  currentXp: number;
+  level: number;
+};
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Pet.name) private readonly petModel: Model<PetDocument>,
   ) {}
 
   async create(data: Partial<User>): Promise<UserDocument> {
@@ -40,8 +55,13 @@ export class UsersService {
       .select('-passwordHash -refreshTokenHash')
       .lean();
     if (!user) throw new NotFoundException('User not found');
+    const xp = this.resolveXp(user);
     return {
       ...user,
+      level: xp.level,
+      lifetimeXp: xp.lifetimeXp,
+      currentXp: xp.currentXp,
+      exp: xp.lifetimeXp,
       petName: user.petName ?? 'Axo-Script',
     };
   }
@@ -89,6 +109,7 @@ export class UsersService {
       onboardingCompleted: true,
     });
     if (!result) throw new NotFoundException('User not found');
+    await this.ensurePetForUser(userId, result.petName);
   }
 
   async updateProfile(
@@ -110,17 +131,38 @@ export class UsersService {
       .findByIdAndUpdate(userId, { $set: update }, { new: true })
       .select('-passwordHash -refreshTokenHash');
     if (!user) throw new NotFoundException('User not found');
+    if (data.petName) {
+      await this.ensurePetForUser(userId, data.petName.trim());
+    }
     return user;
   }
 
   async getLeaderboard() {
-    return this.userModel
+    const users = await this.userModel
       .find({ onboardingCompleted: true })
-      .sort({ exp: -1, level: -1 })
-      .limit(20)
-      .select('username level exp avatarUrl bio')
+      .select('username level exp lifetimeXp currentXp avatarUrl arenaRank')
       .lean()
       .exec();
+
+    return users
+      .map((user) => {
+        const xp = this.resolveXp(user);
+        return {
+          userId: String(user._id),
+          name: user.username,
+          avatar: user.avatarUrl,
+          currentXp: xp.currentXp,
+          lifetimeXp: xp.lifetimeXp,
+          level: xp.level,
+          arenaRank: user.arenaRank ?? 'Beginner',
+        };
+      })
+      .sort((a, b) => b.currentXp - a.currentXp)
+      .slice(0, 20)
+      .map((user, index) => ({
+        rank: index + 1,
+        ...user,
+      }));
   }
 
   async getRandomOpponent(userId: string) {
@@ -139,7 +181,7 @@ export class UsersService {
       return this.userModel
         .findOne({ _id: { $ne: userId } })
         .skip(random)
-        .select('username level exp avatarUrl bio')
+        .select('username level exp lifetimeXp currentXp avatarUrl bio')
         .lean()
         .exec();
     }
@@ -147,44 +189,223 @@ export class UsersService {
     return this.userModel
       .findOne({ _id: { $ne: userId }, onboardingCompleted: true })
       .skip(random)
-      .select('username level exp avatarUrl bio')
+      .select('username level exp lifetimeXp currentXp avatarUrl bio')
       .lean()
       .exec();
   }
 
   async updateXp(userId: string, expChange: number): Promise<UserDocument> {
-    const user = await this.userModel
-      .findByIdAndUpdate(
-        userId,
-        [
-          {
-            $set: {
-              exp: {
-                $max: [
-                  0,
-                  {
-                    $add: [{ $ifNull: ['$exp', 0] }, Math.trunc(expChange)],
-                  },
-                ],
-              },
-            },
-          },
-          {
-            $set: {
-              level: {
-                $add: [{ $floor: { $divide: ['$exp', 1000] } }, 1],
-              },
-            },
-          },
-        ],
-        { new: true },
-      )
+    const amount = Math.trunc(expChange);
+    if (amount >= 0) return this.awardXp(userId, amount);
+
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User not found.',
+      });
+    }
+
+    const xp = this.resolveXp(user);
+    const currentXp = Math.max(0, xp.currentXp + amount);
+    const level = calculateLevelFromXp(xp.lifetimeXp);
+
+    user.lifetimeXp = xp.lifetimeXp;
+    user.currentXp = currentXp;
+    user.exp = xp.lifetimeXp;
+    user.level = level;
+    await user.save();
+
+    const safeUser = await this.userModel
+      .findById(userId)
       .select('-passwordHash -refreshTokenHash');
-    if (!user) throw new NotFoundException('User not found');
-    return user;
+    if (!safeUser) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User not found.',
+      });
+    }
+    return safeUser;
+  }
+
+  async awardXp(userId: string, rewardXp: number): Promise<UserDocument> {
+    const amount = Math.max(0, Math.trunc(rewardXp));
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User not found.',
+      });
+    }
+
+    const xp = this.resolveXp(user);
+    const lifetimeXp = xp.lifetimeXp + amount;
+    const currentXp = xp.currentXp + amount;
+    const level = calculateLevelFromXp(lifetimeXp);
+
+    user.lifetimeXp = lifetimeXp;
+    user.currentXp = currentXp;
+    user.exp = lifetimeXp;
+    user.level = level;
+    await user.save();
+
+    const safeUser = await this.userModel
+      .findById(userId)
+      .select('-passwordHash -refreshTokenHash');
+    if (!safeUser) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User not found.',
+      });
+    }
+    return safeUser;
+  }
+
+  async spendCurrentXp(userId: string, costXp: number): Promise<UserDocument> {
+    const cost = Math.max(0, Math.trunc(costXp));
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User not found.',
+      });
+    }
+
+    const xp = this.resolveXp(user);
+    if (xp.currentXp < cost) {
+      throw new BadRequestException({
+        code: 'INSUFFICIENT_XP',
+        errorCode: 'INSUFFICIENT_XP',
+        message: 'Not enough XP to feed pet',
+      });
+    }
+
+    user.lifetimeXp = xp.lifetimeXp;
+    user.currentXp = xp.currentXp - cost;
+    user.exp = xp.lifetimeXp;
+    user.level = calculateLevelFromXp(xp.lifetimeXp);
+    await user.save();
+
+    const safeUser = await this.userModel
+      .findById(userId)
+      .select('-passwordHash -refreshTokenHash');
+    if (!safeUser) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User not found.',
+      });
+    }
+    return safeUser;
+  }
+
+  async getProfileMe(userId: string) {
+    const user = await this.userModel
+      .findById(userId)
+      .select('-passwordHash -refreshTokenHash')
+      .lean()
+      .exec();
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        errorCode: 'USER_NOT_FOUND',
+        message: 'User not found.',
+      });
+    }
+
+    const xp = this.resolveXp(user);
+    const pet = await this.ensurePetForUser(userId, user.petName);
+    const globalRank = await this.getGlobalRankForXp(xp.currentXp);
+
+    return {
+      id: String(user._id),
+      name: user.username,
+      email: user.email,
+      avatar: user.avatarUrl,
+      level: xp.level,
+      lifetimeXp: xp.lifetimeXp,
+      currentXp: xp.currentXp,
+      nextLevelXp: getNextLevelXp(xp.level),
+      globalRank,
+      arenaRank: user.arenaRank ?? 'Beginner',
+      pet: this.toProfilePet(pet),
+    };
+  }
+
+  async ensurePetForUser(userId: string, petName?: string) {
+    const name = petName?.trim() || 'Axo';
+    return this.petModel
+      .findOneAndUpdate(
+        { ownerId: new Types.ObjectId(userId) },
+        {
+          $set: { name },
+          $setOnInsert: {
+            ownerId: new Types.ObjectId(userId),
+            type: 'default',
+            level: 1,
+            exp: 0,
+            nextLevelExp: 100,
+            evolutionStage: 1,
+            avatarUrl: '',
+            totalFeeds: 0,
+          },
+        },
+        { new: true, upsert: true, setDefaultsOnInsert: true },
+      )
+      .lean()
+      .exec();
   }
 
   async awardBattleWinXp(userId: string): Promise<UserDocument> {
     return this.updateXp(userId, BATTLE_WIN_XP);
+  }
+
+  private resolveXp(user: Partial<User>): UserXpSnapshot {
+    const legacyXp = Math.max(0, Math.floor(user.exp ?? 0));
+    const lifetimeXp = Math.max(0, Math.floor(user.lifetimeXp ?? legacyXp));
+    const currentXp = Math.max(0, Math.floor(user.currentXp ?? lifetimeXp));
+    const level = calculateLevelFromXp(lifetimeXp);
+
+    return { lifetimeXp, currentXp, level };
+  }
+
+  private async getGlobalRankForXp(currentXp: number): Promise<number> {
+    const users = await this.userModel
+      .find({ onboardingCompleted: true })
+      .select('exp lifetimeXp currentXp')
+      .lean()
+      .exec();
+    const ranks = users
+      .map((user) => this.resolveXp(user).currentXp)
+      .sort((a, b) => b - a);
+    const index = ranks.findIndex((xp) => currentXp >= xp);
+
+    return index >= 0 ? index + 1 : ranks.length + 1;
+  }
+
+  private toProfilePet(pet: Partial<Pet>) {
+    const totalExp = resolveTotalPetXpFromStoredPet(pet);
+    const progress = getPetCurrentLevelProgress(totalExp);
+
+    return {
+      name: pet.name,
+      level: progress.level,
+      totalExp,
+      exp: progress.currentLevelXp,
+      levelRequiredExp: progress.levelRequiredExp,
+      nextLevelExp: progress.levelRequiredExp,
+      nextLevelThresholdXp: progress.nextLevelThresholdXp,
+      progressPercent: progress.progressPercent,
+      evolutionStage: Math.min(
+        3,
+        Math.floor((Math.max(1, progress.level) - 1) / 5) + 1,
+      ),
+      avatar: pet.avatarUrl || pet.equippedSkin || undefined,
+    };
   }
 }
