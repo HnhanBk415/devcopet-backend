@@ -6,12 +6,14 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Quiz, QuizDocument, QuestionType } from './schemas/quiz.schema';
-import { SubmitQuizAnswerDto } from './dto/submit-quiz.dto';
+import { SubmitQuizDto } from './dto/submit-quiz.dto';
 import {
   LessonProgress,
   LessonProgressDocument,
 } from '../progress/schemas/lesson-progress.schema';
+import { LearningHistoryService } from '../learning-history/learning-history.service';
 import { LessonsService } from '../lessons/lessons.service';
+import { MissionsService } from '../missions/missions.service';
 import { ProgressService } from '../progress/progress.service';
 import { UsersService } from '../users/users.service';
 import { Course, CourseDocument } from '../courses/schemas/course.schema';
@@ -28,6 +30,8 @@ export class QuizzesService {
     private readonly lessonsService: LessonsService,
     private readonly progressService: ProgressService,
     private readonly usersService: UsersService,
+    private readonly learningHistoryService: LearningHistoryService,
+    private readonly missionsService: MissionsService,
   ) {}
 
   async findByLessonId(lessonId: string, userId: string) {
@@ -48,11 +52,8 @@ export class QuizzesService {
     return this.sanitizeQuiz(quiz);
   }
 
-  async submitQuiz(
-    quizId: string,
-    answers: SubmitQuizAnswerDto[],
-    userId: string,
-  ) {
+  async submitQuiz(quizId: string, body: SubmitQuizDto, userId: string) {
+    const answers = body.answers;
     const objectId = this.toObjectId(quizId, 'quizId');
     const quiz = await this.quizModel
       .findOne({ _id: objectId, isPublished: true })
@@ -131,6 +132,58 @@ export class QuizzesService {
     const percentage =
       totalPoints > 0 ? Math.round((earnedPoints / totalPoints) * 100) : 0;
     const passed = percentage >= quiz.passingScore;
+    const topic = this.topicFromLesson(lesson);
+    const submissionId =
+      body.submissionId?.trim() || `quiz:${quizId}:${Date.now()}`;
+
+    await this.learningHistoryService.recordAttempt({
+      userId,
+      submissionId,
+      sourceType: 'QUIZ',
+      courseSlug: await this.getCourseSlug(quiz.courseId),
+      targetType: 'QUIZ',
+      targetId: String(quiz._id),
+      topic,
+      challengeType: 'lesson-quiz',
+      passed,
+      score: percentage,
+      maxScore: 100,
+      durationSeconds: body.durationSeconds,
+      hintUsed: body.hintUsed,
+      primaryMistake: this.resolvePrimaryMistake(results),
+      metadata: {
+        quizId: String(quiz._id),
+        lessonId: String(quiz.lessonId),
+        passingScore: quiz.passingScore,
+        href: `/lessons/${String(quiz.lessonId)}`,
+      },
+    });
+
+    const quizEvent = await this.learningHistoryService.recordEvent({
+      userId,
+      eventType: 'QUIZ_ATTEMPTED',
+      idempotencyKey: `quiz-attempt:${userId}:${submissionId}`,
+      targetType: 'LESSON',
+      targetId: String(quiz.lessonId),
+      topic,
+      passed,
+      score: percentage,
+      metadata: { quizId: String(quiz._id) },
+    });
+    if (quizEvent.created) {
+      await this.missionsService.processActivityEvent({
+        userId,
+        eventType: 'QUIZ_ATTEMPTED',
+        idempotencyKey: `quiz-attempt:${userId}:${submissionId}`,
+        targetType: 'LESSON',
+        targetId: String(quiz.lessonId),
+        topic,
+        passed,
+        score: percentage,
+        metadata: { quizId: String(quiz._id) },
+      });
+    }
+
     let rewardXp = 0;
     let alreadyCompleted = false;
 
@@ -157,7 +210,7 @@ export class QuizzesService {
                 completed: { $ne: true },
               },
               {
-                $set: { completed: true },
+                $set: { completed: true, completedAt: new Date() },
                 $max: { quizScore: percentage },
               },
               {
@@ -190,6 +243,31 @@ export class QuizzesService {
           .exec();
         rewardXp = getLessonRewardXp(course?.slug);
         await this.usersService.awardXp(userId, rewardXp);
+
+        const lessonEvent = await this.learningHistoryService.recordEvent({
+          userId,
+          eventType: 'LESSON_COMPLETED',
+          idempotencyKey: `lesson-completed:${userId}:${String(quiz.lessonId)}`,
+          targetType: 'LESSON',
+          targetId: String(quiz.lessonId),
+          topic,
+          passed: true,
+          score: percentage,
+          metadata: { quizId: String(quiz._id), rewardXp },
+        });
+        if (lessonEvent.created) {
+          await this.missionsService.processActivityEvent({
+            userId,
+            eventType: 'LESSON_COMPLETED',
+            idempotencyKey: `lesson-completed:${userId}:${String(quiz.lessonId)}`,
+            targetType: 'LESSON',
+            targetId: String(quiz.lessonId),
+            topic,
+            passed: true,
+            score: percentage,
+            metadata: { quizId: String(quiz._id), rewardXp },
+          });
+        }
       }
     }
     const progress = await this.progressService.getLessonProgressSnapshot(
@@ -259,6 +337,28 @@ export class QuizzesService {
     const sortedA = this.normalizeOptionIds(a);
     const sortedB = this.normalizeOptionIds(b);
     return JSON.stringify(sortedA) === JSON.stringify(sortedB);
+  }
+
+  private topicFromLesson(lesson: { slug?: string; title?: string }) {
+    return (lesson.slug || lesson.title || 'lesson')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-');
+  }
+
+  private async getCourseSlug(courseId: Types.ObjectId) {
+    const course = await this.courseModel
+      .findById(courseId)
+      .select({ slug: 1 })
+      .lean<{ slug?: string }>()
+      .exec();
+    return course?.slug;
+  }
+
+  private resolvePrimaryMistake(
+    results: Array<{ isCorrect: boolean; questionIndex: number }>,
+  ) {
+    const firstWrong = results.find((result) => !result.isCorrect);
+    return firstWrong ? `question-${firstWrong.questionIndex}` : undefined;
   }
 
   private isDuplicateKeyError(error: unknown): boolean {

@@ -31,10 +31,6 @@ export class QuizzesController {
     @Body() body: SubmitQuizDto,
     @Req() req: { user: { userId: string } },
   ) {
-    return this.quizzesService.submitQuiz(
-      quizId,
-      body.answers,
-      req.user.userId,
-    );
+    return this.quizzesService.submitQuiz(quizId, body, req.user.userId);
   }
 }

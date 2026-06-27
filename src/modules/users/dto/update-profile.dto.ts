@@ -17,4 +17,9 @@ export class UpdateProfileDto {
   @MinLength(2)
   @MaxLength(30)
   petName?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  timezone?: string;
 }

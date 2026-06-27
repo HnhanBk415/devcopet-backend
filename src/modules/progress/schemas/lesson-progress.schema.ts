@@ -14,6 +14,9 @@ export class LessonProgress {
   @Prop({ default: false })
   completed!: boolean;
 
+  @Prop()
+  completedAt?: Date;
+
   @Prop({ default: 0, min: 0 })
   quizScore!: number;
 }

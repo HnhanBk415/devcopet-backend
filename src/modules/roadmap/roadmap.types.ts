@@ -4,6 +4,11 @@ export type RoadmapStatus = 'locked' | 'available' | 'completed';
 export type ChallengeOptionId = 'A' | 'B' | 'C' | 'D';
 export type ChallengePromptType = 'code_mcq' | 'concept_mcq';
 export type RoadmapMode = 'easy' | 'medium' | 'hard';
+export type RoadmapSubmitMeta = {
+  submissionId?: string;
+  durationSeconds?: number;
+  hintUsed?: number;
+};
 export type AdvancedRoadmapMode = 'medium' | 'hard';
 export type AdvancedChallengeType =
   | 'multiple_choice'

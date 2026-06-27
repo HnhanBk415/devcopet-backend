@@ -41,6 +41,9 @@ export class User {
   @Prop({ trim: true })
   bio?: string;
 
+  @Prop({ default: 'Asia/Ho_Chi_Minh', trim: true })
+  timezone!: string;
+
   @Prop({ unique: true, sparse: true })
   githubId?: string;
 

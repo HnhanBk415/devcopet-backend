@@ -21,6 +21,10 @@ type GeminiResponse = {
 export interface AiGenerateInput {
   system: string;
   user: string;
+  responseMimeType?: string;
+  responseSchema?: Record<string, unknown>;
+  temperature?: number;
+  maxOutputTokens?: number;
 }
 
 export interface AiGenerateResult {
@@ -43,7 +47,7 @@ export class GeminiProvider {
     }
 
     const model = this.getModel();
-    const maxOutputTokens = this.getMaxOutputTokens();
+    const maxOutputTokens = input.maxOutputTokens ?? this.getMaxOutputTokens();
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), this.getTimeoutMs());
@@ -64,9 +68,15 @@ export class GeminiProvider {
             },
           ],
           generationConfig: {
-            temperature: 0.4,
+            temperature: input.temperature ?? 0.4,
             topP: 0.9,
             maxOutputTokens,
+            ...(input.responseMimeType
+              ? { responseMimeType: input.responseMimeType }
+              : {}),
+            ...(input.responseSchema
+              ? { responseSchema: input.responseSchema }
+              : {}),
           },
         }),
       });

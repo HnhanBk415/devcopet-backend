@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import {
   BadRequestException,
   ForbiddenException,
@@ -25,6 +26,8 @@ import {
 } from '../utils/roadmap.util';
 import { UsersService } from '../../users/users.service';
 import { ROADMAP_NODE_XP } from '../../users/xp.util';
+import { LearningHistoryService } from '../../learning-history/learning-history.service';
+import { MissionsService } from '../../missions/missions.service';
 
 type PublicAdvancedChallenge = {
   id: string;
@@ -49,6 +52,8 @@ export abstract class AdvancedRoadmapBaseService {
     protected readonly reviewService: RoadmapReviewService,
     protected readonly statusService: RoadmapStatusService,
     protected readonly usersService: UsersService,
+    protected readonly learningHistoryService: LearningHistoryService,
+    protected readonly missionsService: MissionsService,
   ) {}
 
   async getRoadmap(courseSlug: string, userId: string) {
@@ -364,6 +369,22 @@ export abstract class AdvancedRoadmapBaseService {
       nextChallenge,
     };
 
+    const submissionId =
+      this.getOptionalString(payload.submissionId) || randomUUID();
+    await this.recordAttemptAndEvent({
+      userId,
+      submissionId,
+      courseSlug: course.slug,
+      nodeId: node.id,
+      topic: this.topicFromChallenge(challenge),
+      challengeType: challenge.type,
+      passed: correct,
+      durationSeconds: this.getOptionalNumber(payload.durationSeconds),
+      hintUsed: this.getOptionalNumber(payload.hintUsed),
+      primaryMistake: correct ? undefined : challenge.type,
+      href: '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
+    });
+
     if (correct) {
       const rewardGranted = await this.statusService.tryMarkNodeCompleted(
         userId,
@@ -401,6 +422,14 @@ export abstract class AdvancedRoadmapBaseService {
         };
       }
       await this.usersService.awardXp(userId, ROADMAP_NODE_XP[this.mode]);
+      await this.recordCompletionEvent({
+        userId,
+        courseSlug: course.slug,
+        nodeId: node.id,
+        topic: this.topicFromChallenge(challenge),
+        challengeType: challenge.type,
+        rewardXp: ROADMAP_NODE_XP[this.mode],
+      });
     }
 
     if (!correct) {
@@ -564,6 +593,134 @@ export abstract class AdvancedRoadmapBaseService {
     return publicChallenge;
   }
 
+  private async recordAttemptAndEvent(input: {
+    userId: string;
+    submissionId: string;
+    courseSlug: string;
+    nodeId: string;
+    topic: string;
+    challengeType: string;
+    passed: boolean;
+    durationSeconds?: number;
+    hintUsed?: number;
+    primaryMistake?: string;
+    href: string;
+  }) {
+    const attemptKey =
+      'roadmap-attempt:' + input.userId + ':' + input.submissionId;
+    await this.learningHistoryService.recordAttempt({
+      userId: input.userId,
+      submissionId: input.submissionId,
+      sourceType: 'ROADMAP',
+      courseSlug: input.courseSlug,
+      mode: this.mode,
+      targetType: 'NODE',
+      targetId: input.nodeId,
+      topic: input.topic,
+      challengeType: input.challengeType,
+      passed: input.passed,
+      score: input.passed ? 1 : 0,
+      maxScore: 1,
+      durationSeconds: input.durationSeconds,
+      hintUsed: input.hintUsed,
+      primaryMistake: input.primaryMistake,
+      metadata: { href: input.href },
+    });
+
+    const event = await this.learningHistoryService.recordEvent({
+      userId: input.userId,
+      eventType: 'ROADMAP_ATTEMPTED',
+      idempotencyKey: attemptKey,
+      targetType: 'NODE',
+      targetId: input.nodeId,
+      topic: input.topic,
+      passed: input.passed,
+      score: input.passed ? 1 : 0,
+      metadata: { courseSlug: input.courseSlug, mode: this.mode },
+    });
+    if (event.created) {
+      await this.missionsService.processActivityEvent({
+        userId: input.userId,
+        eventType: 'ROADMAP_ATTEMPTED',
+        idempotencyKey: attemptKey,
+        targetType: 'NODE',
+        targetId: input.nodeId,
+        topic: input.topic,
+        passed: input.passed,
+        score: input.passed ? 1 : 0,
+        metadata: { courseSlug: input.courseSlug, mode: this.mode },
+      });
+    }
+  }
+
+  private async recordCompletionEvent(input: {
+    userId: string;
+    courseSlug: string;
+    nodeId: string;
+    topic: string;
+    challengeType: string;
+    rewardXp: number;
+  }) {
+    const completionKey =
+      'roadmap-node-completed:' +
+      input.userId +
+      ':' +
+      input.courseSlug +
+      ':' +
+      this.mode +
+      ':' +
+      input.nodeId;
+    const event = await this.learningHistoryService.recordEvent({
+      userId: input.userId,
+      eventType: 'ROADMAP_NODE_COMPLETED',
+      idempotencyKey: completionKey,
+      targetType: 'NODE',
+      targetId: input.nodeId,
+      topic: input.topic,
+      passed: true,
+      score: 1,
+      metadata: {
+        courseSlug: input.courseSlug,
+        mode: this.mode,
+        challengeType: input.challengeType,
+        rewardXp: input.rewardXp,
+      },
+    });
+    if (event.created) {
+      await this.missionsService.processActivityEvent({
+        userId: input.userId,
+        eventType: 'ROADMAP_NODE_COMPLETED',
+        idempotencyKey: completionKey,
+        targetType: 'NODE',
+        targetId: input.nodeId,
+        topic: input.topic,
+        passed: true,
+        score: 1,
+        metadata: {
+          courseSlug: input.courseSlug,
+          mode: this.mode,
+          challengeType: input.challengeType,
+          rewardXp: input.rewardXp,
+        },
+      });
+    }
+  }
+
+  private topicFromChallenge(challenge: AdvancedChallengeData) {
+    return (challenge.title || challenge.type || 'roadmap-node')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-');
+  }
+
+  private getOptionalString(value: unknown) {
+    return typeof value === 'string' ? value.trim() || undefined : undefined;
+  }
+
+  private getOptionalNumber(value: unknown) {
+    return typeof value === 'number' && Number.isFinite(value)
+      ? Math.max(0, value)
+      : undefined;
+  }
   private buildRewardSummary() {
     const xp = ROADMAP_NODE_XP[this.mode];
     const stars = xp > 0 ? 10 : 0;

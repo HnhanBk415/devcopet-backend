@@ -1,4 +1,4 @@
-﻿import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { QuizzesController } from './quizzes.controller';
 import { QuizzesService } from './quizzes.service';
@@ -11,12 +11,16 @@ import { LessonsModule } from '../lessons/lessons.module';
 import { ProgressModule } from '../progress/progress.module';
 import { UsersModule } from '../users/users.module';
 import { Course, CourseSchema } from '../courses/schemas/course.schema';
+import { LearningHistoryModule } from '../learning-history/learning-history.module';
+import { MissionsModule } from '../missions/missions.module';
 
 @Module({
   imports: [
     LessonsModule,
     ProgressModule,
     UsersModule,
+    LearningHistoryModule,
+    MissionsModule,
     MongooseModule.forFeature([
       { name: Quiz.name, schema: QuizSchema },
       { name: LessonProgress.name, schema: LessonProgressSchema },

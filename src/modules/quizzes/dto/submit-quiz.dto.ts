@@ -24,6 +24,20 @@ export class SubmitQuizAnswerDto {
 }
 
 export class SubmitQuizDto {
+  @IsOptional()
+  @IsString()
+  submissionId?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  durationSeconds?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  hintUsed?: number;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => SubmitQuizAnswerDto)

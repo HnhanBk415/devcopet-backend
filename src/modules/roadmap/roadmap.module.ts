@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from '../users/users.module';
+import { LearningHistoryModule } from '../learning-history/learning-history.module';
+import { MissionsModule } from '../missions/missions.module';
 import { RoadmapController } from './roadmap.controller';
 import { RoadmapService } from './roadmap.service';
 import { World, WorldSchema } from './schemas/world.schema';
@@ -34,6 +36,8 @@ import { RoadmapStatusService } from './services/roadmap-status.service';
       { name: Lesson.name, schema: LessonSchema },
     ]),
     UsersModule,
+    LearningHistoryModule,
+    MissionsModule,
   ],
   controllers: [RoadmapController],
   providers: [

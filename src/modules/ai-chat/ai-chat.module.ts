@@ -33,6 +33,6 @@ import { RoadmapModule } from '../roadmap/roadmap.module';
     AiChatLogService,
     GeminiProvider,
   ],
-  exports: [AiChatService],
+  exports: [AiChatService, GeminiProvider],
 })
 export class AiChatModule {}

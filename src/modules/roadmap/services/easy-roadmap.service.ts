@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import {
   BadRequestException,
   ForbiddenException,
@@ -10,6 +11,7 @@ import type {
   EasyNodeContext,
   LeanChapter,
   LeanLesson,
+  RoadmapSubmitMeta,
 } from '../roadmap.types';
 import { RoadmapChallengeLoaderService } from './roadmap-challenge-loader.service';
 import { RoadmapQueryService } from './roadmap-query.service';
@@ -22,6 +24,8 @@ import {
 } from '../utils/roadmap.util';
 import { UsersService } from '../../users/users.service';
 import { ROADMAP_NODE_XP } from '../../users/xp.util';
+import { LearningHistoryService } from '../../learning-history/learning-history.service';
+import { MissionsService } from '../../missions/missions.service';
 
 @Injectable()
 export class EasyRoadmapService {
@@ -33,6 +37,8 @@ export class EasyRoadmapService {
     private readonly reviewService: RoadmapReviewService,
     private readonly statusService: RoadmapStatusService,
     private readonly usersService: UsersService,
+    private readonly learningHistoryService: LearningHistoryService,
+    private readonly missionsService: MissionsService,
   ) {}
 
   async getRoadmap(courseSlug: string, userId: string) {
@@ -169,6 +175,7 @@ export class EasyRoadmapService {
     nodeId: string,
     selectedOptionId: string,
     userId: string,
+    meta?: RoadmapSubmitMeta,
   ) {
     const { node, chapter, course, lesson } = await this.getNodeContext(
       nodeId,
@@ -239,6 +246,20 @@ export class EasyRoadmapService {
     };
 
     const correct = selectedOptionId === challenge.correctOptionId;
+    const submissionId = meta?.submissionId?.trim() || randomUUID();
+    await this.recordAttemptAndEvent({
+      userId,
+      submissionId,
+      courseSlug: course.slug,
+      nodeId: node.id,
+      topic: this.topicFromLesson(lesson),
+      challengeType: challenge.type,
+      passed: correct,
+      durationSeconds: meta?.durationSeconds,
+      hintUsed: meta?.hintUsed,
+      primaryMistake: correct ? undefined : selectedOptionId,
+      href: '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
+    });
 
     if (correct) {
       const review = this.reviewService.toEasyReview(
@@ -279,6 +300,14 @@ export class EasyRoadmapService {
         };
       }
       await this.usersService.awardXp(userId, ROADMAP_NODE_XP.easy);
+      await this.recordCompletionEvent({
+        userId,
+        courseSlug: course.slug,
+        nodeId: node.id,
+        topic: this.topicFromLesson(lesson),
+        challengeType: challenge.type,
+        rewardXp: ROADMAP_NODE_XP.easy,
+      });
 
       return {
         correct: true,
@@ -400,6 +429,124 @@ export class EasyRoadmapService {
       xp: ROADMAP_NODE_XP.easy,
       estimatedMinutes: challenge.estimatedMinutes,
     };
+  }
+
+  private async recordAttemptAndEvent(input: {
+    userId: string;
+    submissionId: string;
+    courseSlug: string;
+    nodeId: string;
+    topic: string;
+    challengeType: string;
+    passed: boolean;
+    durationSeconds?: number;
+    hintUsed?: number;
+    primaryMistake?: string;
+    href: string;
+  }) {
+    const attemptKey =
+      'roadmap-attempt:' + input.userId + ':' + input.submissionId;
+    await this.learningHistoryService.recordAttempt({
+      userId: input.userId,
+      submissionId: input.submissionId,
+      sourceType: 'ROADMAP',
+      courseSlug: input.courseSlug,
+      mode: this.mode,
+      targetType: 'NODE',
+      targetId: input.nodeId,
+      topic: input.topic,
+      challengeType: input.challengeType,
+      passed: input.passed,
+      score: input.passed ? 1 : 0,
+      maxScore: 1,
+      durationSeconds: input.durationSeconds,
+      hintUsed: input.hintUsed,
+      primaryMistake: input.primaryMistake,
+      metadata: { href: input.href },
+    });
+
+    const event = await this.learningHistoryService.recordEvent({
+      userId: input.userId,
+      eventType: 'ROADMAP_ATTEMPTED',
+      idempotencyKey: attemptKey,
+      targetType: 'NODE',
+      targetId: input.nodeId,
+      topic: input.topic,
+      passed: input.passed,
+      score: input.passed ? 1 : 0,
+      metadata: { courseSlug: input.courseSlug, mode: this.mode },
+    });
+    if (event.created) {
+      await this.missionsService.processActivityEvent({
+        userId: input.userId,
+        eventType: 'ROADMAP_ATTEMPTED',
+        idempotencyKey: attemptKey,
+        targetType: 'NODE',
+        targetId: input.nodeId,
+        topic: input.topic,
+        passed: input.passed,
+        score: input.passed ? 1 : 0,
+        metadata: { courseSlug: input.courseSlug, mode: this.mode },
+      });
+    }
+  }
+
+  private async recordCompletionEvent(input: {
+    userId: string;
+    courseSlug: string;
+    nodeId: string;
+    topic: string;
+    challengeType: string;
+    rewardXp: number;
+  }) {
+    const completionKey =
+      'roadmap-node-completed:' +
+      input.userId +
+      ':' +
+      input.courseSlug +
+      ':' +
+      this.mode +
+      ':' +
+      input.nodeId;
+    const event = await this.learningHistoryService.recordEvent({
+      userId: input.userId,
+      eventType: 'ROADMAP_NODE_COMPLETED',
+      idempotencyKey: completionKey,
+      targetType: 'NODE',
+      targetId: input.nodeId,
+      topic: input.topic,
+      passed: true,
+      score: 1,
+      metadata: {
+        courseSlug: input.courseSlug,
+        mode: this.mode,
+        challengeType: input.challengeType,
+        rewardXp: input.rewardXp,
+      },
+    });
+    if (event.created) {
+      await this.missionsService.processActivityEvent({
+        userId: input.userId,
+        eventType: 'ROADMAP_NODE_COMPLETED',
+        idempotencyKey: completionKey,
+        targetType: 'NODE',
+        targetId: input.nodeId,
+        topic: input.topic,
+        passed: true,
+        score: 1,
+        metadata: {
+          courseSlug: input.courseSlug,
+          mode: this.mode,
+          challengeType: input.challengeType,
+          rewardXp: input.rewardXp,
+        },
+      });
+    }
+  }
+  private topicFromLesson(lesson: LeanLesson) {
+    return (lesson.slug || lesson.title || 'roadmap-node')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-');
   }
 
   private getRewardSummary() {

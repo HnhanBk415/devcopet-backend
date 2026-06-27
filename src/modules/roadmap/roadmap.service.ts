@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { AiRoadmapContext } from '../ai-chat/ai-chat.types';
-import type { RoadmapMode } from './roadmap.types';
+import type { RoadmapMode, RoadmapSubmitMeta } from './roadmap.types';
 import { EasyRoadmapService } from './services/easy-roadmap.service';
 import { HardRoadmapService } from './services/hard-roadmap.service';
 import { MediumRoadmapService } from './services/medium-roadmap.service';
@@ -45,11 +45,13 @@ export class RoadmapService {
     nodeId: string,
     selectedOptionId: string,
     userId: string,
+    meta?: RoadmapSubmitMeta,
   ) {
     return this.easyRoadmapService.submitNodeChallenge(
       nodeId,
       selectedOptionId,
       userId,
+      meta,
     );
   }
 

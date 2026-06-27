@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { UsersService } from '../users/users.service';
+import { LearningHistoryService } from '../learning-history/learning-history.service';
+import { MissionsService } from '../missions/missions.service';
 import { Pet, PetDocument } from './schemas/pet.schema';
 import {
   calculatePetLevelFromTotalXp,
@@ -17,6 +19,8 @@ export class PetsService {
   constructor(
     @InjectModel(Pet.name) private readonly petModel: Model<PetDocument>,
     private readonly usersService: UsersService,
+    private readonly learningHistoryService: LearningHistoryService,
+    private readonly missionsService: MissionsService,
   ) {}
 
   async getMe(userId: string) {
@@ -60,6 +64,39 @@ export class PetsService {
     pet.totalFeeds = (pet.totalFeeds ?? 0) + 1;
 
     await pet.save();
+
+    const idempotencyKey =
+      'pet-fed:' + userId + ':' + String(pet._id) + ':' + pet.totalFeeds;
+    const event = await this.learningHistoryService.recordEvent({
+      userId,
+      eventType: 'PET_FED',
+      idempotencyKey,
+      targetType: 'PET',
+      targetId: String(pet._id),
+      passed: true,
+      score: 1,
+      metadata: {
+        feedCostXp: PET_FEED_COST_XP,
+        petExpGain: PET_EXP_GAIN_PER_FEED,
+        totalFeeds: pet.totalFeeds,
+      },
+    });
+    if (event.created) {
+      await this.missionsService.processActivityEvent({
+        userId,
+        eventType: 'PET_FED',
+        idempotencyKey,
+        targetType: 'PET',
+        targetId: String(pet._id),
+        passed: true,
+        score: 1,
+        metadata: {
+          feedCostXp: PET_FEED_COST_XP,
+          petExpGain: PET_EXP_GAIN_PER_FEED,
+          totalFeeds: pet.totalFeeds,
+        },
+      });
+    }
 
     return {
       message: 'Pet fed successfully',

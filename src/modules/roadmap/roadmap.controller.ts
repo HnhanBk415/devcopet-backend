@@ -115,13 +115,27 @@ export class RoadmapController {
   @Post('easy/nodes/:nodeId/challenge/submit')
   async submitEasyNodeChallenge(
     @Param('nodeId') nodeId: string,
-    @Body('selectedOptionId') selectedOptionId: string,
+    @Body() payload: Record<string, unknown>,
     @Req() req: RoadmapRequest,
   ) {
     return this.roadmapService.submitEasyNodeChallenge(
       nodeId,
-      selectedOptionId,
+      typeof payload.selectedOptionId === 'string'
+        ? payload.selectedOptionId
+        : '',
       getRoadmapUserId(req),
+      {
+        submissionId:
+          typeof payload.submissionId === 'string'
+            ? payload.submissionId
+            : undefined,
+        durationSeconds:
+          typeof payload.durationSeconds === 'number'
+            ? payload.durationSeconds
+            : undefined,
+        hintUsed:
+          typeof payload.hintUsed === 'number' ? payload.hintUsed : undefined,
+      },
     );
   }
 
