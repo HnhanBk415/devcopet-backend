@@ -91,14 +91,37 @@ export class MissionCandidateService {
         .select({ _id: 1 })
         .lean<Array<{ _id: Types.ObjectId }>>()
         .exec();
-      const lessons = await this.lessonModel
+      const rawLessons = await this.lessonModel
         .find({
           chapterId: { $in: chapters.map((chapter) => chapter._id) },
           isPublished: true,
         })
-        .sort({ order: 1 })
         .lean<LeanLesson[]>()
         .exec();
+
+      const lessonsByChapterId = new Map<string, LeanLesson[]>();
+      for (const lesson of rawLessons) {
+        const key = String(lesson.chapterId);
+        if (!lessonsByChapterId.has(key)) {
+          lessonsByChapterId.set(key, []);
+        }
+        lessonsByChapterId.get(key)!.push(lesson);
+      }
+
+      const lessons = chapters.flatMap((chapter) =>
+        (lessonsByChapterId.get(String(chapter._id)) ?? []).sort(
+          (a, b) => (a.order ?? 0) - (b.order ?? 0),
+        ),
+      );
+
+      const hasStartedCourse = lessons.some((lesson) =>
+        completedLessonIds.has(String(lesson._id)),
+      );
+
+      if (!hasStartedCourse) {
+        continue;
+      }
+
       const availableLesson = lessons.find(
         (lesson, index) =>
           !completedLessonIds.has(String(lesson._id)) &&
@@ -139,7 +162,7 @@ export class MissionCandidateService {
             topic: this.topicFromLesson(availableLesson),
             title: `Complete ${availableLesson.title}`.slice(0, 45),
             message: 'Finish the next checkpoint on your roadmap.',
-            href: `/roadmaps/${course.slug}/easy/nodes/${String(availableLesson._id)}`,
+            href: `/roadmap/${course.slug}/easy/nodes/${String(availableLesson._id)}`,
             difficulty: 'easy',
             estimatedMinutes: Math.max(
               5,
@@ -185,7 +208,7 @@ export class MissionCandidateService {
       const retryHref =
         typeof attempt.metadata?.href === 'string'
           ? attempt.metadata.href
-          : `/roadmaps/${attempt.courseSlug ?? 'python-basic'}/${attempt.mode ?? 'easy'}/nodes/${attempt.targetId}`;
+          : `/roadmap/${attempt.courseSlug ?? 'python-basic'}/${attempt.mode ?? 'easy'}/nodes/${attempt.targetId}`;
       candidates.push({
         candidateId: `retry:${attempt.mode ?? 'easy'}:${attempt.targetId}`,
         actionType: 'RETRY_NODE',
@@ -221,7 +244,7 @@ export class MissionCandidateService {
         topic,
         title: `Strengthen ${this.humanize(topic)}`.slice(0, 45),
         message: 'Complete one correct challenge in this weak topic.',
-        href: '/roadmaps',
+        href: '/roadmap',
         difficulty:
           snapshot.preferredDifficulty === 'hard'
             ? 'hard'
@@ -316,7 +339,7 @@ export class MissionCandidateService {
           'Open the first checkpoint and finish it.',
           snapshot,
         ),
-        href: `/roadmaps/${course.slug}/easy/nodes/${String(lesson._id)}`,
+        href: `/roadmap/${course.slug}/easy/nodes/${String(lesson._id)}`,
         difficulty: 'easy',
         estimatedMinutes: Math.max(5, lesson.estimatedMinutes || 5),
         rewardXp: 20,
@@ -336,7 +359,7 @@ export class MissionCandidateService {
           'Practice one small Python basic concept.',
           snapshot,
         ),
-        href: `/lessons/${String(lesson._id)}`,
+        href: `/lesson/${String(lesson._id)}`,
         difficulty: 'easy',
         estimatedMinutes: 5,
         rewardXp: 15,
@@ -373,7 +396,7 @@ export class MissionCandidateService {
           'Unlock this after finishing all normal missions.',
           snapshot,
         ),
-        href: `/roadmaps/${course.slug}/easy/nodes/${String(lesson._id)}`,
+        href: `/roadmap/${course.slug}/easy/nodes/${String(lesson._id)}`,
         difficulty: 'hard',
         estimatedMinutes: 10,
         rewardXp: 50,
@@ -444,7 +467,7 @@ export class MissionCandidateService {
       topic,
       title: definitions.title.slice(0, 45),
       message: this.withToneMessage(definitions.message, snapshot),
-      href: `/lessons/${id}`,
+      href: `/lesson/${id}`,
       difficulty: 'easy',
       estimatedMinutes: Math.max(5, lesson.estimatedMinutes || 5),
       rewardXp: definitions.rewardXp,

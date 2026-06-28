@@ -570,7 +570,7 @@ export class ArenaRoomService {
       rankUps = ratingResult.rankUps;
     }
 
-    if (!room.resultPersisted && room.startedAt) {
+    if (!room.resultPersisted) {
       room.resultPersisted = true;
       await this.resultService.persistRoom({
         room,

@@ -9,6 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { RoadmapService } from '../roadmap/roadmap.service';
 import { User, UserDocument } from '../users/schemas/user.schema';
+import { Pet, PetDocument } from '../pets/schemas/pet.schema';
 import {
   UserPersonality,
   UserPersonalityDocument,
@@ -31,6 +32,8 @@ export class AiChatService {
     private readonly userModel: Model<UserDocument>,
     @InjectModel(UserPersonality.name)
     private readonly personalityModel: Model<UserPersonalityDocument>,
+    @InjectModel(Pet.name)
+    private readonly petModel: Model<PetDocument>,
   ) {}
 
   async getRoadmapPromptOptions(
@@ -40,13 +43,11 @@ export class AiChatService {
   ) {
     this.promptService.assertRoadmapMode(mode);
 
-    const [user, context, usage] = await Promise.all([
-      this.getUserOrThrow(userId),
+    const [context, usage, dailyLimit] = await Promise.all([
       this.roadmapService.getAiRoadmapContext(mode, nodeId, userId),
       this.usageService.getUsageSnapshot(userId),
+      this.getDailyLimitForUser(userId),
     ]);
-
-    const dailyLimit = this.usageService.getDailyLimit(user.level);
 
     return {
       mode,
@@ -75,7 +76,7 @@ export class AiChatService {
     this.promptService.assertRoadmapMode(mode);
     this.promptService.assertPromptId(promptId);
 
-    const user = await this.getUserOrThrow(userId);
+    await this.getUserOrThrow(userId);
     const context = await this.roadmapService.getAiRoadmapContext(
       mode,
       nodeId,
@@ -92,7 +93,7 @@ export class AiChatService {
     try {
       await this.usageService.assertCooldown(userId);
 
-      const dailyLimit = this.usageService.getDailyLimit(user.level);
+      const dailyLimit = await this.getDailyLimitForUser(userId);
       const globalLimit = this.usageService.getGlobalDailyLimit();
       await this.usageService.reserveUsage(userId, dailyLimit, globalLimit);
       usageReserved = true;
@@ -167,9 +168,9 @@ export class AiChatService {
   }
 
   async getUsageToday(userId: string) {
-    const user = await this.getUserOrThrow(userId);
+    await this.getUserOrThrow(userId);
     const usage = await this.usageService.getUsageSnapshot(userId);
-    const dailyLimit = this.usageService.getDailyLimit(user.level);
+    const dailyLimit = await this.getDailyLimitForUser(userId);
 
     return {
       used: usage.userUsed,
@@ -182,6 +183,18 @@ export class AiChatService {
     };
   }
 
+  private async getDailyLimitForUser(userId: string) {
+    await this.getUserOrThrow(userId);
+
+    const pet = await this.petModel
+      .findOne({ ownerId: new Types.ObjectId(userId) })
+      .select({ level: 1 })
+      .lean<{ level?: number }>()
+      .exec();
+    const petLevel = Math.max(0, Math.floor(pet?.level ?? 0));
+
+    return this.usageService.getDailyLimit(petLevel);
+  }
   private async logSuccessSafely(
     input: Parameters<AiChatLogService['logSuccess']>[0],
   ) {

@@ -34,7 +34,7 @@ import {
 const NORMAL_MISSION_COUNT = 4;
 const SET_COMPLETION_BONUS_XP = 50;
 const MISSION_RETENTION_DAYS = 30;
-const DAILY_MISSION_VERSION = 'daily-mission-v2-english-cta';
+const DAILY_MISSION_VERSION = 'daily-mission-v3-english-cta';
 const ACTIVE_MISSION_STATUSES = ['PENDING', 'OPENED'] as const;
 const MISSION_EVENT_HISTORY_TYPES = [
   'MISSION_OPENED',
@@ -678,7 +678,7 @@ export class MissionsService {
     if (candidate.actionType === 'FEED_PET') return '/profile';
     if (candidate.actionType === 'ENTER_ARENA') return '/arena';
     if (candidate.targetType === 'LESSON')
-      return `/lessons/${candidate.targetId}`;
+      return `/lesson/${candidate.targetId}`;
     if (candidate.targetType === 'NODE') {
       const courseSlug =
         typeof candidate.metadata?.courseSlug === 'string'
@@ -688,14 +688,13 @@ export class MissionsService {
         typeof candidate.metadata?.mode === 'string'
           ? candidate.metadata.mode
           : 'easy';
-      return `/roadmaps/${courseSlug}/${mode}/nodes/${candidate.targetId}/challenge`;
+      return `/roadmap/${courseSlug}/${mode}/nodes/${candidate.targetId}/challenge`;
     }
-    if (candidate.targetType === 'QUIZ')
-      return `/quizzes/${candidate.targetId}`;
+    if (candidate.targetType === 'QUIZ') return `/quiz/${candidate.targetId}`;
     if (candidate.targetType === 'COURSE')
-      return `/courses/${candidate.targetId}`;
+      return `/course/${candidate.targetId}`;
 
-    return candidate.href || '/roadmaps';
+    return candidate.href || '/roadmap';
   }
 
   private normalize(value?: string) {

@@ -47,24 +47,11 @@ export class ArenaScoreService {
   }
 
   decideWinner(players: ArenaRuntimePlayer[]): ArenaWinnerResult {
-    const sorted = [...players].sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      if (b.correctCount !== a.correctCount)
-        return b.correctCount - a.correctCount;
-      return this.getAvgAnswerTime(a) - this.getAvgAnswerTime(b);
-    });
+    const sorted = [...players].sort((a, b) => b.score - a.score);
 
     const first = sorted[0];
     const second = sorted[1];
-    if (!first || !second) {
-      return { isDraw: true };
-    }
-
-    if (
-      first.score === second.score &&
-      first.correctCount === second.correctCount &&
-      this.getAvgAnswerTime(first) === this.getAvgAnswerTime(second)
-    ) {
+    if (!first || !second || first.score === second.score) {
       return { isDraw: true };
     }
 

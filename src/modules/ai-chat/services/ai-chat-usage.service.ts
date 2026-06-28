@@ -39,10 +39,10 @@ export class AiChatUsageService {
     this.pendingAskUserIds.delete(userId);
   }
 
-  getDailyLimit(level: number) {
-    if (level >= 10) return this.getNumberEnv('AI_LEVEL_10_DAILY_LIMIT', 7);
-    if (level >= 5) return this.getNumberEnv('AI_LEVEL_5_DAILY_LIMIT', 5);
-    return this.getNumberEnv('AI_BASE_DAILY_LIMIT', 3);
+  getDailyLimit(petLevel: number) {
+    const baseLimit = this.getNumberEnv('AI_BASE_DAILY_LIMIT', 2);
+    const levelBonus = Math.max(0, Math.floor(petLevel) - 1);
+    return baseLimit + levelBonus;
   }
 
   getGlobalDailyLimit() {

@@ -13,6 +13,7 @@ type ChallengePageResponse = {
   node?: {
     status?: string;
   };
+  challenge?: Record<string, unknown>;
   [key: string]: unknown;
 };
 
@@ -188,7 +189,7 @@ export class RoadmapService {
     nodeId: string,
   ) {
     if (response?.node?.status === 'completed') {
-      return response;
+      return this.withoutReviewCountdown(response);
     }
 
     return {
@@ -202,6 +203,20 @@ export class RoadmapService {
     };
   }
 
+  private withoutReviewCountdown<T extends ChallengePageResponse>(
+    response: T,
+  ): T {
+    if (!response.challenge) return response;
+
+    const challenge = { ...response.challenge };
+    delete challenge.timeLimitSeconds;
+    delete challenge.timeLimit;
+
+    return {
+      ...response,
+      challenge,
+    };
+  }
   private withoutClientTimeout<T extends object>(payload: T): T;
   private withoutClientTimeout<T extends object>(
     payload: T | undefined,

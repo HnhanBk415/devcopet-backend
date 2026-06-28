@@ -9,6 +9,7 @@ import { AiChatUsageService } from './services/ai-chat-usage.service';
 import { AiChatLog, AiChatLogSchema } from './schemas/ai-chat-log.schema';
 import { AiChatUsage, AiChatUsageSchema } from './schemas/ai-chat-usage.schema';
 import { User, UserSchema } from '../users/schemas/user.schema';
+import { Pet, PetSchema } from '../pets/schemas/pet.schema';
 import {
   UserPersonality,
   UserPersonalitySchema,
@@ -22,6 +23,7 @@ import { RoadmapModule } from '../roadmap/roadmap.module';
       { name: AiChatLog.name, schema: AiChatLogSchema },
       { name: AiChatUsage.name, schema: AiChatUsageSchema },
       { name: User.name, schema: UserSchema },
+      { name: Pet.name, schema: PetSchema },
       { name: UserPersonality.name, schema: UserPersonalitySchema },
     ]),
   ],
