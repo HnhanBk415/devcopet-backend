@@ -12,6 +12,11 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
+import { ResendVerificationEmailDto } from './dto/resend-verification-email.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { VerifyResetCodeDto } from './dto/verify-reset-code.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { GithubAuthGuard } from './guards/github-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
@@ -40,6 +45,36 @@ export class AuthController {
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
+  }
+
+  @Post('verify-email')
+  async verifyEmail(@Body() dto: VerifyEmailDto) {
+    return this.authService.verifyEmail(dto.email, dto.code);
+  }
+
+  @Post('resend-verification-email')
+  async resendVerificationEmail(@Body() dto: ResendVerificationEmailDto) {
+    return this.authService.resendVerificationEmail(dto.email);
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto.email);
+  }
+
+  @Post('verify-reset-code')
+  async verifyResetCode(@Body() dto: VerifyResetCodeDto) {
+    return this.authService.verifyResetCode(dto.email, dto.code);
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(
+      dto.email,
+      dto.code,
+      dto.newPassword,
+      dto.confirmPassword,
+    );
   }
 
   @Post('login')

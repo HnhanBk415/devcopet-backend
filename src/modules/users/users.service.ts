@@ -71,9 +71,29 @@ export class UsersService {
     userId: string,
     hashedToken: string | null,
   ): Promise<void> {
-    await this.userModel.findByIdAndUpdate(userId, {
+    const result = await this.userModel.findByIdAndUpdate(userId, {
       refreshTokenHash: hashedToken,
     });
+    if (!result) throw new NotFoundException('User not found');
+  }
+
+  async markEmailVerified(userId: string, verifiedAt: Date): Promise<void> {
+    const result = await this.userModel.findByIdAndUpdate(userId, {
+      emailVerified: true,
+      emailVerifiedAt: verifiedAt,
+    });
+    if (!result) throw new NotFoundException('User not found');
+  }
+
+  async updatePasswordHash(
+    userId: string,
+    passwordHash: string,
+  ): Promise<void> {
+    const result = await this.userModel.findByIdAndUpdate(userId, {
+      passwordHash,
+      refreshTokenHash: null,
+    });
+    if (!result) throw new NotFoundException('User not found');
   }
 
   /** Links a social provider ID to an existing user */

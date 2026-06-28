@@ -279,33 +279,38 @@ export class MissionsService {
     const candidatesById = new Map(
       candidates.map((candidate) => [candidate.candidateId, candidate]),
     );
-    return selected
-      .map((mission, index) => {
-        const candidate = candidatesById.get(mission.candidateId);
-        if (!candidate) return null;
-        return {
-          missionId: randomUUID(),
-          missionIndex: kind === 'HARDCORE' ? 5 : index + 1,
-          missionKind: kind,
-          status: 'PENDING',
-          candidateId: candidate.candidateId,
-          actionType: candidate.actionType,
-          targetType: candidate.targetType,
-          targetId: candidate.targetId,
-          topic: candidate.topic,
-          href: candidate.href,
-          title: mission.title || candidate.title,
-          message: mission.message || candidate.message,
-          reasonCode: mission.reasonCode,
-          progress: 0,
-          target: 1,
-          estimatedMinutes: candidate.estimatedMinutes,
-          rewardSnapshot: { xp: candidate.rewardXp },
-          expectedEventTypes: candidate.expectedEventTypes,
-          metadata: candidate.metadata ?? {},
-        };
-      })
-      .filter((mission): mission is DailyMissionItem => Boolean(mission));
+    const items: DailyMissionItem[] = [];
+
+    selected.forEach((mission, index) => {
+      const candidate = candidatesById.get(mission.candidateId);
+      if (!candidate) return;
+
+      const item: DailyMissionItem = {
+        missionId: randomUUID(),
+        missionIndex: kind === 'HARDCORE' ? 5 : index + 1,
+        missionKind: kind,
+        status: 'PENDING',
+        candidateId: candidate.candidateId,
+        actionType: candidate.actionType,
+        targetType: candidate.targetType,
+        targetId: candidate.targetId,
+        topic: candidate.topic,
+        href: candidate.href,
+        title: mission.title || candidate.title,
+        message: mission.message || candidate.message,
+        reasonCode: mission.reasonCode,
+        progress: 0,
+        target: 1,
+        estimatedMinutes: candidate.estimatedMinutes,
+        rewardSnapshot: { xp: candidate.rewardXp },
+        expectedEventTypes: candidate.expectedEventTypes,
+        metadata: candidate.metadata ?? {},
+      };
+
+      items.push(item);
+    });
+
+    return items;
   }
 
   private async recalculateSet(

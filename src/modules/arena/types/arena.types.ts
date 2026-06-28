@@ -6,6 +6,7 @@ export type ArenaMode = 'ranked' | 'casual' | 'practice';
 export type ArenaQuestionType = 'multiple_choice' | 'drag_drop';
 export type ArenaRoomStatus =
   | 'waiting'
+  | 'confirming'
   | 'countdown'
   | 'playing'
   | 'finished'
@@ -44,6 +45,7 @@ export interface ArenaRuntimePlayer extends PublicArenaPlayer {
   totalAnswerTimeMs: number;
   answeredQuestionCount: number;
   answeredCurrentQuestion: boolean;
+  matchAccepted?: boolean;
   disconnected?: boolean;
   ratingBefore: number;
   ratingAfter: number;
@@ -167,9 +169,11 @@ export interface ArenaRoom {
   questionStartedAt?: number;
   questionTimeLimitSeconds?: number;
   questionFinished: boolean;
+  matchAcceptDeadline?: number;
   resultPersisted: boolean;
   submittedAnswers: Record<string, Record<string, ArenaSubmittedAnswer>>;
   timers: {
+    matchAcceptTimer?: NodeJS.Timeout;
     countdownTimer?: NodeJS.Timeout;
     nextQuestionTimer?: NodeJS.Timeout;
     questionTimer?: NodeJS.Timeout;

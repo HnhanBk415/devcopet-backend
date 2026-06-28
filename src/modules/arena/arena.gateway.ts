@@ -13,7 +13,11 @@ import {
 import type { Namespace, Socket } from 'socket.io';
 import { ARENA_BOT_FALLBACK_SECONDS } from './constants/arena.constants';
 import { FindMatchDto } from './dto/find-match.dto';
-import { LeaveRoomDto, SubmitAnswerDto } from './dto/submit-answer.dto';
+import {
+  LeaveRoomDto,
+  MatchDecisionDto,
+  SubmitAnswerDto,
+} from './dto/submit-answer.dto';
 import { ArenaAuthService } from './services/arena-auth.service';
 import {
   ArenaMatchmakingService,
@@ -139,6 +143,32 @@ export class ArenaGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   }
 
+  @SubscribeMessage('arena:accept_match')
+  async handleAcceptMatch(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: unknown,
+  ) {
+    try {
+      const dto = await this.validatePayload(MatchDecisionDto, payload);
+      this.roomService.acceptMatch(this.server, client, dto.roomId);
+    } catch (error) {
+      this.emitError(client, error);
+    }
+  }
+
+  @SubscribeMessage('arena:decline_match')
+  async handleDeclineMatch(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: unknown,
+  ) {
+    try {
+      const dto = await this.validatePayload(MatchDecisionDto, payload);
+      await this.roomService.declineMatch(this.server, client, dto.roomId);
+    } catch (error) {
+      this.emitError(client, error);
+    }
+  }
+
   @SubscribeMessage('arena:submit_answer')
   async handleSubmitAnswer(
     @ConnectedSocket() client: Socket,
@@ -146,7 +176,7 @@ export class ArenaGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {
     try {
       const dto = await this.validatePayload(SubmitAnswerDto, payload);
-      await this.roomService.submitAnswer(this.server, client, dto);
+      this.roomService.submitAnswer(this.server, client, dto);
     } catch (error) {
       this.emitError(client, error);
     }

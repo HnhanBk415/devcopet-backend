@@ -28,6 +28,11 @@ export class SubmitAnswerDto {
   answer!: ArenaAnswerDto;
 }
 
+export class MatchDecisionDto {
+  @IsString()
+  roomId!: string;
+}
+
 export class LeaveRoomDto {
   @IsString()
   roomId!: string;

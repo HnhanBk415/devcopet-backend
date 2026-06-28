@@ -8,6 +8,7 @@ export type RoadmapSubmitMeta = {
   submissionId?: string;
   durationSeconds?: number;
   hintUsed?: number;
+  timeout?: boolean;
 };
 export type AdvancedRoadmapMode = 'medium' | 'hard';
 export type AdvancedChallengeType =

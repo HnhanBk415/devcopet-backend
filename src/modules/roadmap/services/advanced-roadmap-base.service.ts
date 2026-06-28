@@ -40,6 +40,7 @@ type PublicAdvancedChallenge = {
   template?: string;
   poolItems?: Array<{ id: string; text: string }>;
   estimatedMinutes?: number;
+  timeLimitSeconds?: number;
   xp?: number;
   [key: string]: unknown;
 };
@@ -103,6 +104,7 @@ export abstract class AdvancedRoadmapBaseService {
           status: statusMap.get(nodeId) ?? 'locked',
           xp: ROADMAP_NODE_XP[this.mode],
           estimatedMinutes: challenge.estimatedMinutes,
+          timeLimitSeconds: challenge.estimatedMinutes * 60,
         };
       });
 
@@ -171,6 +173,7 @@ export abstract class AdvancedRoadmapBaseService {
       navigation: {
         returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
         nextChallenge,
+        mustReturnToRoadmap: false,
       },
     };
 
@@ -246,11 +249,67 @@ export abstract class AdvancedRoadmapBaseService {
               node.id,
               userId,
             ),
+            mustReturnToRoadmap: false,
           },
         };
       }
     }
 
+    const user = await this.usersService.findById(userId);
+    const explanationSpeaker = {
+      name: user?.petName || 'Your pet',
+      type: 'PET' as const,
+    };
+
+    const nextChallenge = await this.getNextChallenge(
+      course.slug,
+      node.id,
+      userId,
+    );
+    const passedNavigation = {
+      returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+      nextChallenge,
+      mustReturnToRoadmap: false,
+    };
+    const failedNavigation = {
+      returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+      nextChallenge: null,
+      mustReturnToRoadmap: true,
+    };
+
+    if (payload?.timeout === true) {
+      const submissionId =
+        this.getOptionalString(payload.submissionId) || randomUUID();
+      await this.recordAttemptAndEvent({
+        userId,
+        submissionId,
+        courseSlug: course.slug,
+        nodeId: node.id,
+        topic: this.topicFromChallenge(challenge),
+        challengeType: challenge.type,
+        passed: false,
+        durationSeconds: this.getOptionalNumber(payload.durationSeconds),
+        hintUsed: this.getOptionalNumber(payload.hintUsed),
+        primaryMistake: 'timeout',
+        href:
+          '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
+      });
+
+      return {
+        correct: false,
+        status: 'FAILED',
+        timeout: true,
+        message:
+          'Time is up. Return to the roadmap and try this checkpoint again.',
+        explanation: undefined,
+        correctOptionId: undefined,
+        correctDropZoneMap: undefined,
+        correctMatchingMap: undefined,
+        correctOrderedIds: undefined,
+        rewardSummary: this.getEmptyRewardSummary(),
+        navigation: failedNavigation,
+      };
+    }
     if (payload?.type !== challenge.type) {
       throw new BadRequestException(
         `type must match the node challenge type: ${challenge.type}.`,
@@ -353,22 +412,6 @@ export abstract class AdvancedRoadmapBaseService {
       );
     }
 
-    const user = await this.usersService.findById(userId);
-    const explanationSpeaker = {
-      name: user?.petName || 'Your pet',
-      type: 'PET' as const,
-    };
-
-    const nextChallenge = await this.getNextChallenge(
-      course.slug,
-      node.id,
-      userId,
-    );
-    const navigation = {
-      returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
-      nextChallenge,
-    };
-
     const submissionId =
       this.getOptionalString(payload.submissionId) || randomUUID();
     await this.recordAttemptAndEvent({
@@ -418,7 +461,7 @@ export abstract class AdvancedRoadmapBaseService {
                 completion,
               )
             : review,
-          navigation,
+          navigation: passedNavigation,
         };
       }
       await this.usersService.awardXp(userId, ROADMAP_NODE_XP[this.mode]);
@@ -444,10 +487,7 @@ export abstract class AdvancedRoadmapBaseService {
         correctMatchingMap: undefined,
         correctOrderedIds: undefined,
         rewardSummary: this.getEmptyRewardSummary(),
-        navigation: {
-          returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
-          nextChallenge: null,
-        },
+        navigation: failedNavigation,
       };
     }
 
@@ -462,7 +502,7 @@ export abstract class AdvancedRoadmapBaseService {
       rewardSummary: this.buildRewardSummary(),
       ...returnData,
       review,
-      navigation,
+      navigation: passedNavigation,
     };
   }
 
@@ -554,6 +594,7 @@ export abstract class AdvancedRoadmapBaseService {
     }
 
     publicChallenge.xp = ROADMAP_NODE_XP[this.mode];
+    publicChallenge.timeLimitSeconds = challenge.estimatedMinutes * 60;
 
     if (this.mode === 'hard') {
       const source = challenge as Record<string, unknown>;

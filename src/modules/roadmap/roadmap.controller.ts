@@ -135,6 +135,7 @@ export class RoadmapController {
             : undefined,
         hintUsed:
           typeof payload.hintUsed === 'number' ? payload.hintUsed : undefined,
+        timeout: payload.timeout === true,
       },
     );
   }

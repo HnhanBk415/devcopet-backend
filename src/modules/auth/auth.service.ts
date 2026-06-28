@@ -9,6 +9,8 @@ import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { SocialProvider, UserRole } from '../users/schemas/user.schema';
+import { EmailVerificationService } from './services/email-verification.service';
+import { PasswordResetService } from './services/password-reset.service';
 import * as bcryptjs from 'bcryptjs';
 
 export interface SocialProfile {
@@ -25,6 +27,8 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly emailVerificationService: EmailVerificationService,
+    private readonly passwordResetService: PasswordResetService,
   ) {}
 
   private normalizeEmail(email: string): string {
@@ -88,6 +92,7 @@ export class AuthService {
     petProfileInitialized?: boolean;
     petName?: string;
     authProviders?: string[];
+    emailVerified?: boolean;
   }) {
     return {
       id: String(user._id),
@@ -104,6 +109,7 @@ export class AuthService {
       petProfileInitialized: user.petProfileInitialized,
       petName: user.petName ?? 'Axo-Script',
       authProviders: user.authProviders,
+      emailVerified: user.emailVerified === true,
     };
   }
 
@@ -132,10 +138,14 @@ export class AuthService {
         coins: 0,
         onboardingCompleted: false,
         petProfileInitialized: false,
+        emailVerified: false,
       });
 
+      await this.emailVerificationService.sendVerificationEmail(user);
+
       return {
-        message: 'Register successful',
+        message:
+          'Register successful. Please verify your email before logging in.',
         user: this.buildSafeUser(user),
       };
     } catch (error) {
@@ -153,6 +163,12 @@ export class AuthService {
     const user = await this.usersService.findByEmail(normalizedEmail);
     if (!user || !user.passwordHash) {
       throw new UnauthorizedException('Invalid credentials');
+    }
+
+    if (user.authProviders?.includes('local') && user.emailVerified === false) {
+      throw new UnauthorizedException(
+        'Please verify your email before logging in',
+      );
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.passwordHash);
@@ -215,6 +231,36 @@ export class AuthService {
     return { message: 'Logged out successfully' };
   }
 
+  async verifyEmail(email: string, code: string) {
+    return this.emailVerificationService.verifyEmail(email, code);
+  }
+
+  async resendVerificationEmail(email: string) {
+    return this.emailVerificationService.resendVerificationEmail(email);
+  }
+
+  async forgotPassword(email: string) {
+    return this.passwordResetService.sendResetCode(email);
+  }
+
+  async verifyResetCode(email: string, code: string) {
+    return this.passwordResetService.verifyResetCode(email, code);
+  }
+
+  async resetPassword(
+    email: string,
+    code: string,
+    newPassword: string,
+    confirmPassword?: string,
+  ) {
+    return this.passwordResetService.resetPassword(
+      email,
+      code,
+      newPassword,
+      confirmPassword,
+    );
+  }
+
   async validateOrCreateSocialUser(profile: SocialProfile) {
     const provider = profile.provider;
     const providerIdField = `${provider}Id`;
@@ -236,6 +282,12 @@ export class AuthService {
 
       if (userByEmail) {
         try {
+          if (userByEmail.emailVerified === false) {
+            throw new UnauthorizedException(
+              'Email is registered but not verified. Please verify email before linking social login.',
+            );
+          }
+
           await this.usersService.linkSocialProvider(
             String(userByEmail._id),
             provider,
@@ -264,6 +316,8 @@ export class AuthService {
             email: normalizedEmail,
             [providerIdField]: profile.providerId,
             authProviders: [provider],
+            emailVerified: true,
+            emailVerifiedAt: new Date(),
             avatarUrl: profile.avatarUrl,
             role: UserRole.STUDENT,
             level: 1,

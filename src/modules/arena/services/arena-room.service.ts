@@ -2,7 +2,9 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import type { Namespace, Socket } from 'socket.io';
 import { randomUUID } from 'node:crypto';
 import {
+  ARENA_ANSWER_REVEAL_SECONDS,
   ARENA_COUNTDOWN_VALUES,
+  ARENA_MATCH_ACCEPT_SECONDS,
   ARENA_QUESTION_TIME,
   ARENA_TOTAL_QUESTIONS,
   ARENA_RANK_VALUE,
@@ -66,8 +68,7 @@ export class ArenaRoomService {
     this.rooms.set(room.roomId, room);
     this.matchmakingService.markActiveRoom([a.userId, b.userId], room.roomId);
     await this.joinHumanSockets(server, room);
-    this.emitMatchFound(server, room);
-    this.startCountdown(server, room);
+    this.startMatchConfirmation(server, room);
     return room;
   }
 
@@ -91,14 +92,13 @@ export class ArenaRoomService {
     this.rooms.set(room.roomId, room);
     this.matchmakingService.markActiveRoom([entry.userId], room.roomId);
     await this.joinHumanSockets(server, room);
-    this.emitMatchFound(server, room);
-    this.startCountdown(server, room);
+    this.startMatchConfirmation(server, room);
     return room;
   }
 
-  async submitAnswer(server: Namespace, client: Socket, dto: SubmitAnswerDto) {
+  submitAnswer(server: Namespace, client: Socket, dto: SubmitAnswerDto) {
     const user = this.getSocketUser(client);
-    await this.submitAnswerInternal(server, {
+    this.submitAnswerInternal(server, {
       roomId: dto.roomId,
       userId: user.userId,
       answer: dto.answer,
@@ -106,12 +106,57 @@ export class ArenaRoomService {
     });
   }
 
+  acceptMatch(server: Namespace, client: Socket, roomId: string) {
+    const user = this.getSocketUser(client);
+    const room = this.getRoom(roomId);
+    if (room.status !== 'confirming') {
+      throw new BadRequestException('Match is not accepting confirmations.');
+    }
+
+    const player = this.getRoomPlayer(room, user.userId);
+    if (player.isBot) return;
+    player.matchAccepted = true;
+
+    server.to(room.roomId).emit('arena:match_accept_update', {
+      roomId: room.roomId,
+      acceptedUserIds: room.players
+        .filter((item) => item.matchAccepted)
+        .map((item) => item.userId),
+      requiredUserIds: room.players
+        .filter((item) => !item.isBot)
+        .map((item) => item.userId),
+    });
+
+    if (room.players.every((item) => item.isBot || item.matchAccepted)) {
+      this.clearMatchAcceptTimer(room);
+      this.startCountdown(server, room);
+    }
+  }
+
+  async declineMatch(server: Namespace, client: Socket, roomId: string) {
+    const user = this.getSocketUser(client);
+    const room = this.getRoom(roomId);
+    if (room.status !== 'confirming') {
+      throw new BadRequestException('Match is not accepting confirmations.');
+    }
+
+    const player = this.getRoomPlayer(room, user.userId);
+    server.to(room.roomId).emit('arena:match_declined', {
+      roomId: room.roomId,
+      userId: player.userId,
+    });
+    await this.finishMatch(server, room, 'cancelled');
+  }
+
   async leaveRoom(server: Namespace, client: Socket, roomId: string) {
     const user = this.getSocketUser(client);
     const room = this.getRoom(roomId);
     const player = this.getRoomPlayer(room, user.userId);
     player.disconnected = true;
-    await this.finishMatch(server, room, 'cancelled');
+    const status: ArenaMatchStatus = room.startedAt
+      ? 'disconnected'
+      : 'cancelled';
+    await this.finishMatch(server, room, status);
   }
 
   async handleDisconnect(server: Namespace, userId: string) {
@@ -151,9 +196,12 @@ export class ArenaRoomService {
       roomId: randomUUID(),
       courseSlug: input.courseSlug,
       mode: input.mode,
-      status: 'countdown',
+      status: 'confirming',
       matchTier: input.matchTier,
-      players: input.players,
+      players: input.players.map((player) => ({
+        ...player,
+        matchAccepted: player.isBot ? true : false,
+      })),
       questions: input.questions,
       currentQuestionIndex: 0,
       questionFinished: false,
@@ -161,7 +209,6 @@ export class ArenaRoomService {
       submittedAnswers: {},
       timers: {},
       createdAt: Date.now(),
-      startedAt: Date.now(),
     };
   }
 
@@ -176,12 +223,39 @@ export class ArenaRoomService {
     );
   }
 
+  private startMatchConfirmation(server: Namespace, room: ArenaRoom) {
+    room.status = 'confirming';
+    room.matchAcceptDeadline = Date.now() + ARENA_MATCH_ACCEPT_SECONDS * 1000;
+    this.emitMatchFound(server, room);
+
+    room.timers.matchAcceptTimer = setTimeout(() => {
+      if (room.status !== 'confirming') return;
+      server.to(room.roomId).emit('arena:match_accept_timeout', {
+        roomId: room.roomId,
+        acceptedUserIds: room.players
+          .filter((player) => player.matchAccepted)
+          .map((player) => player.userId),
+      });
+      void this.finishMatch(server, room, 'cancelled');
+    }, ARENA_MATCH_ACCEPT_SECONDS * 1000);
+
+    if (room.players.every((player) => player.isBot || player.matchAccepted)) {
+      this.clearMatchAcceptTimer(room);
+      this.startCountdown(server, room);
+    }
+  }
+
   private emitMatchFound(server: Namespace, room: ArenaRoom) {
     server.to(room.roomId).emit('arena:match_found', {
       roomId: room.roomId,
       mode: room.mode,
       courseSlug: room.courseSlug,
       matchTier: room.matchTier,
+      acceptWindowSeconds: ARENA_MATCH_ACCEPT_SECONDS,
+      acceptDeadline: new Date(
+        room.matchAcceptDeadline ?? Date.now(),
+      ).toISOString(),
+      serverTime: new Date().toISOString(),
       players: room.players.map((player) => ({
         userId: player.userId,
         username: player.username,
@@ -189,11 +263,21 @@ export class ArenaRoomService {
         isBot: player.isBot,
         arenaRank: player.arenaRank,
         arenaRating: player.arenaRating,
+        matchAccepted: player.matchAccepted ?? false,
       })),
     });
   }
 
   private startCountdown(server: Namespace, room: ArenaRoom) {
+    if (room.status === 'finished' || room.status === 'cancelled') return;
+    room.status = 'countdown';
+    room.startedAt = room.startedAt ?? Date.now();
+
+    server.to(room.roomId).emit('arena:match_accepted', {
+      roomId: room.roomId,
+      countdownValues: ARENA_COUNTDOWN_VALUES,
+    });
+
     const values = [...ARENA_COUNTDOWN_VALUES];
     const tick = () => {
       if (room.status !== 'countdown') return;
@@ -249,7 +333,7 @@ export class ArenaRoomService {
 
     room.timers.questionTimer = setTimeout(
       () => {
-        void this.finishQuestion(server, room);
+        this.finishQuestion(server, room);
       },
       room.questionTimeLimitSeconds * 1000 + 100,
     );
@@ -278,18 +362,20 @@ export class ArenaRoomService {
         question,
         bot.botDifficulty!,
       );
-      void this.submitAnswerInternal(server, {
-        roomId: room.roomId,
-        userId: bot.userId,
-        answer,
-        isBot: true,
-      }).catch((error) =>
-        this.logger.warn(error instanceof Error ? error.message : error),
-      );
+      try {
+        this.submitAnswerInternal(server, {
+          roomId: room.roomId,
+          userId: bot.userId,
+          answer,
+          isBot: true,
+        });
+      } catch (error) {
+        this.logger.warn(error instanceof Error ? error.message : error);
+      }
     }, delayMs);
   }
 
-  private async submitAnswerInternal(
+  private submitAnswerInternal(
     server: Namespace,
     input: {
       roomId: string;
@@ -362,15 +448,10 @@ export class ArenaRoomService {
     };
 
     if (!input.isBot && player.socketId) {
-      server.to(player.socketId).emit('arena:answer_result', {
+      server.to(player.socketId).emit('arena:answer_locked', {
         roomId: room.roomId,
         questionId: question.id,
-        isCorrect,
-        earnedScore: score.earnedScore,
-        correctAnswer: this.evaluatorService.getCorrectAnswer(question),
-        explanation: question.explanation,
-        totalScore: player.score,
-        streak: player.streak,
+        locked: true,
       });
     }
 
@@ -379,17 +460,12 @@ export class ArenaRoomService {
       userId: input.userId,
       answered: true,
     });
-    server.to(room.roomId).emit('arena:score_update', {
-      roomId: room.roomId,
-      scoreboard: this.scoreService.getScoreboard(room.players),
-    });
-
     if (room.players.every((item) => item.answeredCurrentQuestion)) {
-      await this.finishQuestion(server, room);
+      this.finishQuestion(server, room);
     }
   }
 
-  private async finishQuestion(server: Namespace, room: ArenaRoom) {
+  private finishQuestion(server: Namespace, room: ArenaRoom) {
     if (room.questionFinished || room.status !== 'playing') return;
 
     room.questionFinished = true;
@@ -416,23 +492,53 @@ export class ArenaRoomService {
       };
     }
 
+    const correctAnswer = this.evaluatorService.getCorrectAnswer(question);
+    const scoreboard = this.scoreService.getScoreboard(room.players);
+    const isLastQuestion =
+      room.currentQuestionIndex >= room.questions.length - 1;
+
+    for (const player of room.players) {
+      if (player.isBot || !player.socketId) continue;
+      const answer = room.submittedAnswers[question.id][player.userId];
+      server.to(player.socketId).emit('arena:answer_result', {
+        roomId: room.roomId,
+        questionId: question.id,
+        isCorrect: answer?.isCorrect ?? false,
+        earnedScore: answer?.earnedScore ?? 0,
+        correctAnswer,
+        explanation: question.explanation,
+        totalScore: player.score,
+        streak: player.streak,
+        timedOut: answer?.timedOut ?? false,
+      });
+    }
+
     server.to(room.roomId).emit('arena:question_finished', {
       roomId: room.roomId,
       questionId: question.id,
-      correctAnswer: this.evaluatorService.getCorrectAnswer(question),
+      correctAnswer,
       explanation: question.explanation,
-      scoreboard: this.scoreService.getScoreboard(room.players),
+      scoreboard,
+      revealSeconds: ARENA_ANSWER_REVEAL_SECONDS,
+      nextQuestionInSeconds: isLastQuestion
+        ? null
+        : ARENA_ANSWER_REVEAL_SECONDS,
     });
 
-    if (room.currentQuestionIndex >= room.questions.length - 1) {
-      await this.finishMatch(server, room, 'completed');
-      return;
-    }
+    server.to(room.roomId).emit('arena:score_update', {
+      roomId: room.roomId,
+      scoreboard,
+    });
 
-    room.currentQuestionIndex += 1;
     room.timers.nextQuestionTimer = setTimeout(() => {
+      if (isLastQuestion) {
+        void this.finishMatch(server, room, 'completed');
+        return;
+      }
+
+      room.currentQuestionIndex += 1;
       this.startCurrentQuestion(server, room);
-    }, 1800);
+    }, ARENA_ANSWER_REVEAL_SECONDS * 1000);
   }
 
   private async finishMatch(
@@ -450,7 +556,10 @@ export class ArenaRoomService {
     let ratingChanges: RatingChange[] = [];
     let rankUps: RankUpPayload[] = [];
 
-    if (status === 'completed' && !room.resultPersisted) {
+    if (
+      (status === 'completed' || status === 'disconnected') &&
+      !room.resultPersisted
+    ) {
       const ratingResult = await this.ratingService.applyMatchResults({
         players: room.players,
         winnerUserId: winner.winnerUserId,
@@ -522,6 +631,7 @@ export class ArenaRoomService {
 
       server.to(player.socketId).emit('arena:match_finished', {
         roomId: room.roomId,
+        status: input.status,
         result,
         winnerUserId: input.winnerUserId,
         finalScoreboard,
@@ -573,6 +683,14 @@ export class ArenaRoomService {
     return ARENA_RANK_VALUE[a] <= ARENA_RANK_VALUE[b] ? a : b;
   }
 
+  private clearMatchAcceptTimer(room: ArenaRoom) {
+    if (room.timers.matchAcceptTimer) {
+      clearTimeout(room.timers.matchAcceptTimer);
+    }
+    room.timers.matchAcceptTimer = undefined;
+    room.matchAcceptDeadline = undefined;
+  }
+
   private clearQuestionTimers(room: ArenaRoom) {
     if (room.timers.questionTimer) clearTimeout(room.timers.questionTimer);
     if (room.timers.botTimer) clearTimeout(room.timers.botTimer);
@@ -581,6 +699,7 @@ export class ArenaRoomService {
   }
 
   private clearAllTimers(room: ArenaRoom) {
+    this.clearMatchAcceptTimer(room);
     this.clearQuestionTimers(room);
     if (room.timers.countdownTimer) clearTimeout(room.timers.countdownTimer);
     if (room.timers.nextQuestionTimer)

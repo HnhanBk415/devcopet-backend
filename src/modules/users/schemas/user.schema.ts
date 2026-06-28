@@ -28,6 +28,12 @@ export class User {
   @Prop()
   passwordHash?: string;
 
+  @Prop()
+  emailVerified?: boolean;
+
+  @Prop()
+  emailVerifiedAt?: Date;
+
   @Prop({
     type: String,
     enum: Object.values(UserRole),

@@ -81,6 +81,8 @@ export class EasyRoadmapService {
           status: statusMap.get(lessonId) ?? 'locked',
           xp: ROADMAP_NODE_XP.easy,
           duration: EASY_NODE_DURATION_MINUTES,
+          estimatedMinutes: EASY_NODE_DURATION_MINUTES,
+          timeLimitSeconds: EASY_NODE_DURATION_MINUTES * 60,
           href: `/lesson/${lessonId}`,
         };
       });
@@ -151,6 +153,7 @@ export class EasyRoadmapService {
       navigation: {
         returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
         nextChallenge,
+        mustReturnToRoadmap: false,
       },
     };
 
@@ -219,14 +222,9 @@ export class EasyRoadmapService {
             node.id,
             userId,
           ),
+          mustReturnToRoadmap: false,
         },
       };
-    }
-
-    if (!isChallengeOptionId(selectedOptionId)) {
-      throw new BadRequestException(
-        'selectedOptionId must be one of A, B, C, or D.',
-      );
     }
 
     const user = await this.usersService.findById(userId);
@@ -240,11 +238,52 @@ export class EasyRoadmapService {
       node.id,
       userId,
     );
-    const navigation = {
+    const passedNavigation = {
       returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
       nextChallenge,
+      mustReturnToRoadmap: false,
+    };
+    const failedNavigation = {
+      returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
+      nextChallenge: null,
+      mustReturnToRoadmap: true,
     };
 
+    if (meta?.timeout === true) {
+      const submissionId = meta?.submissionId?.trim() || randomUUID();
+      await this.recordAttemptAndEvent({
+        userId,
+        submissionId,
+        courseSlug: course.slug,
+        nodeId: node.id,
+        topic: this.topicFromLesson(lesson),
+        challengeType: challenge.type,
+        passed: false,
+        durationSeconds: meta?.durationSeconds,
+        hintUsed: meta?.hintUsed,
+        primaryMistake: 'timeout',
+        href:
+          '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
+      });
+
+      return {
+        correct: false,
+        status: 'FAILED',
+        timeout: true,
+        message:
+          'Time is up. Return to the roadmap and try this checkpoint again.',
+        explanation: undefined,
+        correctOptionId: undefined,
+        rewardSummary: this.getEmptyRewardSummary(),
+        navigation: failedNavigation,
+      };
+    }
+
+    if (!isChallengeOptionId(selectedOptionId)) {
+      throw new BadRequestException(
+        'selectedOptionId must be one of A, B, C, or D.',
+      );
+    }
     const correct = selectedOptionId === challenge.correctOptionId;
     const submissionId = meta?.submissionId?.trim() || randomUUID();
     await this.recordAttemptAndEvent({
@@ -296,7 +335,7 @@ export class EasyRoadmapService {
             challenge,
             completion,
           ),
-          navigation,
+          navigation: passedNavigation,
         };
       }
       await this.usersService.awardXp(userId, ROADMAP_NODE_XP.easy);
@@ -319,7 +358,7 @@ export class EasyRoadmapService {
         explanationSpeaker,
         rewardSummary: this.getRewardSummary(),
         review,
-        navigation,
+        navigation: passedNavigation,
       };
     }
 
@@ -331,10 +370,7 @@ export class EasyRoadmapService {
       explanation: undefined,
       correctOptionId: undefined,
       rewardSummary: this.getEmptyRewardSummary(),
-      navigation: {
-        returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
-        nextChallenge: null,
-      },
+      navigation: failedNavigation,
     };
   }
 
@@ -428,6 +464,7 @@ export class EasyRoadmapService {
       options: challenge.options,
       xp: ROADMAP_NODE_XP.easy,
       estimatedMinutes: challenge.estimatedMinutes,
+      timeLimitSeconds: challenge.estimatedMinutes * 60,
     };
   }
 
