@@ -4,6 +4,8 @@ import { Model, Types } from 'mongoose';
 import { ArenaMatch, ArenaMatchDocument } from '../schemas/arena-match.schema';
 import { ArenaQuestionEvaluatorService } from './arena-question-evaluator.service';
 import { ArenaScoreService } from './arena-score.service';
+import { LearningHistoryService } from '../../learning-history/learning-history.service';
+import { MissionsService } from '../../missions/missions.service';
 import type {
   ArenaMatchStatus,
   ArenaRoom,
@@ -17,6 +19,8 @@ export class ArenaResultService {
     private readonly arenaMatchModel: Model<ArenaMatchDocument>,
     private readonly evaluatorService: ArenaQuestionEvaluatorService,
     private readonly scoreService: ArenaScoreService,
+    private readonly learningHistoryService: LearningHistoryService,
+    private readonly missionsService: MissionsService,
   ) {}
 
   async persistRoom(input: {
@@ -85,6 +89,33 @@ export class ArenaResultService {
       { $setOnInsert: document },
       { upsert: true },
     );
+
+    if (input.status === 'completed' || input.status === 'disconnected') {
+      const now = new Date();
+      await Promise.all(
+        room.players
+          .filter((p) => !p.isBot)
+          .map(async (p) => {
+            const eventData = {
+              userId: p.userId,
+              eventType: 'ARENA_MATCH_FINISHED' as const,
+              idempotencyKey: `arena-match:${room.roomId}:${p.userId}`,
+              targetType: 'ARENA',
+              targetId: room.roomId,
+              occurredAt: now,
+              metadata: {
+                roomId: room.roomId,
+                courseSlug: room.courseSlug,
+                status: input.status,
+                isWinner: p.userId === input.winnerUserId,
+                isDraw: input.isDraw,
+              },
+            };
+            await this.learningHistoryService.recordEvent(eventData);
+            await this.missionsService.processActivityEvent(eventData);
+          }),
+      );
+    }
   }
 
   private toObjectId(id?: string) {

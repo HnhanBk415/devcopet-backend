@@ -18,6 +18,7 @@ export const ACTIVITY_EVENT_TYPES = [
   'MISSION_COMPLETED',
   'MISSION_SET_COMPLETED',
   'HARDCORE_UNLOCKED',
+  'ARENA_MATCH_FINISHED',
 ] as const;
 
 export type ActivityEventType = (typeof ACTIVITY_EVENT_TYPES)[number];

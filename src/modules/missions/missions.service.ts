@@ -31,16 +31,15 @@ import {
   getNextLocalMidnight,
 } from './utils/mission-date.util';
 
-const NORMAL_MISSION_COUNT = 4;
+const NORMAL_MISSION_COUNT = 5;
 const SET_COMPLETION_BONUS_XP = 50;
 const MISSION_RETENTION_DAYS = 30;
-const DAILY_MISSION_VERSION = 'daily-mission-v3-english-cta';
+const DAILY_MISSION_VERSION = 'daily-mission-v6-dynamic';
 const ACTIVE_MISSION_STATUSES = ['PENDING', 'OPENED'] as const;
 const MISSION_EVENT_HISTORY_TYPES = [
   'MISSION_OPENED',
   'MISSION_COMPLETED',
   'MISSION_SET_COMPLETED',
-  'HARDCORE_UNLOCKED',
 ] as const;
 const CURRENT_MISSION_STATUSES = [
   'LOCKED',
@@ -105,6 +104,7 @@ export class MissionsService {
     if (mission.status === 'PENDING') {
       mission.status = 'OPENED';
       mission.openedAt = now;
+      set.markModified('missions');
       await set.save();
       await this.learningHistoryService.recordEvent({
         userId,
@@ -232,15 +232,18 @@ export class MissionsService {
       snapshot,
       'NORMAL',
     );
-    const selection = this.aiSelector.select(snapshot, candidates, 'NORMAL');
+    const selection = await this.aiSelector.select(
+      snapshot,
+      candidates,
+      'NORMAL',
+    );
     const missions = this.buildMissionItems(
       selection.missions,
       candidates,
       'NORMAL',
       now,
     );
-    const hardcore = await this.buildLockedHardcoreMission(userId, now);
-    if (hardcore) missions.push(hardcore);
+
     const localDate = getLocalDate(now, timezone);
     const expiresAt = getNextLocalMidnight(now, timezone);
 
@@ -261,8 +264,7 @@ export class MissionsService {
         missions,
         completedNormal: 0,
         resolvedNormal: 0,
-        hardcoreUnlocked: false,
-        hardcoreGenerationStatus: hardcore ? 'READY' : 'FAILED',
+
         setBonusGranted: false,
         totalRewardXp: 0,
         analysisSummary: selection.analysisSummary ?? {},
@@ -353,10 +355,8 @@ export class MissionsService {
       ['COMPLETED', 'FAILED'].includes(mission.status),
     ).length;
 
-    const hardcore = set.missions.find(
-      (mission) => mission.missionKind === 'HARDCORE',
-    );
-    set.status = hardcore?.status === 'COMPLETED' ? 'COMPLETED' : 'ACTIVE';
+    set.status =
+      set.completedNormal >= NORMAL_MISSION_COUNT ? 'COMPLETED' : 'ACTIVE';
     await set.save();
 
     if (set.completedNormal >= NORMAL_MISSION_COUNT && !set.setBonusGranted) {
@@ -384,46 +384,7 @@ export class MissionsService {
       });
     }
 
-    if (set.completedNormal >= NORMAL_MISSION_COUNT && !set.hardcoreUnlocked) {
-      set.hardcoreUnlocked = true;
-      if (hardcore?.status === 'LOCKED') {
-        hardcore.status = 'PENDING';
-      }
-      set.hardcoreGenerationStatus = hardcore ? 'READY' : 'FAILED';
-      await set.save();
-      await this.learningHistoryService.recordEvent({
-        userId,
-        eventType: 'HARDCORE_UNLOCKED',
-        idempotencyKey: `hardcore-unlocked:${userId}:${set.localDate}`,
-        metadata: { localDate: set.localDate },
-        occurredAt: now,
-      });
-      await this.notificationService.create({
-        userId,
-        type: 'HARDCORE_UNLOCKED',
-        title: 'Hardcore unlocked',
-        message: 'You completed 4/4 missions. The optional challenge is ready.',
-      });
-    }
-
     await this.summaryService.sync(set);
-  }
-
-  private async buildLockedHardcoreMission(userId: string, now: Date) {
-    const snapshot = await this.snapshotService.build(userId);
-    const candidates = await this.candidateService.build(
-      userId,
-      snapshot,
-      'HARDCORE',
-    );
-    const selection = this.aiSelector.select(snapshot, candidates, 'HARDCORE');
-    const missions = this.buildMissionItems(
-      selection.missions,
-      candidates,
-      'HARDCORE',
-      now,
-    );
-    return missions[0] ?? null;
   }
 
   private async completeMissionInSet(
@@ -438,6 +399,7 @@ export class MissionsService {
     mission.status = 'COMPLETED';
     mission.progress = mission.target;
     mission.completedAt = now;
+    set.markModified('missions');
     await set.save();
 
     const reward = await this.rewardService.grant({
@@ -489,6 +451,8 @@ export class MissionsService {
 
     const actionType = mission.actionType as MissionActionType;
     if (actionType === 'FEED_PET') return event.eventType === 'PET_FED';
+    if (actionType === 'ENTER_ARENA')
+      return event.eventType === 'ARENA_MATCH_FINISHED';
 
     if (actionType === 'PRACTICE_TOPIC' || actionType === 'LIGHT_PRACTICE') {
       return (
@@ -513,6 +477,9 @@ export class MissionsService {
         'HARD_LEVEL',
       ].includes(actionType)
     ) {
+      if (mission.sourceType === 'STARTER') {
+        return event.eventType === 'ROADMAP_NODE_COMPLETED';
+      }
       return (
         event.eventType === 'ROADMAP_NODE_COMPLETED' &&
         event.targetId === mission.targetId
@@ -520,6 +487,9 @@ export class MissionsService {
     }
 
     if (actionType === 'CONTINUE_LESSON' || actionType === 'CONTINUE_COURSE') {
+      if (mission.missionKind === 'HARDCORE') {
+        return event.eventType === 'LESSON_COMPLETED';
+      }
       return (
         event.eventType === 'LESSON_COMPLETED' &&
         event.targetId === mission.targetId
@@ -564,6 +534,7 @@ export class MissionsService {
         }
       }
       set.status = 'EXPIRED';
+      set.markModified('missions');
       await set.save();
       await this.summaryService.sync(set);
     }
@@ -677,8 +648,17 @@ export class MissionsService {
 
     if (candidate.actionType === 'FEED_PET') return '/profile';
     if (candidate.actionType === 'ENTER_ARENA') return '/arena';
-    if (candidate.targetType === 'LESSON')
-      return `/lesson/${candidate.targetId}`;
+    if (candidate.targetType === 'LESSON') {
+      const courseSlug =
+        typeof candidate.metadata?.courseSlug === 'string'
+          ? candidate.metadata.courseSlug
+          : 'python-basic';
+      const mode =
+        typeof candidate.metadata?.mode === 'string'
+          ? candidate.metadata.mode
+          : 'easy';
+      return `/roadmap/${courseSlug}/${mode}/nodes/${candidate.targetId}/challenge`;
+    }
     if (candidate.targetType === 'NODE') {
       const courseSlug =
         typeof candidate.metadata?.courseSlug === 'string'
@@ -706,11 +686,8 @@ export class MissionsService {
     const normal = missions.filter(
       (mission) => mission.missionKind === 'NORMAL',
     );
-    const hardcore = missions.find(
-      (mission) => mission.missionKind === 'HARDCORE',
-    );
 
-    if (normal.length !== NORMAL_MISSION_COUNT || !hardcore) return true;
+    if (normal.length !== NORMAL_MISSION_COUNT) return true;
 
     return missions.some((mission) => {
       if (mission.generationVersion !== DAILY_MISSION_VERSION) return true;

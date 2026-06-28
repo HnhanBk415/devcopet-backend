@@ -165,6 +165,20 @@ export class EasyRoadmapService {
         node.id,
       );
 
+      const topic = this.topicFromLesson(lesson);
+      await this.recordAttemptAndEvent({
+        userId,
+        submissionId: randomUUID(),
+        courseSlug: course.slug,
+        nodeId: node.id,
+        topic,
+        challengeType: challenge.type,
+        passed: true,
+        durationSeconds: 5,
+        hintUsed: 0,
+        href: `/roadmap/${course.slug}/${this.mode}/nodes/${node.id}/challenge`,
+      });
+
       return {
         ...baseResponse,
         review: this.reviewService.toEasyCompletedReview(challenge, completion),
@@ -188,43 +202,6 @@ export class EasyRoadmapService {
 
     if (node.status === 'locked') {
       throw new ForbiddenException('This roadmap node is locked.');
-    }
-
-    if (node.status === 'completed') {
-      const completion = await this.statusService.getNodeCompletion(
-        userId,
-        course.slug,
-        this.mode,
-        node.id,
-      );
-
-      const user = await this.usersService.findById(userId);
-      const explanationSpeaker = {
-        name: user?.petName || 'Your pet',
-        type: 'PET' as const,
-      };
-
-      return {
-        correct: true,
-        status: 'PASSED',
-        alreadyCompleted: true,
-        message: 'This roadmap node is already completed.',
-        explanation:
-          challenge.explanation ||
-          'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
-        explanationSpeaker,
-        rewardSummary: this.getEmptyRewardSummary(),
-        review: this.reviewService.toEasyCompletedReview(challenge, completion),
-        navigation: {
-          returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
-          nextChallenge: await this.getNextChallenge(
-            course.slug,
-            node.id,
-            userId,
-          ),
-          mustReturnToRoadmap: false,
-        },
-      };
     }
 
     const user = await this.usersService.findById(userId);
@@ -320,6 +297,15 @@ export class EasyRoadmapService {
           this.mode,
           node.id,
         );
+
+        await this.recordCompletionEvent({
+          userId,
+          courseSlug: course.slug,
+          nodeId: node.id,
+          topic: this.topicFromLesson(lesson),
+          challengeType: challenge.type,
+          rewardXp: 0,
+        });
 
         return {
           correct: true,
