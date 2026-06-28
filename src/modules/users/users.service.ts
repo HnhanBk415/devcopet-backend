@@ -177,7 +177,7 @@ export class UsersService {
           arenaRank: user.arenaRank ?? 'Beginner',
         };
       })
-      .sort((a, b) => b.currentXp - a.currentXp)
+      .sort((a, b) => b.lifetimeXp - a.lifetimeXp)
       .slice(0, 20)
       .map((user, index) => ({
         rank: index + 1,
@@ -340,7 +340,7 @@ export class UsersService {
 
     const xp = this.resolveXp(user);
     const pet = await this.ensurePetForUser(userId, user.petName);
-    const globalRank = await this.getGlobalRankForXp(xp.currentXp);
+    const globalRank = await this.getGlobalRankForLifetimeXp(xp.lifetimeXp);
 
     return {
       id: String(user._id),
@@ -394,16 +394,18 @@ export class UsersService {
     return { lifetimeXp, currentXp, level };
   }
 
-  private async getGlobalRankForXp(currentXp: number): Promise<number> {
+  private async getGlobalRankForLifetimeXp(
+    lifetimeXp: number,
+  ): Promise<number> {
     const users = await this.userModel
       .find({ onboardingCompleted: true })
       .select('exp lifetimeXp currentXp')
       .lean()
       .exec();
     const ranks = users
-      .map((user) => this.resolveXp(user).currentXp)
+      .map((user) => this.resolveXp(user).lifetimeXp)
       .sort((a, b) => b - a);
-    const index = ranks.findIndex((xp) => currentXp >= xp);
+    const index = ranks.findIndex((xp) => lifetimeXp >= xp);
 
     return index >= 0 ? index + 1 : ranks.length + 1;
   }

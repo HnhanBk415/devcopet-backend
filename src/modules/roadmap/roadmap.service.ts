@@ -5,7 +5,22 @@ import { EasyRoadmapService } from './services/easy-roadmap.service';
 import { HardRoadmapService } from './services/hard-roadmap.service';
 import { MediumRoadmapService } from './services/medium-roadmap.service';
 import { RoadmapAiContextService } from './services/roadmap-ai-context.service';
+import { RoadmapChallengeSessionService } from './services/roadmap-challenge-session.service';
 import { RoadmapStatusService } from './services/roadmap-status.service';
+
+type ChallengePageResponse = {
+  courseSlug: string;
+  node?: {
+    status?: string;
+  };
+  [key: string]: unknown;
+};
+
+type ChallengeSubmitResult = {
+  correct?: boolean;
+  status?: string;
+  [key: string]: unknown;
+};
 
 @Injectable()
 export class RoadmapService {
@@ -15,6 +30,7 @@ export class RoadmapService {
     private readonly hardRoadmapService: HardRoadmapService,
     private readonly roadmapAiContextService: RoadmapAiContextService,
     private readonly roadmapStatusService: RoadmapStatusService,
+    private readonly challengeSessionService: RoadmapChallengeSessionService,
   ) {}
 
   async getEasyRoadmap(courseSlug: string, userId: string) {
@@ -30,15 +46,41 @@ export class RoadmapService {
   }
 
   async getEasyNodeChallenge(nodeId: string, userId: string) {
-    return this.easyRoadmapService.getNodeChallenge(nodeId, userId);
+    const response = await this.easyRoadmapService.getNodeChallenge(
+      nodeId,
+      userId,
+    );
+    return this.withChallengeSession(response, userId, 'easy', nodeId);
   }
 
   async getMediumNodeChallenge(nodeId: string, userId: string) {
-    return this.mediumRoadmapService.getNodeChallenge(nodeId, userId);
+    const response = await this.mediumRoadmapService.getNodeChallenge(
+      nodeId,
+      userId,
+    );
+    return this.withChallengeSession(response, userId, 'medium', nodeId);
   }
 
   async getHardNodeChallenge(nodeId: string, userId: string) {
-    return this.hardRoadmapService.getNodeChallenge(nodeId, userId);
+    const response = await this.hardRoadmapService.getNodeChallenge(
+      nodeId,
+      userId,
+    );
+    return this.withChallengeSession(response, userId, 'hard', nodeId);
+  }
+
+  async startChallengeSession(
+    courseSlug: string,
+    mode: RoadmapMode,
+    nodeId: string,
+    userId: string,
+  ) {
+    return this.challengeSessionService.startSession(
+      userId,
+      courseSlug,
+      mode,
+      nodeId,
+    );
   }
 
   async submitEasyNodeChallenge(
@@ -46,33 +88,70 @@ export class RoadmapService {
     selectedOptionId: string,
     userId: string,
     meta?: RoadmapSubmitMeta,
+    courseSlug?: string,
   ) {
-    return this.easyRoadmapService.submitNodeChallenge(
+    const session = await this.challengeSessionService.assertReadyForSubmit({
+      userId,
+      courseSlug,
+      mode: 'easy',
+      nodeId,
+      sessionId: meta?.sessionId,
+    });
+    const result = await this.easyRoadmapService.submitNodeChallenge(
       nodeId,
       selectedOptionId,
       userId,
-      meta,
+      this.withoutClientTimeout(meta),
     );
+    await this.finalizeSessionFromSubmitResult(session.id, result);
+
+    return result;
   }
 
   async submitMediumNodeChallenge(
     nodeId: string,
     payload: Record<string, unknown>,
     userId: string,
+    courseSlug?: string,
   ) {
-    return this.mediumRoadmapService.submitNodeChallenge(
+    const session = await this.challengeSessionService.assertReadyForSubmit({
+      userId,
+      courseSlug,
+      mode: 'medium',
       nodeId,
-      payload,
+      sessionId: payload.sessionId,
+    });
+    const result = await this.mediumRoadmapService.submitNodeChallenge(
+      nodeId,
+      this.withoutClientTimeout(payload),
       userId,
     );
+    await this.finalizeSessionFromSubmitResult(session.id, result);
+
+    return result;
   }
 
   async submitHardNodeChallenge(
     nodeId: string,
     payload: Record<string, unknown>,
     userId: string,
+    courseSlug?: string,
   ) {
-    return this.hardRoadmapService.submitNodeChallenge(nodeId, payload, userId);
+    const session = await this.challengeSessionService.assertReadyForSubmit({
+      userId,
+      courseSlug,
+      mode: 'hard',
+      nodeId,
+      sessionId: payload.sessionId,
+    });
+    const result = await this.hardRoadmapService.submitNodeChallenge(
+      nodeId,
+      this.withoutClientTimeout(payload),
+      userId,
+    );
+    await this.finalizeSessionFromSubmitResult(session.id, result);
+
+    return result;
   }
 
   async resetRoadmapProgress(
@@ -100,5 +179,54 @@ export class RoadmapService {
     userId: string,
   ): Promise<AiRoadmapContext> {
     return this.roadmapAiContextService.getContext(mode, nodeId, userId);
+  }
+
+  private async withChallengeSession(
+    response: ChallengePageResponse,
+    userId: string,
+    mode: RoadmapMode,
+    nodeId: string,
+  ) {
+    if (response?.node?.status === 'completed') {
+      return response;
+    }
+
+    return {
+      ...response,
+      session: await this.challengeSessionService.startSession(
+        userId,
+        response.courseSlug,
+        mode,
+        nodeId,
+      ),
+    };
+  }
+
+  private withoutClientTimeout<T extends object>(payload: T): T;
+  private withoutClientTimeout<T extends object>(
+    payload: T | undefined,
+  ): T | undefined;
+  private withoutClientTimeout<T extends object>(
+    payload: T | undefined,
+  ): T | undefined {
+    if (!payload) return payload;
+
+    const rest = { ...(payload as Record<string, unknown>) };
+    delete rest.timeout;
+    return rest as T;
+  }
+
+  private async finalizeSessionFromSubmitResult(
+    sessionId: string,
+    result: ChallengeSubmitResult,
+  ) {
+    if (result?.correct === true) {
+      await this.challengeSessionService.markSubmitted(sessionId);
+      return;
+    }
+
+    if (result?.status === 'FAILED') {
+      await this.challengeSessionService.markFailed(sessionId);
+    }
   }
 }

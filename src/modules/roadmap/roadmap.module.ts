@@ -12,6 +12,10 @@ import {
   RoadmapProgress,
   RoadmapProgressSchema,
 } from './schemas/roadmap-progress.schema';
+import {
+  RoadmapChallengeSession,
+  RoadmapChallengeSessionSchema,
+} from './schemas/roadmap-challenge-session.schema';
 import { Course, CourseSchema } from '../courses/schemas/course.schema';
 import { Chapter, ChapterSchema } from '../chapters/schemas/chapter.schema';
 import { Lesson, LessonSchema } from '../lessons/schemas/lesson.schema';
@@ -20,6 +24,7 @@ import { HardRoadmapService } from './services/hard-roadmap.service';
 import { MediumRoadmapService } from './services/medium-roadmap.service';
 import { RoadmapAiContextService } from './services/roadmap-ai-context.service';
 import { RoadmapChallengeLoaderService } from './services/roadmap-challenge-loader.service';
+import { RoadmapChallengeSessionService } from './services/roadmap-challenge-session.service';
 import { RoadmapQueryService } from './services/roadmap-query.service';
 import { RoadmapReviewService } from './services/roadmap-review.service';
 import { RoadmapStatusService } from './services/roadmap-status.service';
@@ -31,6 +36,10 @@ import { RoadmapStatusService } from './services/roadmap-status.service';
       { name: Level.name, schema: LevelSchema },
       { name: Node.name, schema: NodeSchema },
       { name: RoadmapProgress.name, schema: RoadmapProgressSchema },
+      {
+        name: RoadmapChallengeSession.name,
+        schema: RoadmapChallengeSessionSchema,
+      },
       { name: Course.name, schema: CourseSchema },
       { name: Chapter.name, schema: ChapterSchema },
       { name: Lesson.name, schema: LessonSchema },
@@ -47,6 +56,7 @@ import { RoadmapStatusService } from './services/roadmap-status.service';
     MediumRoadmapService,
     RoadmapAiContextService,
     RoadmapChallengeLoaderService,
+    RoadmapChallengeSessionService,
     RoadmapQueryService,
     RoadmapReviewService,
     RoadmapStatusService,

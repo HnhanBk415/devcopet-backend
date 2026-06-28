@@ -1,18 +1,15 @@
 import {
-  Body,
   Controller,
   DefaultValuePipe,
   Get,
   Param,
   ParseIntPipe,
   Patch,
-  Post,
   Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { DismissMissionDto } from './dto/dismiss-mission.dto';
 import { MissionsService } from './missions.service';
 
 @UseGuards(JwtAuthGuard)
@@ -25,25 +22,12 @@ export class DailyMissionsController {
     return this.missionsService.getToday(req.user.userId);
   }
 
-  @Post(':missionId/opened')
-  openMission(
+  @Patch(':missionId/opened')
+  patchOpenMission(
     @Req() req: { user: { userId: string } },
     @Param('missionId') missionId: string,
   ) {
     return this.missionsService.openMission(req.user.userId, missionId);
-  }
-
-  @Post(':missionId/dismiss')
-  dismissMission(
-    @Req() req: { user: { userId: string } },
-    @Param('missionId') missionId: string,
-    @Body() body: DismissMissionDto,
-  ) {
-    return this.missionsService.dismissMission(
-      req.user.userId,
-      missionId,
-      body.reason,
-    );
   }
 
   @Get('history')

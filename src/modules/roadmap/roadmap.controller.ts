@@ -79,6 +79,21 @@ export class RoadmapController {
     );
   }
 
+  @Post(':courseSlug/:mode/nodes/:nodeId/session/start')
+  async startChallengeSession(
+    @Param('courseSlug') courseSlug: string,
+    @Param('mode') mode: string,
+    @Param('nodeId') nodeId: string,
+    @Req() req: RoadmapRequest,
+  ) {
+    return this.roadmapService.startChallengeSession(
+      courseSlug,
+      parseRoadmapMode(mode),
+      nodeId,
+      getRoadmapUserId(req),
+    );
+  }
+
   @Get('easy/nodes/:nodeId/challenge')
   async getEasyNodeChallenge(
     @Param('nodeId') nodeId: string,
@@ -125,6 +140,8 @@ export class RoadmapController {
         : '',
       getRoadmapUserId(req),
       {
+        sessionId:
+          typeof payload.sessionId === 'string' ? payload.sessionId : undefined,
         submissionId:
           typeof payload.submissionId === 'string'
             ? payload.submissionId
@@ -135,7 +152,6 @@ export class RoadmapController {
             : undefined,
         hintUsed:
           typeof payload.hintUsed === 'number' ? payload.hintUsed : undefined,
-        timeout: payload.timeout === true,
       },
     );
   }

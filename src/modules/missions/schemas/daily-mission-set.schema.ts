@@ -17,17 +17,31 @@ export class DailyMissionItem {
 
   @Prop({
     required: true,
-    enum: ['LOCKED', 'PENDING', 'OPENED', 'COMPLETED', 'DISMISSED', 'EXPIRED'],
+    enum: [
+      'LOCKED',
+      'PENDING',
+      'OPENED',
+      'COMPLETED',
+      'DISMISSED',
+      'EXPIRED',
+      'FAILED',
+    ],
   })
   status!: string;
 
   @Prop({ required: true, trim: true })
   candidateId!: string;
 
+  @Prop({ required: true, trim: true })
+  generationVersion!: string;
+
   @Prop({ required: true, enum: MISSION_ACTION_TYPES })
   actionType!: string;
 
-  @Prop({ required: true, enum: ['LESSON', 'NODE', 'TOPIC', 'PET'] })
+  @Prop({
+    required: true,
+    enum: ['LESSON', 'NODE', 'TOPIC', 'PET', 'COURSE', 'QUIZ', 'ARENA'],
+  })
   targetType!: string;
 
   @Prop({ required: true, trim: true })
@@ -39,11 +53,38 @@ export class DailyMissionItem {
   @Prop({ required: true, trim: true })
   href!: string;
 
+  @Prop({ required: true, maxlength: 32, trim: true })
+  ctaLabel!: string;
+
+  @Prop({ required: true, trim: true })
+  ctaPath!: string;
+
   @Prop({ required: true, maxlength: 45, trim: true })
   title!: string;
 
   @Prop({ required: true, maxlength: 120, trim: true })
   message!: string;
+
+  @Prop({ maxlength: 240, trim: true })
+  detailMessage?: string;
+
+  @Prop({
+    enum: [
+      'STARTER',
+      'PROGRESS_BASED',
+      'WEAK_TOPIC',
+      'ROADMAP_STATE',
+      'PET_TONE',
+      'FALLBACK',
+    ],
+  })
+  sourceType?: string;
+
+  @Prop({ maxlength: 200, trim: true })
+  generatedReason?: string;
+
+  @Prop()
+  generatedAt?: Date;
 
   @Prop({ required: true, trim: true })
   reasonCode!: string;
@@ -80,6 +121,9 @@ export class DailyMissionItem {
 
   @Prop()
   expiredAt?: Date;
+
+  @Prop()
+  failedAt?: Date;
 }
 
 export const DailyMissionItemSchema =
