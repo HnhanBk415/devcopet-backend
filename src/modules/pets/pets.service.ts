@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { UsersService } from '../users/users.service';
 import { LearningHistoryService } from '../learning-history/learning-history.service';
 import { MissionsService } from '../missions/missions.service';
+import { MissionNotificationService } from '../missions/services/mission-notification.service';
 import { Pet, PetDocument } from './schemas/pet.schema';
 import {
   calculatePetLevelFromTotalXp,
@@ -16,11 +17,14 @@ export const PET_EXP_GAIN_PER_FEED = 25;
 
 @Injectable()
 export class PetsService {
+  private readonly logger = new Logger(PetsService.name);
+
   constructor(
     @InjectModel(Pet.name) private readonly petModel: Model<PetDocument>,
     private readonly usersService: UsersService,
     private readonly learningHistoryService: LearningHistoryService,
     private readonly missionsService: MissionsService,
+    private readonly notificationService: MissionNotificationService,
   ) {}
 
   async getMe(userId: string) {
@@ -64,6 +68,26 @@ export class PetsService {
     pet.totalFeeds = (pet.totalFeeds ?? 0) + 1;
 
     await pet.save();
+    await this.createNotificationSafely({
+      userId,
+      type: 'PET_EXP_GAINED',
+      title: 'Pet EXP gained',
+      message: `${pet.name} gained ${PET_EXP_GAIN_PER_FEED} Pet EXP.`,
+      metadata: {
+        petName: pet.name,
+        petExpGain: PET_EXP_GAIN_PER_FEED,
+        petLevel: pet.level,
+      },
+    });
+    if (pet.level > previousLevel) {
+      await this.createNotificationSafely({
+        userId,
+        type: 'PET_LEVEL_UP',
+        title: 'Pet level up',
+        message: `${pet.name} reached Level ${pet.level}.`,
+        metadata: { petName: pet.name, petLevel: pet.level },
+      });
+    }
 
     const idempotencyKey =
       'pet-fed:' + userId + ':' + String(pet._id) + ':' + pet.totalFeeds;
@@ -130,5 +154,24 @@ export class PetsService {
       evolutionStage: this.getEvolutionStage(progress.level),
       avatar: pet.avatarUrl || pet.equippedSkin || undefined,
     };
+  }
+
+  private async createNotificationSafely(input: {
+    userId: string;
+    type: string;
+    title: string;
+    message: string;
+    missionId?: string;
+    metadata?: Record<string, unknown>;
+  }) {
+    try {
+      await this.notificationService.create(input);
+    } catch (error) {
+      this.logger.warn(
+        error instanceof Error
+          ? `Failed to create notification: ${error.message}`
+          : 'Failed to create notification.',
+      );
+    }
   }
 }

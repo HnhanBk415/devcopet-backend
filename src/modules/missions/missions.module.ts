@@ -21,6 +21,7 @@ import { UsersModule } from '../users/users.module';
 import { DailyMissionsController } from './daily-missions.controller';
 import { MissionsController } from './missions.controller';
 import { MissionsService } from './missions.service';
+import { NotificationsController } from './notifications.controller';
 import {
   DailyMissionSet,
   DailyMissionSetSchema,
@@ -63,7 +64,11 @@ import { MissionValidatorService } from './services/mission-validator.service';
       { name: MissionNotification.name, schema: MissionNotificationSchema },
     ]),
   ],
-  controllers: [MissionsController, DailyMissionsController],
+  controllers: [
+    MissionsController,
+    DailyMissionsController,
+    NotificationsController,
+  ],
   providers: [
     MissionsService,
     GeminiProvider,
@@ -76,6 +81,6 @@ import { MissionValidatorService } from './services/mission-validator.service';
     MissionSummaryService,
     MissionNotificationService,
   ],
-  exports: [MissionsService],
+  exports: [MissionsService, MissionNotificationService],
 })
 export class MissionsModule {}

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema, Types } from 'mongoose';
 
 export type MissionNotificationDocument = HydratedDocument<MissionNotification>;
 
@@ -22,6 +22,12 @@ export class MissionNotification {
 
   @Prop({ default: false })
   read!: boolean;
+
+  @Prop({ default: false })
+  isRead!: boolean;
+
+  @Prop({ type: MongooseSchema.Types.Mixed, default: {} })
+  metadata!: Record<string, unknown>;
 
   @Prop()
   readAt?: Date;

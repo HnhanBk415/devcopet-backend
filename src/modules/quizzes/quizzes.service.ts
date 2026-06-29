@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -14,6 +15,7 @@ import {
 import { LearningHistoryService } from '../learning-history/learning-history.service';
 import { LessonsService } from '../lessons/lessons.service';
 import { MissionsService } from '../missions/missions.service';
+import { MissionNotificationService } from '../missions/services/mission-notification.service';
 import { ProgressService } from '../progress/progress.service';
 import { UsersService } from '../users/users.service';
 import { Course, CourseDocument } from '../courses/schemas/course.schema';
@@ -21,6 +23,8 @@ import { getLessonRewardXp } from '../users/xp.util';
 
 @Injectable()
 export class QuizzesService {
+  private readonly logger = new Logger(QuizzesService.name);
+
   constructor(
     @InjectModel(Quiz.name) private quizModel: Model<QuizDocument>,
     @InjectModel(LessonProgress.name)
@@ -32,6 +36,7 @@ export class QuizzesService {
     private readonly usersService: UsersService,
     private readonly learningHistoryService: LearningHistoryService,
     private readonly missionsService: MissionsService,
+    private readonly notificationService: MissionNotificationService,
   ) {}
 
   async findByLessonId(lessonId: string, userId: string) {
@@ -241,8 +246,35 @@ export class QuizzesService {
           .select({ slug: 1 })
           .lean<{ slug?: string }>()
           .exec();
-        rewardXp = getLessonRewardXp(course?.slug);
-        await this.usersService.awardXp(userId, rewardXp);
+        const courseSlug = course?.slug;
+        rewardXp = getLessonRewardXp(courseSlug);
+        const xpResult = await this.usersService.awardXpWithLevelInfo(
+          userId,
+          rewardXp,
+        );
+        await this.createNotificationSafely({
+          userId,
+          type: 'COURSE_LESSON_COMPLETED',
+          title: 'Lesson completed',
+          message: `You earned ${rewardXp} XP from this lesson.`,
+          metadata: {
+            courseSlug,
+            lessonId: String(quiz.lessonId),
+            xp: rewardXp,
+          },
+        });
+        if (xpResult.leveledUp) {
+          await this.createNotificationSafely({
+            userId,
+            type: 'LEVEL_UP',
+            title: 'Level up',
+            message: `You reached Level ${xpResult.level}.`,
+            metadata: {
+              level: xpResult.level,
+              lifetimeXp: xpResult.lifetimeXp,
+            },
+          });
+        }
 
         const lessonEvent = await this.learningHistoryService.recordEvent({
           userId,
@@ -368,5 +400,24 @@ export class QuizzesService {
       'code' in error &&
       (error as { code?: number }).code === 11000
     );
+  }
+
+  private async createNotificationSafely(input: {
+    userId: string;
+    type: string;
+    title: string;
+    message: string;
+    missionId?: string;
+    metadata?: Record<string, unknown>;
+  }) {
+    try {
+      await this.notificationService.create(input);
+    } catch (error) {
+      this.logger.warn(
+        error instanceof Error
+          ? `Failed to create notification: ${error.message}`
+          : 'Failed to create notification.',
+      );
+    }
   }
 }

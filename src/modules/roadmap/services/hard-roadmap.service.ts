@@ -8,6 +8,7 @@ import { RoadmapStatusService } from './roadmap-status.service';
 import { UsersService } from '../../users/users.service';
 import { LearningHistoryService } from '../../learning-history/learning-history.service';
 import { MissionsService } from '../../missions/missions.service';
+import { MissionNotificationService } from '../../missions/services/mission-notification.service';
 
 @Injectable()
 export class HardRoadmapService extends AdvancedRoadmapBaseService {
@@ -21,6 +22,7 @@ export class HardRoadmapService extends AdvancedRoadmapBaseService {
     usersService: UsersService,
     learningHistoryService: LearningHistoryService,
     missionsService: MissionsService,
+    notificationService: MissionNotificationService,
   ) {
     super(
       challengeLoader,
@@ -30,6 +32,7 @@ export class HardRoadmapService extends AdvancedRoadmapBaseService {
       usersService,
       learningHistoryService,
       missionsService,
+      notificationService,
     );
   }
 }

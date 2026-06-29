@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -52,6 +53,8 @@ const CURRENT_MISSION_STATUSES = [
 
 @Injectable()
 export class MissionsService {
+  private readonly logger = new Logger(MissionsService.name);
+
   constructor(
     @InjectModel(DailyMissionSet.name)
     private readonly missionSetModel: Model<DailyMissionSetDocument>,
@@ -398,11 +401,13 @@ export class MissionsService {
         metadata: { localDate: set.localDate },
         occurredAt: now,
       });
-      await this.notificationService.create({
+      await this.createNotificationSafely({
         userId,
-        type: 'HARDCORE_UNLOCKED',
-        title: 'Hardcore unlocked',
-        message: 'You completed 4/4 missions. The optional challenge is ready.',
+        type: 'HARDCORE_MISSION_UNLOCKED',
+        title: 'Hardcore mission unlocked',
+        message:
+          'You completed all normal missions. Hardcore Mission is now available.',
+        metadata: { localDate: set.localDate },
       });
     }
 
@@ -468,12 +473,18 @@ export class MissionsService {
       },
       occurredAt: now,
     });
-    await this.notificationService.create({
+    await this.createNotificationSafely({
       userId,
-      type: 'MISSION_COMPLETED',
-      title: 'Mission completed',
-      message: `You earned +${mission.rewardSnapshot?.xp ?? 0} XP from ${mission.title}.`,
+      type: 'DAILY_MISSION_COMPLETED',
+      title: 'Daily mission completed',
+      message: `You completed "${mission.title}".`,
       missionId: mission.missionId,
+      metadata: {
+        missionId: mission.missionId,
+        actionType: mission.actionType,
+        targetType: mission.targetType,
+        targetId: mission.targetId,
+      },
     });
 
     await this.recalculateSet(userId, set, now);
@@ -736,6 +747,25 @@ export class MissionsService {
         value,
       )
     );
+  }
+
+  private async createNotificationSafely(input: {
+    userId: string;
+    type: string;
+    title: string;
+    message: string;
+    missionId?: string;
+    metadata?: Record<string, unknown>;
+  }) {
+    try {
+      await this.notificationService.create(input);
+    } catch (error) {
+      this.logger.warn(
+        error instanceof Error
+          ? `Failed to create notification: ${error.message}`
+          : 'Failed to create notification.',
+      );
+    }
   }
 
   private isDuplicateKeyError(error: unknown) {

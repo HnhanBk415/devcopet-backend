@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import {
   BadRequestException,
   ForbiddenException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import type {
@@ -28,6 +29,7 @@ import { UsersService } from '../../users/users.service';
 import { ROADMAP_NODE_XP } from '../../users/xp.util';
 import { LearningHistoryService } from '../../learning-history/learning-history.service';
 import { MissionsService } from '../../missions/missions.service';
+import { MissionNotificationService } from '../../missions/services/mission-notification.service';
 
 type PublicAdvancedChallenge = {
   id: string;
@@ -47,6 +49,8 @@ type PublicAdvancedChallenge = {
 
 export abstract class AdvancedRoadmapBaseService {
   protected abstract readonly mode: AdvancedRoadmapMode;
+  private readonly logger = new Logger(AdvancedRoadmapBaseService.name);
+
   constructor(
     protected readonly challengeLoader: RoadmapChallengeLoaderService,
     protected readonly queryService: RoadmapQueryService,
@@ -55,6 +59,7 @@ export abstract class AdvancedRoadmapBaseService {
     protected readonly usersService: UsersService,
     protected readonly learningHistoryService: LearningHistoryService,
     protected readonly missionsService: MissionsService,
+    protected readonly notificationService: MissionNotificationService,
   ) {}
 
   async getRoadmap(courseSlug: string, userId: string) {
@@ -464,14 +469,42 @@ export abstract class AdvancedRoadmapBaseService {
           navigation: passedNavigation,
         };
       }
-      await this.usersService.awardXp(userId, ROADMAP_NODE_XP[this.mode]);
+      const rewardXp = ROADMAP_NODE_XP[this.mode];
+      const xpResult = await this.usersService.awardXpWithLevelInfo(
+        userId,
+        rewardXp,
+      );
+      await this.createNotificationSafely({
+        userId,
+        type: 'ROADMAP_NODE_COMPLETED',
+        title: 'Roadmap challenge completed',
+        message: `You earned ${rewardXp} XP from ${this.mode} Mode.`,
+        metadata: {
+          courseSlug: course.slug,
+          mode: this.mode,
+          nodeId: node.id,
+          xp: rewardXp,
+        },
+      });
+      if (xpResult.leveledUp) {
+        await this.createNotificationSafely({
+          userId,
+          type: 'LEVEL_UP',
+          title: 'Level up',
+          message: `You reached Level ${xpResult.level}.`,
+          metadata: {
+            level: xpResult.level,
+            lifetimeXp: xpResult.lifetimeXp,
+          },
+        });
+      }
       await this.recordCompletionEvent({
         userId,
         courseSlug: course.slug,
         nodeId: node.id,
         topic: this.topicFromChallenge(challenge),
         challengeType: challenge.type,
-        rewardXp: ROADMAP_NODE_XP[this.mode],
+        rewardXp,
       });
     }
 
@@ -761,6 +794,25 @@ export abstract class AdvancedRoadmapBaseService {
     return typeof value === 'number' && Number.isFinite(value)
       ? Math.max(0, value)
       : undefined;
+  }
+
+  private async createNotificationSafely(input: {
+    userId: string;
+    type: string;
+    title: string;
+    message: string;
+    missionId?: string;
+    metadata?: Record<string, unknown>;
+  }) {
+    try {
+      await this.notificationService.create(input);
+    } catch (error) {
+      this.logger.warn(
+        error instanceof Error
+          ? `Failed to create notification: ${error.message}`
+          : 'Failed to create notification.',
+      );
+    }
   }
   private buildRewardSummary() {
     const xp = ROADMAP_NODE_XP[this.mode];

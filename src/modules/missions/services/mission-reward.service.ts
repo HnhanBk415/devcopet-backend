@@ -6,6 +6,7 @@ import {
   MissionRewardGrant,
   MissionRewardGrantDocument,
 } from '../schemas/mission-reward-grant.schema';
+import { MissionNotificationService } from './mission-notification.service';
 
 @Injectable()
 export class MissionRewardService {
@@ -15,6 +16,7 @@ export class MissionRewardService {
     @InjectModel(MissionRewardGrant.name)
     private readonly grantModel: Model<MissionRewardGrantDocument>,
     private readonly usersService: UsersService,
+    private readonly notificationService: MissionNotificationService,
   ) {}
 
   async grant(input: {
@@ -51,7 +53,22 @@ export class MissionRewardService {
 
     try {
       if (grant.xp > 0) {
-        await this.usersService.awardXp(input.userId, grant.xp);
+        const xpResult = await this.usersService.awardXpWithLevelInfo(
+          input.userId,
+          grant.xp,
+        );
+        if (xpResult.leveledUp) {
+          await this.createNotificationSafely({
+            userId: input.userId,
+            type: 'LEVEL_UP',
+            title: 'Level up',
+            message: `You reached Level ${xpResult.level}.`,
+            metadata: {
+              level: xpResult.level,
+              lifetimeXp: xpResult.lifetimeXp,
+            },
+          });
+        }
       }
       grant.status = 'GRANTED';
       grant.grantedAt = new Date();
@@ -73,5 +90,23 @@ export class MissionRewardService {
       'code' in error &&
       (error as { code?: number }).code === 11000
     );
+  }
+
+  private async createNotificationSafely(input: {
+    userId: string;
+    type: string;
+    title: string;
+    message: string;
+    metadata?: Record<string, unknown>;
+  }) {
+    try {
+      await this.notificationService.create(input);
+    } catch (error) {
+      this.logger.warn(
+        error instanceof Error
+          ? `Failed to create notification: ${error.message}`
+          : 'Failed to create notification.',
+      );
+    }
   }
 }

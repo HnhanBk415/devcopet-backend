@@ -251,6 +251,20 @@ export class UsersService {
   }
 
   async awardXp(userId: string, rewardXp: number): Promise<UserDocument> {
+    const result = await this.awardXpWithLevelInfo(userId, rewardXp);
+    return result.user;
+  }
+
+  async awardXpWithLevelInfo(
+    userId: string,
+    rewardXp: number,
+  ): Promise<{
+    user: UserDocument;
+    previousLevel: number;
+    level: number;
+    leveledUp: boolean;
+    lifetimeXp: number;
+  }> {
     const amount = Math.max(0, Math.trunc(rewardXp));
     const user = await this.userModel.findById(userId);
     if (!user) {
@@ -262,6 +276,7 @@ export class UsersService {
     }
 
     const xp = this.resolveXp(user);
+    const previousLevel = xp.level;
     const lifetimeXp = xp.lifetimeXp + amount;
     const currentXp = xp.currentXp + amount;
     const level = calculateLevelFromXp(lifetimeXp);
@@ -282,7 +297,13 @@ export class UsersService {
         message: 'User not found.',
       });
     }
-    return safeUser;
+    return {
+      user: safeUser,
+      previousLevel,
+      level,
+      leveledUp: level > previousLevel,
+      lifetimeXp,
+    };
   }
 
   async spendCurrentXp(userId: string, costXp: number): Promise<UserDocument> {
