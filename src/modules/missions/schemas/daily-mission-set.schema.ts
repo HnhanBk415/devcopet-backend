@@ -155,10 +155,10 @@ export class DailyMissionSet {
   @Prop({ type: [DailyMissionItemSchema], default: [] })
   missions!: DailyMissionItem[];
 
-  @Prop({ default: 0, min: 0, max: 4 })
+  @Prop({ default: 0, min: 0, max: 5 })
   completedNormal!: number;
 
-  @Prop({ default: 0, min: 0, max: 4 })
+  @Prop({ default: 0, min: 0, max: 5 })
   resolvedNormal!: number;
 
   @Prop({ default: false })

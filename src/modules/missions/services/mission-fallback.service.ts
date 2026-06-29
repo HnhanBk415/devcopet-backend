@@ -14,7 +14,7 @@ export class MissionFallbackService {
     candidates: MissionCandidate[],
     kind: MissionKind,
   ): MissionSelectionResult {
-    const count = kind === 'HARDCORE' ? 1 : 4;
+    const count = kind === 'HARDCORE' ? 1 : 5;
     const ranked = [...candidates].sort(
       (a, b) => this.score(b, snapshot, kind) - this.score(a, snapshot, kind),
     );

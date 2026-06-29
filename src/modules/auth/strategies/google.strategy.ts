@@ -4,6 +4,13 @@ import { Strategy, Profile, VerifyCallback } from 'passport-google-oauth20';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth.service';
 
+type GoogleProfile = Profile & {
+  picture?: string;
+  _json?: {
+    picture?: string;
+  };
+};
+
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(
@@ -25,6 +32,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     done: VerifyCallback,
   ) {
     try {
+      const googleProfile = profile as GoogleProfile;
       const email =
         profile.emails?.[0]?.value ?? `google_${profile.id}@devcopet.local`;
 
@@ -33,7 +41,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         providerId: profile.id,
         email,
         username: profile.displayName ?? `google_${profile.id}`,
-        avatarUrl: profile.photos?.[0]?.value,
+        avatarUrl:
+          profile.photos?.[0]?.value ??
+          googleProfile.picture ??
+          googleProfile._json?.picture,
       });
 
       done(null, result);

@@ -48,41 +48,29 @@ export class MissionCandidateService {
     kind: MissionKind,
   ): Promise<MissionCandidate[]> {
     const userObjectId = new Types.ObjectId(userId);
-    const [courses, completedLessons, recentAttempts, roadmapRows] =
-      await Promise.all([
-        this.courseModel
-          .find({ isPublished: true })
-          .sort({ order: 1 })
-          .lean<Array<Course & { _id: Types.ObjectId }>>()
-          .exec(),
-        this.lessonProgressModel
-          .find({ userId: userObjectId, completed: true })
-          .select({ lessonId: 1, updatedAt: 1 })
-          .lean<Array<{ lessonId: Types.ObjectId; updatedAt?: Date }>>()
-          .exec(),
-        this.learningHistoryService.getRecentAttempts(userId, 100),
-        this.roadmapProgressModel
-          .find({ userId })
-          .select({ nodeId: 1 })
-          .limit(20)
-          .lean<Array<{ nodeId: string }>>()
-          .exec(),
-      ]);
+    const [courses, completedLessons, recentAttempts] = await Promise.all([
+      this.courseModel
+        .find({ isPublished: true })
+        .sort({ order: 1 })
+        .lean<Array<Course & { _id: Types.ObjectId }>>()
+        .exec(),
+      this.lessonProgressModel
+        .find({ userId: userObjectId, completed: true })
+        .select({ lessonId: 1, updatedAt: 1 })
+        .lean<Array<{ lessonId: Types.ObjectId; updatedAt?: Date }>>()
+        .exec(),
+      this.learningHistoryService.getRecentAttempts(userId, 100),
+    ]);
 
     const completedLessonIds = new Set(
       completedLessons.map((row) => String(row.lessonId)),
     );
-    const isStarter =
-      completedLessonIds.size === 0 &&
-      recentAttempts.length === 0 &&
-      roadmapRows.length === 0 &&
-      snapshot.weakTopics.length === 0;
-
-    if (isStarter) {
-      return this.buildStarterCandidates(courses, kind, snapshot);
-    }
 
     const candidates: MissionCandidate[] = [];
+    let fallbackLessonPath: string | undefined;
+    let fallbackRoadmapPath: string | undefined;
+    const easyNodeIdsByCourse = new Map<string, string[]>();
+    const completedEasyRoadmapIdsByCourse = new Map<string, Set<string>>();
 
     for (const course of courses) {
       const chapters = await this.chapterModel
@@ -113,14 +101,10 @@ export class MissionCandidateService {
           (a, b) => (a.order ?? 0) - (b.order ?? 0),
         ),
       );
-
-      const hasStartedCourse = lessons.some((lesson) =>
-        completedLessonIds.has(String(lesson._id)),
+      easyNodeIdsByCourse.set(
+        course.slug,
+        lessons.map((lesson) => String(lesson._id)),
       );
-
-      if (!hasStartedCourse) {
-        continue;
-      }
 
       const availableLesson = lessons.find(
         (lesson, index) =>
@@ -130,6 +114,7 @@ export class MissionCandidateService {
       );
 
       if (availableLesson) {
+        fallbackLessonPath ??= `/lessons/${String(availableLesson._id)}`;
         candidates.push(
           this.lessonCandidate(
             course.slug,
@@ -146,35 +131,48 @@ export class MissionCandidateService {
             snapshot,
           ),
         );
+      }
 
-        const roadmapCompleted = await this.roadmapProgressModel.exists({
-          userId,
-          courseSlug: course.slug,
-          mode: 'easy',
-          nodeId: String(availableLesson._id),
+      const completedEasyRoadmapRows = await this.roadmapProgressModel
+        .find({ userId, courseSlug: course.slug, mode: 'easy' })
+        .select({ nodeId: 1 })
+        .lean<Array<{ nodeId: string }>>()
+        .exec();
+      const completedEasyRoadmapIds = new Set(
+        completedEasyRoadmapRows.map((row) => row.nodeId),
+      );
+      completedEasyRoadmapIdsByCourse.set(course.slug, completedEasyRoadmapIds);
+      const availableRoadmapLesson = lessons.find(
+        (lesson, index) =>
+          !completedEasyRoadmapIds.has(String(lesson._id)) &&
+          (index === 0 ||
+            completedEasyRoadmapIds.has(String(lessons[index - 1]._id))),
+      );
+
+      if (availableRoadmapLesson) {
+        const availableRoadmapLessonId = String(availableRoadmapLesson._id);
+        fallbackRoadmapPath ??= `/roadmap/${course.slug}/easy/nodes/${availableRoadmapLessonId}/challenge`;
+        candidates.push({
+          candidateId: `roadmap:easy:${availableRoadmapLessonId}`,
+          actionType: 'COMPLETE_ROADMAP_NODE',
+          targetType: 'NODE',
+          targetId: availableRoadmapLessonId,
+          topic: this.topicFromLesson(availableRoadmapLesson),
+          title: this.truncateTitle(`Complete ${availableRoadmapLesson.title}`),
+          message: 'Finish the next checkpoint on your roadmap.',
+          href: `/roadmap/${course.slug}/easy/nodes/${availableRoadmapLessonId}`,
+          ctaPath: `/roadmap/${course.slug}/easy/nodes/${availableRoadmapLessonId}/challenge`,
+          difficulty: 'easy',
+          estimatedMinutes: Math.max(
+            5,
+            availableRoadmapLesson.estimatedMinutes || 5,
+          ),
+          rewardXp: 20,
+          expectedEventTypes: ['ROADMAP_NODE_COMPLETED'],
+          sourceType: 'ROADMAP_STATE',
+          generatedReason: 'Next available easy roadmap checkpoint.',
+          metadata: { courseSlug: course.slug, mode: 'easy' },
         });
-        if (!roadmapCompleted) {
-          candidates.push({
-            candidateId: `roadmap:easy:${String(availableLesson._id)}`,
-            actionType: 'COMPLETE_ROADMAP_NODE',
-            targetType: 'NODE',
-            targetId: String(availableLesson._id),
-            topic: this.topicFromLesson(availableLesson),
-            title: `Complete ${availableLesson.title}`.slice(0, 45),
-            message: 'Finish the next checkpoint on your roadmap.',
-            href: `/roadmap/${course.slug}/easy/nodes/${String(availableLesson._id)}`,
-            difficulty: 'easy',
-            estimatedMinutes: Math.max(
-              5,
-              availableLesson.estimatedMinutes || 5,
-            ),
-            rewardXp: 20,
-            expectedEventTypes: ['ROADMAP_NODE_COMPLETED'],
-            sourceType: 'ROADMAP_STATE',
-            generatedReason: 'Next available easy roadmap checkpoint.',
-            metadata: { courseSlug: course.slug, mode: 'easy' },
-          });
-        }
       }
 
       const reviewLesson = [...lessons]
@@ -198,6 +196,15 @@ export class MissionCandidateService {
     );
     for (const attempt of failedRoadmapTargets.slice(0, 5)) {
       const mode = this.asRoadmapMode(attempt.mode);
+      if (
+        !this.isSafeRoadmapAttemptPath(
+          attempt,
+          easyNodeIdsByCourse,
+          completedEasyRoadmapIdsByCourse,
+        )
+      ) {
+        continue;
+      }
       const completed = await this.roadmapProgressModel.exists({
         userId,
         nodeId: attempt.targetId,
@@ -205,22 +212,17 @@ export class MissionCandidateService {
         ...(mode ? { mode } : {}),
       });
       if (completed) continue;
-      const retryHref =
-        typeof attempt.metadata?.href === 'string'
-          ? attempt.metadata.href
-          : `/roadmap/${attempt.courseSlug ?? 'python-basic'}/${attempt.mode ?? 'easy'}/nodes/${attempt.targetId}`;
+      const retryHref = `/roadmap/${attempt.courseSlug}/${mode}/nodes/${attempt.targetId}/challenge`;
       candidates.push({
         candidateId: `retry:${attempt.mode ?? 'easy'}:${attempt.targetId}`,
         actionType: 'RETRY_NODE',
         targetType: 'NODE',
         targetId: attempt.targetId,
         topic: attempt.topic,
-        title: `Retry ${this.humanize(attempt.topic)}`.slice(0, 45),
+        title: this.truncateTitle(`Retry ${this.humanize(attempt.topic)}`),
         message: 'Try the checkpoint that challenged you and finish it.',
         href: retryHref,
-        ctaPath: retryHref.endsWith('/challenge')
-          ? retryHref
-          : `${retryHref}/challenge`,
+        ctaPath: retryHref,
         difficulty: mode ?? 'easy',
         estimatedMinutes: 8,
         rewardXp: mode === 'hard' ? 40 : 25,
@@ -236,15 +238,33 @@ export class MissionCandidateService {
     }
 
     for (const topic of snapshot.weakTopics.slice(0, 3)) {
+      const attempt = recentAttempts.find(
+        (a) =>
+          (a.topic || '').trim().toLowerCase() === topic.trim().toLowerCase() &&
+          a.targetId &&
+          a.courseSlug,
+      );
+
+      const href =
+        attempt &&
+        this.isSafeRoadmapAttemptPath(
+          attempt,
+          easyNodeIdsByCourse,
+          completedEasyRoadmapIdsByCourse,
+        )
+          ? `/roadmap/${attempt.courseSlug}/${attempt.mode || 'easy'}/nodes/${attempt.targetId}/challenge`
+          : (fallbackRoadmapPath ?? fallbackLessonPath ?? '/roadmap');
+
       candidates.push({
         candidateId: `practice-topic:${topic}`,
         actionType: 'PRACTICE_TOPIC',
         targetType: 'TOPIC',
         targetId: topic,
         topic,
-        title: `Strengthen ${this.humanize(topic)}`.slice(0, 45),
+        title: this.truncateTitle(`Strengthen ${this.humanize(topic)}`),
         message: 'Complete one correct challenge in this weak topic.',
-        href: '/roadmap',
+        href,
+        ctaPath: href,
         difficulty:
           snapshot.preferredDifficulty === 'hard'
             ? 'hard'
@@ -275,6 +295,22 @@ export class MissionCandidateService {
       generatedReason: 'Daily pet/profile engagement.',
     });
 
+    candidates.push({
+      candidateId: 'arena:participate',
+      actionType: 'ENTER_ARENA',
+      targetType: 'ARENA',
+      targetId: 'any',
+      title: 'Compete in the Arena',
+      message: 'Join an Arena match and test your skills.',
+      href: '/arena',
+      difficulty: 'medium',
+      estimatedMinutes: 5,
+      rewardXp: 30,
+      expectedEventTypes: ['ARENA_MATCH_FINISHED'],
+      sourceType: 'PROGRESS_BASED',
+      generatedReason: 'Compete with others in Arena.',
+    });
+
     const unique = [
       ...new Map(candidates.map((item) => [item.candidateId, item])).values(),
     ];
@@ -287,147 +323,19 @@ export class MissionCandidateService {
           rewardXp: Math.max(50, candidate.rewardXp),
           estimatedMinutes: Math.max(10, candidate.estimatedMinutes),
           candidateId: `hardcore:${candidate.candidateId}`,
-          title: `Hardcore: ${candidate.title}`.slice(0, 45),
+          title: this.truncateTitle(`Hardcore: ${candidate.title}`),
           actionType:
-            candidate.actionType === 'PASS_QUIZ' ? 'HARD_QUIZ' : 'HARD_LEVEL',
+            candidate.actionType === 'PASS_QUIZ'
+              ? 'HARD_QUIZ'
+              : candidate.actionType === 'CONTINUE_LESSON'
+                ? 'CONTINUE_LESSON'
+                : 'HARD_LEVEL',
           sourceType: candidate.sourceType ?? 'PROGRESS_BASED',
           generatedReason:
             candidate.generatedReason ?? 'Optional challenge after normals.',
         }));
     }
     return unique;
-  }
-
-  private async buildStarterCandidates(
-    courses: Array<Course & { _id: Types.ObjectId }>,
-    kind: MissionKind,
-    snapshot: LearningSnapshot,
-  ): Promise<MissionCandidate[]> {
-    const course = courses[0];
-    if (!course) return [];
-
-    const lesson = await this.findFirstPublishedLesson(course._id);
-    if (!lesson) return [];
-
-    const lessonMission = this.lessonCandidate(
-      course.slug,
-      lesson,
-      'CONTINUE_LESSON',
-      'STARTER',
-      snapshot,
-    );
-    const topic = this.topicFromLesson(lesson);
-    const starter: MissionCandidate[] = [
-      {
-        ...lessonMission,
-        candidateId: `starter:first-lesson:${String(lesson._id)}`,
-        title: 'Complete your first Python lesson',
-        message: this.withToneMessage(
-          'Start with one beginner lesson today.',
-          snapshot,
-        ),
-        generatedReason: 'Starter mission for a new learner.',
-      },
-      {
-        candidateId: `starter:first-roadmap:${String(lesson._id)}`,
-        actionType: 'COMPLETE_ROADMAP_NODE',
-        targetType: 'NODE',
-        targetId: String(lesson._id),
-        topic,
-        title: 'Start your first roadmap challenge',
-        message: this.withToneMessage(
-          'Open the first checkpoint and finish it.',
-          snapshot,
-        ),
-        href: `/roadmap/${course.slug}/easy/nodes/${String(lesson._id)}`,
-        difficulty: 'easy',
-        estimatedMinutes: Math.max(5, lesson.estimatedMinutes || 5),
-        rewardXp: 20,
-        expectedEventTypes: ['ROADMAP_NODE_COMPLETED'],
-        sourceType: 'STARTER',
-        generatedReason: 'Starter mission for first roadmap challenge.',
-        metadata: { courseSlug: course.slug, mode: 'easy' },
-      },
-      {
-        candidateId: `starter:review-concept:${topic}`,
-        actionType: 'LIGHT_PRACTICE',
-        targetType: 'TOPIC',
-        targetId: topic,
-        topic,
-        title: 'Review a beginner Python concept',
-        message: this.withToneMessage(
-          'Practice one small Python basic concept.',
-          snapshot,
-        ),
-        href: `/lesson/${String(lesson._id)}`,
-        difficulty: 'easy',
-        estimatedMinutes: 5,
-        rewardXp: 15,
-        expectedEventTypes: ['ROADMAP_ATTEMPTED', 'QUIZ_ATTEMPTED'],
-        sourceType: 'STARTER',
-        generatedReason: 'Starter mission for light concept practice.',
-      },
-      {
-        candidateId: 'starter:check-pet-progress',
-        actionType: 'FEED_PET',
-        targetType: 'PET',
-        targetId: 'my-pet',
-        title: 'Check your pet progress',
-        message: this.withToneMessage(
-          'Visit your pet/profile and feed your companion.',
-          snapshot,
-        ),
-        href: '/pet',
-        difficulty: 'easy',
-        estimatedMinutes: 1,
-        rewardXp: 5,
-        expectedEventTypes: ['PET_FED'],
-        sourceType: 'STARTER',
-        generatedReason: 'Starter mission for pet/profile discovery.',
-      },
-      {
-        candidateId: `starter:hardcore:${String(lesson._id)}`,
-        actionType: 'HARD_LEVEL',
-        targetType: 'NODE',
-        targetId: String(lesson._id),
-        topic,
-        title: 'Hardcore: first checkpoint',
-        message: this.withToneMessage(
-          'Unlock this after finishing all normal missions.',
-          snapshot,
-        ),
-        href: `/roadmap/${course.slug}/easy/nodes/${String(lesson._id)}`,
-        difficulty: 'hard',
-        estimatedMinutes: 10,
-        rewardXp: 50,
-        expectedEventTypes: ['ROADMAP_NODE_COMPLETED'],
-        sourceType: 'STARTER',
-        generatedReason: 'Locked starter hardcore mission.',
-        metadata: { courseSlug: course.slug, mode: 'easy' },
-      },
-    ];
-
-    return kind === 'HARDCORE' ? [starter[4]] : starter.slice(0, 4);
-  }
-
-  private async findFirstPublishedLesson(courseId: Types.ObjectId) {
-    const chapters = await this.chapterModel
-      .find({ courseId, isPublished: true })
-      .sort({ order: 1 })
-      .select({ _id: 1 })
-      .lean<Array<{ _id: Types.ObjectId }>>()
-      .exec();
-
-    if (chapters.length === 0) return null;
-
-    return this.lessonModel
-      .findOne({
-        chapterId: { $in: chapters.map((chapter) => chapter._id) },
-        isPublished: true,
-      })
-      .sort({ order: 1 })
-      .lean<LeanLesson | null>()
-      .exec();
   }
 
   private lessonCandidate(
@@ -465,9 +373,9 @@ export class MissionCandidateService {
       targetType: 'LESSON',
       targetId: id,
       topic,
-      title: definitions.title.slice(0, 45),
+      title: this.truncateTitle(definitions.title),
       message: this.withToneMessage(definitions.message, snapshot),
-      href: `/lesson/${id}`,
+      href: `/lessons/${id}`,
       difficulty: 'easy',
       estimatedMinutes: Math.max(5, lesson.estimatedMinutes || 5),
       rewardXp: definitions.rewardXp,
@@ -505,6 +413,42 @@ export class MissionCandidateService {
     return value
       .replace(/[-_]+/g, ' ')
       .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  }
+
+  private truncateTitle(value: string, maxLength = 45) {
+    const title = value.trim().replace(/\s+/g, ' ');
+    if (title.length <= maxLength) return title;
+
+    const limit = Math.max(4, maxLength - 3);
+    const clipped = title.slice(0, limit);
+    const lastSpace = clipped.lastIndexOf(' ');
+    const safeClip = lastSpace > 20 ? clipped.slice(0, lastSpace) : clipped;
+    return `${safeClip.trim()}...`;
+  }
+
+  private isSafeRoadmapAttemptPath(
+    attempt: {
+      courseSlug?: string;
+      mode?: string;
+      targetId?: string;
+    },
+    easyNodeIdsByCourse: Map<string, string[]>,
+    completedEasyRoadmapIdsByCourse: Map<string, Set<string>>,
+  ) {
+    if (!attempt.courseSlug || !attempt.targetId) return false;
+    const mode = this.asRoadmapMode(attempt.mode);
+    if (!mode) return false;
+    if (mode === 'easy') {
+      if (!Types.ObjectId.isValid(attempt.targetId)) return false;
+      const nodeIds = easyNodeIdsByCourse.get(attempt.courseSlug) ?? [];
+      const targetIndex = nodeIds.indexOf(attempt.targetId);
+      if (targetIndex < 0) return false;
+      if (targetIndex === 0) return true;
+      const completedIds =
+        completedEasyRoadmapIdsByCourse.get(attempt.courseSlug) ?? new Set();
+      return completedIds.has(nodeIds[targetIndex - 1]);
+    }
+    return /^(medium|hard)-[a-z0-9-]+-c\d+-n\d+$/i.test(attempt.targetId);
   }
 
   private asRoadmapMode(value?: string): RoadmapMode | undefined {

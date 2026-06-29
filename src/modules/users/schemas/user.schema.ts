@@ -41,8 +41,8 @@ export class User {
   })
   role!: UserRole;
 
-  @Prop()
-  avatarUrl?: string;
+  @Prop({ type: String, default: null })
+  avatarUrl?: string | null;
 
   @Prop({ trim: true })
   bio?: string;

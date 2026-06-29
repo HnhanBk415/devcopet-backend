@@ -12,7 +12,7 @@ export class MissionValidatorService {
     candidates: MissionCandidate[],
     kind: MissionKind,
   ) {
-    const requiredCount = kind === 'HARDCORE' ? 1 : 4;
+    const requiredCount = kind === 'HARDCORE' ? 1 : 5;
     if (!Array.isArray(selected) || selected.length !== requiredCount) {
       throw new Error(`AI must select exactly ${requiredCount} mission(s).`);
     }

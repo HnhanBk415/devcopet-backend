@@ -46,7 +46,7 @@ export class UsersController {
         username: 'ByteMaster',
         level: 40,
         exp: 39500,
-        avatarUrl: 'https://i.pravatar.cc/150?u=byte',
+        avatarUrl: null,
         bio: 'Ready to battle!',
       };
     }

@@ -101,7 +101,7 @@ export class UsersService {
     userId: string,
     provider: SocialProvider,
     providerId: string,
-    avatarUrl?: string,
+    avatarUrl?: string | null,
   ): Promise<UserDocument | null> {
     return this.userModel.findByIdAndUpdate(
       userId,
@@ -169,11 +169,14 @@ export class UsersService {
         const xp = this.resolveXp(user);
         return {
           userId: String(user._id),
+          displayName: user.username,
           name: user.username,
+          avatarUrl: user.avatarUrl ?? null,
           avatar: user.avatarUrl,
           currentXp: xp.currentXp,
           lifetimeXp: xp.lifetimeXp,
           level: xp.level,
+          tier: user.arenaRank ?? 'Beginner',
           arenaRank: user.arenaRank ?? 'Beginner',
         };
       })
@@ -365,8 +368,10 @@ export class UsersService {
 
     return {
       id: String(user._id),
+      displayName: user.username,
       name: user.username,
       email: user.email,
+      avatarUrl: user.avatarUrl ?? null,
       avatar: user.avatarUrl,
       level: xp.level,
       lifetimeXp: xp.lifetimeXp,

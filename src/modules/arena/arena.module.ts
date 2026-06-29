@@ -20,9 +20,13 @@ import {
   ArenaQuestion,
   ArenaQuestionSchema,
 } from './schemas/arena-question.schema';
+import { LearningHistoryModule } from '../learning-history/learning-history.module';
+import { MissionsModule } from '../missions/missions.module';
 
 @Module({
   imports: [
+    LearningHistoryModule,
+    MissionsModule,
     ConfigModule,
     JwtModule.registerAsync({
       inject: [ConfigService],

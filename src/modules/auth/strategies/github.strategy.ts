@@ -4,6 +4,12 @@ import { Strategy, Profile } from 'passport-github2';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth.service';
 
+type GithubProfile = Profile & {
+  _json?: {
+    avatar_url?: string;
+  };
+};
+
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(
@@ -25,6 +31,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     done: (err: Error | null, user?: unknown) => void,
   ) {
     try {
+      const githubProfile = profile as GithubProfile;
       const email =
         profile.emails?.find((e) => e.value)?.value ??
         `github_${profile.id}@devcopet.local`;
@@ -35,7 +42,8 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         email,
         username:
           profile.username ?? profile.displayName ?? `github_${profile.id}`,
-        avatarUrl: profile.photos?.[0]?.value,
+        avatarUrl:
+          profile.photos?.[0]?.value ?? githubProfile._json?.avatar_url,
       });
 
       done(null, result);

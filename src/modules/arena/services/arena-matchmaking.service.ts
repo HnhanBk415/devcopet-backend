@@ -12,7 +12,7 @@ export interface ArenaQueueEntry {
   userId: string;
   socketId: string;
   username: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
   arenaRank: ArenaRank;
   arenaRating: number;
   courseSlug: string;

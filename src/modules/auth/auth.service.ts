@@ -18,7 +18,7 @@ export interface SocialProfile {
   providerId: string;
   email: string;
   username: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
 }
 
 @Injectable()
@@ -82,7 +82,7 @@ export class AuthService {
     username: string;
     email: string;
     role?: string;
-    avatarUrl?: string;
+    avatarUrl?: string | null;
     level?: number;
     lifetimeXp?: number;
     currentXp?: number;
@@ -345,6 +345,11 @@ export class AuthService {
 
     const finalUser = await this.usersService.findById(userId);
     if (!finalUser) throw new UnauthorizedException('Social login failed');
+
+    if (profile.avatarUrl && finalUser.avatarUrl !== profile.avatarUrl) {
+      finalUser.avatarUrl = profile.avatarUrl;
+      await finalUser.save();
+    }
 
     const accessToken = this.signAccessToken(userId, finalUser.email);
     const refreshToken = this.signRefreshToken(userId);

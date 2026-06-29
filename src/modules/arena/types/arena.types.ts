@@ -28,7 +28,7 @@ export interface ArenaAnswerPayload {
 export interface PublicArenaPlayer {
   userId: string;
   username: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
   isBot: boolean;
   arenaRank: ArenaRank;
   arenaRating: number;

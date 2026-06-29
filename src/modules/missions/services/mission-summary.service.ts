@@ -87,7 +87,7 @@ export class MissionSummaryService {
         ),
         hardcoreCompleted: rows.filter((row) => row.hardcoreCompleted).length,
         rewardXp: rows.reduce((sum, row) => sum + row.totalRewardXp, 0),
-        perfectDays: rows.filter((row) => row.completedNormal === 4).length,
+        perfectDays: rows.filter((row) => row.completedNormal === 5).length,
       },
     };
   }
