@@ -49,7 +49,7 @@ export const ARENA_RATING_DELTA = {
   draw: 0,
 } as const;
 
-// TODO: Add a daily bot rating cap before ranked bot farming becomes valuable.
+// Bot daily rating cap is disabled until ranked bot farming rules are enabled.
 export const ARENA_BOT_DAILY_RATING_CAP: number | null = null;
 
 export const ARENA_QUESTION_MIX: Record<

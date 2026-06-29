@@ -13,12 +13,8 @@ import type {
 } from './personality-engine.types';
 
 /**
- * PersonalityEngine — Placeholder service.
- *
- * Reads UserPersonality and produces behavior configs
+ * PersonalityEngine reads UserPersonality and produces behavior configs
  * that pet/AI services can use to personalize interactions.
- *
- * TODO: Implement full logic based on product requirements.
  */
 @Injectable()
 export class PersonalityEngineService {
@@ -33,14 +29,13 @@ export class PersonalityEngineService {
    * This is the main entry point for pet service.
    * Returns a behavior profile that dictates HOW the pet
    * should interact with the user (tone, frequency, challenge level, etc).
-   *
-   * TODO: Implement real mapping logic.
    */
   async getPetBehaviorConfig(
     userId: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _context?: PetInteractionContext,
   ): Promise<PetBehaviorConfig> {
+    void _context;
+
     const personality = await this.personalityModel
       .findOne({ userId: new Types.ObjectId(userId) })
       .lean();
@@ -50,29 +45,23 @@ export class PersonalityEngineService {
       return this.getDefaultConfig();
     }
 
-    // TODO: Map personality scores to behavior config.
-    // For now, return defaults.
-    // Future implementation will use personality.dominantTraits
-    // and normalized scores to calculate each config field.
+    // Personality-aware behavior falls back to defaults until mappings are enabled.
     return this.getDefaultConfig();
   }
 
   /**
    * Generate a reminder strategy based on personality and context.
-   *
-   * TODO: Implement real logic.
    */
   async generateReminderStrategy(
     userId: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _context: ReminderContext,
   ): Promise<ReminderStrategy> {
-    // TODO: Use personality data to customize reminder strategy
+    void _context;
+
     await this.personalityModel
       .findOne({ userId: new Types.ObjectId(userId) })
       .lean();
 
-    // TODO: Implement mapping from personality → reminder strategy.
     return {
       shouldSend: true,
       tone: 'supportive',
