@@ -35,6 +35,11 @@ export class AuthService {
     return email.toLowerCase().trim();
   }
 
+  private normalizeAvatarUrl(avatarUrl?: string | null): string | null {
+    const normalized = avatarUrl?.trim();
+    return normalized || null;
+  }
+
   private isDuplicateKeyError(error: unknown): boolean {
     return (
       typeof error === 'object' &&
@@ -99,7 +104,7 @@ export class AuthService {
       username: user.username,
       email: user.email,
       role: user.role,
-      avatarUrl: user.avatarUrl,
+      avatarUrl: user.avatarUrl ?? null,
       level: user.level,
       lifetimeXp: user.lifetimeXp ?? user.exp ?? 0,
       currentXp: user.currentXp ?? user.lifetimeXp ?? user.exp ?? 0,
@@ -264,6 +269,7 @@ export class AuthService {
   async validateOrCreateSocialUser(profile: SocialProfile) {
     const provider = profile.provider;
     const providerIdField = `${provider}Id`;
+    const avatarUrl = this.normalizeAvatarUrl(profile.avatarUrl);
     const normalizedEmail = this.normalizeEmail(
       profile.email || `${provider}_${profile.providerId}@devcopet.local`,
     );
@@ -292,7 +298,7 @@ export class AuthService {
             String(userByEmail._id),
             provider,
             profile.providerId,
-            profile.avatarUrl,
+            avatarUrl,
           );
           userId = String(userByEmail._id);
         } catch (error) {
@@ -318,7 +324,7 @@ export class AuthService {
             authProviders: [provider],
             emailVerified: true,
             emailVerifiedAt: new Date(),
-            avatarUrl: profile.avatarUrl,
+            avatarUrl,
             role: UserRole.STUDENT,
             level: 1,
             lifetimeXp: 0,
@@ -346,8 +352,8 @@ export class AuthService {
     const finalUser = await this.usersService.findById(userId);
     if (!finalUser) throw new UnauthorizedException('Social login failed');
 
-    if (profile.avatarUrl && finalUser.avatarUrl !== profile.avatarUrl) {
-      finalUser.avatarUrl = profile.avatarUrl;
+    if (avatarUrl && finalUser.avatarUrl !== avatarUrl) {
+      finalUser.avatarUrl = avatarUrl;
       await finalUser.save();
     }
 

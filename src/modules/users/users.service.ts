@@ -58,6 +58,7 @@ export class UsersService {
     const xp = this.resolveXp(user);
     return {
       ...user,
+      avatarUrl: user.avatarUrl ?? null,
       level: xp.level,
       lifetimeXp: xp.lifetimeXp,
       currentXp: xp.currentXp,
@@ -172,7 +173,7 @@ export class UsersService {
           displayName: user.username,
           name: user.username,
           avatarUrl: user.avatarUrl ?? null,
-          avatar: user.avatarUrl,
+          avatar: user.avatarUrl ?? null,
           currentXp: xp.currentXp,
           lifetimeXp: xp.lifetimeXp,
           level: xp.level,
@@ -372,7 +373,7 @@ export class UsersService {
       name: user.username,
       email: user.email,
       avatarUrl: user.avatarUrl ?? null,
-      avatar: user.avatarUrl,
+      avatar: user.avatarUrl ?? null,
       level: xp.level,
       lifetimeXp: xp.lifetimeXp,
       currentXp: xp.currentXp,
