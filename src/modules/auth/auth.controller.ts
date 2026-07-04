@@ -12,15 +12,11 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
-import { VerifyEmailDto } from './dto/verify-email.dto';
-import { ResendVerificationEmailDto } from './dto/resend-verification-email.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-import { VerifyResetCodeDto } from './dto/verify-reset-code.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { GithubAuthGuard } from './guards/github-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
-import { FacebookAuthGuard } from './guards/facebook-auth.guard';
 
 interface JwtUser {
   userId: string;
@@ -47,31 +43,16 @@ export class AuthController {
     return this.authService.register(registerDto);
   }
 
-  @Post('verify-email')
-  async verifyEmail(@Body() dto: VerifyEmailDto) {
-    return this.authService.verifyEmail(dto.email, dto.code);
-  }
-
-  @Post('resend-verification-email')
-  async resendVerificationEmail(@Body() dto: ResendVerificationEmailDto) {
-    return this.authService.resendVerificationEmail(dto.email);
-  }
-
   @Post('forgot-password')
-  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+  forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto.email);
-  }
-
-  @Post('verify-reset-code')
-  async verifyResetCode(@Body() dto: VerifyResetCodeDto) {
-    return this.authService.verifyResetCode(dto.email, dto.code);
   }
 
   @Post('reset-password')
   async resetPassword(@Body() dto: ResetPasswordDto) {
     return this.authService.resetPassword(
       dto.email,
-      dto.code,
+      dto.petName,
       dto.newPassword,
       dto.confirmPassword,
     );
@@ -131,18 +112,6 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
   googleCallback(@Req() req: { user: AuthResult }, @Res() res: Response) {
-    return this.redirectToFrontendAuthCallback(req.user, res);
-  }
-
-  @UseGuards(FacebookAuthGuard)
-  @Get('facebook')
-  facebookLogin() {
-    // Passport redirects to Facebook.
-  }
-
-  @UseGuards(FacebookAuthGuard)
-  @Get('facebook/callback')
-  facebookCallback(@Req() req: { user: AuthResult }, @Res() res: Response) {
     return this.redirectToFrontendAuthCallback(req.user, res);
   }
 

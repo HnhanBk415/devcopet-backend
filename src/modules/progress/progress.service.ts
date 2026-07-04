@@ -61,11 +61,13 @@ export class ProgressService {
   ): Promise<LeanProgressLesson[]> {
     const chapters = await this.chapterModel
       .find({ courseId, isPublished: true })
+      .select({ _id: 1, order: 1 })
       .sort({ order: 1 })
       .lean<LeanProgressChapter[]>()
       .exec();
     const lessons = await this.lessonModel
       .find({ courseId, isPublished: true })
+      .select({ _id: 1, chapterId: 1, order: 1 })
       .lean<LeanProgressLesson[]>()
       .exec();
     const lessonsByChapterId = this.groupBy(lessons, (lesson) =>

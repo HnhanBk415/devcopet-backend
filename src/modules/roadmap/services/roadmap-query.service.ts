@@ -49,6 +49,7 @@ export class RoadmapQueryService {
   async findPublishedChapters(courseId: Types.ObjectId) {
     return this.chapterModel
       .find({ courseId, isPublished: true })
+      .select({ _id: 1, courseId: 1, slug: 1, title: 1, order: 1 })
       .sort({ order: 1 })
       .lean<LeanChapter[]>()
       .exec();
@@ -57,6 +58,15 @@ export class RoadmapQueryService {
   async findPublishedLessons(chapterIds: Types.ObjectId[]) {
     return this.lessonModel
       .find({ chapterId: { $in: chapterIds }, isPublished: true })
+      .select({
+        _id: 1,
+        courseId: 1,
+        chapterId: 1,
+        slug: 1,
+        title: 1,
+        description: 1,
+        order: 1,
+      })
       .sort({ order: 1 })
       .lean<LeanLesson[]>()
       .exec();

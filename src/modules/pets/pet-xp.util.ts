@@ -1,10 +1,9 @@
 export function getPetXpThresholdForLevel(level: number): number {
-  const normalizedLevel = Math.floor(level);
-  if (normalizedLevel <= 0) return 0;
+  const normalizedLevel = Math.max(1, Math.floor(level));
 
   let total = 0;
   for (let n = 1; n <= normalizedLevel; n++) {
-    total += Math.pow(n, n) * 100;
+    total += Math.pow(n, 2) * 1000;
   }
 
   return total;
@@ -31,24 +30,18 @@ export function getPetCurrentLevelProgress(totalPetXp: number): {
 } {
   const xp = Math.max(0, Math.floor(totalPetXp));
   const level = calculatePetLevelFromTotalXp(xp);
-  const currentLevelThresholdXp =
-    level <= 1 ? 0 : getPetXpThresholdForLevel(level);
-  const nextLevelThresholdXp =
-    level <= 1
-      ? getPetXpThresholdForLevel(1)
-      : getPetXpThresholdForLevel(level + 1);
+  const currentLevelThresholdXp = getPetXpThresholdForLevel(level);
+  const nextLevelThresholdXp = getPetXpThresholdForLevel(level + 1);
   const nextLevelRequiredXp = nextLevelThresholdXp - currentLevelThresholdXp;
   const currentLevelXp = Math.min(
     nextLevelRequiredXp,
     Math.max(0, xp - currentLevelThresholdXp),
   );
-  const levelRequiredExp =
-    level <= 1 ? getPetXpThresholdForLevel(1) : currentLevelThresholdXp;
 
   return {
     level,
     currentLevelXp,
-    levelRequiredExp,
+    levelRequiredExp: currentLevelThresholdXp,
     nextLevelRequiredXp,
     nextLevelThresholdXp,
     progressPercent:

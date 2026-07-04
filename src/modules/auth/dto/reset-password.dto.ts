@@ -4,9 +4,9 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Matches,
   MaxLength,
   MinLength,
+  Matches,
 } from 'class-validator';
 
 export class ResetPasswordDto {
@@ -15,15 +15,15 @@ export class ResetPasswordDto {
   )
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @Transform(({ value }: { value: unknown }): unknown =>
     typeof value === 'string' ? value.trim() : value,
   )
   @IsString()
   @IsNotEmpty()
-  @Matches(/^\d{6}$/, { message: 'Reset code must be 6 digits' })
-  code: string;
+  @MaxLength(60)
+  petName!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -32,7 +32,7 @@ export class ResetPasswordDto {
   @Matches(/^(?=.*[A-Za-z])(?=.*\d).+$/, {
     message: 'Password must contain at least one letter and one number',
   })
-  newPassword: string;
+  newPassword!: string;
 
   @IsOptional()
   @IsString()

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import * as fs from 'fs';
+import * as path from 'path';
 import {
   Chapter,
   ChapterDocument,
@@ -25,6 +27,12 @@ import type {
 } from '../missions.types';
 
 type LeanLesson = Lesson & { _id: Types.ObjectId };
+type AdvancedRoadmapNodeCandidate = {
+  nodeId: string;
+  title: string;
+  estimatedMinutes: number;
+  topic: string;
+};
 
 @Injectable()
 export class MissionCandidateService {
@@ -47,6 +55,7 @@ export class MissionCandidateService {
     snapshot: LearningSnapshot,
     kind: MissionKind,
   ): Promise<MissionCandidate[]> {
+    void kind;
     const userObjectId = new Types.ObjectId(userId);
     const [courses, completedLessons, recentAttempts] = await Promise.all([
       this.courseModel
@@ -149,7 +158,10 @@ export class MissionCandidateService {
             completedEasyRoadmapIds.has(String(lessons[index - 1]._id))),
       );
 
-      if (availableRoadmapLesson) {
+      if (
+        availableRoadmapLesson &&
+        this.hasRoadmapChallengeFile(course.slug, 'easy')
+      ) {
         const availableRoadmapLessonId = String(availableRoadmapLesson._id);
         fallbackRoadmapPath ??= `/roadmap/${course.slug}/easy/nodes/${availableRoadmapLessonId}/challenge`;
         candidates.push({
@@ -175,6 +187,39 @@ export class MissionCandidateService {
         });
       }
 
+      const completedEasyCount = lessons
+        .map((lesson) => String(lesson._id))
+        .filter((nodeId) => completedEasyRoadmapIds.has(nodeId)).length;
+      if (completedEasyCount >= 5) {
+        const mediumCandidate = await this.advancedRoadmapCandidate(
+          userId,
+          course.slug,
+          'medium',
+        );
+        if (mediumCandidate) {
+          fallbackRoadmapPath ??= mediumCandidate.ctaPath;
+          candidates.push(mediumCandidate);
+        }
+
+        const mediumNodes = this.getAdvancedRoadmapNodes(course.slug, 'medium');
+        const mediumCompletedCount = await this.countCompletedRoadmapNodes(
+          userId,
+          course.slug,
+          'medium',
+          mediumNodes.map((node) => node.nodeId),
+        );
+        if (mediumCompletedCount >= 5) {
+          const hardCandidate = await this.advancedRoadmapCandidate(
+            userId,
+            course.slug,
+            'hard',
+          );
+          if (hardCandidate) {
+            fallbackRoadmapPath ??= hardCandidate.ctaPath;
+            candidates.push(hardCandidate);
+          }
+        }
+      }
       const reviewLesson = [...lessons]
         .reverse()
         .find((lesson) => completedLessonIds.has(String(lesson._id)));
@@ -314,30 +359,118 @@ export class MissionCandidateService {
     const unique = [
       ...new Map(candidates.map((item) => [item.candidateId, item])).values(),
     ];
-    if (kind === 'HARDCORE') {
-      return unique
-        .filter((candidate) => candidate.actionType !== 'FEED_PET')
-        .map((candidate) => ({
-          ...candidate,
-          difficulty: 'hard' as const,
-          rewardXp: Math.max(50, candidate.rewardXp),
-          estimatedMinutes: Math.max(10, candidate.estimatedMinutes),
-          candidateId: `hardcore:${candidate.candidateId}`,
-          title: this.truncateTitle(`Hardcore: ${candidate.title}`),
-          actionType:
-            candidate.actionType === 'PASS_QUIZ'
-              ? 'HARD_QUIZ'
-              : candidate.actionType === 'CONTINUE_LESSON'
-                ? 'CONTINUE_LESSON'
-                : 'HARD_LEVEL',
-          sourceType: candidate.sourceType ?? 'PROGRESS_BASED',
-          generatedReason:
-            candidate.generatedReason ?? 'Optional challenge after normals.',
-        }));
-    }
     return unique;
   }
 
+  private async advancedRoadmapCandidate(
+    userId: string,
+    courseSlug: string,
+    mode: 'medium' | 'hard',
+  ): Promise<MissionCandidate | null> {
+    const nodes = this.getAdvancedRoadmapNodes(courseSlug, mode);
+    if (nodes.length === 0) return null;
+
+    const completedCount = await this.countCompletedRoadmapNodes(
+      userId,
+      courseSlug,
+      mode,
+      nodes.map((node) => node.nodeId),
+    );
+    const nextNode = nodes[completedCount];
+    if (!nextNode) return null;
+
+    const ctaPath = `/roadmap/${courseSlug}/${mode}/nodes/${nextNode.nodeId}/challenge`;
+    return {
+      candidateId: `roadmap:${mode}:${nextNode.nodeId}`,
+      actionType: 'COMPLETE_ROADMAP_NODE',
+      targetType: 'NODE',
+      targetId: nextNode.nodeId,
+      topic: nextNode.topic,
+      title: this.truncateTitle(`Complete ${nextNode.title}`),
+      message: `Continue with the next ${mode} roadmap checkpoint.`,
+      href: ctaPath,
+      ctaPath,
+      difficulty: mode,
+      estimatedMinutes: Math.max(5, nextNode.estimatedMinutes),
+      rewardXp: mode === 'hard' ? 40 : 30,
+      expectedEventTypes: ['ROADMAP_NODE_COMPLETED'],
+      sourceType: 'ROADMAP_STATE',
+      generatedReason: `Next available ${mode} roadmap checkpoint.`,
+      metadata: { courseSlug, mode },
+    };
+  }
+
+  private getAdvancedRoadmapNodes(
+    courseSlug: string,
+    mode: 'medium' | 'hard',
+  ): AdvancedRoadmapNodeCandidate[] {
+    const file = this.readAdvancedRoadmapChallengeFile(courseSlug, mode);
+    if (
+      !file ||
+      file.courseSlug !== courseSlug ||
+      file.mode !== mode ||
+      !Array.isArray(file.chapters)
+    ) {
+      return [];
+    }
+
+    return file.chapters.flatMap((chapter) =>
+      (chapter.nodes ?? []).map((node) => ({
+        nodeId: `${courseSlug}-${mode}-c${chapter.chapterOrder}-n${node.order}`,
+        title: node.title || `${mode} checkpoint`,
+        estimatedMinutes: node.estimatedMinutes || 8,
+        topic: this.topicFromTitle(node.title || chapter.chapterTitle || mode),
+      })),
+    );
+  }
+
+  private readAdvancedRoadmapChallengeFile(
+    courseSlug: string,
+    mode: 'medium' | 'hard',
+  ) {
+    const filePath = this.getRoadmapChallengePath(courseSlug, mode);
+    if (!fs.existsSync(filePath)) return null;
+
+    try {
+      return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as {
+        courseSlug?: string;
+        mode?: string;
+        chapters?: Array<{
+          chapterOrder: number;
+          chapterTitle?: string;
+          nodes?: Array<{
+            order: number;
+            title?: string;
+            estimatedMinutes?: number;
+          }>;
+        }>;
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  private async countCompletedRoadmapNodes(
+    userId: string,
+    courseSlug: string,
+    mode: RoadmapMode,
+    nodeIds: string[],
+  ) {
+    if (nodeIds.length === 0) return 0;
+    const rows = await this.roadmapProgressModel
+      .find({
+        userId,
+        courseSlug,
+        mode,
+        nodeId: { $in: nodeIds },
+      })
+      .select({ nodeId: 1 })
+      .lean<Array<{ nodeId: string }>>()
+      .exec();
+
+    const completed = new Set(rows.map((row) => row.nodeId));
+    return nodeIds.filter((nodeId) => completed.has(nodeId)).length;
+  }
   private lessonCandidate(
     courseSlug: string,
     lesson: LeanLesson,
@@ -403,6 +536,12 @@ export class MissionCandidateService {
     return message;
   }
 
+  private topicFromTitle(title: string) {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
   private topicFromLesson(lesson: LeanLesson) {
     return (lesson.slug || lesson.title)
       .toLowerCase()
@@ -448,12 +587,28 @@ export class MissionCandidateService {
         completedEasyRoadmapIdsByCourse.get(attempt.courseSlug) ?? new Set();
       return completedIds.has(nodeIds[targetIndex - 1]);
     }
-    return /^(medium|hard)-[a-z0-9-]+-c\d+-n\d+$/i.test(attempt.targetId);
+    return /^[a-z0-9-]+-(medium|hard)-c\d+-n\d+$/i.test(attempt.targetId);
   }
 
   private asRoadmapMode(value?: string): RoadmapMode | undefined {
     return value === 'easy' || value === 'medium' || value === 'hard'
       ? value
       : undefined;
+  }
+
+  private hasRoadmapChallengeFile(courseSlug: string, mode: RoadmapMode) {
+    return fs.existsSync(this.getRoadmapChallengePath(courseSlug, mode));
+  }
+
+  private getRoadmapChallengePath(courseSlug: string, mode: RoadmapMode) {
+    return path.resolve(
+      process.cwd(),
+      'src',
+      'database',
+      'seeds',
+      'content',
+      courseSlug,
+      `${mode}-roadmap-challenges.json`,
+    );
   }
 }

@@ -65,11 +65,20 @@ export class CoursesService {
     const [chapters, lessons] = await Promise.all([
       this.chapterModel
         .find({ courseId: course._id, isPublished: true })
+        .select({ _id: 1, title: 1, order: 1 })
         .sort({ order: 1 })
         .lean<{ _id: Types.ObjectId; title: string; order: number }[]>()
         .exec(),
       this.lessonModel
         .find({ courseId: course._id, isPublished: true })
+        .select({
+          _id: 1,
+          chapterId: 1,
+          title: 1,
+          description: 1,
+          order: 1,
+          estimatedMinutes: 1,
+        })
         .sort({ order: 1 })
         .lean<
           {

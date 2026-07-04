@@ -9,7 +9,6 @@ import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { SocialProvider, UserRole } from '../users/schemas/user.schema';
-import { EmailVerificationService } from './services/email-verification.service';
 import { PasswordResetService } from './services/password-reset.service';
 import * as bcryptjs from 'bcryptjs';
 
@@ -27,7 +26,6 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    private readonly emailVerificationService: EmailVerificationService,
     private readonly passwordResetService: PasswordResetService,
   ) {}
 
@@ -119,8 +117,12 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
-    const { username, email, password } = registerDto;
+    const { username, email, password, confirmPassword } = registerDto;
     const normalizedEmail = this.normalizeEmail(email);
+
+    if (confirmPassword !== undefined && confirmPassword !== password) {
+      throw new BadRequestException('Passwords do not match');
+    }
 
     const existing = await this.usersService.findByEmail(normalizedEmail);
     if (existing) {
@@ -143,14 +145,13 @@ export class AuthService {
         coins: 0,
         onboardingCompleted: false,
         petProfileInitialized: false,
-        emailVerified: false,
+        emailVerified: true,
+        emailVerifiedAt: new Date(),
       });
 
-      await this.emailVerificationService.sendVerificationEmail(user);
-
       return {
-        message:
-          'Register successful. Please verify your email before logging in.',
+        message: 'Register successful',
+        verificationRequired: false,
         user: this.buildSafeUser(user),
       };
     } catch (error) {
@@ -168,12 +169,6 @@ export class AuthService {
     const user = await this.usersService.findByEmail(normalizedEmail);
     if (!user || !user.passwordHash) {
       throw new UnauthorizedException('Invalid credentials');
-    }
-
-    if (user.authProviders?.includes('local') && user.emailVerified === false) {
-      throw new UnauthorizedException(
-        'Please verify your email before logging in',
-      );
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.passwordHash);
@@ -236,31 +231,19 @@ export class AuthService {
     return { message: 'Logged out successfully' };
   }
 
-  async verifyEmail(email: string, code: string) {
-    return this.emailVerificationService.verifyEmail(email, code);
-  }
-
-  async resendVerificationEmail(email: string) {
-    return this.emailVerificationService.resendVerificationEmail(email);
-  }
-
-  async forgotPassword(email: string) {
+  forgotPassword(email: string) {
     return this.passwordResetService.sendResetCode(email);
-  }
-
-  async verifyResetCode(email: string, code: string) {
-    return this.passwordResetService.verifyResetCode(email, code);
   }
 
   async resetPassword(
     email: string,
-    code: string,
+    petName: string,
     newPassword: string,
     confirmPassword?: string,
   ) {
     return this.passwordResetService.resetPassword(
       email,
-      code,
+      petName,
       newPassword,
       confirmPassword,
     );
@@ -288,18 +271,19 @@ export class AuthService {
 
       if (userByEmail) {
         try {
-          if (userByEmail.emailVerified === false) {
-            throw new UnauthorizedException(
-              'Email is registered but not verified. Please verify email before linking social login.',
-            );
-          }
-
           await this.usersService.linkSocialProvider(
             String(userByEmail._id),
             provider,
             profile.providerId,
             avatarUrl,
           );
+
+          if (userByEmail.emailVerified !== true) {
+            await this.usersService.markEmailVerified(
+              String(userByEmail._id),
+              new Date(),
+            );
+          }
           userId = String(userByEmail._id);
         } catch (error) {
           if (!this.isDuplicateKeyError(error)) throw error;

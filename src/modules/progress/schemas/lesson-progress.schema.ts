@@ -25,3 +25,4 @@ export const LessonProgressSchema =
   SchemaFactory.createForClass(LessonProgress);
 
 LessonProgressSchema.index({ userId: 1, lessonId: 1 }, { unique: true });
+LessonProgressSchema.index({ userId: 1, completed: 1, lessonId: 1 });

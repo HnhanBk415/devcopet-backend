@@ -1,4 +1,6 @@
 import { randomUUID } from 'crypto';
+import * as fs from 'fs';
+import * as path from 'path';
 import {
   BadRequestException,
   Injectable,
@@ -46,7 +48,7 @@ import {
 const NORMAL_MISSION_COUNT = 5;
 const SET_COMPLETION_BONUS_XP = 50;
 const MISSION_RETENTION_DAYS = 30;
-const DAILY_MISSION_VERSION = 'daily-mission-v6-safe-daily-mission-targets';
+const DAILY_MISSION_VERSION = 'daily-mission-v7-openable-roadmap-targets';
 const ACTIVE_MISSION_STATUSES = ['PENDING', 'OPENED'] as const;
 const MISSION_EVENT_HISTORY_TYPES = [
   'MISSION_OPENED',
@@ -101,12 +103,8 @@ export class MissionsService {
       .exec();
 
     if (set && this.isStaleTodaySet(set)) {
-      await this.missionSetModel
-        .deleteOne({ _id: set._id, userId: new Types.ObjectId(userId) })
-        .exec();
-      set = null;
+      await this.normalizeTodaySet(set);
     }
-
     if (!set) {
       set = await this.generateNormalSet(userId, timezone, now);
     }
@@ -388,9 +386,9 @@ export class MissionsService {
 
       const item: DailyMissionItem = {
         missionId: randomUUID(),
-        missionIndex: kind === 'HARDCORE' ? 5 : index + 1,
+        missionIndex: index + 1,
         missionKind: kind,
-        status: kind === 'HARDCORE' ? 'LOCKED' : 'PENDING',
+        status: 'PENDING',
         candidateId: candidate.candidateId,
         generationVersion: DAILY_MISSION_VERSION,
         actionType: candidate.actionType,
@@ -692,22 +690,24 @@ export class MissionsService {
       mission.targetType === 'ROADMAP_NODE'
     ) {
       const route = this.parseRoadmapChallengePath(mission.ctaPath);
-      if (!route || route.nodeId !== mission.targetId) {
+      if (!route) {
         return { ok: false, reason: 'Mission route unavailable.' };
       }
-
-      if (route.mode !== 'easy') {
-        return { ok: true };
-      }
-
-      const unlocked = await this.isEasyRoadmapNodeUnlocked({
+      return this.isRoadmapChallengeRouteOpenable({
         userId: input.userId,
-        courseSlug: route.courseSlug,
-        nodeId: route.nodeId,
+        route,
+        expectedNodeId: mission.targetId,
       });
-      return unlocked
-        ? { ok: true }
-        : { ok: false, reason: 'Mission target is locked.' };
+    }
+
+    if (mission.targetType === 'TOPIC') {
+      const route = this.parseRoadmapChallengePath(mission.ctaPath);
+      if (route) {
+        return this.isRoadmapChallengeRouteOpenable({
+          userId: input.userId,
+          route,
+        });
+      }
     }
 
     if (
@@ -715,8 +715,266 @@ export class MissionsService {
     ) {
       return { ok: true };
     }
-
     return { ok: false, reason: 'Mission target is unavailable.' };
+  }
+
+  private async isRoadmapChallengeRouteOpenable(input: {
+    userId: string;
+    route: {
+      courseSlug: string;
+      mode: 'easy' | 'medium' | 'hard';
+      nodeId: string;
+    };
+    expectedNodeId?: string;
+  }): Promise<{ ok: true } | { ok: false; reason: string }> {
+    const { route } = input;
+    if (input.expectedNodeId && route.nodeId !== input.expectedNodeId) {
+      return { ok: false, reason: 'Mission route unavailable.' };
+    }
+    if (!this.hasRoadmapChallengeFile(route.courseSlug, route.mode)) {
+      return { ok: false, reason: 'Mission target is unavailable.' };
+    }
+
+    if (route.mode !== 'easy') {
+      const unlocked = await this.isAdvancedRoadmapNodeUnlocked({
+        userId: input.userId,
+        courseSlug: route.courseSlug,
+        mode: route.mode,
+        nodeId: route.nodeId,
+      });
+      return unlocked
+        ? { ok: true }
+        : { ok: false, reason: 'Mission target is locked.' };
+    }
+
+    const unlocked = await this.isEasyRoadmapNodeUnlocked({
+      userId: input.userId,
+      courseSlug: route.courseSlug,
+      nodeId: route.nodeId,
+    });
+    return unlocked
+      ? { ok: true }
+      : { ok: false, reason: 'Mission target is locked.' };
+  }
+  private hasRoadmapChallengeFile(
+    courseSlug: string,
+    mode: 'easy' | 'medium' | 'hard',
+  ) {
+    return fs.existsSync(this.getRoadmapChallengePath(courseSlug, mode));
+  }
+
+  private getRoadmapChallengePath(
+    courseSlug: string,
+    mode: 'easy' | 'medium' | 'hard',
+  ) {
+    return path.resolve(
+      process.cwd(),
+      'src',
+      'database',
+      'seeds',
+      'content',
+      courseSlug,
+      `${mode}-roadmap-challenges.json`,
+    );
+  }
+
+  private readAdvancedRoadmapChallengeFile(
+    courseSlug: string,
+    mode: 'medium' | 'hard',
+  ) {
+    const filePath = this.getRoadmapChallengePath(courseSlug, mode);
+    if (!fs.existsSync(filePath)) return null;
+
+    try {
+      return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as {
+        courseSlug?: string;
+        mode?: string;
+        chapters?: Array<{
+          chapterOrder: number;
+          nodes?: Array<{ order: number }>;
+        }>;
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  private getAdvancedRoadmapNodeIds(
+    courseSlug: string,
+    mode: 'medium' | 'hard',
+  ) {
+    const challengeFile = this.readAdvancedRoadmapChallengeFile(
+      courseSlug,
+      mode,
+    );
+    if (
+      !challengeFile ||
+      challengeFile.courseSlug !== courseSlug ||
+      challengeFile.mode !== mode ||
+      !Array.isArray(challengeFile.chapters)
+    ) {
+      return [];
+    }
+
+    return challengeFile.chapters.flatMap((chapter) =>
+      (chapter.nodes ?? []).map(
+        (node) =>
+          `${courseSlug}-${mode}-c${chapter.chapterOrder}-n${node.order}`,
+      ),
+    );
+  }
+
+  private async isAdvancedRoadmapNodeUnlocked(input: {
+    userId: string;
+    courseSlug: string;
+    mode: 'medium' | 'hard';
+    nodeId: string;
+  }) {
+    const orderedNodeIds = this.getAdvancedRoadmapNodeIds(
+      input.courseSlug,
+      input.mode,
+    );
+    if (!orderedNodeIds.includes(input.nodeId)) return false;
+
+    const difficultyUnlocked = await this.isAdvancedRoadmapDifficultyUnlocked(
+      input.userId,
+      input.courseSlug,
+      input.mode,
+    );
+    if (!difficultyUnlocked) return false;
+
+    return this.isSequentialRoadmapNodeOpenable({
+      userId: input.userId,
+      courseSlug: input.courseSlug,
+      mode: input.mode,
+      nodeId: input.nodeId,
+      orderedNodeIds,
+    });
+  }
+
+  private async isAdvancedRoadmapDifficultyUnlocked(
+    userId: string,
+    courseSlug: string,
+    mode: 'medium' | 'hard',
+  ) {
+    const easyCompleted = await this.countCompletedEasyRoadmapNodes(
+      userId,
+      courseSlug,
+    );
+    if (easyCompleted < 5) return false;
+    if (mode === 'medium') return true;
+
+    const mediumNodeIds = this.getAdvancedRoadmapNodeIds(courseSlug, 'medium');
+    if (mediumNodeIds.length === 0) return false;
+    const mediumCompleted = await this.countCompletedRoadmapNodes({
+      userId,
+      courseSlug,
+      mode: 'medium',
+      orderedNodeIds: mediumNodeIds,
+    });
+    return mediumCompleted >= 5;
+  }
+
+  private async countCompletedEasyRoadmapNodes(
+    userId: string,
+    courseSlug: string,
+  ) {
+    const course = await this.courseModel
+      .findOne({ slug: courseSlug, isPublished: true })
+      .select({ _id: 1 })
+      .lean<{ _id: Types.ObjectId }>()
+      .exec();
+    if (!course) return 0;
+
+    const chapters = await this.chapterModel
+      .find({ courseId: course._id, isPublished: true })
+      .sort({ order: 1 })
+      .select({ _id: 1 })
+      .lean<Array<{ _id: Types.ObjectId }>>()
+      .exec();
+    if (chapters.length === 0) return 0;
+
+    const lessons = await this.lessonModel
+      .find({
+        chapterId: { $in: chapters.map((chapter) => chapter._id) },
+        isPublished: true,
+      })
+      .select({ _id: 1, chapterId: 1, order: 1 })
+      .lean<
+        Array<{ _id: Types.ObjectId; chapterId: Types.ObjectId; order: number }>
+      >()
+      .exec();
+    const lessonsByChapterId = new Map<
+      string,
+      Array<{ _id: Types.ObjectId; order: number }>
+    >();
+    for (const lesson of lessons) {
+      const key = String(lesson.chapterId);
+      if (!lessonsByChapterId.has(key)) lessonsByChapterId.set(key, []);
+      lessonsByChapterId.get(key)!.push(lesson);
+    }
+
+    const orderedNodeIds = chapters.flatMap((chapter) =>
+      (lessonsByChapterId.get(String(chapter._id)) ?? [])
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        .map((lesson) => String(lesson._id)),
+    );
+    return this.countCompletedRoadmapNodes({
+      userId,
+      courseSlug,
+      mode: 'easy',
+      orderedNodeIds,
+    });
+  }
+
+  private async countCompletedRoadmapNodes(input: {
+    userId: string;
+    courseSlug: string;
+    mode: 'easy' | 'medium' | 'hard';
+    orderedNodeIds: string[];
+  }) {
+    if (input.orderedNodeIds.length === 0) return 0;
+    const rows = await this.roadmapProgressModel
+      .find({
+        userId: input.userId,
+        courseSlug: input.courseSlug,
+        mode: input.mode,
+        nodeId: { $in: input.orderedNodeIds },
+      })
+      .select({ nodeId: 1 })
+      .lean<Array<{ nodeId: string }>>()
+      .exec();
+
+    const completed = new Set(rows.map((row) => row.nodeId));
+    return input.orderedNodeIds.filter((nodeId) => completed.has(nodeId))
+      .length;
+  }
+
+  private async isSequentialRoadmapNodeOpenable(input: {
+    userId: string;
+    courseSlug: string;
+    mode: 'easy' | 'medium' | 'hard';
+    nodeId: string;
+    orderedNodeIds: string[];
+  }) {
+    const rows = await this.roadmapProgressModel
+      .find({
+        userId: input.userId,
+        courseSlug: input.courseSlug,
+        mode: input.mode,
+        nodeId: { $in: input.orderedNodeIds },
+      })
+      .select({ nodeId: 1 })
+      .lean<Array<{ nodeId: string }>>()
+      .exec();
+
+    const completed = new Set(rows.map((row) => row.nodeId));
+    if (completed.has(input.nodeId)) return true;
+
+    const firstIncompleteNodeId = input.orderedNodeIds.find(
+      (nodeId) => !completed.has(nodeId),
+    );
+    return firstIncompleteNodeId === input.nodeId;
   }
 
   private parseRoadmapChallengePath(path: string) {
@@ -1043,9 +1301,6 @@ export class MissionsService {
     }
 
     if (actionType === 'CONTINUE_LESSON' || actionType === 'CONTINUE_COURSE') {
-      if (mission.missionKind === 'HARDCORE') {
-        return event.eventType === 'LESSON_COMPLETED';
-      }
       return (
         event.eventType === 'LESSON_COMPLETED' &&
         event.targetId === mission.targetId
@@ -1114,9 +1369,6 @@ export class MissionsService {
     const activeMission = set.missions.find((mission) =>
       ACTIVE_MISSION_STATUSES.includes(mission.status as never),
     );
-    const hardcore = set.missions.find(
-      (mission) => mission.missionKind === 'HARDCORE',
-    );
     const sortedMissions = [...set.missions].sort(
       (a, b) => a.missionIndex - b.missionIndex,
     );
@@ -1135,7 +1387,7 @@ export class MissionsService {
         totalNormal: NORMAL_MISSION_COUNT,
         resolvedNormal,
         hardcoreUnlocked: false,
-        hardcoreCompleted: hardcore?.status === 'COMPLETED',
+        hardcoreCompleted: false,
         hardcoreGenerationStatus: 'LOCKED',
         setBonusGranted: set.setBonusGranted,
       },
@@ -1247,6 +1499,37 @@ export class MissionsService {
     return value?.trim().toLowerCase() || '';
   }
 
+  private async normalizeTodaySet(set: DailyMissionSetDocument) {
+    const normalized: DailyMissionItem[] = [];
+    const seenMissionIds = new Set<string>();
+
+    for (const mission of set.missions ?? []) {
+      if (mission.missionKind !== 'NORMAL') continue;
+      if (normalized.length >= NORMAL_MISSION_COUNT) continue;
+      if (seenMissionIds.has(mission.missionId)) continue;
+      seenMissionIds.add(mission.missionId);
+      normalized.push(mission);
+    }
+
+    let missionIndex = 1;
+    for (const mission of normalized) {
+      mission.missionIndex = missionIndex;
+      missionIndex += 1;
+      if (mission.generationVersion !== DAILY_MISSION_VERSION) {
+        mission.generationVersion = DAILY_MISSION_VERSION;
+      }
+    }
+
+    set.missions = normalized;
+    set.status =
+      normalized.length >= NORMAL_MISSION_COUNT ? 'ACTIVE' : 'NEEDS_COURSE';
+    set.generationStatus = normalized.length > 0 ? 'READY' : 'FAILED';
+    set.hardcoreUnlocked = false;
+    set.hardcoreGenerationStatus = 'LOCKED';
+    set.markModified('missions');
+    await set.save();
+    await this.summaryService.sync(set);
+  }
   private isStaleTodaySet(set: DailyMissionSetDocument) {
     const missions = Array.isArray(set.missions) ? set.missions : [];
     const normal = missions.filter(

@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Chapter, ChapterDocument } from './schemas/chapter.schema';
@@ -31,6 +31,7 @@ export class ChaptersService {
       .exec();
     const lessons = await this.lessonModel
       .find({ courseId: course._id, isPublished: true })
+      .select({ _id: 1, chapterId: 1, order: 1 })
       .lean<LeanLesson[]>()
       .exec();
     const lessonStatusById = await this.progressService.getLessonStatusByCourse(

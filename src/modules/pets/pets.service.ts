@@ -13,7 +13,7 @@ import {
 } from './pet-xp.util';
 
 export const PET_FEED_COST_XP = 100;
-export const PET_EXP_GAIN_PER_FEED = 25;
+export const PET_EXP_GAIN_PER_FEED = 100;
 
 @Injectable()
 export class PetsService {
@@ -148,7 +148,7 @@ export class PetsService {
       totalExp,
       exp: progress.currentLevelXp,
       levelRequiredExp: progress.levelRequiredExp,
-      nextLevelExp: progress.levelRequiredExp,
+      nextLevelExp: progress.nextLevelRequiredXp,
       nextLevelThresholdXp: progress.nextLevelThresholdXp,
       progressPercent: progress.progressPercent,
       evolutionStage: this.getEvolutionStage(progress.level),

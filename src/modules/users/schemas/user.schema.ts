@@ -8,12 +8,7 @@ export enum UserRole {
   STUDENT = 'student',
 }
 
-export const AUTH_PROVIDERS = [
-  'local',
-  'google',
-  'github',
-  'facebook',
-] as const;
+export const AUTH_PROVIDERS = ['local', 'google', 'github'] as const;
 export type AuthProvider = (typeof AUTH_PROVIDERS)[number];
 export type SocialProvider = Exclude<AuthProvider, 'local'>;
 
@@ -55,9 +50,6 @@ export class User {
 
   @Prop({ unique: true, sparse: true })
   googleId?: string;
-
-  @Prop({ unique: true, sparse: true })
-  facebookId?: string;
 
   @Prop({ type: [String], enum: AUTH_PROVIDERS, default: [] })
   authProviders!: AuthProvider[];

@@ -12,7 +12,8 @@ export class MissionValidatorService {
     candidates: MissionCandidate[],
     kind: MissionKind,
   ) {
-    const requiredCount = kind === 'HARDCORE' ? 1 : 5;
+    void kind;
+    const requiredCount = 5;
     if (!Array.isArray(selected) || selected.length !== requiredCount) {
       throw new Error(`AI must select exactly ${requiredCount} mission(s).`);
     }
@@ -53,7 +54,7 @@ export class MissionValidatorService {
         sum + (candidatesById.get(mission.candidateId)?.estimatedMinutes ?? 0),
       0,
     );
-    if (kind === 'NORMAL' && (totalMinutes < 10 || totalMinutes > 60)) {
+    if (totalMinutes < 10 || totalMinutes > 60) {
       throw new Error('Selected mission time budget is invalid.');
     }
     return true;

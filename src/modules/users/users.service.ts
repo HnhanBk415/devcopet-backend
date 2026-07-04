@@ -396,7 +396,7 @@ export class UsersService {
             type: 'default',
             level: 1,
             exp: 0,
-            nextLevelExp: 100,
+            nextLevelExp: 4000,
             evolutionStage: 1,
             avatarUrl: '',
             totalFeeds: 0,
@@ -447,7 +447,7 @@ export class UsersService {
       totalExp,
       exp: progress.currentLevelXp,
       levelRequiredExp: progress.levelRequiredExp,
-      nextLevelExp: progress.levelRequiredExp,
+      nextLevelExp: progress.nextLevelRequiredXp,
       nextLevelThresholdXp: progress.nextLevelThresholdXp,
       progressPercent: progress.progressPercent,
       evolutionStage: Math.min(

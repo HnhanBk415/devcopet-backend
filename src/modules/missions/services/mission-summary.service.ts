@@ -47,11 +47,7 @@ export class MissionSummaryService {
             expiredNormal: normal.filter(
               (mission) => mission.status === 'EXPIRED',
             ).length,
-            hardcoreCompleted: set.missions.some(
-              (mission) =>
-                mission.missionKind === 'HARDCORE' &&
-                mission.status === 'COMPLETED',
-            ),
+            hardcoreCompleted: false,
             totalEstimatedMinutes: set.missions.reduce(
               (sum, mission) => sum + (mission.estimatedMinutes ?? 0),
               0,

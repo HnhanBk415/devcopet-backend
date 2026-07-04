@@ -14,7 +14,7 @@ export class MissionFallbackService {
     candidates: MissionCandidate[],
     kind: MissionKind,
   ): MissionSelectionResult {
-    const count = kind === 'HARDCORE' ? 1 : 5;
+    const count = 5;
     const ranked = [...candidates].sort(
       (a, b) => this.score(b, snapshot, kind) - this.score(a, snapshot, kind),
     );
@@ -23,7 +23,7 @@ export class MissionFallbackService {
 
     for (const candidate of ranked) {
       if (selected.length >= count) break;
-      if (kind === 'NORMAL' && usedActions.has(candidate.actionType)) continue;
+      if (usedActions.has(candidate.actionType)) continue;
       selected.push(candidate);
       usedActions.add(candidate.actionType);
     }
@@ -38,7 +38,7 @@ export class MissionFallbackService {
       source: 'FALLBACK',
       missions: selected
         .slice(0, count)
-        .map((candidate) => this.toSelection(candidate, snapshot, kind)),
+        .map((candidate) => this.toSelection(candidate, snapshot)),
       analysisSummary: {
         focusTopics: snapshot.weakTopics.slice(0, 3),
         confidence: snapshot.confidence,
@@ -52,6 +52,7 @@ export class MissionFallbackService {
     snapshot: LearningSnapshot,
     kind: MissionKind,
   ) {
+    void kind;
     let score = 0;
     if (candidate.topic && snapshot.weakTopics.includes(candidate.topic))
       score += 40;
@@ -61,14 +62,12 @@ export class MissionFallbackService {
     if (candidate.actionType === 'REVIEW_LESSON') score += 15;
     if (candidate.actionType === 'FEED_PET') score += 5;
     if (candidate.difficulty === snapshot.preferredDifficulty) score += 10;
-    if (kind === 'HARDCORE' && candidate.difficulty === 'hard') score += 50;
     return score;
   }
 
   private toSelection(
     candidate: MissionCandidate,
     snapshot: LearningSnapshot,
-    kind: MissionKind,
   ): AiSelectedMission {
     const isWeak = Boolean(
       candidate.topic && snapshot.weakTopics.includes(candidate.topic),
@@ -78,17 +77,15 @@ export class MissionFallbackService {
       title: candidate.title,
       message: candidate.message,
       reasonCode:
-        kind === 'HARDCORE'
-          ? 'CHALLENGE'
-          : candidate.actionType === 'RETRY_NODE'
-            ? 'RETRY_FAILED'
-            : isWeak
-              ? 'WEAK_TOPIC'
-              : candidate.actionType === 'CONTINUE_LESSON'
-                ? 'CONTINUE_PROGRESS'
-                : candidate.actionType === 'FEED_PET'
-                  ? 'DAILY_HABIT'
-                  : 'REVIEW',
+        candidate.actionType === 'RETRY_NODE'
+          ? 'RETRY_FAILED'
+          : isWeak
+            ? 'WEAK_TOPIC'
+            : candidate.actionType === 'CONTINUE_LESSON'
+              ? 'CONTINUE_PROGRESS'
+              : candidate.actionType === 'FEED_PET'
+                ? 'DAILY_HABIT'
+                : 'REVIEW',
     };
   }
 }
