@@ -25,19 +25,38 @@ import {
 } from './services/arena-matchmaking.service';
 import { ArenaRoomService } from './services/arena-room.service';
 import type { ArenaMode, ArenaSocketUser } from './types/arena.types';
-const arenaAllowedOrigins = (
-  process.env.FRONTEND_URL ?? 'http://localhost:5173'
-)
-  .split(',')
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+function normalizeOrigin(origin?: string): string | undefined {
+  return origin?.replace(/\/+$/, '');
+}
+
+function splitOrigins(value?: string): string[] {
+  return (value ?? '')
+    .split(',')
+    .map((origin) => normalizeOrigin(origin.trim()))
+    .filter((origin): origin is string => Boolean(origin));
+}
+
+const arenaAllowedOrigins = Array.from(
+  new Set([
+    ...splitOrigins(process.env.FRONTEND_URL),
+    ...splitOrigins(process.env.CORS_ORIGIN),
+    'http://localhost:5173',
+  ]),
+);
+
+function isAllowedVercelPreview(origin: string): boolean {
+  return /^https:\/\/devcopet-[a-zA-Z0-9-]+.*\.vercel\.app$/.test(origin);
+}
 
 function isArenaCorsOriginAllowed(origin?: string) {
   if (!origin) return true;
-  if (arenaAllowedOrigins.includes(origin)) return true;
+  const normalizedOrigin = normalizeOrigin(origin);
+  if (!normalizedOrigin) return false;
+  if (arenaAllowedOrigins.includes(normalizedOrigin)) return true;
   return (
-    /^http:\/\/localhost:\d+$/.test(origin) ||
-    /^http:\/\/127\.0\.0\.1:\d+$/.test(origin)
+    isAllowedVercelPreview(normalizedOrigin) ||
+    /^http:\/\/localhost:\d+$/.test(normalizedOrigin) ||
+    /^http:\/\/127\.0\.0\.1:\d+$/.test(normalizedOrigin)
   );
 }
 @WebSocketGateway({

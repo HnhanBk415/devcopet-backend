@@ -1,6 +1,8 @@
 export function getPetXpThresholdForLevel(level: number): number {
   const normalizedLevel = Math.max(1, Math.floor(level));
 
+  if (normalizedLevel === 1) return 0;
+
   let total = 0;
   for (let n = 1; n <= normalizedLevel; n++) {
     total += Math.pow(n, 2) * 1000;

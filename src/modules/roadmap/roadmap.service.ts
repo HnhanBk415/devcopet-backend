@@ -1,12 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { Types } from 'mongoose';
 import type { AiRoadmapContext } from '../ai-chat/ai-chat.types';
-import type { RoadmapMode, RoadmapSubmitMeta } from './roadmap.types';
+import type {
+  AdvancedRoadmapMode,
+  RoadmapMode,
+  RoadmapSubmitMeta,
+} from './roadmap.types';
 import { EasyRoadmapService } from './services/easy-roadmap.service';
 import { HardRoadmapService } from './services/hard-roadmap.service';
 import { MediumRoadmapService } from './services/medium-roadmap.service';
 import { RoadmapAiContextService } from './services/roadmap-ai-context.service';
+import { RoadmapChallengeLoaderService } from './services/roadmap-challenge-loader.service';
 import { RoadmapChallengeSessionService } from './services/roadmap-challenge-session.service';
 import { RoadmapStatusService } from './services/roadmap-status.service';
+import { RoadmapQueryService } from './services/roadmap-query.service';
 
 type ChallengePageResponse = {
   courseSlug: string;
@@ -32,6 +39,8 @@ export class RoadmapService {
     private readonly roadmapAiContextService: RoadmapAiContextService,
     private readonly roadmapStatusService: RoadmapStatusService,
     private readonly challengeSessionService: RoadmapChallengeSessionService,
+    private readonly challengeLoader: RoadmapChallengeLoaderService,
+    private readonly queryService: RoadmapQueryService,
   ) {}
 
   async getEasyRoadmap(courseSlug: string, userId: string) {
@@ -44,6 +53,42 @@ export class RoadmapService {
 
   async getHardRoadmap(courseSlug: string, userId: string) {
     return this.hardRoadmapService.getRoadmap(courseSlug, userId);
+  }
+
+  async getRoadmapSummary(courseSlug: string, userId: string) {
+    const course = await this.queryService.findCourseBySlugOrThrow(courseSlug);
+    const easy = await this.getEasySummary(course.slug, course._id, userId);
+    const [medium, hard] = await Promise.all([
+      this.getAdvancedSummary(course.slug, 'medium', userId),
+      this.getAdvancedSummary(course.slug, 'hard', userId),
+    ]);
+
+    const modes = {
+      easy: {
+        ...easy,
+        unlocked: true,
+        available: true,
+      },
+      medium: {
+        ...medium,
+        unlocked: easy.completedNodes >= 5,
+      },
+      hard: {
+        ...hard,
+        unlocked: medium.completedNodes >= 5,
+      },
+    };
+    const totalNodes = easy.totalNodes + medium.totalNodes + hard.totalNodes;
+    const completedNodes =
+      easy.completedNodes + medium.completedNodes + hard.completedNodes;
+
+    return {
+      courseSlug: course.slug,
+      totalNodes,
+      completedNodes,
+      percent: this.toPercent(completedNodes, totalNodes),
+      modes,
+    };
   }
 
   async getEasyNodeChallenge(nodeId: string, userId: string) {
@@ -199,8 +244,19 @@ export class RoadmapService {
         response.courseSlug,
         mode,
         nodeId,
+        this.getChallengeTimeLimitSeconds(response),
       ),
     };
+  }
+
+  private getChallengeTimeLimitSeconds(
+    response: ChallengePageResponse,
+  ): number | undefined {
+    const timeLimitSeconds = response.challenge?.timeLimitSeconds;
+
+    return typeof timeLimitSeconds === 'number' && timeLimitSeconds > 0
+      ? timeLimitSeconds
+      : undefined;
   }
 
   private withoutReviewCountdown<T extends ChallengePageResponse>(
@@ -229,6 +285,89 @@ export class RoadmapService {
     const rest = { ...(payload as Record<string, unknown>) };
     delete rest.timeout;
     return rest as T;
+  }
+
+  private async getEasySummary(
+    courseSlug: string,
+    courseId: Types.ObjectId,
+    userId: string,
+  ) {
+    const chapters = await this.queryService.findPublishedChapters(courseId);
+    const lessons = await this.queryService.findPublishedLessons(
+      chapters.map((chapter) => chapter._id),
+    );
+    const lessonsByChapterId = new Map<string, string[]>();
+
+    for (const lesson of lessons) {
+      const chapterId = String(lesson.chapterId);
+      const group = lessonsByChapterId.get(chapterId) ?? [];
+      group.push(String(lesson._id));
+      lessonsByChapterId.set(chapterId, group);
+    }
+
+    const orderedNodeIds = chapters.flatMap(
+      (chapter) => lessonsByChapterId.get(String(chapter._id)) ?? [],
+    );
+    const summary = await this.roadmapStatusService.getCompletionSummary(
+      userId,
+      courseSlug,
+      'easy',
+      orderedNodeIds,
+    );
+
+    return {
+      mode: 'easy' as const,
+      totalNodes: summary.totalNodes,
+      completedNodes: summary.completedNodes,
+      percent: summary.percent,
+    };
+  }
+
+  private async getAdvancedSummary(
+    courseSlug: string,
+    mode: AdvancedRoadmapMode,
+    userId: string,
+  ) {
+    try {
+      const challengeFile = this.challengeLoader.loadAdvancedChallengeFile(
+        mode,
+        courseSlug,
+      );
+      const orderedNodeIds = challengeFile.chapters.flatMap((chapter) =>
+        chapter.nodes.map(
+          (node) =>
+            `${courseSlug}-${mode}-c${chapter.chapterOrder}-n${node.order}`,
+        ),
+      );
+      const summary = await this.roadmapStatusService.getCompletionSummary(
+        userId,
+        courseSlug,
+        mode,
+        orderedNodeIds,
+      );
+
+      return {
+        mode,
+        totalNodes: summary.totalNodes,
+        completedNodes: summary.completedNodes,
+        percent: summary.percent,
+        available: true,
+      };
+    } catch {
+      return {
+        mode,
+        totalNodes: 0,
+        completedNodes: 0,
+        percent: 0,
+        available: false,
+      };
+    }
+  }
+
+  private toPercent(completedNodes: number, totalNodes: number) {
+    return totalNodes === 0
+      ? 0
+      : Math.round((completedNodes / totalNodes) * 100);
   }
 
   private async finalizeSessionFromSubmitResult(

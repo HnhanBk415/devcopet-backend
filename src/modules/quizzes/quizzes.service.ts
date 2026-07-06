@@ -140,12 +140,13 @@ export class QuizzesService {
     const topic = this.topicFromLesson(lesson);
     const submissionId =
       body.submissionId?.trim() || `quiz:${quizId}:${Date.now()}`;
+    const courseSlug = await this.getCourseSlug(quiz.courseId);
 
     await this.learningHistoryService.recordAttempt({
       userId,
       submissionId,
       sourceType: 'QUIZ',
-      courseSlug: await this.getCourseSlug(quiz.courseId),
+      courseSlug,
       targetType: 'QUIZ',
       targetId: String(quiz._id),
       topic,
@@ -193,113 +194,77 @@ export class QuizzesService {
     let alreadyCompleted = false;
 
     if (passed) {
-      const existingCompletion = await this.lessonProgressModel
-        .findOne({
-          userId: new Types.ObjectId(userId),
-          lessonId: quiz.lessonId,
-          completed: true,
-        })
-        .select({ _id: 1 })
-        .lean()
-        .exec();
+      try {
+        const updateResult = await this.lessonProgressModel
+          .updateOne(
+            {
+              userId: new Types.ObjectId(userId),
+              lessonId: quiz.lessonId,
+              completed: { $ne: true },
+            },
+            {
+              $set: { completed: true, completedAt: new Date() },
+              $max: { quizScore: percentage },
+            },
+            {
+              upsert: true,
+              setDefaultsOnInsert: true,
+            },
+          )
+          .exec();
 
-      alreadyCompleted = Boolean(existingCompletion);
-
-      if (!alreadyCompleted) {
-        try {
-          const updateResult = await this.lessonProgressModel
-            .updateOne(
-              {
-                userId: new Types.ObjectId(userId),
-                lessonId: quiz.lessonId,
-                completed: { $ne: true },
-              },
-              {
-                $set: { completed: true, completedAt: new Date() },
-                $max: { quizScore: percentage },
-              },
-              {
-                upsert: true,
-                setDefaultsOnInsert: true,
-              },
-            )
-            .exec();
-
-          if (
-            updateResult.matchedCount === 0 &&
-            updateResult.upsertedCount === 0
-          ) {
-            alreadyCompleted = true;
-          }
-        } catch (error) {
-          if (this.isDuplicateKeyError(error)) {
-            alreadyCompleted = true;
-          } else {
-            throw error;
-          }
+        alreadyCompleted =
+          updateResult.matchedCount === 0 && updateResult.upsertedCount === 0;
+      } catch (error) {
+        if (this.isDuplicateKeyError(error)) {
+          alreadyCompleted = true;
+        } else {
+          throw error;
         }
       }
 
       if (!alreadyCompleted) {
-        const course = await this.courseModel
-          .findById(quiz.courseId)
-          .select({ slug: 1 })
-          .lean<{ slug?: string }>()
-          .exec();
-        const courseSlug = course?.slug;
         rewardXp = getLessonRewardXp(courseSlug);
         const xpResult = await this.usersService.awardXpWithLevelInfo(
           userId,
           rewardXp,
         );
-        await this.createNotificationSafely({
-          userId,
-          type: 'COURSE_LESSON_COMPLETED',
-          title: 'Lesson completed',
-          message: `You earned ${rewardXp} XP from this lesson.`,
-          metadata: {
-            courseSlug,
-            lessonId: String(quiz.lessonId),
-            xp: rewardXp,
-          },
-        });
-        if (xpResult.leveledUp) {
-          await this.createNotificationSafely({
+        const postRewardTasks: Promise<void>[] = [
+          this.createNotificationSafely({
             userId,
-            type: 'LEVEL_UP',
-            title: 'Level up',
-            message: `You reached Level ${xpResult.level}.`,
+            type: 'COURSE_LESSON_COMPLETED',
+            title: 'Lesson completed',
+            message: `You earned ${rewardXp} XP from this lesson.`,
             metadata: {
-              level: xpResult.level,
-              lifetimeXp: xpResult.lifetimeXp,
+              courseSlug,
+              lessonId: String(quiz.lessonId),
+              xp: rewardXp,
             },
-          });
-        }
-
-        const lessonEvent = await this.learningHistoryService.recordEvent({
-          userId,
-          eventType: 'LESSON_COMPLETED',
-          idempotencyKey: `lesson-completed:${userId}:${String(quiz.lessonId)}`,
-          targetType: 'LESSON',
-          targetId: String(quiz.lessonId),
-          topic,
-          passed: true,
-          score: percentage,
-          metadata: { quizId: String(quiz._id), rewardXp },
-        });
-        if (lessonEvent.created) {
-          await this.missionsService.processActivityEvent({
+          }),
+          this.recordLessonCompletedEvent({
             userId,
-            eventType: 'LESSON_COMPLETED',
-            idempotencyKey: `lesson-completed:${userId}:${String(quiz.lessonId)}`,
-            targetType: 'LESSON',
-            targetId: String(quiz.lessonId),
+            lessonId: String(quiz.lessonId),
+            quizId: String(quiz._id),
             topic,
-            passed: true,
-            score: percentage,
-            metadata: { quizId: String(quiz._id), rewardXp },
-          });
+            percentage,
+            rewardXp,
+          }),
+        ];
+        if (xpResult.leveledUp) {
+          postRewardTasks.push(
+            this.createNotificationSafely({
+              userId,
+              type: 'LEVEL_UP',
+              title: 'Level up',
+              message: `You reached Level ${xpResult.level}.`,
+              metadata: {
+                level: xpResult.level,
+                lifetimeXp: xpResult.lifetimeXp,
+              },
+            }),
+          );
         }
+        await Promise.all(postRewardTasks);
       }
     }
     const progress = await this.progressService.getLessonProgressSnapshot(
@@ -324,6 +289,41 @@ export class QuizzesService {
       progress,
       results,
     };
+  }
+
+  private async recordLessonCompletedEvent(input: {
+    userId: string;
+    lessonId: string;
+    quizId: string;
+    topic: string;
+    percentage: number;
+    rewardXp: number;
+  }) {
+    const idempotencyKey = `lesson-completed:${input.userId}:${input.lessonId}`;
+    const lessonEvent = await this.learningHistoryService.recordEvent({
+      userId: input.userId,
+      eventType: 'LESSON_COMPLETED',
+      idempotencyKey,
+      targetType: 'LESSON',
+      targetId: input.lessonId,
+      topic: input.topic,
+      passed: true,
+      score: input.percentage,
+      metadata: { quizId: input.quizId, rewardXp: input.rewardXp },
+    });
+    if (lessonEvent.created) {
+      await this.missionsService.processActivityEvent({
+        userId: input.userId,
+        eventType: 'LESSON_COMPLETED',
+        idempotencyKey,
+        targetType: 'LESSON',
+        targetId: input.lessonId,
+        topic: input.topic,
+        passed: true,
+        score: input.percentage,
+        metadata: { quizId: input.quizId, rewardXp: input.rewardXp },
+      });
+    }
   }
 
   // ─── Private helpers ────────────────────────────────────────────────────────

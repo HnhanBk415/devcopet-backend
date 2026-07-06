@@ -48,7 +48,7 @@ import {
 const NORMAL_MISSION_COUNT = 5;
 const SET_COMPLETION_BONUS_XP = 50;
 const MISSION_RETENTION_DAYS = 30;
-const DAILY_MISSION_VERSION = 'daily-mission-v7-openable-roadmap-targets';
+const DAILY_MISSION_VERSION = 'daily-mission-v8-topic-route-match';
 const ACTIVE_MISSION_STATUSES = ['PENDING', 'OPENED'] as const;
 const MISSION_EVENT_HISTORY_TYPES = [
   'MISSION_OPENED',
@@ -703,10 +703,25 @@ export class MissionsService {
     if (mission.targetType === 'TOPIC') {
       const route = this.parseRoadmapChallengePath(mission.ctaPath);
       if (route) {
-        return this.isRoadmapChallengeRouteOpenable({
+        const openable = await this.isRoadmapChallengeRouteOpenable({
           userId: input.userId,
           route,
         });
+        if (!openable.ok) return openable;
+
+        if (mission.actionType === 'PRACTICE_TOPIC') {
+          const hasMatchingAttempt = await this.hasMatchingRoadmapTopicAttempt(
+            input.userId,
+            mission,
+            route,
+          );
+
+          return hasMatchingAttempt
+            ? { ok: true }
+            : { ok: false, reason: 'Mission topic route is unavailable.' };
+        }
+
+        return openable;
       }
     }
 
@@ -977,6 +992,32 @@ export class MissionsService {
     return firstIncompleteNodeId === input.nodeId;
   }
 
+  private async hasMatchingRoadmapTopicAttempt(
+    userId: string,
+    mission: DailyMissionItem,
+    route: {
+      courseSlug: string;
+      mode: 'easy' | 'medium' | 'hard';
+      nodeId: string;
+    },
+  ) {
+    const topic = this.normalize(mission.topic || mission.targetId);
+    if (!topic) return false;
+
+    const attempts = await this.learningHistoryService.getRecentAttempts(
+      userId,
+      100,
+    );
+
+    return attempts.some(
+      (attempt) =>
+        attempt.sourceType === 'ROADMAP' &&
+        this.normalize(attempt.topic) === topic &&
+        attempt.courseSlug === route.courseSlug &&
+        attempt.mode === route.mode &&
+        attempt.targetId === route.nodeId,
+    );
+  }
   private parseRoadmapChallengePath(path: string) {
     const match = path.match(
       /^\/roadmap\/([^/]+)\/(easy|medium|hard)\/nodes\/([^/]+)\/challenge$/i,

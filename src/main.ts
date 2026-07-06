@@ -8,18 +8,21 @@ function normalizeOrigin(origin?: string): string | undefined {
   return origin?.replace(/\/+$/, '');
 }
 
+function splitOrigins(value?: string): string[] {
+  return (value ?? '')
+    .split(',')
+    .map((origin) => normalizeOrigin(origin.trim()))
+    .filter((origin): origin is string => Boolean(origin));
+}
+
 function getAllowedOrigins(): string[] {
   const origins = [
-    process.env.FRONTEND_URL,
-    process.env.CORS_ORIGIN,
+    ...splitOrigins(process.env.FRONTEND_URL),
+    ...splitOrigins(process.env.CORS_ORIGIN),
     'http://localhost:5173',
-  ]
-    .filter((origin): origin is string => typeof origin === 'string')
-    .map((origin) => normalizeOrigin(origin));
+  ];
 
-  return Array.from(
-    new Set(origins.filter((origin): origin is string => Boolean(origin))),
-  );
+  return Array.from(new Set(origins));
 }
 
 function isAllowedVercelPreview(origin: string): boolean {

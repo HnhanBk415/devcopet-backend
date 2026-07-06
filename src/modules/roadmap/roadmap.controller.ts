@@ -33,6 +33,17 @@ function parseRoadmapMode(mode: string): RoadmapMode {
 export class RoadmapController {
   constructor(private readonly roadmapService: RoadmapService) {}
 
+  @Get(':courseSlug/summary')
+  async getRoadmapSummary(
+    @Param('courseSlug') courseSlug: string,
+    @Req() req: RoadmapRequest,
+  ) {
+    return this.roadmapService.getRoadmapSummary(
+      courseSlug,
+      getRoadmapUserId(req),
+    );
+  }
+
   @Get(':courseSlug/easy')
   async getEasyRoadmap(
     @Param('courseSlug') courseSlug: string,

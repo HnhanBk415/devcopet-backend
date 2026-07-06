@@ -11,7 +11,9 @@ import {
 export type LessonLearningStatus = 'locked' | 'available' | 'completed';
 
 export type LeanProgressChapter = Chapter & { _id: Types.ObjectId };
-export type LeanProgressLesson = Lesson & { _id: Types.ObjectId };
+export type LeanProgressLesson = Pick<Lesson, 'chapterId' | 'order'> & {
+  _id: Types.ObjectId;
+};
 
 export type CourseProgressResetResult = {
   totalLessons: number;
@@ -45,6 +47,13 @@ export class ProgressService {
     userId: string,
   ): Promise<Map<string, LessonLearningStatus>> {
     const orderedLessons = await this.getOrderedLessonsByCourse(courseId);
+    return this.getLessonStatusByOrderedLessons(userId, orderedLessons);
+  }
+
+  async getLessonStatusByOrderedLessons(
+    userId: string,
+    orderedLessons: LeanProgressLesson[],
+  ): Promise<Map<string, LessonLearningStatus>> {
     const completedLessonIds = await this.getCompletedLessonIds(
       userId,
       orderedLessons.map((lesson) => lesson._id),
@@ -55,7 +64,6 @@ export class ProgressService {
       completedLessonIds,
     );
   }
-
   async getOrderedLessonsByCourse(
     courseId: Types.ObjectId,
   ): Promise<LeanProgressLesson[]> {

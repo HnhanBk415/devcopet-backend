@@ -43,13 +43,11 @@ export class RoadmapChallengeSessionService {
     courseSlug: string,
     mode: RoadmapMode,
     nodeId: string,
+    timeLimitSecondsOverride?: number,
   ): Promise<ChallengeSessionResponse> {
-    const timeLimitSeconds = await this.resolveTimeLimitSeconds(
-      userId,
-      courseSlug,
-      mode,
-      nodeId,
-    );
+    const timeLimitSeconds =
+      timeLimitSecondsOverride ??
+      (await this.resolveTimeLimitSeconds(userId, courseSlug, mode, nodeId));
     const now = new Date();
     const existingSession = await this.sessionModel
       .findOne({

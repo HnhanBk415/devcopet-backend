@@ -76,8 +76,6 @@ export class MissionCandidateService {
     );
 
     const candidates: MissionCandidate[] = [];
-    let fallbackLessonPath: string | undefined;
-    let fallbackRoadmapPath: string | undefined;
     const easyNodeIdsByCourse = new Map<string, string[]>();
     const completedEasyRoadmapIdsByCourse = new Map<string, Set<string>>();
 
@@ -123,7 +121,6 @@ export class MissionCandidateService {
       );
 
       if (availableLesson) {
-        fallbackLessonPath ??= `/lessons/${String(availableLesson._id)}`;
         candidates.push(
           this.lessonCandidate(
             course.slug,
@@ -163,7 +160,6 @@ export class MissionCandidateService {
         this.hasRoadmapChallengeFile(course.slug, 'easy')
       ) {
         const availableRoadmapLessonId = String(availableRoadmapLesson._id);
-        fallbackRoadmapPath ??= `/roadmap/${course.slug}/easy/nodes/${availableRoadmapLessonId}/challenge`;
         candidates.push({
           candidateId: `roadmap:easy:${availableRoadmapLessonId}`,
           actionType: 'COMPLETE_ROADMAP_NODE',
@@ -197,7 +193,6 @@ export class MissionCandidateService {
           'medium',
         );
         if (mediumCandidate) {
-          fallbackRoadmapPath ??= mediumCandidate.ctaPath;
           candidates.push(mediumCandidate);
         }
 
@@ -215,7 +210,6 @@ export class MissionCandidateService {
             'hard',
           );
           if (hardCandidate) {
-            fallbackRoadmapPath ??= hardCandidate.ctaPath;
             candidates.push(hardCandidate);
           }
         }
@@ -290,15 +284,20 @@ export class MissionCandidateService {
           a.courseSlug,
       );
 
-      const href =
-        attempt &&
-        this.isSafeRoadmapAttemptPath(
+      const mode = this.asRoadmapMode(attempt?.mode);
+      if (
+        !attempt ||
+        !mode ||
+        !this.isSafeRoadmapAttemptPath(
           attempt,
           easyNodeIdsByCourse,
           completedEasyRoadmapIdsByCourse,
         )
-          ? `/roadmap/${attempt.courseSlug}/${attempt.mode || 'easy'}/nodes/${attempt.targetId}/challenge`
-          : (fallbackRoadmapPath ?? fallbackLessonPath ?? '/roadmap');
+      ) {
+        continue;
+      }
+
+      const href = `/roadmap/${attempt.courseSlug}/${mode}/nodes/${attempt.targetId}/challenge`;
 
       candidates.push({
         candidateId: `practice-topic:${topic}`,

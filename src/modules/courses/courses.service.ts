@@ -2,7 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Course, CourseDocument } from './schemas/course.schema';
-import { ProgressService } from '../progress/progress.service';
+import {
+  LeanProgressLesson,
+  ProgressService,
+} from '../progress/progress.service';
 import { Chapter, ChapterDocument } from '../chapters/schemas/chapter.schema';
 import { Lesson, LessonDocument } from '../lessons/schemas/lesson.schema';
 
@@ -93,11 +96,27 @@ export class CoursesService {
         .exec(),
     ]);
 
-    const statusByLessonId = await this.progressService.getLessonStatusByCourse(
-      course._id,
-      userId,
+    const lessonsByChapterForProgress = new Map<string, LeanProgressLesson[]>();
+    for (const lesson of lessons) {
+      const chapterId = String(lesson.chapterId);
+      const group = lessonsByChapterForProgress.get(chapterId) ?? [];
+      group.push({
+        _id: lesson._id,
+        chapterId: lesson.chapterId,
+        order: lesson.order,
+      });
+      lessonsByChapterForProgress.set(chapterId, group);
+    }
+    const orderedLessons = chapters.flatMap((chapter) =>
+      (lessonsByChapterForProgress.get(String(chapter._id)) ?? []).sort(
+        (a, b) => a.order - b.order,
+      ),
     );
-
+    const statusByLessonId =
+      await this.progressService.getLessonStatusByOrderedLessons(
+        userId,
+        orderedLessons,
+      );
     const lessonsByChapterId = new Map<
       string,
       Array<{

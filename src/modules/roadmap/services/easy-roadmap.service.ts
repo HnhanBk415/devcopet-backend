@@ -134,17 +134,14 @@ export class EasyRoadmapService {
       throw new ForbiddenException('This roadmap node is locked.');
     }
 
-    const user = await this.usersService.findById(userId);
+    const [user, nextChallenge] = await Promise.all([
+      this.usersService.findById(userId),
+      this.getNextChallenge(course.slug, node.id, userId),
+    ]);
     const explanationSpeaker = {
       name: user?.petName || 'Your pet',
       type: 'PET' as const,
     };
-
-    const nextChallenge = await this.getNextChallenge(
-      course.slug,
-      node.id,
-      userId,
-    );
 
     const baseResponse = {
       mode: this.mode,
@@ -214,17 +211,14 @@ export class EasyRoadmapService {
       throw new ForbiddenException('This roadmap node is locked.');
     }
 
-    const user = await this.usersService.findById(userId);
+    const [user, nextChallenge] = await Promise.all([
+      this.usersService.findById(userId),
+      this.getNextChallenge(course.slug, node.id, userId),
+    ]);
     const explanationSpeaker = {
       name: user?.petName || 'Your pet',
       type: 'PET' as const,
     };
-
-    const nextChallenge = await this.getNextChallenge(
-      course.slug,
-      node.id,
-      userId,
-    );
     const passedNavigation = {
       returnToRoadmap: { courseSlug: course.slug, mode: this.mode },
       nextChallenge,
@@ -238,25 +232,23 @@ export class EasyRoadmapService {
 
     if (meta?.timeout === true) {
       const submissionId = meta?.submissionId?.trim() || randomUUID();
-      await this.recordAttemptAndEvent({
-        userId,
-        submissionId,
-        courseSlug: course.slug,
-        nodeId: node.id,
-        topic: this.topicFromLesson(lesson),
-        challengeType: challenge.type,
-        passed: false,
-        durationSeconds: meta?.durationSeconds,
-        hintUsed: meta?.hintUsed,
-        primaryMistake: 'timeout',
-        href:
-          '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
-      });
-      const failed = await this.buildWrongFeedback(
-        userId,
-        challenge,
-        'timeout',
-      );
+      const [, failed] = await Promise.all([
+        this.recordAttemptAndEvent({
+          userId,
+          submissionId,
+          courseSlug: course.slug,
+          nodeId: node.id,
+          topic: this.topicFromLesson(lesson),
+          challengeType: challenge.type,
+          passed: false,
+          durationSeconds: meta?.durationSeconds,
+          hintUsed: meta?.hintUsed,
+          primaryMistake: 'timeout',
+          href:
+            '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
+        }),
+        this.buildWrongFeedback(userId, challenge, 'timeout'),
+      ]);
 
       return {
         correct: false,
@@ -282,7 +274,7 @@ export class EasyRoadmapService {
     }
     const correct = selectedOptionId === challenge.correctOptionId;
     const submissionId = meta?.submissionId?.trim() || randomUUID();
-    await this.recordAttemptAndEvent({
+    const attemptTask = this.recordAttemptAndEvent({
       userId,
       submissionId,
       courseSlug: course.slug,
@@ -297,11 +289,10 @@ export class EasyRoadmapService {
     });
 
     if (correct) {
-      const review = await this.reviewService.toEasyReview(
-        userId,
-        challenge,
-        selectedOptionId,
-      );
+      const [review] = await Promise.all([
+        this.reviewService.toEasyReview(userId, challenge, selectedOptionId),
+        attemptTask,
+      ]);
 
       const rewardGranted = await this.statusService.tryMarkNodeCompleted(
         userId,
@@ -318,19 +309,21 @@ export class EasyRoadmapService {
           node.id,
         );
 
-        await this.recordCompletionEvent({
-          userId,
-          courseSlug: course.slug,
-          nodeId: node.id,
-          topic: this.topicFromLesson(lesson),
-          challengeType: challenge.type,
-          rewardXp: 0,
-        });
-        const completedReview = await this.reviewService.toEasyCompletedReview(
-          userId,
-          challenge,
-          completion,
-        );
+        const [completedReview] = await Promise.all([
+          this.reviewService.toEasyCompletedReview(
+            userId,
+            challenge,
+            completion,
+          ),
+          this.recordCompletionEvent({
+            userId,
+            courseSlug: course.slug,
+            nodeId: node.id,
+            topic: this.topicFromLesson(lesson),
+            challengeType: challenge.type,
+            rewardXp: 0,
+          }),
+        ]);
 
         return {
           correct: true,
@@ -353,38 +346,43 @@ export class EasyRoadmapService {
         userId,
         ROADMAP_NODE_XP.easy,
       );
-      await this.createNotificationSafely({
-        userId,
-        type: 'ROADMAP_NODE_COMPLETED',
-        title: 'Roadmap challenge completed',
-        message: `You earned ${ROADMAP_NODE_XP.easy} XP from easy Mode.`,
-        metadata: {
-          courseSlug: course.slug,
-          mode: this.mode,
-          nodeId: node.id,
-          xp: ROADMAP_NODE_XP.easy,
-        },
-      });
-      if (xpResult.leveledUp) {
-        await this.createNotificationSafely({
+      const postRewardTasks: Promise<void>[] = [
+        this.createNotificationSafely({
           userId,
-          type: 'LEVEL_UP',
-          title: 'Level up',
-          message: `You reached Level ${xpResult.level}.`,
+          type: 'ROADMAP_NODE_COMPLETED',
+          title: 'Roadmap challenge completed',
+          message: `You earned ${ROADMAP_NODE_XP.easy} XP from easy Mode.`,
           metadata: {
-            level: xpResult.level,
-            lifetimeXp: xpResult.lifetimeXp,
+            courseSlug: course.slug,
+            mode: this.mode,
+            nodeId: node.id,
+            xp: ROADMAP_NODE_XP.easy,
           },
-        });
+        }),
+        this.recordCompletionEvent({
+          userId,
+          courseSlug: course.slug,
+          nodeId: node.id,
+          topic: this.topicFromLesson(lesson),
+          challengeType: challenge.type,
+          rewardXp: ROADMAP_NODE_XP.easy,
+        }),
+      ];
+      if (xpResult.leveledUp) {
+        postRewardTasks.push(
+          this.createNotificationSafely({
+            userId,
+            type: 'LEVEL_UP',
+            title: 'Level up',
+            message: `You reached Level ${xpResult.level}.`,
+            metadata: {
+              level: xpResult.level,
+              lifetimeXp: xpResult.lifetimeXp,
+            },
+          }),
+        );
       }
-      await this.recordCompletionEvent({
-        userId,
-        courseSlug: course.slug,
-        nodeId: node.id,
-        topic: this.topicFromLesson(lesson),
-        challengeType: challenge.type,
-        rewardXp: ROADMAP_NODE_XP.easy,
-      });
+      await Promise.all(postRewardTasks);
 
       return {
         correct: true,
@@ -406,11 +404,10 @@ export class EasyRoadmapService {
       };
     }
 
-    const failed = await this.buildWrongFeedback(
-      userId,
-      challenge,
-      selectedOptionId,
-    );
+    const failed = await Promise.all([
+      attemptTask,
+      this.buildWrongFeedback(userId, challenge, selectedOptionId),
+    ]).then(([, feedback]) => feedback);
 
     return {
       correct: false,

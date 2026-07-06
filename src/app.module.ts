@@ -15,8 +15,12 @@ import { AiChatModule } from './modules/ai-chat/ai-chat.module';
 import { ArenaModule } from './modules/arena/arena.module';
 import { PetsModule } from './modules/pets/pets.module';
 import { MissionsModule } from './modules/missions/missions.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
+  controllers: [AppController],
+  providers: [AppService],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
