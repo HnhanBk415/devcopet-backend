@@ -28,6 +28,7 @@ import { ROADMAP_NODE_XP } from '../../users/xp.util';
 import { LearningHistoryService } from '../../learning-history/learning-history.service';
 import { MissionsService } from '../../missions/missions.service';
 import { MissionNotificationService } from '../../missions/services/mission-notification.service';
+import { PetPersonalizationService } from '../../personality-engine/pet-personalization.service';
 
 @Injectable()
 export class EasyRoadmapService {
@@ -43,6 +44,7 @@ export class EasyRoadmapService {
     private readonly learningHistoryService: LearningHistoryService,
     private readonly missionsService: MissionsService,
     private readonly notificationService: MissionNotificationService,
+    private readonly personalization: PetPersonalizationService,
   ) {}
 
   async getRoadmap(courseSlug: string, userId: string) {
@@ -185,7 +187,11 @@ export class EasyRoadmapService {
 
       return {
         ...baseResponse,
-        review: this.reviewService.toEasyCompletedReview(challenge, completion),
+        review: await this.reviewService.toEasyCompletedReview(
+          userId,
+          challenge,
+          completion,
+        ),
       };
     }
 
@@ -246,15 +252,24 @@ export class EasyRoadmapService {
         href:
           '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
       });
+      const failed = await this.buildWrongFeedback(
+        userId,
+        challenge,
+        'timeout',
+      );
 
       return {
         correct: false,
         status: 'FAILED',
         timeout: true,
-        message:
-          'Time is up. Return to the roadmap and try this checkpoint again.',
+        message: failed.text,
+        shouldExit: true,
+        retryRequired: true,
         explanation: undefined,
         correctOptionId: undefined,
+        explanationSpeaker: failed.speaker,
+        explanationTone: failed.tone,
+        ...this.devMeta(failed.meta),
         rewardSummary: this.getEmptyRewardSummary(),
         navigation: failedNavigation,
       };
@@ -282,7 +297,8 @@ export class EasyRoadmapService {
     });
 
     if (correct) {
-      const review = this.reviewService.toEasyReview(
+      const review = await this.reviewService.toEasyReview(
+        userId,
         challenge,
         selectedOptionId,
       );
@@ -310,21 +326,26 @@ export class EasyRoadmapService {
           challengeType: challenge.type,
           rewardXp: 0,
         });
+        const completedReview = await this.reviewService.toEasyCompletedReview(
+          userId,
+          challenge,
+          completion,
+        );
 
         return {
           correct: true,
           status: 'PASSED',
           alreadyCompleted: true,
           message: 'This roadmap node is already completed.',
-          explanation:
-            challenge.explanation ||
-            'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
-          explanationSpeaker,
+          shouldExit: false,
+          retryRequired: false,
+          explanation: completedReview.explanation,
+          explanationSpeaker:
+            completedReview.explanationSpeaker ?? explanationSpeaker,
+          explanationTone: completedReview.explanationTone,
+          ...this.devMeta(completedReview.personalizationMeta),
           rewardSummary: this.getEmptyRewardSummary(),
-          review: this.reviewService.toEasyCompletedReview(
-            challenge,
-            completion,
-          ),
+          review: completedReview,
           navigation: passedNavigation,
         };
       }
@@ -368,24 +389,41 @@ export class EasyRoadmapService {
       return {
         correct: true,
         status: 'PASSED',
-        message: 'Correct. Nice work.',
-        explanation:
-          challenge.explanation ||
-          'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
-        explanationSpeaker,
+        message: this.personalization.getPraiseMessage(
+          review.explanationTone,
+          this.getTopTrait(review.personalizationMeta),
+        ),
+        shouldExit: false,
+        retryRequired: false,
+        selectedAnswer: selectedOptionId,
+        explanation: review.explanation,
+        explanationSpeaker: review.explanationSpeaker ?? explanationSpeaker,
+        explanationTone: review.explanationTone,
+        ...this.devMeta(review.personalizationMeta),
         rewardSummary: this.getRewardSummary(),
         review,
         navigation: passedNavigation,
       };
     }
 
+    const failed = await this.buildWrongFeedback(
+      userId,
+      challenge,
+      selectedOptionId,
+    );
+
     return {
       correct: false,
       status: 'FAILED',
-      message:
-        'Not quite. Return to the roadmap and try this checkpoint again.',
+      message: failed.text,
+      shouldExit: true,
+      retryRequired: true,
+      selectedAnswer: selectedOptionId,
       explanation: undefined,
       correctOptionId: undefined,
+      explanationSpeaker: failed.speaker,
+      explanationTone: failed.tone,
+      ...this.devMeta(failed.meta),
       rewardSummary: this.getEmptyRewardSummary(),
       navigation: failedNavigation,
     };
@@ -628,6 +666,36 @@ export class EasyRoadmapService {
       petExp: 0,
       items: [],
     };
+  }
+
+  private async buildWrongFeedback(
+    userId: string,
+    challenge: EasyChallengeData,
+    mistakeType?: string,
+  ) {
+    return this.personalization.personalizeText({
+      userId,
+      baseText: '',
+      fallbackText:
+        'Not correct yet. Return to the roadmap and try this checkpoint again.',
+      context: {
+        interactionType: 'challenge_wrong',
+        mode: this.mode,
+        challengeType: challenge.type,
+        topicTitle: challenge.title,
+        mistakeType,
+      },
+    });
+  }
+
+  private devMeta(meta: unknown) {
+    return process.env.NODE_ENV !== 'production' && meta
+      ? { personalizationMeta: meta }
+      : {};
+  }
+
+  private getTopTrait(meta?: Record<string, unknown>) {
+    return typeof meta?.topTrait === 'string' ? meta.topTrait : undefined;
   }
 
   private getOrderedLessonIds(

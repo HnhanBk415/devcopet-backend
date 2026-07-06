@@ -170,6 +170,12 @@ export interface RoadmapOrderedNode {
 export interface RoadmapCompletionReview {
   correct: true;
   explanation: string;
+  explanationSpeaker?: {
+    name: string;
+    type: 'PET';
+  };
+  explanationTone?: string;
+  personalizationMeta?: Record<string, unknown>;
   completedAt: string;
   selectedOptionId?: ChallengeOptionId;
   correctOptionId?: ChallengeOptionId;

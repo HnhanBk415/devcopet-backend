@@ -30,6 +30,7 @@ import { ROADMAP_NODE_XP } from '../../users/xp.util';
 import { LearningHistoryService } from '../../learning-history/learning-history.service';
 import { MissionsService } from '../../missions/missions.service';
 import { MissionNotificationService } from '../../missions/services/mission-notification.service';
+import { PetPersonalizationService } from '../../personality-engine/pet-personalization.service';
 
 type PublicAdvancedChallenge = {
   id: string;
@@ -60,6 +61,7 @@ export abstract class AdvancedRoadmapBaseService {
     protected readonly learningHistoryService: LearningHistoryService,
     protected readonly missionsService: MissionsService,
     protected readonly notificationService: MissionNotificationService,
+    protected readonly personalization: PetPersonalizationService,
   ) {}
 
   async getRoadmap(courseSlug: string, userId: string) {
@@ -207,7 +209,9 @@ export abstract class AdvancedRoadmapBaseService {
       if (completion && completion.review) {
         return {
           ...baseResponse,
-          review: this.reviewService.toAdvancedCompletedReview(
+          review: await this.reviewService.toAdvancedCompletedReview(
+            userId,
+            this.mode,
             challenge,
             completion,
           ),
@@ -271,18 +275,27 @@ export abstract class AdvancedRoadmapBaseService {
         href:
           '/roadmaps/' + course.slug + '/' + this.mode + '/nodes/' + node.id,
       });
+      const failed = await this.buildWrongFeedback(
+        userId,
+        challenge,
+        'timeout',
+      );
 
       return {
         correct: false,
         status: 'FAILED',
         timeout: true,
-        message:
-          'Time is up. Return to the roadmap and try this checkpoint again.',
+        message: failed.text,
+        shouldExit: true,
+        retryRequired: true,
         explanation: undefined,
         correctOptionId: undefined,
         correctDropZoneMap: undefined,
         correctMatchingMap: undefined,
         correctOrderedIds: undefined,
+        explanationSpeaker: failed.speaker,
+        explanationTone: failed.tone,
+        ...this.devMeta(failed.meta),
         rewardSummary: this.getEmptyRewardSummary(),
         navigation: failedNavigation,
       };
@@ -320,7 +333,9 @@ export abstract class AdvancedRoadmapBaseService {
 
       correct = selectedOptionId === correctOptionId;
       review = correct
-        ? this.reviewService.toAdvancedOptionReview(
+        ? await this.reviewService.toAdvancedOptionReview(
+            userId,
+            this.mode,
             challenge,
             selectedOptionId,
             correctOptionId,
@@ -335,7 +350,9 @@ export abstract class AdvancedRoadmapBaseService {
 
       correct = isSameStringRecord(dropZoneMap, challenge.correctDropZoneMap);
       review = correct
-        ? this.reviewService.toAdvancedDropZoneReview(
+        ? await this.reviewService.toAdvancedDropZoneReview(
+            userId,
+            this.mode,
             challenge,
             dropZoneMap,
             challenge.correctDropZoneMap,
@@ -352,7 +369,9 @@ export abstract class AdvancedRoadmapBaseService {
       const correctMatchingMap = this.getCorrectMatchingMap(challenge);
       correct = isSameStringRecord(matchingMap, correctMatchingMap);
       review = correct
-        ? this.reviewService.toAdvancedMatchingReview(
+        ? await this.reviewService.toAdvancedMatchingReview(
+            userId,
+            this.mode,
             challenge,
             matchingMap,
             correctMatchingMap,
@@ -376,7 +395,9 @@ export abstract class AdvancedRoadmapBaseService {
       const correctOrderedIds = this.getCorrectOrderedIds(challenge);
       correct = this.isSameStringArray(orderedIds, correctOrderedIds);
       review = correct
-        ? this.reviewService.toAdvancedOrderingReview(
+        ? await this.reviewService.toAdvancedOrderingReview(
+            userId,
+            this.mode,
             challenge,
             orderedIds,
             correctOrderedIds,
@@ -429,24 +450,29 @@ export abstract class AdvancedRoadmapBaseService {
           challengeType: challenge.type,
           rewardXp: 0,
         });
+        const completedReview =
+          await this.reviewService.toAdvancedCompletedReview(
+            userId,
+            this.mode,
+            challenge,
+            completion,
+          );
 
         return {
           correct: true,
           status: 'PASSED',
           alreadyCompleted: true,
           message: 'This node is already completed.',
-          explanation:
-            challenge.explanation ||
-            'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
-          explanationSpeaker,
+          shouldExit: false,
+          retryRequired: false,
+          explanation: completedReview.explanation,
+          explanationSpeaker:
+            completedReview.explanationSpeaker ?? explanationSpeaker,
+          explanationTone: completedReview.explanationTone,
+          ...this.devMeta(completedReview.personalizationMeta),
           rewardSummary: this.getEmptyRewardSummary(),
           ...returnData,
-          review: completion?.review
-            ? this.reviewService.toAdvancedCompletedReview(
-                challenge,
-                completion,
-              )
-            : review,
+          review: completedReview,
           navigation: passedNavigation,
         };
       }
@@ -490,16 +516,27 @@ export abstract class AdvancedRoadmapBaseService {
     }
 
     if (!correct) {
+      const failed = await this.buildWrongFeedback(
+        userId,
+        challenge,
+        challenge.type,
+      );
+
       return {
         correct: false,
         status: 'FAILED',
-        message:
-          'Not quite. Return to the roadmap and try this checkpoint again.',
+        message: failed.text,
+        shouldExit: true,
+        retryRequired: true,
+        selectedAnswer: this.getSelectedAnswer(payload),
         explanation: undefined,
         correctOptionId: undefined,
         correctDropZoneMap: undefined,
         correctMatchingMap: undefined,
         correctOrderedIds: undefined,
+        explanationSpeaker: failed.speaker,
+        explanationTone: failed.tone,
+        ...this.devMeta(failed.meta),
         rewardSummary: this.getEmptyRewardSummary(),
         navigation: failedNavigation,
       };
@@ -508,11 +545,17 @@ export abstract class AdvancedRoadmapBaseService {
     return {
       correct: true,
       status: 'PASSED',
-      message: 'Correct. Nice work.',
-      explanation:
-        challenge.explanation ||
-        'This works because it matches the key rule in the checkpoint. Focus on the concept, then apply it to the next problem.',
-      explanationSpeaker,
+      message: this.personalization.getPraiseMessage(
+        review?.explanationTone,
+        this.getTopTrait(review?.personalizationMeta),
+      ),
+      shouldExit: false,
+      retryRequired: false,
+      selectedAnswer: this.getSelectedAnswer(payload),
+      explanation: review?.explanation,
+      explanationSpeaker: review?.explanationSpeaker ?? explanationSpeaker,
+      explanationTone: review?.explanationTone,
+      ...this.devMeta(review?.personalizationMeta),
       rewardSummary: this.buildRewardSummary(),
       ...returnData,
       review,
@@ -820,6 +863,46 @@ export abstract class AdvancedRoadmapBaseService {
       petExp: 0,
       items: [],
     };
+  }
+
+  private async buildWrongFeedback(
+    userId: string,
+    challenge: AdvancedChallengeData,
+    mistakeType?: string,
+  ) {
+    return this.personalization.personalizeText({
+      userId,
+      baseText: '',
+      fallbackText:
+        'Not correct yet. Return to the roadmap and try this checkpoint again.',
+      context: {
+        interactionType: 'challenge_wrong',
+        mode: this.mode,
+        challengeType: challenge.type,
+        topicTitle: challenge.title,
+        mistakeType,
+      },
+    });
+  }
+
+  private getSelectedAnswer(payload: Record<string, unknown>) {
+    return (
+      payload.selectedOptionId ??
+      payload.dropZoneMap ??
+      payload.matchingMap ??
+      payload.orderedIds ??
+      null
+    );
+  }
+
+  private devMeta(meta: unknown) {
+    return process.env.NODE_ENV !== 'production' && meta
+      ? { personalizationMeta: meta }
+      : {};
+  }
+
+  private getTopTrait(meta?: Record<string, unknown>) {
+    return typeof meta?.topTrait === 'string' ? meta.topTrait : undefined;
   }
 
   private parseNodeId(

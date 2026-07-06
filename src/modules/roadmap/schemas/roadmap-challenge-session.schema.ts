@@ -19,7 +19,7 @@ export class RoadmapChallengeSession {
   @Prop({ required: true, trim: true })
   courseSlug!: string;
 
-  @Prop({ required: true, enum: ['easy', 'medium', 'hard'] })
+  @Prop({ type: String, required: true, enum: ['easy', 'medium', 'hard'] })
   mode!: RoadmapMode;
 
   @Prop({ required: true, trim: true })
@@ -35,6 +35,7 @@ export class RoadmapChallengeSession {
   timeLimitSeconds!: number;
 
   @Prop({
+    type: String,
     required: true,
     enum: ['IN_PROGRESS', 'SUBMITTED', 'FAILED', 'EXPIRED'],
     default: 'IN_PROGRESS',

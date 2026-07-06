@@ -41,6 +41,77 @@ export interface PetBehaviorConfig {
   learningMode: 'solo' | 'collaborative' | 'mixed';
 }
 
+export type PetTone =
+  | 'gentle'
+  | 'direct'
+  | 'motivational'
+  | 'analytical'
+  | 'playful';
+
+export type PersonalityTrait =
+  | 'analytical'
+  | 'creative'
+  | 'disciplined'
+  | 'independent'
+  | 'empathetic'
+  | 'competitive'
+  | 'adaptable'
+  | 'curious';
+
+export type PersonalizationDepth = 'light' | 'medium' | 'deep';
+
+export type PersonalizationContext = {
+  interactionType:
+    | 'challenge_correct'
+    | 'challenge_wrong'
+    | 'challenge_review'
+    | 'challenge_hint';
+  mode?: 'easy' | 'medium' | 'hard';
+  challengeType?: string;
+  topicTitle?: string;
+  selectedAnswer?: unknown;
+  mistakeType?: string;
+  hintUsed?: number;
+  durationSeconds?: number;
+  metadata?: Record<string, unknown>;
+};
+
+export type PersonalizationDebug = {
+  userId: string;
+  petName: string;
+  tone: PetTone;
+  dominantTraits: string[];
+  topTrait?: string;
+  directness: number;
+  encouragementLevel: number;
+  challengeLevel: number;
+  messageLength: 'short' | 'medium' | 'detailed';
+  useCompetition: boolean;
+  useProgressEvidence: boolean;
+  personalityFound: boolean;
+  defaultUsed: boolean;
+  templatesUsed: string[];
+  context: PersonalizationContext;
+};
+
+export type PersonalizeTextInput = {
+  userId: string;
+  baseText: string;
+  fallbackText: string;
+  context: PersonalizationContext;
+  depth?: PersonalizationDepth;
+};
+
+export type PersonalizedTextResult = {
+  text: string;
+  speaker: {
+    name: string;
+    type: 'PET';
+  };
+  tone: PetTone;
+  meta?: PersonalizationDebug;
+};
+
 /**
  * Context passed when generating pet interactions.
  */

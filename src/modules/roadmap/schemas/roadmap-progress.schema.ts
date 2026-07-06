@@ -12,7 +12,7 @@ export class RoadmapProgress {
   @Prop({ required: true, trim: true })
   courseSlug!: string;
 
-  @Prop({ required: true, enum: ['easy', 'medium', 'hard'] })
+  @Prop({ type: String, required: true, enum: ['easy', 'medium', 'hard'] })
   mode!: RoadmapMode;
 
   @Prop({ required: true, trim: true })

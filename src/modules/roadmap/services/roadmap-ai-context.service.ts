@@ -64,7 +64,8 @@ export class RoadmapAiContextService {
         challenge: this.easyRoadmapService.toPublicChallenge(lesson, challenge),
         ...(node.status === 'completed'
           ? {
-              review: this.reviewService.toEasyCompletedReview(
+              review: await this.reviewService.toEasyCompletedReview(
+                userId,
                 challenge,
                 completion,
               ),
@@ -103,7 +104,9 @@ export class RoadmapAiContextService {
       challenge: roadmapService.toPublicChallenge(nodeId, challenge),
       ...(node.status === 'completed'
         ? {
-            review: this.reviewService.toAdvancedCompletedReview(
+            review: await this.reviewService.toAdvancedCompletedReview(
+              userId,
+              mode,
               challenge,
               completion,
             ),

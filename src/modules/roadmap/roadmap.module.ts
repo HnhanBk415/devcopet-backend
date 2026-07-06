@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from '../users/users.module';
 import { LearningHistoryModule } from '../learning-history/learning-history.module';
 import { MissionsModule } from '../missions/missions.module';
+import { PersonalityEngineModule } from '../personality-engine/personality-engine.module';
 import { RoadmapController } from './roadmap.controller';
 import { RoadmapService } from './roadmap.service';
 import { World, WorldSchema } from './schemas/world.schema';
@@ -22,6 +23,7 @@ import { Lesson, LessonSchema } from '../lessons/schemas/lesson.schema';
 import { EasyRoadmapService } from './services/easy-roadmap.service';
 import { HardRoadmapService } from './services/hard-roadmap.service';
 import { MediumRoadmapService } from './services/medium-roadmap.service';
+import { ChallengeExplanationBuilderService } from './services/challenge-explanation-builder.service';
 import { RoadmapAiContextService } from './services/roadmap-ai-context.service';
 import { RoadmapChallengeLoaderService } from './services/roadmap-challenge-loader.service';
 import { RoadmapChallengeSessionService } from './services/roadmap-challenge-session.service';
@@ -47,6 +49,7 @@ import { RoadmapStatusService } from './services/roadmap-status.service';
     UsersModule,
     LearningHistoryModule,
     MissionsModule,
+    PersonalityEngineModule,
   ],
   controllers: [RoadmapController],
   providers: [
@@ -54,6 +57,7 @@ import { RoadmapStatusService } from './services/roadmap-status.service';
     EasyRoadmapService,
     HardRoadmapService,
     MediumRoadmapService,
+    ChallengeExplanationBuilderService,
     RoadmapAiContextService,
     RoadmapChallengeLoaderService,
     RoadmapChallengeSessionService,
