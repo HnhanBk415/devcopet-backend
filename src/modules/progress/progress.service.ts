@@ -20,6 +20,12 @@ export type CourseProgressResetResult = {
   deletedProgressRecords: number;
 };
 
+export type CourseProgressSummary = {
+  completedLessons: number;
+  totalLessons: number;
+  percent: number;
+};
+
 export type LessonProgressSnapshot = {
   currentLessonId: string;
   currentLessonStatus: LessonLearningStatus;
@@ -48,6 +54,66 @@ export class ProgressService {
   ): Promise<Map<string, LessonLearningStatus>> {
     const orderedLessons = await this.getOrderedLessonsByCourse(courseId);
     return this.getLessonStatusByOrderedLessons(userId, orderedLessons);
+  }
+  async getCourseProgressSummaries(
+    courseIds: Types.ObjectId[],
+    userId: string,
+  ): Promise<Map<string, CourseProgressSummary>> {
+    const summaries = new Map<string, CourseProgressSummary>();
+    for (const courseId of courseIds) {
+      summaries.set(String(courseId), {
+        completedLessons: 0,
+        totalLessons: 0,
+        percent: 0,
+      });
+    }
+
+    if (courseIds.length === 0 || !Types.ObjectId.isValid(userId)) {
+      return summaries;
+    }
+
+    const lessons = await this.lessonModel
+      .find({ courseId: { $in: courseIds }, isPublished: true })
+      .select({ _id: 1, courseId: 1 })
+      .lean<Array<{ _id: Types.ObjectId; courseId: Types.ObjectId }>>()
+      .exec();
+    const lessonIds = lessons.map((lesson) => lesson._id);
+    const completedLessonIds =
+      lessonIds.length > 0
+        ? await this.getCompletedLessonIds(
+            new Types.ObjectId(userId),
+            lessonIds,
+          )
+        : new Set<string>();
+
+    for (const lesson of lessons) {
+      const courseId = String(lesson.courseId);
+      const summary = summaries.get(courseId) ?? {
+        completedLessons: 0,
+        totalLessons: 0,
+        percent: 0,
+      };
+
+      summary.totalLessons += 1;
+      if (completedLessonIds.has(String(lesson._id))) {
+        summary.completedLessons += 1;
+      }
+      summaries.set(courseId, summary);
+    }
+
+    for (const [courseId, summary] of summaries) {
+      summaries.set(courseId, {
+        ...summary,
+        percent:
+          summary.totalLessons === 0
+            ? 0
+            : Math.round(
+                (summary.completedLessons / summary.totalLessons) * 100,
+              ),
+      });
+    }
+
+    return summaries;
   }
 
   async getLessonStatusByOrderedLessons(
@@ -109,7 +175,8 @@ export class ProgressService {
 
     const result = await this.lessonProgressModel
       .deleteMany({
-        userId: new Types.ObjectId(userId),
+        userId:
+          typeof userId === 'string' ? new Types.ObjectId(userId) : userId,
         lessonId: { $in: lessonIds },
       })
       .exec();
@@ -194,12 +261,13 @@ export class ProgressService {
   }
 
   private async getCompletedLessonIds(
-    userId: string,
+    userId: string | Types.ObjectId,
     lessonIds: Types.ObjectId[],
   ): Promise<Set<string>> {
     const progress = await this.lessonProgressModel
       .find({
-        userId: new Types.ObjectId(userId),
+        userId:
+          typeof userId === 'string' ? new Types.ObjectId(userId) : userId,
         lessonId: { $in: lessonIds },
         completed: true,
       })

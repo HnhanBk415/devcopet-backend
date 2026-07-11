@@ -18,11 +18,32 @@ export class CoursesService {
     private readonly progressService: ProgressService,
   ) {}
 
-  async findAll() {
-    return this.courseModel
+  async findAll(userId: string) {
+    const courses = await this.courseModel
       .find({ isPublished: true })
       .sort({ order: 1 })
+      .lean<Array<Course & { _id: Types.ObjectId }>>()
       .exec();
+    const progressByCourseId =
+      await this.progressService.getCourseProgressSummaries(
+        courses.map((course) => course._id),
+        userId,
+      );
+
+    return courses.map((course) => {
+      const progress = progressByCourseId.get(String(course._id)) ?? {
+        completedLessons: 0,
+        totalLessons: Number(course.totalLessons || 0),
+        percent: 0,
+      };
+
+      return {
+        ...course,
+        id: String(course._id),
+        totalLessons: progress.totalLessons || Number(course.totalLessons || 0),
+        progress,
+      };
+    });
   }
 
   async findByIdOrSlug(courseIdOrSlug: string) {

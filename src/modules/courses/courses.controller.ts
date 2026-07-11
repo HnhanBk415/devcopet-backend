@@ -11,8 +11,9 @@ export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Get()
-  async findAll() {
-    return this.coursesService.findAll();
+  @UseGuards(JwtAuthGuard)
+  async findAll(@Req() req: AuthenticatedRequest) {
+    return this.coursesService.findAll(req.user.userId);
   }
 
   @Get(':courseId')

@@ -7,7 +7,7 @@ import {
   Get,
   Res,
 } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -28,11 +28,6 @@ interface AuthResult {
   refreshToken: string;
   user: Record<string, unknown>;
 }
-
-const ACCESS_TOKEN_COOKIE = 'dc_access_token';
-const REFRESH_TOKEN_COOKIE = 'dc_refresh_token';
-const ACCESS_TOKEN_MAX_AGE_MS = 15 * 60 * 1000;
-const REFRESH_TOKEN_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
 @Controller('auth')
 export class AuthController {
@@ -64,21 +59,18 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const result = await this.authService.login(loginDto);
-    this.setAuthCookies(res, result);
-    return { user: result.user };
+    this.setNoStoreHeaders(res);
+    return result;
   }
 
   @Post('refresh')
   async refresh(
-    @Body() dto: Partial<RefreshTokenDto>,
-    @Req() req: Request,
+    @Body() dto: RefreshTokenDto,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const refreshToken =
-      dto?.refreshToken ?? this.getCookieValue(req, REFRESH_TOKEN_COOKIE);
-    const result = await this.authService.refresh(refreshToken ?? '');
-    this.setAuthCookies(res, result);
-    return { message: 'Session refreshed' };
+    const result = await this.authService.refresh(dto.refreshToken);
+    this.setNoStoreHeaders(res);
+    return { message: 'Session refreshed', ...result };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -87,7 +79,7 @@ export class AuthController {
     @Req() req: { user: JwtUser },
     @Res({ passthrough: true }) res: Response,
   ) {
-    this.clearAuthCookies(res);
+    this.setNoStoreHeaders(res);
     return this.authService.logout(req.user.userId);
   }
 
@@ -117,54 +109,31 @@ export class AuthController {
 
   private redirectToFrontendAuthCallback(result: AuthResult, res: Response) {
     const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:5173';
-    this.setAuthCookies(res, result);
+    this.setNoStoreHeaders(res);
+    const authFragment = this.buildAuthCallbackFragment(result);
 
-    return res.redirect(`${frontendUrl}/auth/callback`);
+    return res.redirect(`${frontendUrl}/auth/callback#${authFragment}`);
   }
 
-  private setAuthCookies(
-    res: Response,
-    result: Pick<AuthResult, 'accessToken' | 'refreshToken'>,
-  ) {
-    const isProduction = process.env.NODE_ENV === 'production';
-    const cookieOptions = {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? ('none' as const) : ('lax' as const),
-      path: '/',
-    };
-
-    res.cookie(ACCESS_TOKEN_COOKIE, result.accessToken, {
-      ...cookieOptions,
-      maxAge: ACCESS_TOKEN_MAX_AGE_MS,
+  private buildAuthCallbackFragment(result: AuthResult) {
+    const params = new URLSearchParams({
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+      user: Buffer.from(JSON.stringify(result.user), 'utf8').toString(
+        'base64url',
+      ),
     });
-    res.cookie(REFRESH_TOKEN_COOKIE, result.refreshToken, {
-      ...cookieOptions,
-      maxAge: REFRESH_TOKEN_MAX_AGE_MS,
-    });
+
+    return params.toString();
   }
 
-  private clearAuthCookies(res: Response) {
-    const isProduction = process.env.NODE_ENV === 'production';
-    const cookieOptions = {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? ('none' as const) : ('lax' as const),
-      path: '/',
-    };
-
-    res.clearCookie(ACCESS_TOKEN_COOKIE, cookieOptions);
-    res.clearCookie(REFRESH_TOKEN_COOKIE, cookieOptions);
-  }
-
-  private getCookieValue(req: Request, name: string) {
-    const cookieHeader = req.headers.cookie;
-    if (!cookieHeader) return null;
-    const cookie = cookieHeader
-      .split(';')
-      .map((part) => part.trim())
-      .find((part) => part.startsWith(`${name}=`));
-
-    return cookie ? decodeURIComponent(cookie.slice(name.length + 1)) : null;
+  private setNoStoreHeaders(res: Response) {
+    res.setHeader(
+      'Cache-Control',
+      'no-store, no-cache, must-revalidate, proxy-revalidate',
+    );
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Referrer-Policy', 'no-referrer');
   }
 }

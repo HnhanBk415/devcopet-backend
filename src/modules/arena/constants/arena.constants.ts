@@ -9,7 +9,7 @@ export const ARENA_BOT_FALLBACK_SECONDS = 30;
 export const ARENA_MATCH_ACCEPT_SECONDS = 5;
 export const ARENA_ANSWER_REVEAL_SECONDS = 5;
 export const ARENA_COUNTDOWN_VALUES = [3, 2, 1, 'GO'] as const;
-export const ARENA_MIN_RATING = 1000;
+export const ARENA_MIN_RATING = 0;
 
 export const ARENA_RANKS: ArenaRank[] = [
   'Beginner',

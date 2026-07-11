@@ -142,53 +142,39 @@ export class QuizzesService {
       body.submissionId?.trim() || `quiz:${quizId}:${Date.now()}`;
     const courseSlug = await this.getCourseSlug(quiz.courseId);
 
-    await this.learningHistoryService.recordAttempt({
-      userId,
-      submissionId,
-      sourceType: 'QUIZ',
-      courseSlug,
-      targetType: 'QUIZ',
-      targetId: String(quiz._id),
-      topic,
-      challengeType: 'lesson-quiz',
-      passed,
-      score: percentage,
-      maxScore: 100,
-      durationSeconds: body.durationSeconds,
-      hintUsed: body.hintUsed,
-      primaryMistake: this.resolvePrimaryMistake(results),
-      metadata: {
-        quizId: String(quiz._id),
-        lessonId: String(quiz.lessonId),
-        passingScore: quiz.passingScore,
-        href: `/lessons/${String(quiz.lessonId)}`,
-      },
-    });
-
-    const quizEvent = await this.learningHistoryService.recordEvent({
-      userId,
-      eventType: 'QUIZ_ATTEMPTED',
-      idempotencyKey: `quiz-attempt:${userId}:${submissionId}`,
-      targetType: 'LESSON',
-      targetId: String(quiz.lessonId),
-      topic,
-      passed,
-      score: percentage,
-      metadata: { quizId: String(quiz._id) },
-    });
-    if (quizEvent.created) {
-      await this.missionsService.processActivityEvent({
+    this.runBackgroundTasks('quiz attempt side effects', [
+      this.learningHistoryService.recordAttempt({
         userId,
-        eventType: 'QUIZ_ATTEMPTED',
-        idempotencyKey: `quiz-attempt:${userId}:${submissionId}`,
-        targetType: 'LESSON',
-        targetId: String(quiz.lessonId),
+        submissionId,
+        sourceType: 'QUIZ',
+        courseSlug,
+        targetType: 'QUIZ',
+        targetId: String(quiz._id),
+        topic,
+        challengeType: 'lesson-quiz',
+        passed,
+        score: percentage,
+        maxScore: 100,
+        durationSeconds: body.durationSeconds,
+        hintUsed: body.hintUsed,
+        primaryMistake: this.resolvePrimaryMistake(results),
+        metadata: {
+          quizId: String(quiz._id),
+          lessonId: String(quiz.lessonId),
+          passingScore: quiz.passingScore,
+          href: `/lessons/${String(quiz.lessonId)}`,
+        },
+      }),
+      this.recordQuizAttemptEvent({
+        userId,
+        submissionId,
+        lessonId: String(quiz.lessonId),
+        quizId: String(quiz._id),
         topic,
         passed,
         score: percentage,
-        metadata: { quizId: String(quiz._id) },
-      });
-    }
+      }),
+    ]);
 
     let rewardXp = 0;
     let alreadyCompleted = false;
@@ -264,7 +250,7 @@ export class QuizzesService {
             }),
           );
         }
-        await Promise.all(postRewardTasks);
+        this.runBackgroundTasks('lesson reward side effects', postRewardTasks);
       }
     }
     const progress = await this.progressService.getLessonProgressSnapshot(
@@ -326,6 +312,55 @@ export class QuizzesService {
     }
   }
 
+  private async recordQuizAttemptEvent(input: {
+    userId: string;
+    submissionId: string;
+    lessonId: string;
+    quizId: string;
+    topic: string;
+    passed: boolean;
+    score: number;
+  }) {
+    const idempotencyKey = `quiz-attempt:${input.userId}:${input.submissionId}`;
+    const quizEvent = await this.learningHistoryService.recordEvent({
+      userId: input.userId,
+      eventType: 'QUIZ_ATTEMPTED',
+      idempotencyKey,
+      targetType: 'LESSON',
+      targetId: input.lessonId,
+      topic: input.topic,
+      passed: input.passed,
+      score: input.score,
+      metadata: { quizId: input.quizId },
+    });
+    if (quizEvent.created) {
+      await this.missionsService.processActivityEvent({
+        userId: input.userId,
+        eventType: 'QUIZ_ATTEMPTED',
+        idempotencyKey,
+        targetType: 'LESSON',
+        targetId: input.lessonId,
+        topic: input.topic,
+        passed: input.passed,
+        score: input.score,
+        metadata: { quizId: input.quizId },
+      });
+    }
+  }
+
+  private runBackgroundTasks(label: string, tasks: Promise<unknown>[]) {
+    void Promise.allSettled(tasks).then((results) => {
+      for (const result of results) {
+        if (result.status === 'rejected') {
+          this.logger.warn(
+            result.reason instanceof Error
+              ? `${label} failed: ${result.reason.message}`
+              : `${label} failed.`,
+          );
+        }
+      }
+    });
+  }
   // ─── Private helpers ────────────────────────────────────────────────────────
 
   private toObjectId(value: string, fieldName: string) {

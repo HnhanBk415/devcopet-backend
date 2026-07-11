@@ -81,7 +81,7 @@ export class User {
   @Prop({ default: 'Axo-Script', trim: true })
   petName!: string;
 
-  @Prop({ default: 1000, min: 1000 })
+  @Prop({ default: 1000, min: 0 })
   arenaRating!: number;
 
   @Prop({
