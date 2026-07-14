@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 type CorsOriginCallback = (err: Error | null, allow?: boolean) => void;
 
@@ -30,8 +31,10 @@ function isAllowedVercelPreview(origin: string): boolean {
 }
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT ?? 3000;
+
+  app.set('trust proxy', 1);
 
   app.useGlobalPipes(
     new ValidationPipe({

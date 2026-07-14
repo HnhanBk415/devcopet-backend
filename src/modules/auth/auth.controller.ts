@@ -8,6 +8,7 @@ import {
   Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
+import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -28,21 +29,28 @@ interface AuthResult {
   refreshToken: string;
   user: Record<string, unknown>;
 }
-
+const ONE_MINUTE_MS = 60_000;
+const AUTH_RATE_LIMIT = { default: { ttl: ONE_MINUTE_MS, limit: 5 } };
+const PASSWORD_RESET_RATE_LIMIT = {
+  default: { ttl: ONE_MINUTE_MS, limit: 3 },
+};
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Throttle(AUTH_RATE_LIMIT)
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
+  @Throttle(PASSWORD_RESET_RATE_LIMIT)
   @Post('forgot-password')
   forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto.email);
   }
 
+  @Throttle(PASSWORD_RESET_RATE_LIMIT)
   @Post('reset-password')
   async resetPassword(@Body() dto: ResetPasswordDto) {
     return this.authService.resetPassword(
@@ -53,6 +61,7 @@ export class AuthController {
     );
   }
 
+  @Throttle(AUTH_RATE_LIMIT)
   @Post('login')
   async login(
     @Body() loginDto: LoginDto,
