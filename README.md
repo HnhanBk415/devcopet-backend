@@ -11,7 +11,7 @@
 - **Đàng Tiến Thành** - Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
 ### 👥 Backend Team
 
-- **Nguyễn Hoàng Nhân** — Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
+- **Nguyễn Hoàng Nhân** - Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
 - **Đặng Tuấn Kiệt** — Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
 - **Võ Chí Thành** — Ho Chi Minh City University of Technology and Engineering
 
