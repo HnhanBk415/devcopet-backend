@@ -7,12 +7,12 @@
 **🖥️ Frontend:** https://github.com/phuong-tran2006/devcopet_fe
 ### 🎨 Frontend Team
 
-- **Trần Thị Yến Phương** - VietNam National University Ho Chi Minh City University of Technology
-- **Đàng Tiến Thành** - VietNam National University Ho Chi Minh City University of Technology
+- **Trần Thị Yến Phương** - Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
+- **Đàng Tiến Thành** - Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
 ### 👥 Backend Team
 
-- **Nguyễn Hoàng Nhân** — VietNam National University Ho Chi Minh City University of Technology
-- **Đặng Tuấn Kiệt** — VietNam National University Ho Chi Minh City University of Technology
+- **Nguyễn Hoàng Nhân** — Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
+- **Đặng Tuấn Kiệt** — Ho Chi Minh City University of Technology - Vietnam National University Ho Chi Minh City.
 - **Võ Chí Thành** — Ho Chi Minh City University of Technology and Engineering
 
 ## 📖 Overview
